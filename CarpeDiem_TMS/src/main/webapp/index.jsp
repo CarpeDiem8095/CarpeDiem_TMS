@@ -9,6 +9,7 @@
 <body>
 <h1><a href="./boardsearch.do?auth=ADMIN">관리자 동행찾기로 이동</a></h1>
 <h1><a href="./boardsearch.do?auth=USER">유저 동행찾기로 이동</a></h1>
+<h1><a href="./notePaging.do">노트로 이동</a></h1>
 <form action="./mainchat.do" method="post">
 <table>
 	<tr>
