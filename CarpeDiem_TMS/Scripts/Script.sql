@@ -427,3 +427,14 @@ WHERE CHATMYID ='우성1(sung9606071@naver.com)'
 AND SEQ ='1';
 
 --우성--
+
+
+
+
+
+--은솔--
+
+ALTER TABLE NOTE
+DROP CONSTRAINT FK_EMAIL;
+
+
