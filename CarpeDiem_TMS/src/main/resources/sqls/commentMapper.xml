@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cp.tms.dto.CommentDto">
+
+
+<select id="commnetList" parameterType="java.lang.String">
+	SELECT COMM_SEQ,ONEDAY_SEQ,
+	EMAIL,REFFER,DEPTH,
+	STEP,REGDATE,CONTENT, REPORTCHK FROM COMMENTBOARD
+	WHERE ONEDAY_SEQ =#{oneday_seq}
+</select>
+
+<insert id="writeComment" parameterType="comDto">
+	INSERT INTO COMMENTBOARD(
+	COMM_SEQ,ONEDAY_SEQ,
+	EMAIL,REFFER,DEPTH,
+	STEP,REGDATE,CONTENT)
+	VALUES (SEQ_COMM.NEXTVAL,#{oneday_seq},
+	#{email},(SELECT NVL(MAX(REFFER),0) FROM COMMENTBOARD)+1,0,0,SYSDATE,#{content})
+</insert>
+
+<update id="updateReply" parameterType="java.lang.String">
+	UPDATE COMMENTBOARD SET STEP = STEP +1
+	WHERE STEP > (SELECT STEP FROM COMMENTBOARD WHERE COMM_SEQ=#{com_seq})
+	AND REFFER = (SELECT REFFER FROM COMMENTBOARD WHERE COMM_SEQ=#{com_seq})
+</update>
+
+<insert id="writeReply" parameterType="comDto">
+	INSERT INTO COMMENTBOARD(
+    COMM_SEQ,ONEDAY_SEQ,EMAIL,
+    REFFER,DEPTH,
+    STEP,REGDATE,CONTENT)
+	VALUES(SEQ_COMM.NEXTVAL,#{oneday_seq},#{email},
+	(SELECT REFFER FROM COMMENTBOARD WHERE COMM_SEQ=#{comm_seq}),(SELECT DEPTH FROM COMMENTBOARD WHERE COMM_SEQ = #{comm_seq})+1,
+	(SELECT STEP FROM COMMENTBOARD WHERE COMM_SEQ = #{comm_seq})+1,SYSDATE,#{content})
+</insert>
+
+ <update id="modifyComment" parameterType="comDto">
+ 	UPDATE COMMENTBOARD SET CONTENT = #{content}
+	WHERE COMM_SEQ = #{comm_seq}
+ </update>
+ 
+ 
+
+</mapper>
