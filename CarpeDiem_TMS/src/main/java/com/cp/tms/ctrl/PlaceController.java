@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.cp.tms.dto.PlaceDto;
 import com.cp.tms.model.schedule.IPlaceService;
 
-@Controller
+//@Controller
 public class PlaceController {
 
 	@Autowired
