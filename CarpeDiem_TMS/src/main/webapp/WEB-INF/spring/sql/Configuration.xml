@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.cp.tms.dto.NoteDto" alias="nDto"/>
+		<typeAlias type="com.cp.tms.dto.OnedayDto" alias="oDto"/>
+		<typeAlias type="com.cp.tms.dto.CalendarDto" alias="cDto"/>
+		<typeAlias type="com.cp.tms.dto.PlaceDto" alias="pDto"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="/sqls/note.xml"/>
+		<mapper resource="/sqls/oneday.xml"/>
+		<mapper resource="/sqls/place.xml"/>
+	</mappers>
+</configuration>
