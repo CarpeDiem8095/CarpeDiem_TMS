@@ -1,0 +1,58 @@
+package com.cp.tms.model.chat;
+
+import java.util.List;
+import java.util.Map;
+
+import com.cp.tms.dto.ChatingDto;
+import com.cp.tms.dto.UserDto;
+
+public interface ITripchatDao {
+
+	/**
+	 * 로그인 테스트
+	 *  userid
+	 */
+	public UserDto logintest(String userid);
+	
+	/**
+	 * 채팅 만들기
+	 * @param dto (chatmyid,chatyourid,chatgroupid)
+	 * @return T/F 성공/실패
+	 */
+	public boolean chatboardinsert(ChatingDto dto);
+	
+	/**
+	 * 체팅 클릭시 최근시간으로 바꾸기
+	 * @param map (chatmyid,chatyourid)
+	 * @return T/F 성공/실패
+	 */
+	public boolean chatboardupdate(Map<String, Object> map);
+	
+	/**
+	 * 
+	 * @param map (chatmyid,chatyourid)
+	 * @return T/F 성공/실패
+	 */
+	public ChatingDto selchatboardcontent(Map<String, Object> map); 
+	
+	/**
+	 * 채팅 삭제 하기
+	 * @param dto (chatmyid, seq)
+	 * @return T/F 성공/ 실패
+	 */
+	public boolean delchatboard(ChatingDto dto);
+	
+	/**
+	 * 채팅방에 내용 입력하기
+	 * @param dto(chatmyid,chatcontent)
+	 * @return
+	 */
+	public boolean chatboardcontentinsert(ChatingDto dto);
+	
+	/**
+	 * 내 채팅 현황 보기
+	 * @param chatMyId
+	 * @return 내 채팅 현황이 나온다.
+	 */
+	public List<ChatingDto> selmychatboard(String chatMyId);
+}

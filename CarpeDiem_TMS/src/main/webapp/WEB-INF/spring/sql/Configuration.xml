@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+<typeAliases>
+	<typeAlias type="com.cp.tms.dto.TripboadDto" alias="tsbDto"/>
+	<typeAlias type="com.cp.tms.dto.ChatingDto" alias="chatDto"/>
+</typeAliases>
+
+<mappers>
+	<mapper resource="/sqls/tripSearchBoard.xml"/>
+	<mapper resource="/sqls/tripChat.xml"/>
+</mappers>
+
+
+</configuration>
