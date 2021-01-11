@@ -5,7 +5,7 @@
 	<!-- ONEDAY_SEQ, PLACE_NAME, STEP, XLAT, YLNG	DTO		Integer		writePlace			writePlace.do -->
 	<insert id="writePlace" parameterType="pDto">
 	INSERT INTO PLACE
-	(PLACE_SEQ, ONEDAY_SEQ, PLACE_NAME, STEP, XLAT, YLNG, MEMO)
+	(PLACE_SEQ, ONEDAY_SEQ, STEP, PLACE_NAME, XLAT, YLNG, MEMO)
 	VALUES(SEQ_ONEDAY.NEXTVAL, #{oneday_seq}, #{step}, #{place_name}, #{xlat}, #{ylng}, '')
 	</insert>
 	

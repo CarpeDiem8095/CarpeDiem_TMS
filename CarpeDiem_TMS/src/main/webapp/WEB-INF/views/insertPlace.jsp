@@ -194,6 +194,7 @@
 }
 </style>
 </head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <body>
 	<div class="map_wrap">
 		<div id="map"
@@ -480,15 +481,16 @@
 			
 			
 			insertDB.innerHTML += "<div>"+
-								"<input type='hidden' name='placeName' value='"+myTitle+"/'/>"+
-								"<input type='hidden' name='myX' value='"+myX+"/'/>"+
-								"<input type='hidden' name='myY' value='"+myY+"/'/></div>";
+								"<input type='hidden' name='placeName' value='"+myTitle+"'/>"+
+								"<input type='hidden' name='myX' value='"+myX+"'/>"+
+								"<input type='hidden' name='myY' value='"+myY+"'/></div>";
 
 			var form = document.getElementById("oneDayPlace");
 			form.method = "post";
 			form.action = "./insertPlace.do";
 			form.submit();
 		}
+		
 		
 		function removeAllChildNods(el) {
 			while (el.hasChildNodes()) {
