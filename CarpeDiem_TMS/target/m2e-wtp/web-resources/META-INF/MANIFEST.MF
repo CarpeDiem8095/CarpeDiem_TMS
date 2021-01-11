@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Manifest-Version: 1.0
 <<<<<<< HEAD
 Built-By: choiwoosung
@@ -7,3 +8,9 @@ Built-By: EUNSOL
 Build-Jdk: 11.0.9.1
 Created-By: Maven Integration for Eclipse
 
+=======
+Manifest-Version: 1.0
+Built-By: choiwoosung
+Build-Jdk: 11.0.9.1
+Created-By: Maven Integration for Eclipse
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git

@@ -3,16 +3,25 @@
 <configuration>
 <<<<<<< HEAD
 
+
 <typeAliases>
 	<typeAlias type="com.cp.tms.dto.TripboadDto" alias="tsbDto"/>
 	<typeAlias type="com.cp.tms.dto.ChatingDto" alias="chatDto"/>
+  <typeAlias type="com.cp.tms.dto.NoteDto" alias="nDto"/>
+	<typeAlias type="com.cp.tms.dto.OnedayDto" alias="oDto"/>
+	<typeAlias type="com.cp.tms.dto.CalendarDto" alias="cDto"/>
+	<typeAlias type="com.cp.tms.dto.PlaceDto" alias="pDto"/>
 </typeAliases>
 
 <mappers>
 	<mapper resource="/sqls/tripSearchBoard.xml"/>
 	<mapper resource="/sqls/tripChat.xml"/>
+  <mapper resource="/sqls/note.xml"/>
+	<mapper resource="/sqls/oneday.xml"/>
+	<mapper resource="/sqls/place.xml"/>
 </mappers>
 
+<<<<<<< HEAD
 
 =======
 	<typeAliases>
@@ -26,4 +35,6 @@
 		<mapper resource="/sqls/commentMapper.xml"/>
 	</mappers>
 >>>>>>> branch 'EUNSOL' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
+=======
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
 </configuration>

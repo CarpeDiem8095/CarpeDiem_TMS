@@ -178,17 +178,26 @@
 		
 		<!-- AJAX를 사용 시 Map의 타입을 JSON으로 쉽게 사용하기 위한 라이브러리 -->
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- 		<dependency> -->
 <!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
 <!-- 			<artifactId>jackson-core</artifactId> -->
 <!-- 			<version>2.10.0</version> -->
 <!-- 		</dependency> -->
+=======
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.codehaus.jackson</groupId> -->
-<!-- 			<artifactId>jackson-mapper-asl</artifactId> -->
-<!-- 			<version>1.9.13</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
