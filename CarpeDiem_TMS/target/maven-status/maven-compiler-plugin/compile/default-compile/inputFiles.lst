@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\dto\ChatingDto.java
 C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\dto\UserDto.java
 C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\model\tripsearchboard\ITripsearchboardDao.java
@@ -13,3 +14,8 @@ C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\model\tripsear
 C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\dto\PagingDto.java
 C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\dto\TripboadDto.java
 C:\CarpeDiem_TMS_workspace\CarpeDiem_TMS\src\main\java\com\cp\tms\ctrl\TripboardController.java
+=======
+/Users/EUNSOL/CarpeDiem_TMS_WorkSpace/CarpeDiem_TMS/src/main/java/com/cp/tms/ctrl/HomeController.java
+/Users/EUNSOL/CarpeDiem_TMS_WorkSpace/CarpeDiem_TMS/src/main/java/com/cp/tms/dto/ReviewDto.java
+/Users/EUNSOL/CarpeDiem_TMS_WorkSpace/CarpeDiem_TMS/src/main/java/com/cp/tms/ctrl/ReviewController.java
+>>>>>>> branch 'EUNSOL' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git

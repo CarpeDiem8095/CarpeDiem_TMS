@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 com\cp\tms\model\chat\ITripchatService.class
 com\cp\tms\model\tripsearchboard\ITripsearchboardDao.class
 com\cp\tms\socket\TripSocketHandler.class
@@ -12,3 +13,5 @@ com\cp\tms\model\tripsearchboard\TripsearchboardImplDao.class
 com\cp\tms\ctrl\TripChatController.class
 com\cp\tms\model\tripsearchboard\ITripsearchboardService.class
 com\cp\tms\model\chat\ITripchatDao.class
+=======
+>>>>>>> branch 'EUNSOL' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
