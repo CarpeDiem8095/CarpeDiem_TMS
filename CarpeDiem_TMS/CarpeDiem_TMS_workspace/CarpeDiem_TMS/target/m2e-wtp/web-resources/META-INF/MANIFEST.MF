@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: kim
+=======
+Built-By: choiwoosung
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
 Build-Jdk: 11.0.9.1
 Created-By: Maven Integration for Eclipse
 

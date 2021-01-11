@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"resources":{"Scripts/Script.sql":{"sql-editor-data-source-id":"oracle_thin-176db9a6a33-5be8e83ec809d2e3","default-datasource":"oracle_thin-176db9a6a33-5be8e83ec809d2e3","default-schema":"TRIP"},"Scripts/고객지원.sql":{"default-schema":"TRIP","sql-editor-data-source-id":"oracle_thin-176db9a6a33-5be8e83ec809d2e3","default-datasource":"oracle_thin-176db9a6a33-5be8e83ec809d2e3"}}}
+=======
+{"resources":{"Scripts/Script-1.sql":{"default-schema":"TRIP","sql-editor-data-source-id":"oracle_thin-176ecc3bf59-323f67d2fa134447","default-datasource":"oracle_thin-176ecc3bf59-323f67d2fa134447"},"Scripts/Script-2.sql":{"sql-editor-data-source-id":"oracle_thin-176ecc3bf59-323f67d2fa134447","default-datasource":"oracle_thin-176ecc3bf59-323f67d2fa134447","default-schema":"TRIP"},"Scripts/Script.sql":{"default-schema":"TRIP","sql-editor-data-source-id":"oracle_thin-176ecc3bf59-323f67d2fa134447","default-datasource":"oracle_thin-176ecc3bf59-323f67d2fa134447"}}}
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
