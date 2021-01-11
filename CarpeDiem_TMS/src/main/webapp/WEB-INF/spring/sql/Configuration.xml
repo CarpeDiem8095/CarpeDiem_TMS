@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.cp.tms.dto.TripboadDto" alias="tsbDto"/>
+		<typeAlias type="com.cp.tms.dto.ChatingDto" alias="chatDto"/>
+		<typeAlias type="com.cp.tms.dto.NoteDto" alias="nDto"/>
+		<typeAlias type="com.cp.tms.dto.OnedayDto" alias="oDto"/>
+		<typeAlias type="com.cp.tms.dto.CalendarDto" alias="cDto"/>
+		<typeAlias type="com.cp.tms.dto.PlaceDto" alias="pDto"/>
+		<typeAlias type="com.cp.tms.dto.QuestionDto" alias="qDto"/>
+		<typeAlias type="com.cp.tms.dto.ReportDto" alias="rDto"/>
+		<typeAlias type="com.cp.tms.dto.Member" alias="memDto"/>
+		<typeAlias type="com.cp.tms.dto.LoginDTO" alias="loDto"/>
+		<typeAlias type="com.cp.tms.dto.ReviewDto" alias="revDto"/>
+		<typeAlias type="com.cp.tms.dto.CommentDto" alias="comDto"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="/sqls/tripSearchBoard.xml"/>
+		<mapper resource="/sqls/tripChat.xml"/>
+		<mapper resource="/sqls/note.xml"/>
+		<mapper resource="/sqls/oneday.xml"/>
+		<mapper resource="/sqls/place.xml"/>
+		<mapper resource="/sqls/questionMapper.xml"/>
+		<mapper resource="/sqls/reportMapper.xml"/>
+		<mapper resource="/sqls/memberMapper.xml"/>
+		<mapper resource="/sqls/reviewMapper.xml"/>
+		<mapper resource="/sqls/commentMapper.xml"/>
+	</mappers>
+
+</configuration>

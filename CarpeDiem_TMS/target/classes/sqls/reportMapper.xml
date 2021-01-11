@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cp.tms.model.support.IReportDao">
+
+	<!-- 전체조회 -->
+	<select id="reportboardList" parameterType="java.util.Map" resultType="rDto">
+		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE
+			FROM REPORTBOARD r
+	</select>
+
+	<!-- 전체조회(페이징) -->
+	<select id="reportboardListPage" parameterType="java.util.Map" resultType="rDto">
+		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
+			FROM (SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) RN,
+					SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE
+					FROM REPORTBOARD r)
+				WHERE RN BETWEEN #{first} AND #{last}
+	</select>
+	
+	<!-- 글 개수 -->
+	<select id="totalCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM REPORTBOARD
+	</select>
+	
+	<!-- 상세조회 -->
+	<select id="reportDetailBoard" parameterType="java.lang.String" resultType="rDto">
+		SELECT SEQ, EMAIL, REPORT_TYPE, CONTENT, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
+			FROM REPORTBOARD r 
+				WHERE SEQ = #{seq}
+	</select>
+	
+	<!-- 신고처리(탈퇴여부 변경) -->
+	<update id="changeWithdrawal" parameterType="java.lang.String">
+		UPDATE MEMBER SET WITHDRAWAL='Y'
+			WHERE EMAIL = #{email}
+	</update>
+	
+	<!-- 신고처리(처리여부 변경) -->
+	<update id="changeProcessingStatus" parameterType="java.lang.String">
+		UPDATE REPORTBOARD SET PROCESSING_STATUS='Y'
+			WHERE SEQ = #{seq}
+	</update>
+	
+</mapper>

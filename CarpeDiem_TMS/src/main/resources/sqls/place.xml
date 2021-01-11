@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="place.mapper">
+	
+	<!-- ONEDAY_SEQ, PLACE_NAME, STEP, XLAT, YLNG	DTO		Integer		writePlace			writePlace.do -->
+	<insert id="writePlace" parameterType="pDto">
+	INSERT INTO PLACE
+	(PLACE_SEQ, ONEDAY_SEQ, PLACE_NAME, STEP, XLAT, YLNG, MEMO)
+	VALUES(SEQ_ONEDAY.NEXTVAL, #{oneday_seq}, #{step}, #{place_name}, #{xlat}, #{ylng}, '')
+	</insert>
+	
+	<!-- ONEDAY_SEQ,  PLACE_SEQ						DTO		Integer		modifyUpPlace		modifyUpPlace.do -->
+	<update id="modifyUpPlace1" parameterType="pDto">
+	UPDATE PLACE
+	SET STEP = STEP-1
+	WHERE ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
+	</update>
+	
+	<update id="modifyUpPlace2" parameterType="pDto">
+	UPDATE PLACE
+	SET STEP = STEP+1
+	WHERE  ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
+	</update>
+	
+	
+	<!-- ONEDAY_SEQ,  PLACE_SEQ						DTO		Integer		modifyDownPlace		modifyDownPlace.do -->
+	<update id="modifyDownPlace1" parameterType="pDto">
+	UPDATE PLACE
+	SET STEP = STEP+1
+	WHERE ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
+	</update>
+	
+	<update id="modifyDownPlace2" parameterType="pDto">
+	UPDATE PLACE 
+	SET STEP = STEP-1
+	WHERE ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
+	</update>
+
+	<!-- PLACE_SEQ									String		Integer		stepMinus			stepMinus.do -->
+	<update id="stepMinus" parameterType="java.lang.String">
+	UPDATE PLACE
+	SET STEP = STEP-1
+	WHERE STEP > (SELECT STEP FROM PLACE WHERE PLACE_SEQ=#{place_seq}) <!-- 삭제할 seq로 받아야함 -->
+	</update>
+	
+	<!-- PLACE_SEQ									String		Integer		delPlace			delPlace.do -->
+	<delete id="delPlace" parameterType="java.lang.String">
+	DELETE FROM PLACE
+	WHERE PLACE_SEQ=#{place_seq}
+	</delete>
+	
+	
+	<!-- PLACE_SEQ, MEMO							DTO			Integer		addMemo				addMemo.do -->
+	<update id="addMemo" parameterType="pDto">
+	UPDATE PLACE
+	SET MEMO=#{memo}
+	WHERE PLACE_SEQ=#{place_seq}
+	</update>
+</mapper>

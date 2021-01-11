@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cp.tms.model.support.IQuestionDao">
+
+	<!-- 전체조회(비회원/회원) -->
+	<select id="userQuestionboardList" resultType="qDto">
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG 
+			FROM QUESTIONBOARD
+				WHERE DELFLAG = 'N'
+				ORDER BY REFER DESC, DEPTH
+	</select>
+	
+	<!-- 전체조회(관리자) -->
+	<select id="adminQuestionboardList" resultType="qDto">
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG, PUBLIC_STATUS 
+			FROM QUESTIONBOARD
+				ORDER BY REFER DESC, DEPTH
+	</select>
+	
+	<!-- 전체조회(비회원/회원-페이징) -->
+	<select id="userQuestionboardListPage" parameterType="java.util.Map" resultType="qDto">
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
+			FROM(SELECT ROW_NUMBER() OVER(ORDER BY REFER DESC) RN,
+					SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
+					FROM QUESTIONBOARD
+						WHERE DELFLAG='N')
+				WHERE RN BETWEEN #{first} AND #{last}
+	</select>
+	
+	<!-- 전체조회(관리자-페이징) -->
+	<select id="adminQuestionboardListPage" parameterType="java.util.Map" resultType="qDto">
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
+			FROM(SELECT ROW_NUMBER() OVER(ORDER BY REFER DESC) RN,
+					SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
+					FROM QUESTIONBOARD)
+				WHERE RN BETWEEN #{first} AND #{last}
+	</select>
+	
+	<!-- 글 개수(비회원/회원) -->
+	<select id="userTotalCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM QUESTIONBOARD
+				WHERE DELFLAG = 'N'
+	</select>
+	
+	<!-- 글 개수(관리자) -->
+	<select id="adminTotalCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM QUESTIONBOARD
+	</select>
+	
+	<!-- 상세조회 -->
+	<select id="questionDetailBoard" parameterType="java.lang.String" resultType="qDto">
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, DELFLAG 
+			FROM QUESTIONBOARD
+				WHERE SEQ = #{seq}
+	</select>
+	
+	<!-- 글 입력(비회원/회원) -->
+	<insert id="userWriteQuestionboard" parameterType="qDto">
+		INSERT INTO QUESTIONBOARD(SEQ, WRITER, TITLE, 
+				CONTENT, TEXT_PW, REFER, 
+				"DEPTH", DELFLAG, TEXT_REGDATE)
+		VALUES(QUESTIONBOARD_SEQ.NEXTVAL, #{writer}, #{title},
+				#{content}, #{text_pw}, (SELECT NVL(MAX(REFER),0)+1 FROM QUESTIONBOARD),
+				0, 'N', SYSDATE)
+		<selectKey keyProperty="seq" resultType="java.lang.Integer" order="AFTER">
+			SELECT QUESTIONBOARD_SEQ.CURRVAL AS SEQ FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<!-- 글 입력(관리자) -->
+	<insert id="adminWriteQuestionboard" parameterType="qDto">
+		INSERT INTO QUESTIONBOARD(SEQ, WRITER, TITLE, 
+				CONTENT, PUBLIC_STATUS, REFER, 
+				"DEPTH", DELFLAG, TEXT_REGDATE)
+		VALUES(QUESTIONBOARD_SEQ.NEXTVAL, #{writer}, #{title},
+				#{content}, 'Y', (SELECT NVL(MAX(REFER),0)+1 FROM QUESTIONBOARD),
+				0, 'N', SYSDATE)
+	</insert>
+	
+	<!-- 답글 입력(관리자) -->
+	<insert id="replyQuestionboard" parameterType="qDto">
+		INSERT INTO QUESTIONBOARD(SEQ, WRITER, TITLE, 
+				CONTENT, TEXT_PW, 
+				REFER, 
+				"DEPTH", DELFLAG, TEXT_REGDATE)
+		VALUES(QUESTIONBOARD_SEQ.NEXTVAL, #{writer}, #{title},
+				#{content}, (SELECT TEXT_PW FROM QUESTIONBOARD WHERE SEQ=#{seq}), 
+				(SELECT REFER FROM QUESTIONBOARD WHERE SEQ=#{seq}),
+				(SELECT "DEPTH" FROM QUESTIONBOARD WHERE SEQ=#{seq})+1, 'N', SYSDATE)
+	</insert>
+	
+	<!-- 글 수정 -->
+	<update id="modifyQuestionboard" parameterType="java.util.Map">
+		UPDATE QUESTIONBOARD SET TITLE = #{title}, CONTENT = #{content}
+			WHERE SEQ=#{seq}
+	</update>
+	
+	<!-- 글 수정(관리자) -->
+	<update id="modifyQuestionboardAdmin" parameterType="java.util.Map">
+		UPDATE QUESTIONBOARD SET TITLE = #{title}, CONTENT = #{content}, PUBLIC_STATUS = 'Y'
+			WHERE SEQ=#{seq}
+	</update>
+	
+	<!-- 글 삭제(root글 삭제 시 댓글도 삭제) -->
+	<update id="deleteQuestionboard" parameterType="java.lang.String">
+		UPDATE QUESTIONBOARD SET DELFLAG='Y'
+			WHERE REFER=(SELECT REFER FROM QUESTIONBOARD WHERE SEQ=#{seq})
+	</update>	
+	
+	<!-- 다중삭제(관리자) -->
+	<update id="multiDelQuestionboard" parameterType="java.util.Map">
+		UPDATE QUESTIONBOARD SET DELFLAG='Y'
+        	WHERE SEQ IN
+        <foreach collection="seqs" item="seq" open="(" separator="," close=")">
+        	#{seq}
+        </foreach>
+	</update>
+	
+	<!-- 삭제(다이나믹 쿼리) 조건을 추가하자 -->
+	<update id="multiDelQuestionboard2" parameterType="java.util.Map">
+		UPDATE QUESTIONBOARD SET DELFLAG='Y'
+		<choose>
+			<when test="refer != null">
+				WHERE REFER=(SELECT REFER FROM QUESTIONBOARD WHERE SEQ=#{seq})
+			</when>
+			<otherwise>
+				WHERE SEQ IN
+				<foreach collection="seqs" item="seq" open="(" separator="," close=")">
+					#{seq}
+				</foreach>
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>
