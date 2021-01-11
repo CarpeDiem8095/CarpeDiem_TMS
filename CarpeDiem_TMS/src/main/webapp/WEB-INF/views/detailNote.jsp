@@ -25,7 +25,7 @@
 				<tr>
 					<c:forEach var="onedto" items="${ndto.odto}">
 						<td class="frameTD" style="text-align: center;">
-							<a href="./insertPlace.do?seq=${onedto.oneday_seq}">${onedto.oneday_title}</a>
+							<a href="./insertPlacePage.do?seq=${onedto.oneday_seq}">${onedto.oneday_title}</a>
 							<input type = "button" value="X" style="float: right;" onclick="delOneday(${onedto.oneday_seq})">
 						<input type = "button" value="수정" onclick="modifyNote(${onedto.oneday_seq})" style="text-align: center; float: right;">
 						</td>
