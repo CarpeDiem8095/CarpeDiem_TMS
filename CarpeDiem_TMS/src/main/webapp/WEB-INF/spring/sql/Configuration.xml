@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+<<<<<<< HEAD
 
 
 <typeAliases>
@@ -20,4 +21,20 @@
 	<mapper resource="/sqls/place.xml"/>
 </mappers>
 
+<<<<<<< HEAD
+
+=======
+	<typeAliases>
+		<typeAlias type="com.cp.tms.dto.ReviewDto" alias="revDto"/>
+		<typeAlias type="com.cp.tms.dto.CommentDto" alias="comDto"/>
+	</typeAliases>
+
+	<mappers>
+<!-- 		<mapper resource="/sqls/"/> -->
+		<mapper resource="/sqls/reviewMapper.xml"/>
+		<mapper resource="/sqls/commentMapper.xml"/>
+	</mappers>
+>>>>>>> branch 'EUNSOL' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
+=======
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
 </configuration>

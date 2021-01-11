@@ -1,5 +1,17 @@
 package com.cp.tms.ctrl;
 
+<<<<<<< HEAD
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+
+	@RequestMapping(value="hello")
+	public String homeController() {
+		
+		return "hello";
+=======
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -46,5 +58,6 @@ public class HomeController {
 		List<CalendarDto> clists = calService.getCalViewList(map);
 		System.out.println("controller clists: "+clists);
 		return "calendar";
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
 	}
 }
