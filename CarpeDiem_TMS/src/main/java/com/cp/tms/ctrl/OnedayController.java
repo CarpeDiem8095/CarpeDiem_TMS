@@ -55,7 +55,7 @@ public class OnedayController {
 		return "detailNote";
 	}
 	
-	@RequestMapping(value="/insertPlace.do", method = RequestMethod.GET)
+	@RequestMapping(value="/insertPlacePage.do", method = RequestMethod.GET)
 	public String insertPlace(Model model, String seq) {
 		model.addAttribute("seq",seq);
 		
