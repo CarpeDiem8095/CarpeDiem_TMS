@@ -2,14 +2,12 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.cp.tms.dto.QuestionDto" alias="queDto"/>
-		<typeAlias type="com.cp.tms.dto.ReportDto" alias="reDto"/>
-		<typeAlias type="com.cp.tms.dto.CalendarDto" alias="cDto"/>
+		<typeAlias type="com.cp.tms.dto.QuestionDto" alias="qDto"/>
+		<typeAlias type="com.cp.tms.dto.ReportDto" alias="rDto"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/sqls/questionMapper.xml"/>
 		<mapper resource="/sqls/reportMapper.xml"/>
-		<mapper resource="/sqls/calendarMapper.xml"/>
 	</mappers>
 </configuration>
