@@ -46,8 +46,8 @@
 						<th>등록일</th>
 						<th>작성자</th>
 						<!-- 관리자는 삭제여부 필요 -->
+						<th>삭제여부</th>
 					</tr>
-						
 					<jsp:useBean id="data" class="com.cp.tms.usebean.SupportInputData" scope="page"/>
 					<jsp:setProperty property="lists" name="data" value="${lists}"/>
 					<jsp:getProperty property="listForm" name="data"/>
@@ -71,22 +71,48 @@
 			</div>
 		</form>
 		
+		<!-- 비밀번호 입력 modal -->
+		<div id="textPw" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h3 class="modal-title" style="text-align: center">비밀번호를 입력해 주세요.</h3>
+					</div>
+					<div class="modal-body">
+						<form action="#" class="form-margin" method="post" id="frmPW">
+							<input type='hidden' value='${dto.seq}' name='seq'>
+							<table class='table'>
+								<tr>
+									<th style='vertical-align: middle'>비밀번호</th>
+									<td>
+										<input class="form-control" type="password" name="text_pw" maxlength="4" required>
+									</td>
+								</tr>
+							</table>
+							<div class='modal-footer' style='text-align: center'>
+								<input class='btn-primary' type='button' value='확인' onclick='checkPw()'/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 		<!-- 수정 modal -->
 		<div id="modify" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h3 class="modal-title">글 수정</h3>
+						<h3 class="modal-title" style="text-align: center">글 수정</h3>
 					</div>
 					<div class="modal-body">
-					<form action="#" class="form-margin" method="post" id="frmModify">
-						<div class='form-group'>
-							<input type='hidden' value='${dto.seq}' name='seq'>
-							<label for='writer'>작성자</label>
-						</div>
-					</form>
-				</div>
+						<form action="#" class="form-margin" method="post" id="frmModify">
+							
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

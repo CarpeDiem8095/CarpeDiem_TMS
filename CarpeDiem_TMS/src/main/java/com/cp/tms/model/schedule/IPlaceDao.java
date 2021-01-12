@@ -18,4 +18,6 @@ public interface IPlaceDao {
 	public boolean delPlace(String seq);
 
 	public boolean addMemo(PlaceDto dto);
+	
+	public PlaceDto reviewList(String seq);
 }

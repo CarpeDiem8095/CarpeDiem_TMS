@@ -18,10 +18,10 @@
 	<div>
 	<c:forEach var="i" items="${commentList}" varStatus="vs">
 	<div>
-		<div id="showMeTheForm">
+		<div class="showMeTheForm">
 			${i.comm_seq}${i.email}${i.content}<input type="button" value="답글">
 		</div>
-		<div id="re_Form">
+		<div class="re_Form">  
 			<input type="text"><input type="button" value="작성">
 		</div>
 	</div>
@@ -32,8 +32,8 @@
 // 버튼 클릭 시 댓글 작성 폼 보이기
 
 $(document).ready(function() {	
-	$("#showMeTheForm").click(function(){
-		$(this).siblings("#re_Form").slideToggle('slow');
+	$(".showMeTheForm").click(function(){
+		$(this).parent().find(".re_Form").slideToggle('slow');
 	});
  });
 </script>

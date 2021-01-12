@@ -19,9 +19,18 @@
 	WHERE PLACE_SEQ=#{place_seq}
 </update>
 
-<select id="">
-SELECT PLACE_SEQ, UUID_NAME, ORIGIN_NAME, IMG_URL, REVIEW_TITLE,CONTENT FROM REVIEWBOARD
-</select>
+<!-- 해당하는 하루 일정의 모든 장소 조회 - - DTO selDetailOneday 
+		selDetailOneday.do -->
+<!-- 	<select id="selDetailOneday" parameterType="java.lang.String" resultMap="oneDto"> -->
+<!-- 		SELECT o.ONEDAY_SEQ, o.ONEDAY_TITLE, o.ONEDATE, -->
+<!-- 		p.ONEDAY_SEQ, p.PLACE_SEQ, p.STEP, p.PLACE_NAME, -->
+<!-- 		p.XLAT, p.YLNG, -->
+<!-- 		p.MEMO -->
+<!-- 		FROM ONEDAY o JOIN PLACE p -->
+<!-- 		ON o.ONEDAY_SEQ = p.ONEDAY_SEQ -->
+<!-- 		WHERE o.ONEDAY_SEQ=#{oneday_seq} -->
+<!-- 		ORDER BY STEP ASC -->
+<!-- 	</select> -->
 
 
 </mapper>

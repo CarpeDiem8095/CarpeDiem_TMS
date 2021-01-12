@@ -36,7 +36,6 @@ public class TripChatController implements ServletConfigAware {
 		
 		UserDto userdto=tripchatservice.logintest(userid);
 		session.setAttribute("userdto", userdto);
-		
 		String gr_id = "main";
 		
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
@@ -77,7 +76,6 @@ public class TripChatController implements ServletConfigAware {
 		
 		// 가져오기
 		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
-		System.out.println("가져오기  seldto:"+seldto);
 		if(seldto == null) {
 			// 새로 생성
 			dto.setChatmyid(userdto.getUserid());
@@ -89,7 +87,9 @@ public class TripChatController implements ServletConfigAware {
 		}
 		seldto.setChatgroupid(dto.getChatgroupid());
 		model.addAttribute("chatDto", seldto);
-		System.out.println(seldto);
+		session.setAttribute("gr_id", seldto.getChatgroupid());
+		session.setAttribute("chat_id", seldto.getChatmyid());
+		
 		return "chatingroom";
 	}
 	
