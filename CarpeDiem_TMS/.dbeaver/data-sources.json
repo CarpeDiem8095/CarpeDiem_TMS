@@ -1,6 +1,7 @@
 {
 	"folders": {},
 	"connections": {
+<<<<<<< HEAD
 		"oracle_thin-176f1dcb7cd-3e644393e0b7fc06": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
@@ -14,6 +15,20 @@
 				"database": "XE",
 				"url": "jdbc:oracle:thin:@//localhost:1521/XE",
 				"home": "C:\\oraclexe\\app\\oracle\\product\\11.2.0\\server",
+=======
+		"oracle_thin-176f2588fa7-a2aed9e9aecc703": {
+			"provider": "oracle",
+			"driver": "oracle_thin",
+			"name": "xe",
+			"save-password": true,
+			"show-system-objects": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "1521",
+				"database": "xe",
+				"url": "jdbc:oracle:thin:@//localhost:1521/xe",
+>>>>>>> branch 'main' of https://github.com/CarpeDiem8095/CarpeDiem_TMS.git
 				"type": "dev",
 				"provider-properties": {
 					"@dbeaver-check-schema-content@": "false",
