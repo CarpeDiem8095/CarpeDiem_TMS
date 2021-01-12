@@ -11,7 +11,7 @@ import com.cp.tms.dto.Member;
 @Repository
 public class MemberDaoImpl implements IMemberDao {
 	
-	private final String CP = "com.cp.tms.model.member.MemberDao.";
+	private static String CP = "com.cp.tms.model.member.MemberDao.";
 	
 	@Autowired
 	private SqlSessionTemplate SqlSession;
@@ -27,6 +27,10 @@ public class MemberDaoImpl implements IMemberDao {
 	public Member login(LoginDTO loginDTO) throws Exception {
 		return SqlSession.selectOne(CP+".login", loginDTO);
 	}
+
+
+	
+	
 
 	
 	

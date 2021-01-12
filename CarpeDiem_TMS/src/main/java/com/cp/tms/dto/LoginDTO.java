@@ -1,5 +1,7 @@
 package com.cp.tms.dto;
 
+import org.apache.ibatis.session.SqlSession;
+
 public class LoginDTO {
 	
 	private String Email;
@@ -45,6 +47,8 @@ public class LoginDTO {
 	public void setNickname(String nickname) {
 		Nickname = nickname;
 	}
+
+	
 	
 	
 	

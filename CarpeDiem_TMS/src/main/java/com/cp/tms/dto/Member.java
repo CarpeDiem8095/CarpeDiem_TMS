@@ -1,5 +1,7 @@
 package com.cp.tms.dto;
 
+import org.apache.ibatis.session.SqlSession;
+
 public class Member {
 	
 	private String email;
@@ -89,6 +91,11 @@ public class Member {
 
 	public void setJoindate(String joindate) {
 		this.joindate = joindate;
+	}
+
+	public static SqlSession openSession() {
+		// TODO Auto-generated method stub
+		return null;
 	}
    
 	

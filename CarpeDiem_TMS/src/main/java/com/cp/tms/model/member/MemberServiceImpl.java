@@ -23,7 +23,6 @@ public class MemberServiceImpl implements IMemberService {
 	public Member login(LoginDTO loginDTO) throws Exception {
 		return Dao.login(loginDTO);
 	}
-	
 
 	
 }

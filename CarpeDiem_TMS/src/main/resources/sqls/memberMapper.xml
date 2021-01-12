@@ -8,10 +8,15 @@
 		VALUES(#{Email},#{Password},#{Nickname})
 	</insert>
 	
-	<select id="login" resultType="loDto">
-    SELECT *
+	<!-- 회원가입 중복확인 -->
+	<select id="checkdupl" resultType="loDto">
+    SELECT Email
     FROM MEMBER
     WHERE EMAIL = #{email}
 	</select>
+	
+	
+	
+	
 	
 </mapper>

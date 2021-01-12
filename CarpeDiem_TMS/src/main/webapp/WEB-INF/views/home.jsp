@@ -99,6 +99,7 @@
 							</div>
 						</form>
 					</div>
+					
 					<!-- 완료 -->
 					<div class="modal-footer">
 					<button type="button" id="signYes" name="signYes" class="btn btn-success btn-default pull-left"  
@@ -163,21 +164,27 @@
 	</div>
 </div>
 	<script>
-	//아이디 중복확인 액션  
-	$('#emailCheck').click(function() {
+	//이메일 중복확인
+	$('#emailCheck').keyup(function(){
+		
 		$.ajax({
-			url : 'emailCheckOK.do',
-			type : 'post',
-			data : $('#Frm').serialize(),
-			success : function(data) {
-				if (data == "0") {
-					alert("사용가능한 email입니다.");
-				} else {
-					alert("이미 사용중인 email입니다.");
+			type: "GET",
+			url: "./authenticate.do",
+			data: {"email":$('#emailCheck').val()},
+			success: function(data){
+				var result = data;
+				if (result == 'success') {
+					emailCheck = true;
+					$('emailCheck').swal("사용 가능한 이메일입니다.");
+					
+				}else{
+					emailCheck = false;
+					$('#emailCheck').swal("이미 존재하는 이메일입니다.");
 				}
 			}
 		});
 	});
+	
 </script>
 </body>
 </html>
