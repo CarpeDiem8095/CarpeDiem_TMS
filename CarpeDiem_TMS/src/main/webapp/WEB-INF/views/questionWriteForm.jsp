@@ -56,8 +56,8 @@
 				</tr>
 			</table>
 			<div class="form-group" style="text-align: right">
-				<input type="submit" value="등록">
-				<input type="button" value="취소" onclick="location.href='./questionboard.do'">
+				<input class="btn btn-primary" type="submit" value="등록">
+				<input class="btn btn-primary" type="button" value="취소" onclick="location.href='./questionboard.do'">
 			</div>
 		</form>
 	</div>

@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cp.tms.dto.QuestionDto;
 import com.cp.tms.model.support.IQuestionService;
@@ -78,7 +80,28 @@ public class SupportController {
 	}
 	
 	// 글 수정 폼(modal)으로 이동
-	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/modifyForm.do", method = RequestMethod.POST, 
+			produces = "application/text; charset=UTF-8;")
+	@ResponseBody
+	public String modifyForm(String seq) {
+		QuestionDto dto = service.questionDetailBoard(seq);
+		JSONObject json = new JSONObject();
+		json.put("seq", dto.getSeq());
+		json.put("writer", dto.getWriter());
+		json.put("title", dto.getTitle());
+		json.put("content", dto.getContent());
+		System.out.println(json.toString());
+		return json.toString();
+	}
 	
 	// 글 수정
+	@RequestMapping(value = "/modify.do", method = RequestMethod.POST)
+	public String modify(QuestionDto dto) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("dto: " + dto);
+		boolean isc = service.modifyQuestionboard(map);
+		return "redirect:/questionboard.do";
+	}
+	
 }
