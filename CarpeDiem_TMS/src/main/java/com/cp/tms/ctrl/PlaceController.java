@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cp.tms.dto.OnedayDto;
 import com.cp.tms.dto.PlaceDto;
@@ -37,19 +36,24 @@ public class PlaceController {
 		dto.setPlace_name(placeName);
 //		
 		System.out.println(dto);
-		service.writePlace(dto);
+		boolean isc = service.writePlace(dto);
 		
-		List<OnedayDto> oneDto = oService.selDetailOneday(day);
-		System.out.println("하루일정의 seq값 = "+day);
-		System.out.println(oneDto);
 		
-		return "redirect:/insertPlacePage.do?seq="+day;
+		return isc?"redirect:/insertPlacePage.do?seq="+day:"error";
 	}
 	
 	@RequestMapping(value="/delPlace.do", method = RequestMethod.GET)
 	public String delPlace(Model model, String seq, String onedaySeq) {
-		service.stepMinusNdelPlace(onedaySeq);
-		return "";
+		boolean isc = service.stepMinusNdelPlace(seq);
+		return isc?"redirect:/insertPlacePage.do?seq="+onedaySeq:"error";
 	}
 	
+	@RequestMapping(value="/selDetailOneday.do", method = RequestMethod.GET)
+	public String selDetailOneday(Model model, String seq) {
+		
+		List<OnedayDto> selDetailOneday = oService.selDetailOneday(seq);
+		model.addAttribute("selDetailOneday", selDetailOneday);
+		
+		return selDetailOneday.size()>0?"onedayAllPlace":"error";
+	}
 }

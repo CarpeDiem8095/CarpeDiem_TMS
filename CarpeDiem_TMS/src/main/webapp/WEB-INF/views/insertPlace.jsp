@@ -228,15 +228,17 @@
 				<tr>
 					<td>${onedto.oneday_title}</td>
 				</tr>
-					<c:forEach var="placedto" items="${onedto.placeDto}">
+					<c:forEach var="placeDto" items="${onedto.placeDto}">
+					<%-- <c:if test="placeDto.depth<0"></c:if> 위로 수정하기 없애기--%>
 					<tr>
-						<td>${placedto.place_name}<a href="./delOneRow.do?seq=${placedto.place_seq}&onedaySeq=${onedto.note_seq}">삭제하기 </a></td>
+						<td>${placeDto.place_name}<a href="./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}">삭제하기 </a></td>
 					</tr>
 					</c:forEach>
 			</c:forEach>
 		</table>
 		<div>
-			<input type="button" id="wind" value="전송하기" style="display: none;">
+<!-- 			<input type="button" id="wind" value="전송하기" style="display: none;"> -->
+			<input type="button" value="상세 페이지로 이동" onclick="moveDetail(${onedaySeq})">
 		</div>
 	</form>
 	</div>
@@ -497,7 +499,10 @@
 				el.removeChild(el.lastChild);
 			}
 		}
+
+		function moveDetail(seq){
+			location.href="./selDetailOneday.do?seq="+seq;
+		}
 	</script>
-		
 </body>
 </html>

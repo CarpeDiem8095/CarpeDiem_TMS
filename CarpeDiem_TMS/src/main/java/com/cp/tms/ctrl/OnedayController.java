@@ -63,10 +63,10 @@ public class OnedayController {
 		System.out.println("하루일정의 seq값 = "+seq);
 		System.out.println(oneDto);
 		
-		
 		model.addAttribute("onedaySeq", seq);
 		model.addAttribute("oneDto", oneDto);
 		return "insertPlace";
 	}
+	
 	
 }
