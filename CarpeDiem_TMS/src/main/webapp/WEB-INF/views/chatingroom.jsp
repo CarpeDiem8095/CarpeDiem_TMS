@@ -22,20 +22,25 @@
       
       
       function wss(){
-    	  replace();
-          nick = $("#nickName").val();
+//           replace();
+    	  nick = $("#nickName").val();
           $(".chat_div").show();
           $(".chat").focus();
           
           // 웹소켓 서버
           ws = new WebSocket("ws://172.30.1.15:8091/CarpeDiem_TMS/tripChat.do");
           
-       // 메세지 보낼때
+          /// 웹소켓 서버가 오픈 됐을때
+          ws.onopen = function() {
+             ws.send(nick);
+          };
+          
+          // 메세지 보낼때
           ws.onmessage = function(event) {
           	var msg = event.data;
-          	var id = "${chatgroupid}";
+          	var id = "${chatDto.chatmyid}";
           	// alert("메세지 출력 결과 : "+msg); // ex: user01:안녕
-            var msgArr = msg.split(":"); // ex: [user01], [안녕] [user02],[아녕]
+            var msgArr = msg.split(":") // ex: [user01], [안녕] [user02],[아녕]
           	var send = msgArr[0]; // ex: user01
 			var sendmsg = msgArr[1]; // ex: 안녕
           	
@@ -43,93 +48,22 @@
           	if(msg.startsWith("<font color=")){	//입장,퇴장
             	$(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
 				viewList(id);
-          	}else if(send=="${chatmyid}"){
+          	}else if(send=="${chatDto.chatmyid}"){
 	          	$(".receive_msg").append($("<div id='sendDiv' class='"+send+"'>").append($("<span id='sender' class='"+send+"'>").text(msg))).append("<br><br>");
           	}else{
 	          	$(".receive_msg").append($("<div id='receiveDiv' class='"+send+"'>").append($("<span id='receiver' class='"+send+"'>").text(msg))).append("<br><br>");
           	}
           	$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
-          	chatSave();
           }
           
-          // 메세지 보내기 버튼 클릭시
-         $(".chat_btn").bind("click",function() {
-            if($(".chat").val() == '' ) {
-               alert("내용을 입력하세요");
-               return ;
-            }else {
-               ws.send(nick+" : "+$(".chat").val());
-               $(".chat").val('');
-               $(".chat").focus();
-            }
-         });
-      }
-      
-      // 대화내용 저장
-      function chatSave(){
-    	var chatmember = document.getElementById("chatmember").value; // chatmember에 mem_id, gr_id 를 담음 -> ex: user01, user02 // (그룹)구디, user01
-      		allContent = document.getElementById("receive_msg").innerHTML;
-      		// DB에 대화내용 저장 
-      		$.ajax({ 
-      					url : "./updateChat.do", 
-      					type : "post",	
-      					//업데이트를 위해 db의 chatmember, content을 보냄
-      					data : "chatmember="+chatmember+"&content="+allContent,
-      				});
-      }
-      
-      // 나가기 버튼 눌렀을때
-      function roomClose(){
-    	var chatmember = document.getElementById("chatmember").value; // chatmember에 mem_id, gr_id 를 담음 -> ex: user01, user02 // (그룹)구디, user01
-    		var chatmemberSplit = chatmember.split(','); // ","를 기준으로 쪼갬
-    		var nickName = document.getElementById("nickName").value;
-    		chatmember = chatmemberSplit[0]; // 앞에있는단어 (ex: (그룹)구디 ) 만 가져옴
-    		allContent = document.getElementById("receive_msg").innerHTML;
-    		alert(nickName);
-    		// DB에 대화내용 저장 
-    		$.ajax({ 
-    					url : "./updateChat.do", 
-    					type : "post",	
-    					//업데이트를 위해 db의 chatmember, content을 보냄
-    					data : "chatmember="+chatmember+"&content="+allContent+"&closemember="+nickName,
-    					success : function(msg) {
-    						var isc = msg;
-    						if(isc=="성공"){
-    							location.href="./completeLogin.do";
-    						}
-    					}
-    				});
-    		 alert("서버와의 연결이 종료되었습니다.");
-    		 chatOut(); 	 
-          	 self.close();
-          	 disconnect();
-      }
-      
-      // ws server 종료
-      function disconnect() {
-         ws.close();
-         ws = null ;
-      } 
-	
-    function replace(){
-    	// 대화내용(메세지)를 왼쪽 오른쪽 구분하기
-        var sendDiv = $('#sendDiv').attr('class');
-        var receiveDiv = $('#receiveDiv').attr('class');
-    	var sender = $('#sender').attr('class');
-        var receiver = $('#receiver').attr('class');
-        var memId = '${chatmyid}';
-        
-  	  if(sendDiv != memId){
-  		  $('#sendDiv').attr('id', 'receiverDiv');
-  		  $('#receiveDiv').attr('id', 'senderDiv');
-  	  }
-  	  
-  	  if(sender != memId){
-  		  $('#sender').attr('id', 'receivers');
-  		  $('#receiver').attr('id', 'senders');
-  	  }
+    }         
     	
-    }
+          	
+
+          
+
+
+
 </script>
 <body>
 	<br>
