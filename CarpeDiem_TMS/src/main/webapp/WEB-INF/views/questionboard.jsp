@@ -80,7 +80,12 @@
 						<h3 class="modal-title">글 수정</h3>
 					</div>
 					<div class="modal-body">
-					<form action="#" class="form-margin" method="post" id="frmModify"></form>
+					<form action="#" class="form-margin" method="post" id="frmModify">
+						<div class='form-group'>
+							<input type='hidden' value='${dto.seq}' name='seq'>
+							<label for='writer'>작성자</label>
+						</div>
+					</form>
 				</div>
 				</div>
 			</div>
