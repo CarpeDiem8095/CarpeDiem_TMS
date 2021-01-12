@@ -37,6 +37,7 @@
 	<h1><a href="./notePaging.do">노트로 이동</a></h1>
 	<h1><a href="./questionboard.do">문의 게시판</a></h1>
 	<h1><a href="./commnetList.do?one_seq=2">댓글 게시판</a></h1>
+	<h1><a href="./reviewList.do?seq=2&one_seq=4">하루일정 조회 게시판</a></h1>
 	<form action="./mainchat.do" method="post">
 	<table>
 		<tr>

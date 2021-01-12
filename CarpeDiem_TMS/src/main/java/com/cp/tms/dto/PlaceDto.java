@@ -9,7 +9,35 @@ public class PlaceDto {
 	private String xlat;
 	private String ylng;
 	private String memo;
+	private ReviewDto revDto;
+
+	public PlaceDto() {
+	}
 	
+	@Override
+	public String toString() {
+		return "PlaceDto [place_seq=" + place_seq + ", oneday_seq=" + oneday_seq + ", step=" + step + ", place_name="
+				+ place_name + ", xlat=" + xlat + ", ylng=" + ylng + ", memo=" + memo + ", revDto=" + revDto + "]";
+	}
+	
+	public PlaceDto(String place_seq, String oneday_seq, String step, String place_name, String xlat, String ylng,
+			String memo, ReviewDto revDto) {
+		super();
+		this.place_seq = place_seq;
+		this.oneday_seq = oneday_seq;
+		this.step = step;
+		this.place_name = place_name;
+		this.xlat = xlat;
+		this.ylng = ylng;
+		this.memo = memo;
+		this.revDto = revDto;
+	}
+	public ReviewDto getRevDto() {
+		return revDto;
+	}
+	public void setRevDto(ReviewDto revDto) {
+		this.revDto = revDto;
+	}
 	public String getPlace_seq() {
 		return place_seq;
 	}
@@ -52,11 +80,7 @@ public class PlaceDto {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	@Override
-	public String toString() {
-		return "PlaceDto [place_seq=" + place_seq + ", oneday_seq=" + oneday_seq + ", step=" + step + ", place_name="
-				+ place_name + ", xlat=" + xlat + ", ylng=" + ylng + ", memo=" + memo + "]";
-	}
+	
 	public PlaceDto(String place_seq, String oneday_seq, String step, String place_name, String xlat, String ylng,
 			String memo) {
 		super();
@@ -67,9 +91,6 @@ public class PlaceDto {
 		this.xlat = xlat;
 		this.ylng = ylng;
 		this.memo = memo;
-	}
-	
-	public PlaceDto() {
 	}
 	
 }

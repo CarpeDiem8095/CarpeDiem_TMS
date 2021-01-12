@@ -49,4 +49,9 @@ public class PlaceServiceImpl implements IPlaceService {
 		return dao.addMemo(dto);
 	}
 
+	@Override
+	public PlaceDto reviewList(String seq) {
+		return dao.reviewList(seq);
+	}
+
 }

@@ -13,4 +13,6 @@ public interface IPlaceService {
 	public boolean stepMinusNdelPlace(String seq);
 
 	public boolean addMemo(PlaceDto dto);
+	
+	public PlaceDto reviewList(String seq);
 }

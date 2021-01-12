@@ -8,6 +8,7 @@
 	EMAIL,REFFER,DEPTH,
 	STEP,REGDATE,CONTENT, REPORTCHK FROM COMMENTBOARD
 	WHERE ONEDAY_SEQ =#{oneday_seq}
+	ORDER BY REFFER DESC, STEP
 </select>
 
 <insert id="writeComment" parameterType="comDto">

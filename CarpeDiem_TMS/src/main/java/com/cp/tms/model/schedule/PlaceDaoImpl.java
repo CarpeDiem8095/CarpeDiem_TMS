@@ -54,4 +54,9 @@ public class PlaceDaoImpl implements IPlaceDao{
 		return session.update(NS+"addMemo", dto)>0?true:false;
 	}
 
+	@Override
+	public PlaceDto reviewList(String seq) {
+		return session.selectOne(NS+"reviewList", seq);
+	}
+
 }
