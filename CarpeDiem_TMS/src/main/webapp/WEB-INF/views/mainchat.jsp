@@ -30,7 +30,6 @@ UserDto userdto=(UserDto)session.getAttribute("userdto");
 	var wss = function() {
 		var ws = null;
 		// 웹소켓 서버
-		ws = new WebSocket("ws://172.30.1.15:8091/CarpeDiem_TMS/tripChat.do");
 		var grId = "main"
 		$(".memList").children().remove();
 		$(".memList").append("<tr><td colspan='2'>접속 목록</td></tr>");
