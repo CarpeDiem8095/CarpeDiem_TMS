@@ -3,7 +3,7 @@
 <mapper namespace="com.cp.tms.dto.CommentDto">
 
 
-<select id="commnetList" parameterType="java.lang.String">
+<select id="commnetList" parameterType="java.lang.String" resultType="comDto">
 	SELECT COMM_SEQ,ONEDAY_SEQ,
 	EMAIL,REFFER,DEPTH,
 	STEP,REGDATE,CONTENT, REPORTCHK FROM COMMENTBOARD
@@ -19,10 +19,10 @@
 	#{email},(SELECT NVL(MAX(REFFER),0) FROM COMMENTBOARD)+1,0,0,SYSDATE,#{content})
 </insert>
 
-<update id="updateReply" parameterType="java.lang.String">
+<update id="updateReply" parameterType="comDto">
 	UPDATE COMMENTBOARD SET STEP = STEP +1
-	WHERE STEP > (SELECT STEP FROM COMMENTBOARD WHERE COMM_SEQ=#{com_seq})
-	AND REFFER = (SELECT REFFER FROM COMMENTBOARD WHERE COMM_SEQ=#{com_seq})
+	WHERE STEP > (SELECT STEP FROM COMMENTBOARD WHERE COMM_SEQ=#{comm_seq})
+	AND REFFER = (SELECT REFFER FROM COMMENTBOARD WHERE COMM_SEQ=#{comm_seq})
 </update>
 
 <insert id="writeReply" parameterType="comDto">
@@ -40,6 +40,11 @@
 	WHERE COMM_SEQ = #{comm_seq}
  </update>
  
+ <delete id="delComment" parameterType="comDto">
+	DELETE FROM COMMENTBOARD
+	WHERE ONEDAY_SEQ = #{oneday_seq}
+	AND REFFER = #{reffer} AND STEP > #{step}
+ </delete>
  
 
 </mapper>
