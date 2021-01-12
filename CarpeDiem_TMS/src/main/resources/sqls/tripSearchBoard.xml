@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cp.tms.model.tripsearchboard">
 
-<!-- 동행찾기 게시판 -->
+<!-- 동행찾기 게시판 --> 
 
 <!-- 관리자 조회 -->
 <select id="tripboardselectadmin" parameterType="java.util.Map" resultType="tsbDto">
@@ -13,7 +13,7 @@ BOARDTITLE ,DELFLAG ,TRIPREGDATE,ROW_NUMBER () OVER(ORDER BY TRIPREGDATE DESC) R
 FROM TRIPSEARCHBOARD t
 WHERE DELFLAG ='N'
 AND REPORT_STATUS ='N')
-WHERE RN BETWEEN #{start} AND #{last} 
+WHERE RN BETWEEN #{start} AND #{last}
 </select>
 
 <!--유저 조회 -->
