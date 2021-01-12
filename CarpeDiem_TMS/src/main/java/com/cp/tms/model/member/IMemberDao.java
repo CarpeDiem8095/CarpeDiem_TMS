@@ -13,6 +13,11 @@ public interface IMemberDao {
     
     //로그인 처리
     Member login(LoginDTO loginDTO) throws Exception;
+
+  
+    
+    
+    
     
   
 

@@ -11,4 +11,8 @@ public interface IMemberService {
     
     // 로그인
     Member login(LoginDTO loginDTO) throws Exception;
+
+  
+    
+    
 }
