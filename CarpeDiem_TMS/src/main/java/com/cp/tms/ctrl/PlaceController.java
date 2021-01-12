@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cp.tms.dto.OnedayDto;
 import com.cp.tms.dto.PlaceDto;
@@ -23,7 +24,7 @@ public class PlaceController {
 	IOneDayService oService;
 	
 	@RequestMapping(value = "/insertPlace.do", method = RequestMethod.POST)
-	public String insertPlace(Model model, String placeName, String day, String myX, String myY) {
+	public String insertPlace(String placeName, String day, String myX, String myY) {
 		
 		String Xlat = myX.substring(0,11);
 		String Ylng = myY.substring(0,11);
@@ -42,9 +43,7 @@ public class PlaceController {
 		System.out.println("하루일정의 seq값 = "+day);
 		System.out.println(oneDto);
 		
-		model.addAttribute("onedaySeq", day);
-		model.addAttribute("oneDto", oneDto);
-		return "insertPlacePage";
+		return "redirect:/insertPlacePage.do?seq="+day;
 	}
 	
 	@RequestMapping(value="/delPlace.do", method = RequestMethod.GET)
