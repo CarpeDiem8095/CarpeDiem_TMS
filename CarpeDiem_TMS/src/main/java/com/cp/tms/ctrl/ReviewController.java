@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cp.tms.dto.ReviewDto;
 import com.cp.tms.model.review.IReviewService;
+import com.cp.tms.model.schedule.IOneDayService;
+import com.cp.tms.model.schedule.IPlaceService;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -28,6 +30,20 @@ public class ReviewController {
 
 	@Autowired
 	private IReviewService service;
+	
+	@Autowired
+	private IPlaceService plService;
+	
+	@Autowired
+	private IOneDayService oneService;
+	
+	@RequestMapping(value="/reviewList.do", method = RequestMethod.GET)
+	public String reviewList (Model model, String seq, String one_seq) {
+		System.out.println("후기 조회 seq" + seq);
+		model.addAttribute("reviewList",plService.reviewList(seq));
+		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
+		return "reviewList";
+	}
 	
 	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
 	public String reviewForm() {
