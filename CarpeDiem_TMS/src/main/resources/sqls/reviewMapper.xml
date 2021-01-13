@@ -18,7 +18,7 @@
 	SET UUID_NAME=NULL , ORIGIN_NAME=NULL, IMG_URL=NULL, REVIEW_TITLE=NULL, CONTENT=NULL 
 	WHERE PLACE_SEQ=#{place_seq}
 </update>
-
+  
 <!-- 해당하는 하루 일정의 모든 장소 조회 - - DTO selDetailOneday 
 		selDetailOneday.do -->
 <!-- 	<select id="selDetailOneday" parameterType="java.lang.String" resultMap="oneDto"> -->
