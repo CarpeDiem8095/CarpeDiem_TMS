@@ -37,12 +37,15 @@ public class ReviewController {
 	@Autowired
 	private IOneDayService oneService;
 	
-	@RequestMapping(value="/reviewList.do", method = RequestMethod.GET)
+	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
 	public String reviewList (Model model, String seq, String one_seq) {
 		System.out.println("후기 조회 seq" + seq);
+		System.out.println("하루 일정 seq" + one_seq);
+		//System.out.println(plService.reviewList(seq));
+		//System.out.println(oneService.selDetailOneday(one_seq));
 		model.addAttribute("reviewList",plService.reviewList(seq));
 		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
-		return "reviewList";
+		return "reviewsList";
 	}
 	
 	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
@@ -79,8 +82,7 @@ public class ReviewController {
 		dto.setUuid_name(uuid_name);
 		dto.setImg_url(directory);
 		dto.setPlace_seq("2");
-	//	dto.setContent("aaaa");
-		dto.setReview_title("bbbbb");
+		//dto.setContent(content);
 		
 		System.out.println("완성된 파일 DTO : "+ dto);
 		
