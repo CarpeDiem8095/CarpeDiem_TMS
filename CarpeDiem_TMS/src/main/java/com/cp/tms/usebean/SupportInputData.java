@@ -8,17 +8,17 @@ import com.cp.tms.dto.QuestionDto;
 
 public class SupportInputData {
 
-	private List<QuestionDto> lists;
+	private List<QuestionDto> questionLists;
 	
-	public void setLists(List<QuestionDto> lists) {
-		this.lists = lists;
+	public void setQuestionLists(List<QuestionDto> lists) {
+		this.questionLists = lists;
 	}
 
 	// 전체 글 목록
 	public String getListForm() {
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < lists.size(); i++) {
-			sb.append(listForm(lists.get(i)));
+		for (int i = 0; i < questionLists.size(); i++) {
+			sb.append(listForm(questionLists.get(i)));
 		}
 		return sb.toString();
 	}
@@ -52,20 +52,18 @@ public class SupportInputData {
 		StringBuffer sb = new StringBuffer();
 		int n = 5;
 		
-		sb.append("<c:set var='len' value='${fn:length(lists)}'/>");
+//		sb.append("<c:set var='len' value='${fn:length(lists)}'/>");
 		if (dto.getDelflag().equalsIgnoreCase("N")) {
 			sb.append("<tr>");
 			// 체크박스는 관리자만 보이게
-			sb.append("	<td style='text-align: center; vertical-align: middle;'>");
+			sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px;'>");
 			sb.append("		<input type='checkbox' name='chkVal' value='"+dto.getSeq()+"'>");
 			sb.append("	</td>");
 			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getSeq()+"</td>");
-			sb.append("	<td>");
-			sb.append("		<div class='panel-heading'>");
-			sb.append("			<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+dto.getSeq()+"' onclick='collapse(\""+dto.getSeq()+"\")'>");
+			sb.append("	<td class='panel-heading' style='vertical-align: middle; height: 56px;'>");
+			sb.append("		<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+dto.getSeq()+"' onclick='collapse(\""+dto.getSeq()+"\")'>");
 			sb.append(replyImage(dto.getDepth()) + dto.getTitle());
-			sb.append("			</a>");
-			sb.append("		</div>");
+			sb.append("		</a>");
 			sb.append("	</td>");
 			sb.append("	<td style='text-align: center; vertical-align: middle;'>");
 			sb.append(dateFormat(dto.getText_regdate()));
