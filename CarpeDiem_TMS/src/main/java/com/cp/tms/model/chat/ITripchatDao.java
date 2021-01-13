@@ -37,7 +37,7 @@ public interface ITripchatDao {
 	
 	/**
 	 * 채팅 삭제 하기
-	 * @param dto (chatmyid, seq)
+	 * @param dto (chatmyid, groupChatid)
 	 * @return T/F 성공/ 실패
 	 */
 	public boolean delchatboard(ChatingDto dto);

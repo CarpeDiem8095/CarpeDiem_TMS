@@ -41,13 +41,10 @@ AND CHATYOURID =#{chatyourid}
 </update>
 
 <!-- 채팅방 삭제 -->
-<delete id="ChatDto" parameterType="chatDto">
+<delete id="delchatboard" parameterType="chatDto">
 DELETE FROM CHATINGBOARD c
 WHERE CHATMYID =#{chatmyid}
-AND SEQ IN
-        <foreach item="seq" collection="seqs" open="(" separator="," close=")">
-            #{seq}
-        </foreach>
+AND CHATGROUPID =#{chatgroupid}
 </delete>
 
 <!--  내 채팅방 목록 죄회 -->
@@ -58,6 +55,6 @@ FROM CHATINGBOARD c
 WHERE CHATDELFLAG ='N'
 AND REPORT_TYPE ='N'
 AND CHATGROUPID LIKE '%'||#{chatmyid}||'%')
-WHERE RN BETWEEN 1 AND 10;
+WHERE RN BETWEEN 1 AND 10
 </select>
 </mapper>

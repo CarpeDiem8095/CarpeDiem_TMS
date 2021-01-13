@@ -18,60 +18,108 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.cp.tms.dto.ChatingDto;
 import com.cp.tms.dto.UserDto;
 
-
 @Component(value = "tripChat.do")
 public class TripSocketHandler extends TextWebSocketHandler {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	private ArrayList<WebSocketSession> list ;
-	
+
+	private ArrayList<WebSocketSession> list;
+
 	public TripSocketHandler() {
 		list = new ArrayList<WebSocketSession>();
 	}
-	
+
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("afterConnectionEstablished()실행");
 		super.afterConnectionEstablished(session);
 
-		list.add(session);	//전체 접속자 리스트에 새로운 접속자 추가
-		System.out.println("client session cnt : "+list.size()); 
-		System.out.println("session connected : "+session.getId());
+		list.add(session); // 전체 접속자 리스트에 새로운 접속자 추가
+		System.out.println("client session cnt : " + list.size());
+		System.out.println("session connected : " + session.getId());
 		System.out.println(list);
 	}
-	
+
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		logger.info("handleTextMessage()실행");
 		String msg = message.getPayload();
 		String txt = "";
-		
+
 		System.out.println(session.getAttributes());
 		Map<String, Object> mySession = session.getAttributes();
-		String myGrSession = (String)mySession.get("gr_id");	//접속자의 그룹 아이디
-		String myMemSession = (String)mySession.get("chat_id");	//접속자 아이디
+		String myGrSession = (String) mySession.get("gr_id"); // 접속자의 그룹 아이디
+		String myMemSession = (String) mySession.get("chat_id"); // 접속자 아이디
 
-		System.out.println("접속자의 그룹 아이디"+myGrSession);
-		System.out.println("접속자 아이디"+myMemSession);
-		
-		if( msg != null && !msg.equals("")) {
-			for(WebSocketSession s : list) {
-				System.out.println("s는 ?"+s);
-				Map<String, Object> ChatSession =s.getAttributes();
-				String otherGrSession = (String)ChatSession.get("gr_id");
-				String otherMemSession = (String)ChatSession.get("chat_id");
-				ArrayList<String> grMemList = new ArrayList<String>();
-				String [] other_gr_session =otherGrSession.split(",");
-				if(other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) {	//같은 그룹 소속일 때
-					s.sendMessage(
-							new TextMessage("<font color='red' size='1px'>"+myMemSession+" 님이 입장했습니다.</font>")
-					);
+		System.out.println("접속자의 그룹 아이디" + myGrSession);
+		System.out.println("접속자 아이디" + myMemSession);
+		System.out.println(msg.indexOf("sung"));
+		if (msg != null && !msg.equals("")) {
+			if (msg.indexOf("#$nick_") > -1) {
+				for (WebSocketSession s : list) {
+					Map<String, Object> ChatSession = s.getAttributes();
+					String otherGrSession = (String) ChatSession.get("gr_id");
+					String otherMemSession = (String) ChatSession.get("chat_id");
+					System.out.println("다른사람들 그룹 : " + otherGrSession + "다른사람들 아이디" + otherMemSession);
+					String[] other_gr_session = otherGrSession.split(",");
+					if (other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) { 
+						s.sendMessage(
+								new TextMessage("<font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다.</font>"));
+					}
+				}
+			} else {
+				String msg2 = msg.substring(0, msg.indexOf(":")).trim();
+				for (WebSocketSession s : list) {
+					Map<String, Object> sessionMap = s.getAttributes();
+					String otherGrSession = (String) sessionMap.get("gr_id");
+					String otherMemSession = (String) sessionMap.get("chat_id");
+					String[] other_gr_session = otherGrSession.split(",");
+					if (other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) {
+						if (msg2.equals(otherMemSession)) {
+							String newMsg = myMemSession + ":"
+									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
+							System.out.println("나는 수정전 msg야:" + msg);
+							System.out.println("나는 newMsg야 : " + newMsg);
+							String msgLog = myMemSession
+									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
+							System.out.println("나는 msgLog야 : " + msgLog);
+							logger.info("newMsg:" + msgLog);
+							txt = newMsg;
+						} else {
+							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
+							System.out.println("나는 상대방이 보낸 메세지(수정전) : " + part1);
+							String part2 = part1 + ":" + msg.substring(msg.trim().indexOf(":") + 1);
+							System.out.println("나는 상대방이 보낸 메세지(수정후) : " + part2);
+							txt = part2;
+						}
+						s.sendMessage(new TextMessage(txt));
+					}
 				}
 			}
 		}
-		
 	}
-	
-	
+
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		logger.info("afterConnectionClosed()실행");
+		super.afterConnectionClosed(session, status);
+		Map<String, Object> mySession = session.getAttributes();
+		String myGrSession = (String) mySession.get("gr_id");
+		String myMemSession = (String) mySession.get("chat_id");
+		System.out.println("삭제전"+list);
+		list.remove(session);
+		System.out.println("삭제후"+list);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String now = sdf.format(new Date());
+		System.out.println("사이즈"+list.size());
+		for (WebSocketSession a : list) {
+			Map<String, Object> sessionMap = a.getAttributes();
+			String otherGrSession = (String) sessionMap.get("gr_id");
+			String[] other_gr_session = otherGrSession.split(",");
+			if (other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) {
+				a.sendMessage(new TextMessage("<font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now + ")</font>"));
+			}
+		}
+	}
+
 }

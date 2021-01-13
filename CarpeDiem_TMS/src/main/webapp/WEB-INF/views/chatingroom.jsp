@@ -22,7 +22,7 @@
       
       
       function wss(){
-//           replace();
+          replace();
     	  nick = $("#nickName").val();
           $(".chat_div").show();
           $(".chat").focus();
@@ -32,7 +32,7 @@
           
           /// 웹소켓 서버가 오픈 됐을때
           ws.onopen = function() {
-             ws.send(nick);
+             ws.send("#$nick_"+nick);
           };
           
           // 메세지 보낼때
@@ -47,20 +47,89 @@
           	
           	if(msg.startsWith("<font color=")){	//입장,퇴장
             	$(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
-				viewList(id);
           	}else if(send=="${chatDto.chatmyid}"){
 	          	$(".receive_msg").append($("<div id='sendDiv' class='"+send+"'>").append($("<span id='sender' class='"+send+"'>").text(msg))).append("<br><br>");
           	}else{
 	          	$(".receive_msg").append($("<div id='receiveDiv' class='"+send+"'>").append($("<span id='receiver' class='"+send+"'>").text(msg))).append("<br><br>");
           	}
           	$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
+          	chatSave();
+          	
           }
           
-    }         
-    	
-          	
-
+          // 메세지 보내기 버튼 클릭시
+          $(".chat_btn").bind("click",function() {
+             if($(".chat").val() == '' ) {
+                alert("내용을 입력하세요");
+                return ;
+             }else {
+                ws.send(nick+" : "+$(".chat").val());
+                $(".chat").val('');
+                $(".chat").focus();
+             }
+          });  
           
+    }         
+    
+   // 대화내용 저장
+      function chatSave(){
+    	var chatmember = document.getElementById("chatmember").value; // chatmember에 mem_id, gr_id 를 담음 -> ex: user01, user02 // (그룹)구디, user01
+      		allContent = document.getElementById("receive_msg").innerHTML;
+      		$.ajax({
+      					url : "./chatboardcontentinsert.do",
+      					type : "post",	
+      					//업데이트를 위해 db의 chatmember, content을 보냄
+      					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
+      				});
+      }
+      
+      
+   // 나가기 버튼 눌렀을때
+      function roomClose(){
+    	  var chatmember = document.getElementById("chatmember").value;
+    	 allContent = document.getElementById("receive_msg").innerHTML;
+  		$.ajax({
+  					url : "./chatboardcontentinsert.do",
+  					type : "post",	
+  					//업데이트를 위해 db의 chatmember, content을 보냄
+  					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
+  					success : function(msg) {
+  						var isc = msg;
+  						if(isc=="성공"){
+  							alert("성공");
+  						}
+  					}
+  				});
+    	  alert("서버와의 연결이 종료되었습니다.");
+    	  self.close();
+    	  disconnect();
+   }
+      
+   // ws server 종료
+      function disconnect() {
+         ws.close();
+         ws = null ;
+      }      	
+
+      function replace(){
+      	// 대화내용(메세지)를 왼쪽 오른쪽 구분하기
+          var sendDiv = $('#sendDiv').attr('class');
+          var receiveDiv = $('#receiveDiv').attr('class');
+      	var sender = $('#sender').attr('class');
+          var receiver = $('#receiver').attr('class');
+          var memId = '${chatDto.chatmyid}';
+          
+    	  if(sendDiv != memId){
+    		  $('#sendDiv').attr('id', 'receiverDiv');
+    		  $('#receiveDiv').attr('id', 'senderDiv');
+    	  }
+    	  
+    	  if(sender != memId){
+    		  $('#sender').attr('id', 'receivers');
+    		  $('#receiver').attr('id', 'senders');
+    	  }
+      	
+      }     
 
 
 
