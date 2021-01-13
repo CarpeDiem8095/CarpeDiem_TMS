@@ -67,14 +67,7 @@ public class MemberCnotroller {
 	    
 	    
 	    
-	    //이메일 중복확인
-	    @RequestMapping(value = "/authenticate.do" , method = RequestMethod.GET)
-	    public String emailCheck() {
-	    	return "ajax";
-
-	      
-
-	    }
+	    
 	    
 	    
 	    //이메일 인증번호 보내기
