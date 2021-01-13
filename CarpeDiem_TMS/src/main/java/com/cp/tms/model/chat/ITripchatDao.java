@@ -55,4 +55,11 @@ public interface ITripchatDao {
 	 * @return 내 채팅 현황이 나온다.
 	 */
 	public List<ChatingDto> selmychatboard(String chatMyId);
+	
+	/**
+	 * 채팅 신고하기
+	 * @param groupid
+	 * @return 채팅 신고 완료시 채팅은 신고현황으로 넘어간다.
+	 */
+	public boolean reportchatboard(String groupid);
 }

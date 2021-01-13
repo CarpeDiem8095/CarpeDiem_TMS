@@ -26,11 +26,12 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		wss();
-		mychat();
 	})
 
 	var wss = function() {
 		var ws = null;
+		var show = null;
+		
 		// 웹소켓 서버
 		var grId = "main"
 		$(".memList").children().remove();
@@ -44,8 +45,9 @@
 						if(k !="<%=userdto.getUserid()%>"){
 							var gr_id = "<%=userdto.getUserid()%>,"+k;
 						$(".memList").append("<tr>"
-						+"<td class='mainaccess'>"+k+"</td>"
-						+"<td class='chatbutton'><input type='button' value='채팅하기' onclick="+"goSocket('"+gr_id+"','"+k+"')"+"></td>"
+						+"<td class='main_mem_access'>"+k+"</td>"
+						+"<td class='chatbutton'>"+
+						"<input type='button' value='채팅하기' onclick="+"goSocket('"+gr_id+"','"+k+"')"+"></td>"
 						+"</tr>");
 						}
 					}
@@ -55,16 +57,15 @@
 				console.log('의미 심장한 애러 발생 (╯°□°）╯︵ ┻━┻');
 			}
 		});
-	}	
+	}
 		
-	function goSocket(gr_id,chatyour_id){
+	function goSocket(gr_id,chatyour_id){	//내가 만든기
 		window.open("./socketOpen.do?chatgroupid="+gr_id+"&chatyourid="+chatyour_id, "그룹채팅", "width = 500, height = 600, resizable = no, toolbar = no, menubar = no, location = no, fullscreen = no, left = 300, top = 50");
 	}
 	
 	function goSocket2(gr_id,chatmy_id,chatyour_id){	//내꺼 접속할때 
 		window.open("./socketOpen2.do?chatgroupid="+gr_id+"&chatmyid="+chatmy_id+"&chatyourid="+chatyour_id, "그룹채팅", "width = 500, height = 600, resizable = no, toolbar = no, menubar = no, location = no, fullscreen = no, left = 300, top = 50");
 	}
-	
 </script>
 <body>
 	<table class="memList"></table>
@@ -78,11 +79,11 @@
 		<tr>
 				<c:choose>
 				<c:when test="${mychat.chatyourid eq myid}">
-					<td>${mychat.chatmyid}</td>
-					<td><input type="button" value="채팅하기" onclick="goSocket2(${mychat.chatgroupid},${mychat.chatmyid},${mychat.chatyourid})"></td>
+					<td class="mychatname">${mychat.chatmyid}</td>
+					<td><input type="button" value="채팅하기" onclick="goSocket2('${mychat.chatgroupid}','${mychat.chatmyid}','${mychat.chatyourid}')"></td>
 				</c:when>
 				<c:otherwise>
-				<td>${mychat.chatyourid}</td>
+				<td class="mychatname">${mychat.chatyourid}</td>
 				<td><input type="button" value="채팅하기" onclick="goSocket2('${mychat.chatgroupid}','${mychat.chatmyid}','${mychat.chatyourid}')"></td>
 				</c:otherwise>
 				</c:choose>

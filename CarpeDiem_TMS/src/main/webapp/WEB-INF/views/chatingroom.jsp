@@ -7,6 +7,7 @@
 <title>채팅방입니다.</title>
 <link type="text/css" rel="stylesheet" href="./css/chat.css">
 </head>
+<% String chat_id=(String)session.getAttribute("chat_id"); %>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
@@ -38,7 +39,7 @@
           // 메세지 보낼때
           ws.onmessage = function(event) {
           	var msg = event.data;
-          	var id = "${chatDto.chatmyid}";
+          	var id = "<%=chat_id%>";
           	// alert("메세지 출력 결과 : "+msg); // ex: user01:안녕
             var msgArr = msg.split(":") // ex: [user01], [안녕] [user02],[아녕]
           	var send = msgArr[0]; // ex: user01
@@ -47,7 +48,7 @@
           	
           	if(msg.startsWith("<font color=")){	//입장,퇴장
             	$(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
-          	}else if(send=="${chatDto.chatmyid}"){
+          	}else if(send=="<%=chat_id%>"){
 	          	$(".receive_msg").append($("<div id='sendDiv' class='"+send+"'>").append($("<span id='sender' class='"+send+"'>").text(msg))).append("<br><br>");
           	}else{
 	          	$(".receive_msg").append($("<div id='receiveDiv' class='"+send+"'>").append($("<span id='receiver' class='"+send+"'>").text(msg))).append("<br><br>");
@@ -95,9 +96,6 @@
   					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
   					success : function(msg) {
   						var isc = msg;
-  						if(isc=="성공"){
-  							alert("성공");
-  						}
   					}
   				});
     	  alert("서버와의 연결이 종료되었습니다.");
@@ -117,7 +115,7 @@
           var receiveDiv = $('#receiveDiv').attr('class');
       	var sender = $('#sender').attr('class');
           var receiver = $('#receiver').attr('class');
-          var memId = '${chatDto.chatmyid}';
+          var memId = '${mychatid}';
           
     	  if(sendDiv != memId){
     		  $('#sendDiv').attr('id', 'receiverDiv');
@@ -130,20 +128,35 @@
     	  }
       	
       }     
-
+	function chatreport(){
+// 		alert("작동");
+		var groupid="${chatDto.chatgroupid}";
+		alert(groupid);
+		$.ajax({
+			url : "./reportchatboard.do",
+			type : "post",
+			datatype :"json",
+			data :"groupid="+groupid,
+			success : function(data) {
+					alert("신고가 접수되었습니다.");
+			}
+		});
+		roomClose();
+	  	self.close();
+  	    disconnect();
+	}
 
 
 </script>
 <body>
 	<br>
-	<input type="hidden" id="nickName" value="${chatDto.chatmyid}" />
+	<input type="hidden" id="nickName" value="<%=chat_id%>" />
 	<div style="text-align: center;">
 		<a style="font-size: x-large;">${chatDto.chatyourid}</a>
 	</div>
 	<div style="display: inline-block;">
 		<div class="out_btn" onclick="roomClose()"></div>
-		<div style="margin-left: 430px; width: 50px; font-size: x-large;"
-			onclick="openRightMenu()">&#9776;</div>
+		<div id="reportchat_btn" onclick="chatreport()"></div>
 	</div>
 	<br>
 	<table>

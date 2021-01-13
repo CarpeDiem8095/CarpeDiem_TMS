@@ -62,4 +62,9 @@ public class TripchatImplDao implements ITripchatDao {
 		return sqlsessiontemplate.selectOne(NS+"logintest", userid);
 	}
 
+	@Override
+	public boolean reportchatboard(String groupid) {
+		return (sqlsessiontemplate.update(NS+"reportchatboard", groupid)>0)?true:false;
+	}
+
 }
