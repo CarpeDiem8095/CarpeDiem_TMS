@@ -12,14 +12,20 @@
 		<c:forEach var="oneday" items="${selDetailOneday}">
 			<div>${oneday.oneday_title}</div>
 			<c:forEach var="place" items="${oneday.placeDto}">
-				<div>${place.place_name}</div>
-				<div>${place.xlat}</div>
-				<div>${place.ylng}</div>
-
+				<c:choose>
+					<c:when test="${place.step eq '1'}">
+						<div>${place.place_name}</div>
+					</c:when>
+					<c:otherwise>
+						<div><button onclick="viewPath(${place.place_name})">경로보기</button></div>		
+						<div>${place.place_name}</div>
+					</c:otherwise>
+				</c:choose>
+<%-- 				<div>${place.xlat}</div> --%>
+<%-- 				<div>${place.ylng}</div> --%>
 				<input type="hidden" name="myTitle" value="${place.place_name}"/>
 				<input type="hidden" name="myX" value="${place.xlat}"/>
 				<input type="hidden" name="myY" value="${place.ylng}"/>
-
 			</c:forEach>
 		</c:forEach>
 	</div>
@@ -34,7 +40,7 @@
 		var x = document.getElementsByName("myX");
 		var y = document.getElementsByName("myY");
 		
-		alert(x[0].value);
+// 		alert(x[0].value);
 
 		var options = {
 			center : new kakao.maps.LatLng(33.3766655, 126.542220),
@@ -54,7 +60,7 @@
 		var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 		
 		var title = document.getElementsByName("myTitle");
-		alert(title.length);
+// 		alert(title.length);
 
 		//배열 생성
 		var latlng = []
@@ -147,5 +153,15 @@
 		        infowindow.close();
 		    };
 		}
+	</script>
+	
+	<script type="text/javascript">
+	 function viewPath(place_name){
+		 alert(place_name);
+// 			var url = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C523953%2C1084098&rt1=넥슨코리아본사&rr2="+name+"&rtIds=%2C&rtTypes=%2C"
+// 			var title = "길찾기";
+// 			var attr = "width=400px, height=200px";
+// 		 window.open(url, title, attr);
+	 }
 	</script>
 </html>
