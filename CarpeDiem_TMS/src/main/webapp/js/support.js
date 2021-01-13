@@ -21,7 +21,6 @@ var modifyAjax = function(val) {
 		method: "post",
 		data: "seq="+val,
 		dataType: "json",
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success: function(v) {
 			console.log(v.seq, v.writer, v.title, v.content)
 			
@@ -61,5 +60,16 @@ var modifyAjax = function(val) {
 }
 
 function update() {
-	alert("작동");
+//	alert("작동");
+	var frm = document.getElementById("frmModify");
+	frm.action = "./modify.do";
+	var title = $('#title').val();
+//	alert(title);
+	var content = $('#content').val();
+//	alert(content);
+	if (title == ' ' || content == ' ') {
+		swal("수정 오류", "제목과 내용은 필수입니다.");
+	} else {
+		frm.submit();
+	}
 }

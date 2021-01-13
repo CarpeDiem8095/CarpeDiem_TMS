@@ -40,7 +40,8 @@
 				<table class="table table-bordered">
 					<tr class="info">
 						<!-- 체크박스는 관리자만 보이게 -->
-						<th><input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"></th>
+<!-- 						<th><input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"></th> -->
+						<th></th>
 						<th>글 번호</th>
 						<th>제목</th>
 						<th>등록일</th>
@@ -49,7 +50,7 @@
 						<th>삭제여부</th>
 					</tr>
 					<jsp:useBean id="data" class="com.cp.tms.usebean.SupportInputData" scope="page"/>
-					<jsp:setProperty property="lists" name="data" value="${lists}"/>
+					<jsp:setProperty property="questionLists" name="data" value="${questionLists}"/>
 					<jsp:getProperty property="listForm" name="data"/>
 				</table>
 			</div>

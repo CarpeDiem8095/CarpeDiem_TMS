@@ -22,12 +22,12 @@ public class SupportController {
 	private IQuestionService service;
 	
 	// 문의 게시판으로 이동(전체 조회)
-	@RequestMapping(value = "/questionboard.do", method = RequestMethod.GET)
-	public String questionboard(Model model) {
+	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
+	public String questionBoard(Model model) {
 		List<QuestionDto> lists = service.userQuestionboardList();
-		model.addAttribute("lists", lists);
+		model.addAttribute("questionLists", lists);
 //		System.out.println(lists);
-		return "questionboard";
+		return "questionBoard";
 	}
 	
 	// 다중삭제
@@ -37,7 +37,7 @@ public class SupportController {
 		map.put("seqs", chkVal);
 		boolean isc = service.multiDelQuestionboard(map);
 		System.out.println("다중삭제 성공여부: " + isc);
-		return "redirect:/questionboard.do";
+		return "redirect:/questionBoard.do";
 	}
 	
 	// 상세글 삭제(root글 삭제 시 댓글도 같이 삭제 됨) -> 댓글 삭제 시 root글이 같이 삭제되는 부분 수정해야 함(session에 담을 그릇이 필요해서 memberDto 필요함)
@@ -45,7 +45,7 @@ public class SupportController {
 	public String delete(String seq) {
 		boolean isc = service.deleteQuestionboard(seq);
 		System.out.println("글 삭제 성공여부: " + isc);
-		return "redirect:/questionboard.do";
+		return "redirect:/questionBoard.do";
 	}
 	
 	// 글 입력 폼으로 이동
@@ -59,7 +59,7 @@ public class SupportController {
 	public String write(QuestionDto dto) {
 		boolean isc = service.userWriteQuestionboard(dto);
 		System.out.println("문의글 입력 성공여부: " + isc);
-		return "redirect:/questionboard.do";
+		return "redirect:/questionBoard.do";
 	}
 	
 	// 답글 입력 폼으로 이동
@@ -76,7 +76,7 @@ public class SupportController {
 		boolean isc = service.replyQuestionboard(dto);
 		System.out.println("dto: " + dto);
 		System.out.println("답글 입력 성공여부: " + isc);
-		return "redirect:/questionboard.do";
+		return "redirect:/questionBoard.do";
 	}
 	
 	// 글 수정 폼(modal)으로 이동
@@ -97,11 +97,14 @@ public class SupportController {
 	
 	// 글 수정
 	@RequestMapping(value = "/modify.do", method = RequestMethod.POST)
-	public String modify(QuestionDto dto) {
+	public String modify(Model model, String seq) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("dto: " + dto);
+//		System.out.println("dto: " + dto);
+		map.put("seq", seq);
+		model.addAttribute("seq", seq);
+		System.out.println(seq);
 		boolean isc = service.modifyQuestionboard(map);
-		return "redirect:/questionboard.do";
+		return "redirect:/questionBoard.do";
 	}
 	
 }
