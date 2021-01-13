@@ -114,10 +114,14 @@
 	
 	#sender{
 		float: right;
+		font-size: 13px;
+		font-family: inherit;
 	}
 	
 	#receiver{
 		float: left;
+		font-size: 13px;
+		font-family: inherit;
 	}
 	
 	#senderDiv{

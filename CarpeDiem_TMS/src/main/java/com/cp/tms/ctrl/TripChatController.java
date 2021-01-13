@@ -1,6 +1,7 @@
 package com.cp.tms.ctrl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
@@ -32,7 +33,7 @@ public class TripChatController implements ServletConfigAware {
 	}
 	
 	@RequestMapping(value = "/mainchat.do", method = RequestMethod.POST)
-	public String loginChat(HttpSession session,String userid) {
+	public String loginChat(HttpSession session,String userid,Model model) {
 		
 		UserDto userdto=tripchatservice.logintest(userid);
 		session.setAttribute("userdto", userdto);
@@ -49,7 +50,9 @@ public class TripChatController implements ServletConfigAware {
 			servletContext.setAttribute("chatList", chatList);
 		}
 		
-		System.out.println(chatList);
+		List<ChatingDto> myChatList=tripchatservice.selmychatboard(userid);
+		model.addAttribute("myChatList", myChatList);
+		
 		return "mainchat";
 	}
 	
@@ -89,9 +92,48 @@ public class TripChatController implements ServletConfigAware {
 		model.addAttribute("chatDto", seldto);
 		session.setAttribute("gr_id", seldto.getChatgroupid());
 		session.setAttribute("chat_id", seldto.getChatmyid());
-		
 		return "chatingroom";
 	}
+	
+	@RequestMapping(value = "/socketOpen2", method = RequestMethod.GET)
+	public String socketOpen2(HttpSession session,ChatingDto dto, Model model) {
+		System.out.println("상대방아이디는?" + dto.getChatyourid());
+		System.out.println("그룹아이디는?" + dto.getChatgroupid());
+		
+		UserDto userdto=(UserDto)session.getAttribute("userdto");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("chatmyid",userdto.getUserid());
+		map.put("chatyourid", dto.getChatyourid());
+		
+		// 가져오기
+		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
+		seldto.setChatgroupid(dto.getChatgroupid());
+		model.addAttribute("chatDto", seldto);
+		session.setAttribute("gr_id", seldto.getChatgroupid());
+		session.setAttribute("chat_id", seldto.getChatmyid());
+		return "chatingroom";
+	}
+	
+	@RequestMapping(value = "/chatboardcontentinsert.do",method = RequestMethod.POST)
+	public String updateChat(HttpSession session,ChatingDto dto) {
+		System.out.println("groupid :"+dto.getChatgroupid());
+		System.out.println("content :"+dto.getChatcontent());
+		String [] chatgroup=dto.getChatgroupid().split(",");
+		boolean isc =false;
+		System.out.println("그룹 쪼개기 1 : "+chatgroup[0] +"그룹 쪼개기 2"+chatgroup[1]);
+		if(chatgroup[0].equals(session.getAttribute("chat_id"))) {
+			isc=tripchatservice.delchatboard(dto);
+		}else {
+			dto.setChatmyid(chatgroup[1]);
+			dto.setChatyourid(chatgroup[2]);
+			isc =tripchatservice.chatboardcontentinsert(dto);
+		}
+		System.out.println(dto);
+		return isc == true ? "성공" : "실패";
+	}
+	
+	
 	
 }
 
