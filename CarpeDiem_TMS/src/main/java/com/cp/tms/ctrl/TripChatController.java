@@ -136,6 +136,12 @@ public class TripChatController implements ServletConfigAware {
 		return isc == true ? "성공" : "실패";
 	}
 	
+	@RequestMapping(value = "/chatdel.do",method = RequestMethod.POST)
+	@ResponseBody
+	public String chatdel(ChatingDto dto) {
+		boolean isc=tripchatservice.delchatboard(dto);
+		return isc== true ?"성공":"실패";
+	}
 }
 
 
