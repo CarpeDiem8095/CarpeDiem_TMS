@@ -64,18 +64,13 @@
 	<hr>
 	<h6>
 		신고하기 test &nbsp;
-		<input type="button" value="신고하기(ver.1)" onclick="report1()"> &nbsp;
-		<input type="button" value="신고하기(ver.3)" onclick="report3()">
+		<input type="button" value="신고하기" onclick="report3()">
 	</h6>
 	<h3><a href="./reportBoard.do">신고처리 게시판</a></h3>
 </body>
 <script type="text/javascript">
-	function report1() {
-		open("./report(ver.1).jsp", "", "width=600px, height=600px");
-	}
-	
-	function report3() {
-		open("./report(ver.3).jsp", "", "width=600px, height=600px");
+	function report() {
+		open("./report.jsp", "", "width=600px, height=650px");
 	}
 </script>
 </html>
