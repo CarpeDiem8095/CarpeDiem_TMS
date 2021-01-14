@@ -3,19 +3,20 @@
 <mapper namespace="com.cp.tms.dto.ReviewDto">
 
 <insert id="writeReveiw" parameterType="revDto">
-	INSERT INTO REVIEWBOARD(PLACE_SEQ, UUID_NAME, ORIGIN_NAME, IMG_URL,REVIEW_TITLE)
-	VALUES(#{place_seq}, #{uuid_name}, #{origin_name}, #{img_url},#{review_title})
+	INSERT INTO REVIEWBOARD(PLACE_SEQ, UUID_NAME, ORIGIN_NAME, IMG_URL, CONTENT)
+	values(#{place_seq},#{uuid_name}, #{origin_name},#{img_url},#{content})
+<!-- 	VALUES(#{place_seq}, #{uuid_name}, #{origin_name}, #{img_url}, #{content}) -->
 </insert>
 
 <update id="modifyReview" parameterType="revDto">
 	UPDATE REVIEWBOARD
-	SET UUID_NAME=#{uuid_name} , ORIGIN_NAME=#{origin_name}, IMG_URL=#{img_url}, REVIEW_TITLE=#{review_title}, CONTENT=#{content}
+	SET UUID_NAME=#{uuid_name}, ORIGIN_NAME=#{origin_name}, IMG_URL=#{img_url}, CONTENT=#{content}
 	WHERE PLACE_SEQ=#{place_seq}
 </update>
 
 <update id="deleteReview" parameterType="java.lang.String">
 	UPDATE TOGETHER.REVIEWBOARD
-	SET UUID_NAME=NULL , ORIGIN_NAME=NULL, IMG_URL=NULL, REVIEW_TITLE=NULL, CONTENT=NULL 
+	SET UUID_NAME=NULL , ORIGIN_NAME=NULL, IMG_URL=NULL, CONTENT=NULL 
 	WHERE PLACE_SEQ=#{place_seq}
 </update>
   
