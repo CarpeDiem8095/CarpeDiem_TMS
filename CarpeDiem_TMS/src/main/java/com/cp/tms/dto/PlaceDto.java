@@ -3,6 +3,7 @@ package com.cp.tms.dto;
 public class PlaceDto {
 
 	private String place_seq;
+	private String place_seq2;
 	private String oneday_seq;
 	private String step;
 	private String place_name;
@@ -16,10 +17,19 @@ public class PlaceDto {
 	
 	@Override
 	public String toString() {
-		return "PlaceDto [place_seq=" + place_seq + ", oneday_seq=" + oneday_seq + ", step=" + step + ", place_name="
-				+ place_name + ", xlat=" + xlat + ", ylng=" + ylng + ", memo=" + memo + ", revDto=" + revDto + "]";
+		return "PlaceDto [place_seq=" + place_seq + ", place_seq2=" + place_seq2 + ", oneday_seq=" + oneday_seq
+				+ ", step=" + step + ", place_name=" + place_name + ", xlat=" + xlat + ", ylng=" + ylng + ", memo="
+				+ memo + ", revDto=" + revDto + "]";
 	}
 	
+	public String getPlace_seq2() {
+		return place_seq2;
+	}
+
+	public void setPlace_seq2(String place_seq2) {
+		this.place_seq2 = place_seq2;
+	}
+
 	public PlaceDto(String place_seq, String oneday_seq, String step, String place_name, String xlat, String ylng,
 			String memo, ReviewDto revDto) {
 		super();

@@ -16,8 +16,6 @@
 		}
 	</style>
 <body>
-<!-- 노트 한개의 여러개의 하루 일정이 있는데 -->
-
 <%-- ${fn:length(detail.odto)} --%>
 	<form>
 		<table style="margin: 0px auto;">
@@ -25,7 +23,7 @@
 				<tr>
 					<c:forEach var="onedto" items="${ndto.odto}">
 						<td class="frameTD" style="text-align: center;">
-							<a href="./insertPlacePage.do?seq=${onedto.oneday_seq}">${onedto.oneday_title}</a>
+							<a href="./insertPlacePage.do?seq=${onedto.oneday_seq}&noteSeq=${seq}">${onedto.oneday_title}</a>
 							<input type = "button" value="X" style="float: right;" onclick="delOneday(${onedto.oneday_seq})">
 						<input type = "button" value="수정" onclick="modifyNote(${onedto.oneday_seq})" style="text-align: center; float: right;">
 						</td>
@@ -34,6 +32,7 @@
 			</c:forEach>
 		</table>
 		<div style="text-align: center;">
+			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'">
 			<input type = "button" value="하루일정생성" onclick="writeOneday(${seq})" style="text-align: center;">
 			<input type = "hidden" value="${seq}" id="noteSeq">
 		</div>
