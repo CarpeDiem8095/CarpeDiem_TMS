@@ -40,16 +40,17 @@ public class MemberCnotroller {
 		return null;
 	}
 	
-	//중복 체크
-	@RequestMapping(value = "/idCheck.do", method = RequestMethod.POST)
-	public Map<String, String> emailCheck(String email){
-		Map<String, String> map = new HashMap<String, String>();
-		logger.info("idCheck.do :\t", email);
-		boolean isc = Service.idDuplicateCheck(email);
-		logger.info("welecom idCheck.do 결과: \t", isc);
-		map.put("isc", String.valueOf(isc));
-		return map;
-	}
+	/* 이메일 인증 */
+    @RequestMapping(value="/mailCheck.do", method=RequestMethod.GET)
+    @ResponseBody
+    public void mailCheckGET(String email) throws Exception{
+        
+        /* 뷰(View)로부터 넘어온 데이터 확인 */
+        logger.info("이메일 데이터 전송 확인");
+        logger.info("인증번호 : " + email);
+                
+        
+    }
 	
 		
 	

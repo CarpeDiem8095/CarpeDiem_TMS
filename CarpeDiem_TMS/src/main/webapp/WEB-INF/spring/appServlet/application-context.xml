@@ -19,6 +19,18 @@
 		<property name="port" value="587"/>
 		<property name="username" value="joseokgyu12@gmail.com"/>
 		<property name="password" value="tjrrbsla1@"/>
+		
+		 <!-- 보안연결 SSL과 관련된 설정 -->
+		<property name="javaMailProperties">
+      <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+      <prop key="mail.smtps.checkserveridentity">true</prop>
+      <prop key="mail.smtps.ssl.trust">*</prop>
+      <prop key="mail.debug">true</prop>
+      <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+      </props>
+      </property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

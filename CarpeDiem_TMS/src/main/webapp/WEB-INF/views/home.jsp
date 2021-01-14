@@ -16,31 +16,21 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
-<script type="text/javascript">
-	$(".sendMail").click(function(){
-		var email = $(".email").val(); //사용자의 이메일 입력값
-		if (email =="") {
-			alert("메일 주소가 입력되지 않았습니다.");
-		
-		}else{
-			email = email+"@"+$(".domain").val(); //섹렉트 박스에 @뒤 값을 더함
-			$.ajax({
-				type:'post',
-				url:'./CheckMail.do',
-				data: {
-					email:email
-				},
-				dataType: 'json',
-			});
-			alert("인증번호가 전송되었습니다.")
-			isCertification=ture; //추후 인증 여부를 알기위한 값
-		}
+
+	<script type="text/javascript">
+	/* 인증번호 이메일 전송 */
+	$("sendCheckNum").click(function(){
+	    var email = $("email").val();        // 입력한 이메일
+	    $.ajax({
+	        type:"GET",
+	        url:"./mailCheck.do?email=" + email
+	      
+	   
+	    });
+	    
 	});
-
-
-
-</script>
 	
+	</script>
 	
 	
 </head>
@@ -69,26 +59,43 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<form class="form-horizontal" method="POST" id="Frm" name="Frm">
-
 							<div class="modal-body"
-								style="padding: 30px 50px; height: 360px;">
-
+								style="padding: 30px 50px; height: 500px;">
 								<div class="form-group" style="text-align: left; width: 72%"
 									id="divEmail">
-
+								
 									<!-- 이메일 확인 -->
 									<label for="email"><span
 										class="glyphicon glyphicon-user"></span> 이메일</label> <input
 										type="text" class="email form-control" id="email" name="email"
 										placeholder="이메일을 입력하세요">
 								</div>
-								<div class="form-group" style="float: right; margin-top: -53px"
-									id="divEmailCheck">
+								<div class="form-group"
+									style="float: right; margin-top: -53px; margin-right: 10px"
+									id="divinputCheckNum">
 									<button type="button" class="btn btn-primary btn-block"
-										name="emailCheck" id="emailCheck">
-										<span class="glyphicon glyphicon-off"></span> 중복확인
+										id="sendCheckNum">
+										<span class="glyphicon glyphicon-envelope"></span>인증
 									</button>
 								</div>
+								
+								<!-- 인증번호 -->
+								<div class="form-group" style="text-align: left; width: 72%"
+									id="divCheckNum">
+									<label for="checknum"><span
+										class="glyphicon glyphicon-envelope"></span> 인증번호</label> <input
+										type="text" class="form-control" id="inputCheckNum"
+										name="inputCheckNum" placeholder="인증번호를 입력하세요">
+								</div>
+								<!-- 인증번호 확인및 완료 -->
+								<div class="form-group" style="float: right; margin-top: -53px; margin-right: 10px"
+									id="divCheckConfirm">
+									<button type="button" class="btn btn-primary btn-block"
+										id="checkConfirm" name="checkConfirm">
+										<span class="glyphicon glyphicon-ok"></span>확인
+									</button>
+								</div>
+								<hr>
 								<!-- 닉네임 확인 -->
 								<div class="form-group" id="divNickname"
 									style="text-align: left;">
@@ -111,30 +118,8 @@
 										type="password" class="form-control" id="pwd2" name="pwd2"
 										placeholder="2차 비밀번호를 입력하세요(8자리 이상)">
 								</div>
-								<!-- 인증번호 -->
-								<div class="form-group" style="text-align: left; width: 60%"
-									id="divCheckNum">
-									<label for="checknum"><span
-										class="glyphicon glyphicon-envelope"></span> 인증번호</label> <input
-										type="text" class="form-control" id="inputCheckNum"
-										name="inputCheckNum" placeholder="인증번호를 입력하세요">
-								</div>
-								<!-- 인증번호 확인및 완료 -->
-								<div class="form-group" style="float: right; margin-top: -53px"
-									id="divCheckConfirm">
-									<button type="button" class="btn btn-primary btn-block"
-										id="checkConfirm" name="checkConfirm">
-										<span class="glyphicon glyphicon-ok"></span>확인
-									</button>
-								</div>
-								<div class="form-group"
-									style="float: right; margin-top: -53px; margin-right: 10px"
-									id="divinputCheckNum">
-									<button type="button" class="btn btn-primary btn-block"
-										id="sendCheckNum">
-										<span class="glyphicon glyphicon-envelope"></span>인증
-									</button>
-								</div>
+								
+								
 							</div>
 						</form>
 					</div>
@@ -157,29 +142,7 @@
 			</div>
 		</div>
 	</div>
-	<script>
-	//이메일 중복확인
-	$('#emailCheck').keyup(function(){
-		
-		$.ajax({
-			type: "GET",
-			url: "./authenticate.do",
-			data: {"email":$('#emailCheck').val()},
-			success: function(data){
-				var result = data;
-				if (result == 'success') {
-					emailCheck = true;
-					$('emailCheck').swal("사용 가능한 이메일입니다.");
-					
-				}else{
-					emailCheck = false;
-					$('#emailCheck').swal("이미 존재하는 이메일입니다.");
-				}
-			}
-		});
-	});
 	
-</script>
 
 	<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	
