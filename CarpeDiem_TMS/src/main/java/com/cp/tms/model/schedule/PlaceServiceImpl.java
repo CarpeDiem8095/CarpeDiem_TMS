@@ -38,10 +38,10 @@ public class PlaceServiceImpl implements IPlaceService {
 	/* 사용하는 seq의 값이 같기 때문에 괜찮음*/
 	@Transactional
 	@Override
-	public boolean stepMinusNdelPlace(String seq) {
-		boolean isc1 =dao.stepMinus(seq);
+	public boolean stepMinusNdelPlace(String seq, PlaceDto dto) {
+		boolean isc1 =dao.stepMinus(dto);
 		boolean isc2 =dao.delPlace(seq);
-		return (isc1 || isc2)?true:false;
+		return (isc1 && isc2)?true:false;
 	}
 
 	@Override

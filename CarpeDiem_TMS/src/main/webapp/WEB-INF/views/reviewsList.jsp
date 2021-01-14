@@ -38,21 +38,24 @@ a {
 		<div class="panel-group" id="accordion">
 			<c:forEach var="oneday" items="${selDetailOneday}">
 				<div>${oneday.oneday_title}</div>
-
+				
 				<c:forEach var="p" items="${oneday.placeDto}">
 				<div>
 					<div class="showMeTheForm" >
+					
 						<button class="w3-btn w3-block w3-black w3-left-align">
-						${p.place_name}
+						${p.place_name} ${p.place_seq}
 						</button>
 					</div>
-				<form enctype="multipart/form-data" method="post">
+				<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
+				<input type="hidden" name="oneday_seq" value="${oneday_seq}">
+				<input type="hidden" name="seq" value="${seq}">
 					<div class="revForm" class="w3-container w3-hide">
-						<div><input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*"></div>
+						<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
 						<div>
-							<div id="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-							<div><textarea style="width:540px; height: 250px;" name="content" id="content"></textarea></div>
-							<div><input type="button" id="btnSave" value="save" style="float:right;" onclick=""/></div>
+							<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
+							<div><input type="text" style="width:540px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
+							<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
 						</div>
 					</div>
 					</form>
@@ -66,41 +69,37 @@ a {
 	</div>
 	
 	<script type="text/javascript">
-	
-	// 아작스 
-	$(document).ready(function(){
-                //ID가 btnSave를 클릭할때
-                $("#btnSave").click(function(){
-                    //JSON 객체에 값을 담아줌
-                    var json = {
-                        content : $("#content").val()
-                    };
-                    
-                    //비동기 요청
-                     $.ajax({
-                        type : "post", 
-                        url : "fileUpload.do", 
-                        data : json, 
-                        dataType : "json",
-                        contentType : false, // true=application/x-www-form-urlencoded, false=multipart/form-data
-                        processData : false,
-                        success : function(data) { //성공시
-                        	if(data == "success"){
-                				alert("등록이 완료되었습니다.")
-                				document.location.href="./boardList.do";
-                			}
-                		},
- 
-                        error : function(error) {
-                            alert("오류 발생"+ error);
-                        }
-                    });
-                });
-            });
-
-	
+	// forData에 담을 요소 
+    //ID가 btnSave를 클릭할때 onclick="save(${p.place_seq})
+// 	function save(id) {
+		
+//     	var formData = {};
+    	
+//     	formData.content = document.getElementById('content_'+id).value;
+//     	//formData.filename = document.getElementById('uploadFile_' + id).value;
+//     	formData.filename = document.getElementById('uploadFile_' + id).files[0];
+//     	console.table(formData);
+//         //비동기 요청
+//          $.ajax({
+//             type : "post", 
+//             url : "fileUpload.do", 
+//             data : formData, 
+//             contentType : 'multipart/form-data', // true=application/x-www-form-urlencoded, false=multipart/form-data
+//             processData : false,
+//             success : function(data) { //성공시
+//             	if(data == "success"){
+//     				alert("등록이 완료되었습니다.")
+//     				document.location.href="./reviewsList.do";
+//     			}
+//     		},
+//             error : function(error) {
+//                 alert("오류 발생"+ error);
+//             }
+//         });
+//     }
 	// 아코디언 메뉴 롤업
 	$(document).ready(function() {	
+		$(".revForm").hide();
 		$(".showMeTheForm").click(function(){
 			$(".revForm").hide();
 			$(this).parent().find(".revForm").slideToggle('slow');
@@ -113,7 +112,7 @@ a {
 	    if(input.files && input.files[0]) {
 	        var reader = new FileReader();
 	        reader.onload = function (e) {
-	            $('#preview').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
+	            $('#preview_${p.place_seq}').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
 	        }
 	        reader.readAsDataURL(input.files[0]);
 	    }

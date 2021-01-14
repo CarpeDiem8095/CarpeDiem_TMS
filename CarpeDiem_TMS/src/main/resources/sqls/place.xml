@@ -14,27 +14,28 @@
 		<result property="uuid_name" column="UUID_NAME"/>
 		<result property="origin_name" column="ORIGIN_NAME"/>
 		<result property="img_url" column="IMG_URL"/>
-		<result property="review_title" column="REVIEW_TITLE"/>
 		<result property="content" column="CONTENT"/>
 	</resultMap>
 	
 	
 	<!-- reviewList 후기 목록 조회 -->
 	<select id="reviewList" parameterType="java.lang.String" resultMap="plDto">
-	SELECT p1.PLACE_SEQ, p1.PLACE_NAME, r1.PLACE_SEQ, r1.UUID_NAME, r1.ORIGIN_NAME, r1.IMG_URL, r1.REVIEW_TITLE, r1.CONTENT
+	SELECT p1.PLACE_SEQ, p1.PLACE_NAME, r1.PLACE_SEQ, r1.UUID_NAME, r1.ORIGIN_NAME, r1.IMG_URL, r1.CONTENT
 	FROM PLACE p1 JOIN REVIEWBOARD r1
 	ON p1.PLACE_SEQ = r1.PLACE_SEQ
 	WHERE r1.PLACE_SEQ = #{place_seq}
 	</select>
 	
-	
+	<!-- 장소 입력 -->
 	<!-- ONEDAY_SEQ, PLACE_NAME, STEP, XLAT, YLNG	DTO		Integer		writePlace			writePlace.do -->
 	<insert id="writePlace" parameterType="pDto">
 	INSERT INTO PLACE
-	(PLACE_SEQ, ONEDAY_SEQ, STEP, PLACE_NAME, XLAT, YLNG, MEMO)
-	VALUES(SEQ_ONEDAY.NEXTVAL, #{oneday_seq}, #{step}, #{place_name}, #{xlat}, #{ylng}, '')
+	(PLACE_SEQ, ONEDAY_SEQ, PLACE_NAME, STEP, XLAT, YLNG, MEMO)
+	VALUES(SEQ_ONEDAY.NEXTVAL, #{oneday_seq}, #{place_name}, (SELECT NVL(MAX(STEP)+1,1) FROM PLACE WHERE ONEDAY_SEQ=#{oneday_seq}), #{xlat}, #{ylng}, '')
+	
 	</insert>
 	
+	<!-- 장소 수정 위 버튼1 -->
 	<!-- ONEDAY_SEQ,  PLACE_SEQ						DTO		Integer		modifyUpPlace		modifyUpPlace.do -->
 	<update id="modifyUpPlace1" parameterType="pDto">
 	UPDATE PLACE
@@ -42,13 +43,14 @@
 	WHERE ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
 	</update>
 	
+	<!-- 장소 수정 위 버튼2 -->
 	<update id="modifyUpPlace2" parameterType="pDto">
 	UPDATE PLACE
 	SET STEP = STEP+1
 	WHERE  ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
 	</update>
 	
-	
+	<!-- 장소 수정 아래 버튼 1-->
 	<!-- ONEDAY_SEQ,  PLACE_SEQ						DTO		Integer		modifyDownPlace		modifyDownPlace.do -->
 	<update id="modifyDownPlace1" parameterType="pDto">
 	UPDATE PLACE
@@ -56,26 +58,29 @@
 	WHERE ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
 	</update>
 	
+	<!-- 장소 수정 아래 버튼 2-->
 	<update id="modifyDownPlace2" parameterType="pDto">
 	UPDATE PLACE 
 	SET STEP = STEP-1
 	WHERE ONEDAY_SEQ = #{oneday_seq} AND PLACE_SEQ = #{place_seq}
 	</update>
 
+	<!-- 장소 삭제 해당하는 seq보다 step이 높을 시 step-1 -->
 	<!-- PLACE_SEQ									String		Integer		stepMinus			stepMinus.do -->
-	<update id="stepMinus" parameterType="java.lang.String">
+	<update id="stepMinus" parameterType="pDto">
 	UPDATE PLACE
 	SET STEP = STEP-1
-	WHERE STEP > (SELECT STEP FROM PLACE WHERE PLACE_SEQ=#{place_seq}) <!-- 삭제할 seq로 받아야함 -->
+	WHERE STEP > (SELECT STEP FROM PLACE WHERE PLACE_SEQ=#{place_seq} AND ONEDAY_SEQ = #{oneday_seq}) <!-- AND ONEDAY_SEQ = #{oneday_seq} -->
 	</update>
 	
+	<!-- 장소 삭제-->
 	<!-- PLACE_SEQ									String		Integer		delPlace			delPlace.do -->
 	<delete id="delPlace" parameterType="java.lang.String">
 	DELETE FROM PLACE
 	WHERE PLACE_SEQ=#{place_seq}
 	</delete>
 	
-	
+	<!-- 장소에 대한 메모 추가 -->
 	<!-- PLACE_SEQ, MEMO							DTO			Integer		addMemo				addMemo.do -->
 	<update id="addMemo" parameterType="pDto">
 	UPDATE PLACE

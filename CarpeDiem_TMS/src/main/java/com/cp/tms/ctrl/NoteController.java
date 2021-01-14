@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,9 @@ public class NoteController {
 	INoteService service;
 	
 	@RequestMapping(value = "/notePaging.do", method = RequestMethod.GET)
-	public String notePaging(Model model, String page) {
+	public String notePaging(Model model, String page, HttpSession session) {
+		session.setAttribute("email", "A001"); //원래는 받아와서 써야함
+		
 		System.out.println("넘어온 page의 값은"+page);
 		if(page == null) {
 			page = "1";
@@ -55,7 +59,7 @@ public class NoteController {
 		p.setEndPage(p.getCountPage());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("email", "A001");
+		map.put("email", session.getAttribute("email"));
 		map.put("first", (p.getPage()-1)*p.getCountList()+1);
 		map.put("last", p.getPage()*p.getCountList());
 		
@@ -65,37 +69,37 @@ public class NoteController {
 		
 		model.addAttribute("pageList",pageList);
 		model.addAttribute("page", p);
+//		model.addAttribute("email", session.getAttribute("email"));
 		return "notePaging";
 	}
 	
 	
 	@RequestMapping(value ="/writeNoteForm.do", method = RequestMethod.GET)
 	public String writeNoteForm(Model model) {
-		String email = "A001";
-		model.addAttribute("email", email);
 		return "writeNoteForm";
 	}
 	
 	@RequestMapping(value = "/writeNote.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String writeNote(String email, String title) {
-		
+	public String writeNote(String title, String email) {
+		System.out.println(email);
 		NoteDto dto = new NoteDto();
 		dto.setEmail(email);
 		dto.setNote_title(title);
 		service.writeNote(dto);
-		
 		return title;
 	}
 	
 	
 	
 	@RequestMapping(value ="/delOneNote.do", method = RequestMethod.POST)
-	public String delOneNote(String seq) {
+	public String delOneNote(String seq, HttpSession session) {
 		System.out.println(seq);
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("note_seq", seq);
-		map.put("email", "A001");
+		map.put("email", session.getAttribute("email"));
+		
 		boolean isc = service.delOneNote(map);
 		System.out.println(isc);
 		return "redirect:/notePaging.do";
@@ -114,18 +118,13 @@ public class NoteController {
 	
 	@RequestMapping(value = "/modifyNoteForm.do", method = RequestMethod.GET)
 	public String modifyNoteForm(Model model, String seq) {
-		String email = "A001";
-		
 		model.addAttribute("seq", seq);
-		model.addAttribute("email", email);
-		
 		return "modifyNoteForm";
 	}
 	
 	@RequestMapping(value = "/modifyNote", method = RequestMethod.POST)
 	@ResponseBody
 	public String modifyNote(String seq, String email, String title) {
-		
 		NoteDto dto = new NoteDto();
 		dto.setEmail(email);
 		dto.setNote_seq(seq);
@@ -136,14 +135,13 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value = "/detailNote.do", method = RequestMethod.GET)
-	public String detailNote(String seq, Model model) {
-		
-		
+	public String detailNote(String seq, Model model, String page) {
 		List<NoteDto> ndto = service.selDetailNote(seq);
-		System.out.println(ndto);
 		
+		System.out.println(ndto);
 		model.addAttribute("ndto", ndto);
 		model.addAttribute("seq",seq);
+		model.addAttribute("page",page);
 		return "detailNote";
 	}
 }

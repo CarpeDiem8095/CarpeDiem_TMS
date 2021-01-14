@@ -39,37 +39,47 @@ public class ReviewController {
 	
 	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
 	public String reviewList (Model model, String seq, String one_seq) {
-		System.out.println("후기 조회 seq" + seq);
+		System.out.println("장소 seq" + seq);
 		System.out.println("하루 일정 seq" + one_seq);
 		//System.out.println(plService.reviewList(seq));
 		//System.out.println(oneService.selDetailOneday(one_seq));
 		model.addAttribute("reviewList",plService.reviewList(seq));
 		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
+		model.addAttribute("oneday_seq", one_seq);
+		model.addAttribute("seq", seq);
 		return "reviewsList";
 	}
 	
 	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
-	public String reviewForm() {
-
+	public String reviewForm(ReviewDto dto) {
+		boolean isc = service.writeReveiw(dto);
+		System.out.println(isc);
 		return "reviewForm";
 	}
 	
 	@RequestMapping(value = "/fileUpload.do", method=RequestMethod.POST)
-	@ResponseBody
+	//@ResponseBody
 	public String fileUpload(HttpServletRequest req, Model model, ReviewDto dto) throws IOException {
+		// seq 받아옴
+		
 		
 		// 경로
 		String directory = "/Users/EUNSOL/CarpeDiem_TMS_WorkSpace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps";
-		
-		System.out.println("절대경로 :"+directory);
+		//System.out.println("절대경로 :"+directory);
 		
 		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
 		String encoding = "UTF-8";
 
 		MultipartRequest multi = new MultipartRequest(req, directory, maxPortSize, encoding, new DefaultFileRenamePolicy());
+
+		String one_seq = multi.getParameter("oneday_seq");
+		String seq = multi.getParameter("seq");
+		String content = multi.getParameter("content");
+		System.out.println("받아오는 컨텐트 값 : "+content);
 		
 		// 파일 내용 
 		String origin_name = multi.getOriginalFileName("filename");
+		
 		System.out.println("전달 받은 파일명 :"+origin_name);
 		
 		// 파일 받기
@@ -82,16 +92,18 @@ public class ReviewController {
 		dto.setUuid_name(uuid_name);
 		dto.setImg_url(directory);
 		dto.setPlace_seq("2");
-		//dto.setContent(content);
+		dto.setContent(content);
 		
 		System.out.println("완성된 파일 DTO : "+ dto);
+		
 		
 		// 서비스 실행
 		boolean isc = service.writeReveiw(dto);
 		System.out.println(isc);
 		
-		
-		return null;
+		return "redirect:/reviewsList.do?seq="+seq+"&one_seq="+one_seq;
 	}
+	
+	//reviewsList.do?seq="+seq+"&one_seq="+one_seq
 	
 }

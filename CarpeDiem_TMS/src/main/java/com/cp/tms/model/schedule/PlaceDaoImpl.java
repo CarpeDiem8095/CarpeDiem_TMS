@@ -40,8 +40,8 @@ public class PlaceDaoImpl implements IPlaceDao{
 	}
 
 	@Override
-	public boolean stepMinus(String seq) {
-		return session.update(NS+"stepMinus", seq)>0?true:false;
+	public boolean stepMinus(PlaceDto dto) {
+		return session.update(NS+"stepMinus", dto)>0?true:false;
 	}
 
 	@Override

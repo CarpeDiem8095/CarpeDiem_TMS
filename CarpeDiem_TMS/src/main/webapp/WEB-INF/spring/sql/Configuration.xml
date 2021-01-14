@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
 
 	<typeAliases>
 		<typeAlias type="com.cp.tms.dto.TripboadDto" alias="tsbDto"/>
@@ -12,7 +16,6 @@
 		<typeAlias type="com.cp.tms.dto.QuestionDto" alias="qDto"/>
 		<typeAlias type="com.cp.tms.dto.ReportDto" alias="rDto"/>
 		<typeAlias type="com.cp.tms.dto.Member" alias="memDto"/>
-		<typeAlias type="com.cp.tms.dto.LoginDTO" alias="loDto"/>
 		<typeAlias type="com.cp.tms.dto.ReviewDto" alias="revDto"/>
 		<typeAlias type="com.cp.tms.dto.CommentDto" alias="comDto"/>
 	</typeAliases>

@@ -10,19 +10,17 @@
 <body>
 	<div>
 		<c:forEach var="oneday" items="${selDetailOneday}">
-			<div>${oneday.oneday_title}</div>
+			<div style="font-style:italic; color: red;">${oneday.oneday_title}</div>
 			<c:forEach var="place" items="${oneday.placeDto}">
 				<c:choose>
 					<c:when test="${place.step eq '1'}">
 						<div>${place.place_name}</div>
 					</c:when>
 					<c:otherwise>
-						<div><button onclick="viewPath(${place.place_name})">경로보기</button></div>		
+						<div><input type="button" onclick="viewPath(${place.place_name})" value="경로보기"/></div>
 						<div>${place.place_name}</div>
 					</c:otherwise>
 				</c:choose>
-<%-- 				<div>${place.xlat}</div> --%>
-<%-- 				<div>${place.ylng}</div> --%>
 				<input type="hidden" name="myTitle" value="${place.place_name}"/>
 				<input type="hidden" name="myX" value="${place.xlat}"/>
 				<input type="hidden" name="myY" value="${place.ylng}"/>

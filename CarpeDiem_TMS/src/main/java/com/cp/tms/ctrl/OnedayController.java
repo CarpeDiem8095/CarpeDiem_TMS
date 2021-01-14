@@ -56,15 +56,17 @@ public class OnedayController {
 	}
 	
 	@RequestMapping(value="/insertPlacePage.do", method = RequestMethod.GET)
-	public String insertPlace(Model model, String seq) {
+	public String insertPlace(Model model, String seq, String noteSeq) {
 		model.addAttribute("seq",seq);
 		
 		List<OnedayDto> oneDto = service.selDetailOneday(seq);
 		System.out.println("하루일정의 seq값 = "+seq);
 		System.out.println(oneDto);
 		
+		model.addAttribute("note_seq", noteSeq);
 		model.addAttribute("onedaySeq", seq);
 		model.addAttribute("oneDto", oneDto);
+		
 		return "insertPlace";
 	}
 	
