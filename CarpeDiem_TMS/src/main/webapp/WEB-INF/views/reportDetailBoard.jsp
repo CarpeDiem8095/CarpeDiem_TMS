@@ -19,7 +19,6 @@
 	<div id="container">
 		<h3>신고처리 게시판</h3>
 		<table class="table">
-		<c:forEach var="dto" items="${reDto}">
 			<tr>
 				<th>신고대상</th>
 				<td>
@@ -35,16 +34,15 @@
 			<tr>
 				<th>신고사유</th>
 				<td>
-					<input type="text" class="form-control" name="report_type" value="${dto.report_type}" readonly>
+					<input type="text" class="form-control" name="report_type" value="${detail.report_type}" readonly>
 				</td>
 			</tr>
 			<tr>
 				<th></th>
 				<td>
-					<input type="text" class="form-control" name="content" value="${dto.content}" readonly>
+					<input type="text" class="form-control" name="content" value="${detail.content}" readonly>
 				</td>
 			</tr>
-		</c:forEach>
 		</table>
 	</div>
 </body>
