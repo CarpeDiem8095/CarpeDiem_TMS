@@ -102,7 +102,26 @@
     	  self.close();
     	  disconnect();
    }
-      
+   
+   //삭제 버튼 눌렀을때
+   function delroom(){
+	   var chatmember = document.getElementById("chatmember").value;
+	   $.ajax({
+				url : "./chatdel.do",
+				type : "post",	
+				//업데이트를 위해 db의 chatmember, content을 보냄
+				data : "chatgroupid="+chatmember+"&chatmyid="+<%=chat_id%>,
+				success : function(msg) {
+					var isc = msg;
+					if(isc =="성공"){
+						alert(isc);
+					}
+				}
+			});
+ 	  self.close();
+ 	  disconnect();
+   }
+   
    // ws server 종료
       function disconnect() {
          ws.close();
