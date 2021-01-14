@@ -34,13 +34,13 @@
 	<c:forEach var="i" items="${commentList}" varStatus="vs">
 	<div>
 		<div class="showMeTheForm">
-			${i.email}${i.content}<input type="button" value="답글">
+			${i.comm_seq}${i.email}${i.content}<input type="button" value="답글">
 		</div>
 	<form action="./writeReply.do" method="post">
 		<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 <%-- 	<input type="hidden" name="comm_seq" value="${comm_seq}" > --%>
 		<div class="re_Form">  
-			<input type="text"><input type="submit" value="작성">
+			<input type="text" name="contetn" class =""><input type="submit" value="작성">
 		</div>
 	</form>
 	</div>
