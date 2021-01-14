@@ -36,7 +36,7 @@
 			<table class="table table-bordered">
 				<tr class="info">
 					<th>글 번호</th>
-					<th>신고유형</th>
+					<th>신고사유</th>
 					<th>등록일</th>
 					<th>작성자</th>
 					<th>처리여부</th>
@@ -44,12 +44,12 @@
 				</tr>
 				<c:forEach var="dto" items="${reDto}">
 				<tr>
-					<td>${dto.seq}</td>
-					<td><a href="./reportDetail.do?seq=${dto.seq}">${dto.report_type}</a></td>
-					<td><fmt:formatDate value="${dto.text_regdate}" pattern="yyyy-MM-dd"/></td>
-					<td>${dto.email}</td>
-					<td>${dto.processing_status}</td>
-					<td>${dto.board_type}</td>
+					<td style="text-align: center; vertical-align: middle; width: 90px;">${dto.seq}</td>
+					<td style="text-align: center; vertical-align: middle; height: 56px;"><a href="./reportDetail.do?seq=${dto.seq}">${dto.report_type}</a></td>
+					<td style="text-align: center; vertical-align: middle;"><fmt:formatDate value="${dto.text_regdate}" pattern="yyyy-MM-dd"/></td>
+					<td style="text-align: center; vertical-align: middle;">${dto.email}</td>
+					<td style="text-align: center; vertical-align: middle;">${dto.processing_status}</td>
+					<td style="text-align: center; vertical-align: middle;">${dto.board_type}</td>
 				</tr>
 				</c:forEach>
 			</table>
