@@ -70,7 +70,7 @@
 	<update id="stepMinus" parameterType="pDto">
 	UPDATE PLACE
 	SET STEP = STEP-1
-	WHERE STEP > (SELECT STEP FROM PLACE WHERE PLACE_SEQ=#{place_seq} AND ONEDAY_SEQ = #{oneday_seq}) <!-- AND ONEDAY_SEQ = #{oneday_seq} -->
+	WHERE STEP > (SELECT STEP FROM PLACE WHERE PLACE_SEQ=#{place_seq}) AND ONEDAY_SEQ = #{oneday_seq} <!-- AND ONEDAY_SEQ = #{oneday_seq} -->
 	</update>
 	
 	<!-- 장소 삭제-->
