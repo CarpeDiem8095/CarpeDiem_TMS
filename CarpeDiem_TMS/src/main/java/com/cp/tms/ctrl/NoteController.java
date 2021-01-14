@@ -25,10 +25,10 @@ public class NoteController {
 	
 	@RequestMapping(value = "/notePaging.do", method = RequestMethod.GET)
 	public String notePaging(Model model, String page, HttpSession session) {
-		session.setAttribute("email", "A001"); //원래는 받아와서 써야함
+		session.setAttribute("email", "A001"); //원래는 받아와서 써야함 
 		
 		System.out.println("넘어온 page의 값은"+page);
-		if(page == null) {
+		if(page == null || page == "") {
 			page = "1";
 		}
 		

@@ -264,7 +264,6 @@
 			</c:forEach>
 		</table>
 		<div>
-			${onedaySeq}
 			<input type="hidden" value="${note_seq}" name="note_seq">
 			<input type="button" value="뒤로가기" onclick="location.href='./detailNote.do?seq=${note_seq}'">
 			<!-- place값이 없으면 활성화 안되게 해야함 -->
