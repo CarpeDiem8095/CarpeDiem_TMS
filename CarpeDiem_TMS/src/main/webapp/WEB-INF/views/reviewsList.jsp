@@ -32,17 +32,14 @@ a {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-
 	<div id="container">
 		<h3>하루 일정</h3>
 		<div class="panel-group" id="accordion">
 			<c:forEach var="oneday" items="${selDetailOneday}">
 				<div>${oneday.oneday_title}</div>
-				
 				<c:forEach var="p" items="${oneday.placeDto}">
 				<div>
 					<div class="showMeTheForm" >
-					
 						<button class="w3-btn w3-block w3-black w3-left-align">
 						${p.place_name} ${p.place_seq}
 						</button>
@@ -62,10 +59,7 @@ a {
 				</div>
 				</c:forEach>
 			</c:forEach>
-
-
 		</div>
-
 	</div>
 	
 	<script type="text/javascript">

@@ -5,31 +5,90 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>하루 일정 조회</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style type="text/css">
+#container {
+	width: 800px;
+	height: 540px;
+	margin: 40px auto;
+}
+
+th {
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	vertical-align: -webkit-baseline-middle;
+	margin-left: 10px;
+}
+</style>
 <body>
-	<div>
-		<c:forEach var="oneday" items="${selDetailOneday}">
-			<div style="font-style:italic; color: red;">${oneday.oneday_title}</div>
-			<c:forEach var="place" items="${oneday.placeDto}">
-				<c:choose>
-					<c:when test="${place.step eq '1'}">
-						<div>${place.place_name}</div>
-					</c:when>
-					<c:otherwise>
-						<div><input type="button" onclick="viewPath(${place.place_name})" value="경로보기"/></div>
-						<div>${place.place_name}</div>
-					</c:otherwise>
-				</c:choose>
-				<input type="hidden" name="myTitle" value="${place.place_name}"/>
-				<input type="hidden" name="myX" value="${place.xlat}"/>
-				<input type="hidden" name="myY" value="${place.ylng}"/>
-			</c:forEach>
-		</c:forEach>
-	</div>
-	
+	<div id="container">
+		<h3>하루 일정</h3>
+			<div class="panel-group" id="accordion">
+				<c:forEach var="oneday" items="${selDetailOneday}">
+					<div style="font-style:italic; color: red;">${oneday.oneday_title}</div>
+					<c:forEach var="p" items="${oneday.placeDto}" varStatus="vs">
+					<c:choose>
+						<c:when test="${p.step eq '1'}">
+						<div>
+							<div class="showMeTheForm" >
+								<button class="w3-btn w3-block w3-black w3-left-align">
+								${p.place_name}
+								</button>
+								<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
+							</div>
+							<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
+								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
+									<div class="revForm" class="w3-container w3-hide">
+										<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
+										<div>
+											<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
+											<div><input type="text" style="width:540px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
+											<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
+										</div>
+									</div>
+								</form>
+						</div>
+						</c:when>
+						<c:otherwise>
+							<div>
+								<div><input type="button" onclick="viewPath(${p.place_name})" value="경로보기"/></div>
+								<div>
+									<div class="showMeTheForm" >
+									<button class="w3-btn w3-block w3-black w3-left-align">
+									${p.place_name}
+									</button>
+									<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
+									</div>
+									<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
+									<input type="hidden" name="oneday_seq" value="${oneday_seq}">
+										<div class="revForm" class="w3-container w3-hide">
+											<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
+											<div>
+												<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
+												<div><input type="text" style="width:540px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
+												<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</c:otherwise>
+						</c:choose>
+								<input type="hidden" name="myTitle" value="${p.place_name}"/>
+								<input type="hidden" name="myX" value="${p.xlat}"/>
+								<input type="hidden" name="myY" value="${p.ylng}"/>
+						</c:forEach>
+					</c:forEach>
+				</div>
+			</div>
 	<div id="map" style="width: 500px; height: 400px;"></div>
-	
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
@@ -42,14 +101,14 @@
 
 		var options = {
 			center : new kakao.maps.LatLng(33.3766655, 126.542220),
-			level : 1
+			level : 10
 		};
 
 		var map = new kakao.maps.Map(container, options);
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 		mapOption = {
-			center : new daum.maps.LatLng(33.3766655, 126.542220), // 지도의 중심좌표
-			level : 10
+			center : new daum.maps.LatLng(x[0].value, y[0].value), // 지도의 중심좌표
+			level : 8
 		// 지도의 확대 레벨
 		};
 		
@@ -152,14 +211,68 @@
 		    };
 		}
 	</script>
-	
 	<script type="text/javascript">
-	 function viewPath(place_name){
-		 alert(place_name);
+	 function viewPath(pname){
+		 alert(pname);
 // 			var url = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C523953%2C1084098&rt1=넥슨코리아본사&rr2="+name+"&rtIds=%2C&rtTypes=%2C"
 // 			var title = "길찾기";
 // 			var attr = "width=400px, height=200px";
 // 		 window.open(url, title, attr);
 	 }
+	</script>
+	<script type="text/javascript">
+	// forData에 담을 요소 
+    //ID가 btnSave를 클릭할때 onclick="save(${p.place_seq})
+// 	function save(id) {
+		
+//     	var formData = {};
+    	
+//     	formData.content = document.getElementById('content_'+id).value;
+//     	//formData.filename = document.getElementById('uploadFile_' + id).value;
+//     	formData.filename = document.getElementById('uploadFile_' + id).files[0];
+//     	console.table(formData);
+//         //비동기 요청
+//          $.ajax({
+//             type : "post", 
+//             url : "fileUpload.do", 
+//             data : formData, 
+//             contentType : 'multipart/form-data', // true=application/x-www-form-urlencoded, false=multipart/form-data
+//             processData : false,
+//             success : function(data) { //성공시
+//             	if(data == "success"){
+//     				alert("등록이 완료되었습니다.")
+//     				document.location.href="./reviewsList.do";
+//     			}
+//     		},
+//             error : function(error) {
+//                 alert("오류 발생"+ error);
+//             }
+//         });
+//     }
+	// 아코디언 메뉴 롤업
+	$(document).ready(function() {	
+		$(".revForm").hide();
+		$(".showMeTheForm").click(function(){
+			$(".revForm").hide();
+			$(this).parent().find(".revForm").slideToggle('slow');
+		});
+	 });
+	
+	
+	// 등록 된 이미지 미리보기
+	function readInputFile(input) {
+	    if(input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $('#preview_${p.place_seq}').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
+	        }
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+	 
+	// 등록된 이미지 바꾸기 
+	$(".uploadFile").on('change', function(){
+	    readInputFile(this);
+	});	
 	</script>
 </html>
