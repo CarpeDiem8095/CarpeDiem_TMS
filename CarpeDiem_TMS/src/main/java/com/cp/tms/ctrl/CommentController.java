@@ -47,7 +47,6 @@ public class CommentController {
 	
 	
 	// 댓글의 댓글 작성 
-	
 	@RequestMapping(value = "/writeReply.do", method = RequestMethod.POST)
 	@Transactional
 	public String writeReply(CommentDto dto, HttpServletRequest req) {
