@@ -50,11 +50,12 @@ public class CommentController {
 	
 	@RequestMapping(value = "/writeReply.do", method = RequestMethod.POST)
 	@Transactional
-	public String writeReply(CommentDto dto, Model model, String comm_seq, HttpServletRequest req) {
+	public String writeReply(CommentDto dto, HttpServletRequest req) {
 		String one_seq = req.getParameter("oneday_seq");
 		dto.setEmail("A002");
-		System.out.println("댓글 댓글에서 받는 one_seq : " + one_seq);
-		model.addAttribute(comm_seq, "comm_seq");
+		dto.setComm_seq("37");
+	//	System.out.println("댓글 댓글에서 받는 one_seq : " + one_seq);
+	//	model.addAttribute(comm_seq, "comm_seq");
 		boolean isc = service.reply(dto);
 		System.out.println(isc);
 		return "redirect:/commnetList.do?one_seq="+one_seq;
