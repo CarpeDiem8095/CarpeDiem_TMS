@@ -20,9 +20,8 @@
 	<!-- 로그인 확인 -->
 	<select id="loginMember" parameterType="java.util.Map" resultType="memDto">
 	SELECT EMAIL,PASSWORD,WITHDRAWAL FROM "MEMBER"
-	WHERE EMAIL =#{email}
-	AND PASSWORD =#{password}
-	AND WITHDRAWAL ='N'
+	WHERE EMAIL = #{email}
+	AND PASSWORD = #{password}
 	</select>
 	
 	

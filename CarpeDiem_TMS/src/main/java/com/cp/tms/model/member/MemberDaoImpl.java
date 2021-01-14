@@ -13,7 +13,7 @@ import com.cp.tms.dto.Member;
 @Repository
 public class MemberDaoImpl implements IMemberDao {
 	
-	private final String CP = "com.cp.tms.model.member.MemberDao.";
+	private final String CP = "com.cp.tms.model.member.IMemberDao.";
 	
 	@Autowired
 	private SqlSessionTemplate SqlSession;
@@ -32,8 +32,10 @@ public class MemberDaoImpl implements IMemberDao {
 
 	@Override
 	public Member loginMember(Map<String, Object> map) {
-		Member dto = SqlSession.selectOne(CP+"loginMember", map);
+		Member dto = SqlSession.selectOne("memDto.loginMember", map);
+		
 		return dto;
+		
 	}
 
 

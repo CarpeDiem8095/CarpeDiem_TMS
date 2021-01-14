@@ -150,8 +150,12 @@
 	
 	
 	window.onload = function(){
+		alert("작동");
+// 	document.getElementById("").onclick = function(){
 // 		alert("작동");
-	}
+// 		location.href="./register.do";
+// 		}
+	};
 		
 		
 		function loginChkeck(){
@@ -159,33 +163,37 @@
 		var password = document.getElementById("InputPassword").value;
 		var frm = document.frm;
 // 		alert(frm);
-		frm.action="./loginCheckMap.do"; //ajax에서 이동
+		frm.action="./login.do"; //ajax에서 이동
 		
 		var result="";
+		
 		if (email==""|| email.trim()=="") {
 			document.getElementById("InputEmail").focus();
 			$("InputEmail").val("");
-			swal("로그인","이메일을 입력해주세요");
+			alert("이메일을 입력해주세요");
 		
+			
 		}else if(password==""|| password.trim()==""){
 			document.getElementById("InputPassword").focus();
 			$("InputPassword").val("");
-			swal("로그인","비밀번호를 입력해주세요");
+			alert("비밀번호를 입력해주세요");
+			
 		}else{
 			$.ajax({
 				type:"post",
 				url:"./loginCheckMap.do",
 				data:"email="+email+"&password="+password,
 				success:function(msg){
+					alert(msg.isc);
 					if (msg.isc=="성공") {
 						frm.submit();
 						
 					}else{
-						swal("로그인","해당 이메일은 존재하지않습니다 회원가입을 진행해주세요");
+						alert("해당 이메일은 존재하지않습니다 회원가입을 진행해주세요");
 					}
 				},
 				error:function(){
-					swal("로그인","로그인에문제가발생했습니다.");
+					alert("로그인에 문제가 발생했습니다.");
 				}
 			});
 		}
@@ -209,15 +217,14 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-
 					<form method="post" name="frm">
 						<div class="form-group has-feedback">
-							<input type="text" id="InputEmail" class="form-control" placeholder="이메일">
+							<input type="text" id="InputEmail" class="form-control" value="qr2277@naver.com" placeholder="이메일">
 							<span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
 						</div>
 
 						<div class="form-group has-feedback">
-							<input type="password" id="InputPassword" class="form-control" placeholder="비밀번호" onclick="enterkey()">
+							<input type="password" id="InputPassword" class="form-control" value="tjrrb1111" placeholder="비밀번호" onkeyup="enterkey()">
 							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 						
