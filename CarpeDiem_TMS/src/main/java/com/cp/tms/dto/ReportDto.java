@@ -1,12 +1,17 @@
 package com.cp.tms.dto;
 
-public class ReportDto {
+import java.io.Serializable;
+import java.util.Date;
 
+public class ReportDto implements Serializable {
+
+	private static final long serialVersionUID = 2712529924623742976L;
+	
 	private int seq;
 	private String email;
 	private String report_type;
 	private String content;
-	private String text_regdate;
+	private Date text_regdate;
 	private String processing_status;
 	private String board_type;
 	
@@ -53,11 +58,11 @@ public class ReportDto {
 		this.content = content;
 	}
 
-	public String getText_regdate() {
+	public Date getText_regdate() {
 		return text_regdate;
 	}
 
-	public void setText_regdate(String text_regdate) {
+	public void setText_regdate(Date text_regdate) {
 		this.text_regdate = text_regdate;
 	}
 

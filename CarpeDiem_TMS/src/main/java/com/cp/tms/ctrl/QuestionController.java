@@ -12,21 +12,86 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.QuestionDto;
 import com.cp.tms.model.support.IQuestionService;
 
 @Controller
-public class SupportController {
+public class QuestionController {
 
 	@Autowired
 	private IQuestionService service;
 	
 	// 문의 게시판으로 이동(전체 조회)
-	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
-	public String questionBoard(Model model) {
-		List<QuestionDto> lists = service.userQuestionboardList();
-		model.addAttribute("questionLists", lists);
+//	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
+//	public String questionBoard(Model model) {
+//		List<QuestionDto> lists = service.userQuestionboardList();
+//		model.addAttribute("questionLists", lists);
 //		System.out.println(lists);
+//		return "questionBoard";
+//	}
+	
+	// 문의 게시판으로 이동(전체 조회-페이징)
+	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
+	public String questionBoard(Model model, String page) {
+//		System.out.println("넘어온 page: "+page);
+		
+		if (page == null) {
+			page = "1";
+		}
+		
+		int selPage = Integer.parseInt(page);
+//		System.out.println("선택된 페이지: "+selPage);
+		
+		Paging p = new Paging();
+		
+		// 총 게시글의 수
+		// 비회원, 회원
+		p.setTotalCount(service.userTotalCount());
+		// 관리자
+//		p.setTotalcount(service.adminTotalCount());
+		
+		// 보여줄 게시글의 수
+		p.setCountList(5);
+		
+		// 보여줄 페이지의 수
+		p.setCountPage(3);
+		
+		// 총 페이지의 수
+		p.setTotalPage(p.getTotalCount());
+		
+		// 선택한 페이지
+		p.setPage(selPage);
+		
+		// 시작 페이지
+		p.setStartPage(selPage);
+		
+		// 마지막 페이지
+		p.setEndPage(p.getCountPage());
+
+		System.out.println(p);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("first", (p.getPage()-1)*p.getCountList()+1);
+		map.put("last", p.getPage()*p.getCountList());
+//		System.out.println("시작 페이지: "+map.get("first"));
+//		System.out.println("마지막 페이지: "+map.get("last"));
+		
+		// 비회원, 회원
+		List<QuestionDto> qUserDto = service.userQuestionboardList(map);
+		// 관리자
+//		List<QuestionDto> qAdminDto = service.adminQuestionboardList(map);
+		
+		// 비회원, 회원
+		model.addAttribute("questionLists", qUserDto);
+		// 관리자
+//		model.addAttribute("questionLists", qAdminDto);
+		
+		model.addAttribute("page", p);
+		
+//		System.out.println("선택된 페이지의 글 목록: "+qUserDto);
+//		System.out.println("선택된 페이지의 페이징dto: "+p);
+		
 		return "questionBoard";
 	}
 	
@@ -91,19 +156,21 @@ public class SupportController {
 		json.put("writer", dto.getWriter());
 		json.put("title", dto.getTitle());
 		json.put("content", dto.getContent());
-		System.out.println(json.toString());
+//		System.out.println("선택된 글의 값: "+json.toString());
 		return json.toString();
 	}
 	
 	// 글 수정
 	@RequestMapping(value = "/modify.do", method = RequestMethod.POST)
-	public String modify(Model model, String seq) {
+	public String modify(Model model, String seq, String title, String content) {
 		Map<String, Object> map = new HashMap<String, Object>();
-//		System.out.println("dto: " + dto);
 		map.put("seq", seq);
+		map.put("title", title);
+		map.put("content", content);
 		model.addAttribute("seq", seq);
-		System.out.println(seq);
+//		System.out.println("model에 담아준 seq: "+seq);
 		boolean isc = service.modifyQuestionboard(map);
+		System.out.println("글 수정 성공여부: "+service.modifyQuestionboard(map));
 		return "redirect:/questionBoard.do";
 	}
 	

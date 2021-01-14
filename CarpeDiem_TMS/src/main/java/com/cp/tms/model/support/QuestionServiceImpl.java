@@ -14,16 +14,38 @@ public class QuestionServiceImpl implements IQuestionService {
 	@Autowired
 	private IQuestionDao dao;
 	
+	// test용 전체글 조회
+//	@Override
+//	public List<QuestionDto> userQuestionboardList() {
+//		return dao.userQuestionboardList();
+//	}
+
+//	@Override
+//	public List<QuestionDto> adminQuestionboardList() {
+//		return dao.adminQuestionboardList();
+//	}
+	
+	// 페이징
 	@Override
-	public List<QuestionDto> userQuestionboardList() {
-		return dao.userQuestionboardList();
+	public List<QuestionDto> userQuestionboardList(Map<String, Object> map) {
+		return dao.userQuestionboardList(map);
 	}
 
 	@Override
-	public List<QuestionDto> adminQuestionboardList() {
-		return dao.adminQuestionboardList();
+	public List<QuestionDto> adminQuestionboardList(Map<String, Object> map) {
+		return dao.adminQuestionboardList(map);
 	}
 
+	@Override
+	public int userTotalCount() {
+		return dao.userTotalCount();
+	}
+
+	@Override
+	public int adminTotalCount() {
+		return dao.adminTotalCount();
+	}
+	
 	@Override
 	public QuestionDto questionDetailBoard(String seq) {
 		return dao.questionDetailBoard(seq);

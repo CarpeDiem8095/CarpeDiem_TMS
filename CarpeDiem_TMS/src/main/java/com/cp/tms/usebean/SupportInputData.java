@@ -52,15 +52,14 @@ public class SupportInputData {
 		StringBuffer sb = new StringBuffer();
 		int n = 5;
 		
-//		sb.append("<c:set var='len' value='${fn:length(lists)}'/>");
 		if (dto.getDelflag().equalsIgnoreCase("N")) {
 			sb.append("<tr>");
 			// 체크박스는 관리자만 보이게
 			sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px;'>");
 			sb.append("		<input type='checkbox' name='chkVal' value='"+dto.getSeq()+"'>");
 			sb.append("	</td>");
-			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getSeq()+"</td>");
-			sb.append("	<td class='panel-heading' style='vertical-align: middle; height: 56px;'>");
+			sb.append("	<td style='text-align: center; vertical-align: middle; width: 90px;'>"+dto.getSeq()+"</td>");
+			sb.append("	<td class='panel-heading' style='vertical-align: middle; height: 56px; width: 295px;'>");
 			sb.append("		<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+dto.getSeq()+"' onclick='collapse(\""+dto.getSeq()+"\")'>");
 			sb.append(replyImage(dto.getDepth()) + dto.getTitle());
 			sb.append("		</a>");
