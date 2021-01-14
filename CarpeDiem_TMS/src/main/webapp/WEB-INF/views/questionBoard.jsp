@@ -26,6 +26,10 @@
 		vertical-align: -webkit-baseline-middle;
 		margin-left: 10px;
 	}
+	
+	.table>tbody>tr>td {
+		padding: 0;
+	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -47,7 +51,7 @@
 						<th>등록일</th>
 						<th>작성자</th>
 						<!-- 관리자는 삭제여부 필요 -->
-						<th>삭제여부</th>
+<!-- 						<th>삭제여부</th> -->
 					</tr>
 					<jsp:useBean id="data" class="com.cp.tms.usebean.SupportInputData" scope="page"/>
 					<jsp:setProperty property="questionLists" name="data" value="${questionLists}"/>
@@ -73,9 +77,9 @@
 			</div>
 			
 			<div style="text-align: center; padding-bottom: 20px;">
-	  			<input class="btn btn-primary" type="button" value="글쓰기" onclick="location.href='./writeForm.do'">
+	  			<input type="button" class="btn btn-primary" value="글쓰기" onclick="location.href='./writeForm.do'">
 	  			<!-- 관리자만 보이게 -->
-				<input class="btn btn-primary" type="submit" value="삭제" style="width: 68px">
+				<input type="submit" class="btn btn-primary" value="삭제" style="width: 68px">
 			</div>
 		</form>
 		

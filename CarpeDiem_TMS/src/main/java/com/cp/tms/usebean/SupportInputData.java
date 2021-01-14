@@ -73,7 +73,7 @@ public class SupportInputData {
 			// 작성자: 회원, 관리자는 session 가져오기
 			sb.append("	</td>");
 			// 관리자는 삭제여부 필요
-			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getDelflag()+"</td>");
+//			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getDelflag()+"</td>");
 			sb.append("</tr>");
 			sb.append("<tr>");
 			sb.append("	<td colspan='"+n+"'>");
@@ -84,7 +84,7 @@ public class SupportInputData {
 			//		auth가 'A'면 보이게
 			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
 //			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
-			sb.append("				<input type='button' class='btn-primary' value='비밀번호 입력' onclick='textPw(\""+dto.getSeq()+"\")'>");
+//			sb.append("				<input type='button' class='btn-primary' value='비밀번호 입력' onclick='textPw(\""+dto.getSeq()+"\")'>");
 			
 			sb.append("			</div>");
 			sb.append("			<div class='form-group'>");
