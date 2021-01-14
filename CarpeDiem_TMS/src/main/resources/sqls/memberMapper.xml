@@ -1,20 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cp.tms.dto.Member">
-	<!-- 로그인 확인 -->
-	<insert id="register">
-		INSERT INTO MEMBER(
-		EMAIL,PASSWORD, NICNAME)
-		VALUES(#{Email},#{Password},#{Nickname})
+
+
+	<!-- 회원가입 -->
+	<insert id="sinupMember" parameterType="memDto">
+	INSERT INTO "MEMBER" (EMAIL,NICKNAME,PASSWORD,AUTH,WITHDRAWAL,JOINDATE)
+	VALUES(#{email},#{pw},#{nickname},'U','N',JOINDATE)
 	</insert>
 	
-	<!-- 회원가입 중복확인 -->
-	<select id="checkdupl" resultType="loDto">
-    SELECT Email
-    FROM MEMBER
-    WHERE EMAIL = #{email}
+	
+	<!-- 이메일 중복 체크 -->
+	<select id="idDuplicateCheck" parameterType="java.lang.String" resultType="java.lang.Integer">
+	SELECT COUNT(EMAIL) EMAIL FROM "MEMBER"
+	WHERE EMAIL = #{email}
+	
 	</select>
 	
+	<!-- 로그인 확인 -->
+	<select id="loginMember" parameterType="java.util.Map" resultType="memDto">
+	SELECT EMAIL,PASSWORD,WITHDRAWAL FROM "MEMBER"
+	WHERE EMAIL =#{email}
+	AND PASSWORD =#{password}
+	AND WITHDRAWAL ='N'
+	</select>
+	
+	
+	<!-- 회원가입 중복확인 -->
+<!-- 	<select id="checkdupl" resultType="loDto"> -->
+<!--     SELECT Email -->
+<!--     FROM MEMBER -->
+<!--     WHERE EMAIL = #{email} -->
+<!-- 	</select> -->
+	
+	<!-- 비밀번호 변경 -->
+<update id="updatePw" >
+	update member set password = #{password} where email = #{email}
+</update>
 	
 	
 	

@@ -13,6 +13,13 @@
 		<property name="username" value="trip"/>
 		<property name="password" value="trip"/>
 	</bean>
+	
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="joseokgyu12@gmail.com"/>
+		<property name="password" value="tjrrbsla1@"/>
+	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

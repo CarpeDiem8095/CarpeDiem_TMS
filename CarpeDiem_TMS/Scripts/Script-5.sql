@@ -1,0 +1,12 @@
+
+	SELECT EMAIL,PASSWORD,WITHDRAWAL FROM "MEMBER" m 
+	WHERE EMAIL ='email'
+	AND PASSWORD ='password'
+	AND WITHDRAWAL ='N';
+
+	SELECT *
+		FROM "MEMBER" m ;
+	
+	
+	UPDATE "MEMBER" SET PASSWORD ='tt0012!'
+	WHERE EMAIL ='joseokgyu@naver.com';
