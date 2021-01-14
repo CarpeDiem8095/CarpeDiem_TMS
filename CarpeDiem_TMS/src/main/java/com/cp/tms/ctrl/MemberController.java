@@ -5,21 +5,21 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.cp.tms.dto.Member;
 import com.cp.tms.model.member.IMemberService;
 
 
 @Controller
-public class MemberCnotroller {
+public class MemberController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -58,10 +58,10 @@ public class MemberCnotroller {
 
 	//로그인
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(Map<String, Object> map, HttpSession session) {
+	public String login(@RequestParam Map<String, Object> map, HttpSession session) {
 		Member mdto = Service.loginMember(map);
 		session.setAttribute("mem", mdto);
-		return "redirect:/register.do";
+		return "redirect:/index";
 	}
 	//로그인 처리
 	@RequestMapping(value = "/loginCheckMap.do", method = RequestMethod.POST)
@@ -71,7 +71,7 @@ public class MemberCnotroller {
 		Map<String, Object> iMap = new HashMap<String, Object>();
 		iMap.put("email", email);
 		iMap.put("password", password);
-		Member mDto=Service.loginMember(iMap);
+		Member mDto = Service.loginMember(iMap);
 		System.out.println("로그인 결과값 : \t" +mDto);
 		if (mDto== null) {
 			map.put("isc", "실패");

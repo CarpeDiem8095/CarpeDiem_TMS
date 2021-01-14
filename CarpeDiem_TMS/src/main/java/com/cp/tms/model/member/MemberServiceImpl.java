@@ -40,7 +40,9 @@ public class MemberServiceImpl implements IMemberService {
 	public Member loginMember(Map<String, Object> map) {
 		logger.info("로그인 loginMember");
 		return Dao.loginMember(map);
+		
 	}
+	
 
 
 
