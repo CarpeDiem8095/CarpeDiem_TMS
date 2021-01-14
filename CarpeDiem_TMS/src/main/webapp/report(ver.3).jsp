@@ -29,7 +29,8 @@
 			</div>
 			<hr>
 			<div class="form-group">
-				<label for="">신고사유</label>
+				<label for="">신고
+유</label>
 				<div class="radio">
 					<label style="margin-left: 10px; margin-bottom: 5px;"><input type="radio" name="optradio">부적절한 홍보 게시글</label><br>
 					<label style="margin-left: 10px; margin-bottom: 5px;"><input type="radio" name="optradio">음란성 또는 청소년에게 부적합한 내용</label><br>
