@@ -47,5 +47,12 @@
 	AND REFFER = #{reffer} AND STEP > #{step}
  </delete>
  
+ <select id="getOneComment" parameterType="java.lang.String" resultType="comDto">
+ 	SELECT COMM_SEQ,ONEDAY_SEQ,
+	EMAIL,REFFER,DEPTH,
+	STEP,REGDATE,CONTENT, REPORTCHK FROM COMMENTBOARD
+	WHERE ONEDAY_SEQ =#{oneday_seq} AND COMM_SEQ=#{comm_seq}
+ </select>
+ 
 
 </mapper>
