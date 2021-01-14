@@ -51,9 +51,8 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
-	public String reviewForm(ReviewDto dto) {
-		boolean isc = service.writeReveiw(dto);
-		System.out.println(isc);
+	public String reviewForm() {
+		
 		return "reviewForm";
 	}
 	
@@ -102,8 +101,11 @@ public class ReviewController {
 		System.out.println(isc);
 		
 		return "redirect:/reviewsList.do?seq="+seq+"&one_seq="+one_seq;
+				
+				
 	}
 	
-	//reviewsList.do?seq="+seq+"&one_seq="+one_seq
+	//"redirect:/reviewsList.do?seq="+seq+"&one_seq="+one_seq;
+	//"redirect:/reviewForm.do"
 	
 }

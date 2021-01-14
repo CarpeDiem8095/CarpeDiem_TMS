@@ -24,7 +24,7 @@
 			   <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">등록</button>
                </span>
-               </div>
+        </div>
 		</form>
 </div>
  <div class="container">
@@ -33,14 +33,20 @@
 
 	<c:forEach var="i" items="${commentList}" varStatus="vs">
 	<div>
-		<div class="showMeTheForm">
-			${i.comm_seq}${i.email}${i.content}<input type="button" value="답글">
-		</div>
+		<span>
+			${i.comm_seq}${i.email}${i.content}
+		</span>
+		<span class="showMeTheForm"><input type="button" value="답글" style="float:right;"></span>
 	<form action="./writeReply.do" method="post">
 		<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 <%-- 	<input type="hidden" name="comm_seq" value="${comm_seq}" > --%>
-		<div class="re_Form">  
-			<input type="text" name="contetn" class =""><input type="submit" value="작성">
+		<div class="re_Form">
+		<div class="input-group">
+			<input type="text" name="content" class ="form-control" placeholder="답글 내용을 입력하세요.">
+			  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">등록</button>
+               </span>
+		</div>  
 		</div>
 	</form>
 	</div>
