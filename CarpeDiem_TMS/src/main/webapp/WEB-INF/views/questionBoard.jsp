@@ -55,13 +55,20 @@
 				</table>
 			</div>
 			
+			<!-- 페이징 -->
 			<div class="center" style="text-align: center;">
 				<ul class="pagination">
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
+					<c:if test="${page.startPage ne 1}">
+						<li><a href="./questionBoard.do?page=1">◀◀</a></li>
+						<li><a href="./questionBoard.do?page=${page.startPage-1}">◁</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}" step="1">
+						<li><a href="./questionBoard.do?page=${i}">&nbsp;&nbsp;${i}&nbsp;&nbsp;</a></li>
+					</c:forEach>
+					<c:if test= "${page.startPage+page.countPage le page.totalPage}">
+						<li><a href="./questionBoard.do?page=${page.endPage+1}">▷</a></li>
+						<li><a href="./questionBoard.do?page=${page.totalPage}">▶▶</a></li>
+					</c:if>
 				</ul>
 			</div>
 			
@@ -82,17 +89,13 @@
 					</div>
 					<div class="modal-body">
 						<form action="#" class="form-margin" method="post" id="frmPW">
-							<input type='hidden' value='${dto.seq}' name='seq'>
-							<table class='table'>
-								<tr>
-									<th style='vertical-align: middle'>비밀번호</th>
-									<td>
-										<input class="form-control" type="password" name="text_pw" maxlength="4" required>
-									</td>
-								</tr>
-							</table>
-							<div class='modal-footer' style='text-align: center'>
-								<input class='btn-primary' type='button' value='확인' onclick='checkPw()'/>
+							<input type="hidden" value="${dto.seq}" name="seq">
+							<div class="form-group">
+								<label for="text_pw">비밀번호</label>
+								<input class="form-control" type="password" id="text_pw" name="text_pw" maxlength="4" required>
+							</div>
+							<div class="modal-footer" style="text-align: center">
+								<input class="btn-primary" type="button" value="확인" onclick="checkPw()"/>
 							</div>
 						</form>
 					</div>

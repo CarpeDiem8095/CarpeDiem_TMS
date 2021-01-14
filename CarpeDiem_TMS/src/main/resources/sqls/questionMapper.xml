@@ -3,22 +3,22 @@
 <mapper namespace="com.cp.tms.model.support.IQuestionDao">
 
 	<!-- 전체조회(비회원/회원) -->
-	<select id="userQuestionboardList" resultType="qDto">
-		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG 
-			FROM QUESTIONBOARD
-				WHERE DELFLAG = 'N'
-				ORDER BY REFER DESC, DEPTH
-	</select>
+<!-- 	<select id="userQuestionboardList" resultType="qDto"> -->
+<!-- 		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG  -->
+<!-- 			FROM QUESTIONBOARD -->
+<!-- 				WHERE DELFLAG = 'N' -->
+<!-- 				ORDER BY REFER DESC, DEPTH -->
+<!-- 	</select> -->
 	
 	<!-- 전체조회(관리자) -->
-	<select id="adminQuestionboardList" resultType="qDto">
-		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG, PUBLIC_STATUS 
-			FROM QUESTIONBOARD
-				ORDER BY REFER DESC, DEPTH
-	</select>
+<!-- 	<select id="adminQuestionboardList" resultType="qDto"> -->
+<!-- 		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG, PUBLIC_STATUS  -->
+<!-- 			FROM QUESTIONBOARD -->
+<!-- 				ORDER BY REFER DESC, DEPTH -->
+<!-- 	</select> -->
 	
 	<!-- 전체조회(비회원/회원-페이징) -->
-	<select id="userQuestionboardListPage" parameterType="java.util.Map" resultType="qDto">
+	<select id="userQuestionboardList" parameterType="java.util.Map" resultType="qDto">
 		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
 			FROM(SELECT ROW_NUMBER() OVER(ORDER BY REFER DESC) RN,
 					SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
@@ -28,7 +28,7 @@
 	</select>
 	
 	<!-- 전체조회(관리자-페이징) -->
-	<select id="adminQuestionboardListPage" parameterType="java.util.Map" resultType="qDto">
+	<select id="adminQuestionboardList" parameterType="java.util.Map" resultType="qDto">
 		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
 			FROM(SELECT ROW_NUMBER() OVER(ORDER BY REFER DESC) RN,
 					SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG

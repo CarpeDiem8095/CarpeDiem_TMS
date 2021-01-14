@@ -3,13 +3,13 @@
 <mapper namespace="com.cp.tms.model.support.IReportDao">
 
 	<!-- 전체조회 -->
-	<select id="reportboardList" parameterType="java.util.Map" resultType="rDto">
-		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE
-			FROM REPORTBOARD r
-	</select>
+<!-- 	<select id="reportboardList" parameterType="java.util.Map" resultType="rDto"> -->
+<!-- 		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE -->
+<!-- 			FROM REPORTBOARD r -->
+<!-- 	</select> -->
 
 	<!-- 전체조회(페이징) -->
-	<select id="reportboardListPage" parameterType="java.util.Map" resultType="rDto">
+	<select id="reportboardList" parameterType="java.util.Map" resultType="rDto">
 		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
 			FROM (SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) RN,
 					SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE
