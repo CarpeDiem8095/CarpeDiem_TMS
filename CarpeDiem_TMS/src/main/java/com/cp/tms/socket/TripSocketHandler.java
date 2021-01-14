@@ -5,18 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestHandler;
-import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.cp.tms.dto.ChatingDto;
-import com.cp.tms.dto.UserDto;
 
 @Component(value = "tripChat.do")
 public class TripSocketHandler extends TextWebSocketHandler {
@@ -52,7 +49,7 @@ public class TripSocketHandler extends TextWebSocketHandler {
 		String myMemSession = (String) mySession.get("chat_id"); // 접속자 아이디
 
 		System.out.println("접속자의 그룹 아이디" + myGrSession);
-		System.out.println("접속자 아이디" + myMemSession);
+		System.out.println("text 접속자 아이디" + myMemSession);
 		System.out.println(msg.indexOf("sung"));
 		if (msg != null && !msg.equals("")) {
 			if (msg.indexOf("#$nick_") > -1) {
@@ -61,8 +58,7 @@ public class TripSocketHandler extends TextWebSocketHandler {
 					String otherGrSession = (String) ChatSession.get("gr_id");
 					String otherMemSession = (String) ChatSession.get("chat_id");
 					System.out.println("다른사람들 그룹 : " + otherGrSession + "다른사람들 아이디" + otherMemSession);
-					String[] other_gr_session = otherGrSession.split(",");
-					if (other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) { 
+					if (myGrSession.equals(otherGrSession)) { 
 						s.sendMessage(
 								new TextMessage("<font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다.</font>"));
 					}
@@ -115,8 +111,7 @@ public class TripSocketHandler extends TextWebSocketHandler {
 		for (WebSocketSession a : list) {
 			Map<String, Object> sessionMap = a.getAttributes();
 			String otherGrSession = (String) sessionMap.get("gr_id");
-			String[] other_gr_session = otherGrSession.split(",");
-			if (other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) {
+			if (myGrSession.equals(otherGrSession)) {
 				a.sendMessage(new TextMessage("<font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now + ")</font>"));
 			}
 		}

@@ -38,6 +38,7 @@ public class TripChatController implements ServletConfigAware {
 		UserDto userdto=tripchatservice.logintest(userid);
 		session.setAttribute("userdto", userdto);
 		String gr_id = "main";
+		session.setAttribute("chat_id", userdto.getUserid());
 		
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
 		if (chatList == null) {
@@ -52,7 +53,6 @@ public class TripChatController implements ServletConfigAware {
 		
 		List<ChatingDto> myChatList=tripchatservice.selmychatboard(userid);
 		model.addAttribute("myChatList", myChatList);
-		
 		return "mainchat";
 	}
 	
@@ -71,27 +71,29 @@ public class TripChatController implements ServletConfigAware {
 		System.out.println("상대방아이디는?" + dto.getChatyourid());
 		System.out.println("그룹아이디는?" + dto.getChatgroupid());
 		
-		UserDto userdto=(UserDto)session.getAttribute("userdto");
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("chatmyid",userdto.getUserid());
+		map.put("chatmyid",session.getAttribute("chat_id"));
 		map.put("chatyourid", dto.getChatyourid());
-		
-		// 가져오기
+		// 가져오기 바꿔서 가져오기
 		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
 		if(seldto == null) {
+			Map<String, Object> map1 = new HashMap<String, Object>();
+			map1.put("chatmyid",dto.getChatyourid());
+			map1.put("chatyourid", session.getAttribute("chat_id"));
+			seldto=tripchatservice.selchatboardcontent(map1);
+			System.out.println("바꿔서도 조회"+seldto);
+		}
+		System.out.println("현제 세션아이디"+ session.getAttribute("chat_id"));
+		if(seldto == null) {
 			// 새로 생성
-			dto.setChatmyid(userdto.getUserid());
+			dto.setChatmyid((String)session.getAttribute("chat_id"));
 			boolean isc=tripchatservice.chatboardinsert(dto);
 			System.out.println("채팅생성 : "+isc);
-			seldto=tripchatservice.selchatboardcontent(map);
-		}else {
 			seldto=tripchatservice.selchatboardcontent(map);
 		}
 		seldto.setChatgroupid(dto.getChatgroupid());
 		model.addAttribute("chatDto", seldto);
 		session.setAttribute("gr_id", seldto.getChatgroupid());
-		session.setAttribute("chat_id", seldto.getChatmyid());
 		return "chatingroom";
 	}
 	
@@ -99,41 +101,40 @@ public class TripChatController implements ServletConfigAware {
 	public String socketOpen2(HttpSession session,ChatingDto dto, Model model) {
 		System.out.println("상대방아이디는?" + dto.getChatyourid());
 		System.out.println("그룹아이디는?" + dto.getChatgroupid());
-		
-		UserDto userdto=(UserDto)session.getAttribute("userdto");
-		
+		System.out.println(dto);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("chatmyid",userdto.getUserid());
+		map.put("chatmyid",dto.getChatmyid());
 		map.put("chatyourid", dto.getChatyourid());
-		
 		// 가져오기
 		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
 		seldto.setChatgroupid(dto.getChatgroupid());
 		model.addAttribute("chatDto", seldto);
+		model.addAttribute("mychatid",(String)session.getAttribute("chat_id"));
 		session.setAttribute("gr_id", seldto.getChatgroupid());
-		session.setAttribute("chat_id", seldto.getChatmyid());
 		return "chatingroom";
 	}
 	
 	@RequestMapping(value = "/chatboardcontentinsert.do",method = RequestMethod.POST)
+	@ResponseBody
 	public String updateChat(HttpSession session,ChatingDto dto) {
 		System.out.println("groupid :"+dto.getChatgroupid());
 		System.out.println("content :"+dto.getChatcontent());
 		String [] chatgroup=dto.getChatgroupid().split(",");
-		boolean isc =false;
 		System.out.println("그룹 쪼개기 1 : "+chatgroup[0] +"그룹 쪼개기 2"+chatgroup[1]);
-		if(chatgroup[0].equals(session.getAttribute("chat_id"))) {
-			isc=tripchatservice.delchatboard(dto);
-		}else {
-			dto.setChatmyid(chatgroup[1]);
-			dto.setChatyourid(chatgroup[2]);
-			isc =tripchatservice.chatboardcontentinsert(dto);
-		}
+		dto.setChatmyid(chatgroup[0]);
+		dto.setChatyourid(chatgroup[1]);
+		boolean	isc =tripchatservice.chatboardcontentinsert(dto);
 		System.out.println(dto);
 		return isc == true ? "성공" : "실패";
 	}
 	
-	
+	@RequestMapping(value = "/reportchatboard.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String reportchatboard(String groupid) {
+		System.out.println(groupid);
+		boolean isc=tripchatservice.reportchatboard(groupid);
+		return isc == true ? "성공" : "실패";
+	}
 	
 }
 
