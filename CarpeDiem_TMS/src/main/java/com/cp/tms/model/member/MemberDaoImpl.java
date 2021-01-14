@@ -1,32 +1,48 @@
 package com.cp.tms.model.member;
 
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cp.tms.dto.LoginDTO;
+
 import com.cp.tms.dto.Member;
 
 @Repository
 public class MemberDaoImpl implements IMemberDao {
 	
-	private static String CP = "com.cp.tms.model.member.MemberDao.";
+	private final String CP = "com.cp.tms.model.member.MemberDao.";
 	
 	@Autowired
 	private SqlSessionTemplate SqlSession;
 
 	@Override
-	public void register(Member member) throws Exception {
-		SqlSession.insert(CP+".register", member);
-		
+	public boolean singupMember(Member dto) {
+		int cnt = SqlSession.insert(CP+"signupMember",dto);
+		return (cnt>0)?true:false;
+	}
+	
+	@Override
+	public boolean idDuplicateCheck(String email) {
+		int cnt = SqlSession.insert(CP+"idDuplicateCheck", email);
+		return (cnt>0)?true:false;
 	}
 
-	//로그인 처리
 	@Override
-	public Member login(LoginDTO loginDTO) throws Exception {
-		return SqlSession.selectOne(CP+".login", loginDTO);
+	public Member loginMember(Map<String, Object> map) {
+		Member dto = SqlSession.selectOne(CP+"loginMember", map);
+		return dto;
 	}
+
+
+
+
+
+
+
+
 
 
 	

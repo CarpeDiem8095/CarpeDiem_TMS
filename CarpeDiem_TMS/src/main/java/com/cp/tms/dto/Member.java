@@ -1,8 +1,10 @@
 package com.cp.tms.dto;
 
-import org.apache.ibatis.session.SqlSession;
+import java.io.Serializable;
 
-public class Member {
+public class Member implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String email;
 	private String nickname;
@@ -93,10 +95,7 @@ public class Member {
 		this.joindate = joindate;
 	}
 
-	public static SqlSession openSession() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
    
 	
 	
