@@ -23,7 +23,7 @@ public class PlaceController {
 	IOneDayService oService;
 	
 	@RequestMapping(value = "/insertPlace.do", method = RequestMethod.POST)
-	public String insertPlace(String placeName, String day, String myX, String myY) {
+	public String insertPlace(String placeName, String day, String myX, String myY, String note_seq) {
 		
 		String Xlat = myX.substring(0,11);
 		String Ylng = myY.substring(0,11);
@@ -39,13 +39,20 @@ public class PlaceController {
 		boolean isc = service.writePlace(dto);
 		
 		
-		return isc?"redirect:/insertPlacePage.do?seq="+day:"error";
+		return isc?"redirect:/insertPlacePage.do?seq="+day+"&noteSeq="+note_seq+"":"error";
 	}
 	
 	@RequestMapping(value="/delPlace.do", method = RequestMethod.GET)
-	public String delPlace(Model model, String seq, String onedaySeq) {
-		boolean isc = service.stepMinusNdelPlace(seq);
-		return isc?"redirect:/insertPlacePage.do?seq="+onedaySeq:"error";
+	public String delPlace(Model model, String seq, String onedaySeq, String note_seq) {
+		System.out.println(onedaySeq+"삭제 하루일정의 ");
+		PlaceDto dto = new PlaceDto();
+		dto.setPlace_seq(seq);
+		dto.setOneday_seq(onedaySeq);
+		
+		boolean isc = service.stepMinusNdelPlace(seq, dto);
+		
+		return "redirect:/insertPlacePage.do?seq="+onedaySeq+"&noteSeq="+note_seq+"";
+//		return isc?"redirect:/insertPlacePage.do?seq="+onedaySeq+"&noteSeq="+note_seq+"":"error";
 	}
 	
 	@RequestMapping(value="/selDetailOneday.do", method = RequestMethod.GET)

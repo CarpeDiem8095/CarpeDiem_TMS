@@ -13,7 +13,7 @@ public interface IPlaceDao {
 
 	public boolean modifyDownPlace2(PlaceDto dto);
 
-	public boolean stepMinus(String seq);
+	public boolean stepMinus(PlaceDto dto);
 
 	public boolean delPlace(String seq);
 

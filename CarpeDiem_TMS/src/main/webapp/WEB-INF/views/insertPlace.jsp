@@ -211,33 +211,63 @@
 			</div>
 		</div>
 		<hr>
-		
-		
 		<ul id="placesList"></ul>
 		<div id="pagination"></div>
 	</div>
 	</div>
-	
 	<div>
 	<form id="oneDayPlace">
 		<div id="insertDB" style="border: 1px">
 			<input type="hidden" name="day" value="${onedaySeq}">
 		</div>
-		<table>
-			<c:forEach var="onedto" items="${oneDto}" varStatus="vs">
+		<table style="text-align: right;">
+			<c:forEach var="onedto" items="${oneDto}">
 				<tr>
-					<td>${onedto.oneday_title}</td>
+					<td style="text-align: center; font-style:italic; color: red;">하루 일정 제목 : ${onedto.oneday_title}</td>
 				</tr>
-					<c:forEach var="placeDto" items="${onedto.placeDto}">
-					<%-- <c:if test="placeDto.depth<0"></c:if> 위로 수정하기 없애기--%>
-					<tr>
-						<td>${placeDto.place_name}<a href="./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}">삭제하기 </a></td>
-					</tr>
+					<c:forEach var="placeDto" items="${onedto.placeDto}" varStatus="vs">
+						<c:choose>
+							<c:when test="${placeDto.step eq 1}">
+							<tr>
+								<td>
+									${placeDto.place_name}
+									<input type="button" value="▼" onclick=""/>
+									<input type="button" value="X" onclick="location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}'"/>
+									${placeDto.step}
+								</td>
+							</tr>
+							</c:when>
+							<c:when test="${placeDto.step eq vs.last}">
+							<tr>
+								<td>
+									${placeDto.place_name}
+									<input type="button" value="▲" onclick="up(${placeDto.place_seq}, <!-- 다음 placeDteo의 seq 절대 못 가져옴-->)"/>
+									<input type="button" value="▼" onclick="down()"/>
+									<input type="button" value="X" onclick="location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}'"/>
+									${placeDto.step}
+								</td>
+							</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td>
+										${placeDto.place_name}
+										<input type="button" value="▲" onclick="up(${placeDto.place_seq}, <!-- 다음 placeDteo의 seq 절대 못 가져옴-->)"/>
+										<input type="button" value="X" onclick="location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}'"/>
+										${placeDto.step}
+									</td>
+								</tr>
+							</c:otherwise>
+<%-- 							<input type="hidden" value="${placeDto.place_seq}"> --%>
+						</c:choose>
 					</c:forEach>
 			</c:forEach>
 		</table>
 		<div>
-<!-- 			<input type="button" id="wind" value="전송하기" style="display: none;"> -->
+			${onedaySeq}
+			<input type="hidden" value="${note_seq}" name="note_seq">
+			<input type="button" value="뒤로가기" onclick="location.href='./detailNote.do?seq=${note_seq}'">
+			<!-- place값이 없으면 활성화 안되게 해야함 -->
 			<input type="button" value="상세 페이지로 이동" onclick="moveDetail(${onedaySeq})">
 		</div>
 	</form>
@@ -252,8 +282,6 @@
 	<script>
 		// 마커를 담을 배열입니다
 		var markers = [];
-		
-
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(33.3797769, 126.545875), // 지도의 중심좌표
@@ -284,13 +312,6 @@
 			// 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 			ps.keywordSearch(keyword, placesSearchCB);
 		}
-		
-		
-//			if (!keyword.replace(/^\s+|\s+$/g, '')) {
-//				alert('키워드를 입력해주세요!');
-//				return false;
-//			}
-
 
 		// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 		function placesSearchCB(data, status, pagination) {
@@ -500,9 +521,13 @@
 			}
 		}
 
+		
+	</script>
+	<script type="text/javascript">
 		function moveDetail(seq){
 			location.href="./selDetailOneday.do?seq="+seq;
 		}
+		
 	</script>
 </body>
 </html>
