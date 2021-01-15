@@ -1,4 +1,6 @@
+<%@page import="com.cp.tms.dto.Member"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,10 +26,16 @@
 	    $.ajax({
 	        type:"GET",
 	        url:"./mailCheck.do?email=" + email
-	      
-	   
 	    });
 	    
+	});
+	$(document).ready(function(){
+		var id = '${mDto.email}';
+		if(id =='' || id == null){
+			$(".userboard").css("display","none");
+		}else{
+			$(".login").css('display','none');
+		}
 	});
 	
 	</script>
@@ -39,17 +47,18 @@
 	</a>
 	<!-- 회원가입  -->
 	<div class="container" style="text-align: right;">
-
+		<div class="userboard">
+		<div>회원 아이디 :${mDto.email}</div><div>회원 등급  :${mDto.auth}</div>
+		</div>
 		<!-- 버튼 클릭시 모달창 생성 -->
-		<button type="button" class="btn btn-primary" data-toggle="modal"
+		<button type="button" class="btn btn-primary join" data-toggle="modal"
 			data-target="#myModal">회원가입</button>
-		<button type="button" class="btn btn-primary" data-toggle="modal"
+		<button type="button" class="btn btn-primary login" data-toggle="modal"
 			data-target="#loginModal">로그인</button>
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
-
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h4 class="modal-title">CarpeDiem</h4>
@@ -70,6 +79,12 @@
 										type="text" class="email form-control" id="email" name="email"
 										placeholder="이메일을 입력하세요">
 								</div>
+								<div class="form-group" style="float:rigth; margin-right: 10px" id="IdEmailCheck">
+									<button type="button" class="btn btn-primary btn-block" id="emailCheck" name="emailCheck">
+										<span class="glyphicon glyphicon-ok">중복확인</span>
+									</button>
+								</div>
+								<br><br>
 								<div class="form-group"
 									style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divinputCheckNum">
@@ -144,65 +159,32 @@
 	</div>
 	
 
-	<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
-	
+	<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 	<script type="text/javascript">
+	function loginChkeck(){
+	var email = $("#InputEmail").val();
+	var password = $("#InputPassword").val();
 	
-	
-	window.onload = function(){
-		alert("작동");
-// 	document.getElementById("").onclick = function(){
-// 		alert("작동");
-// 		location.href="./register.do";
-// 		}
-	};
-		
-		
-		function loginChkeck(){
-		var email = document.getElementById("InputEmail").value;
-		var password = document.getElementById("InputPassword").value;
-		var frm = document.frm;
-// 		alert(frm);
-		frm.action="./login.do"; //ajax에서 이동
-		
-		var result="";
-		
-		if (email==""|| email.trim()=="") {
-			document.getElementById("InputEmail").focus();
-			$("InputEmail").val("");
-			alert("이메일을 입력해주세요");
-		
-			
-		}else if(password==""|| password.trim()==""){
-			document.getElementById("InputPassword").focus();
-			$("InputPassword").val("");
-			alert("비밀번호를 입력해주세요");
-			
-		}else{
-			$.ajax({
+	$.ajax({ 
 				type:"post",
 				url:"./loginCheckMap.do",
 				data:"email="+email+"&password="+password,
 				success:function(msg){
-					alert(msg.isc);
-					if (msg.isc=="성공") {
-						frm.submit();
-						
+					if(msg.isc=="성공"){
+					$(".login").css('display','none');
+					$(".userboard").css('display','block');
+					location.reload();
 					}else{
-						alert("해당 이메일은 존재하지않습니다 회원가입을 진행해주세요");
+						alert(isc);
 					}
 				},
 				error:function(){
 					alert("로그인에 문제가 발생했습니다.");
 				}
 			});
-		}
-			
-		
-			
-		}
+	}
+	
 	</script>
-
 	<!-- 로그인 모달 -->
 	<!-- The Modal -->
 	<div class="modal fade" id="loginModal">
@@ -244,8 +226,6 @@
 						</div>
 					</form>
 				</div>
-
-
 			</div>
 		</div>
 	</div>
@@ -258,7 +238,7 @@
 	}
 </script>	
 	
-<div>로그인된 사용자 : ${mem}</div>
+
 
 
 </body>

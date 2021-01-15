@@ -12,6 +12,10 @@ public interface IMemberService {
     //이메일 중복 체크
     public boolean idDuplicateCheck(String email);
     
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    
     // 로그인 처리
     public Member loginMember(Map<String, Object> map);
     

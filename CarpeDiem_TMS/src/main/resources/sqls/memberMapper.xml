@@ -1,43 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cp.tms.dto.Member">
+<mapper namespace="com.cp.tms.model.member.IMemberDao">
 
 
 	<!-- 회원가입 -->
-	<insert id="sinupMember" parameterType="memDto">
+	<insert id="memberList" parameterType="memDto">
 	INSERT INTO "MEMBER" (EMAIL,NICKNAME,PASSWORD,AUTH,WITHDRAWAL,JOINDATE)
-	VALUES(#{email},#{pw},#{nickname},'U','N',JOINDATE)
+	VALUES(#{email},#{pw},#{nickname},'U','N',SYSDATE)
 	</insert>
 	
+	<!-- API 회원가입 -->
+	<insert id="apimemberList" parameterType="memDto" >
+	INSERT INTO "MEMBER" 
+	(EMAIL, NICKNAME, AUTH, WITHDRAWAL, JOINDATE)
+	VALUES(#{email},#{nickname},'U','N', SYSDATE)
+	</insert>
 	
 	<!-- 이메일 중복 체크 -->
-	<select id="idDuplicateCheck" parameterType="java.lang.String" resultType="java.lang.Integer">
-	SELECT COUNT(EMAIL) EMAIL FROM "MEMBER"
-	WHERE EMAIL = #{email}
-	
+	<select id="EMDuplicateCheck" parameterType="memDto" resultType="java.lang.Integer">
+	SELECT COUNT(EMAIL) EMAIL
+	FROM "MEMBER" 
+	WHERE EMAIL = #{email};
 	</select>
 	
-	<!-- 로그인 확인 -->
-	<select id="loginMember" parameterType="java.util.Map" resultType="memDto">
-	SELECT EMAIL,PASSWORD,WITHDRAWAL FROM "MEMBER"
+	<!-- 일반 회원 로그인 기능 -->
+	<select id="loginMember" parameterType="memDto" resultType="memDto">
+	SELECT EMAIL, NICKNAME, AUTH, JOINDATE FROM "MEMBER"
 	WHERE EMAIL = #{email}
 	AND PASSWORD = #{password}
+	AND WITHDRAWAL  ='N'
 	</select>
 	
+	<!-- API 회원 로그인 기능 -->	
+	<select id="apiLoginMember" parameterType="memDto" resultType="memDto">
+	SELECT EMAIL,NICKNAME,AUTH,WITHDRAWAL
+        FROM  "MEMBER" m 
+        WHERE EMAIL = #{email}
+        AND NICKNAME = #{nickname}
+        AND WITHDRAWAL ='N'
+	</select>
 	
-	<!-- 회원가입 중복확인 -->
-<!-- 	<select id="checkdupl" resultType="loDto"> -->
-<!--     SELECT Email -->
-<!--     FROM MEMBER -->
-<!--     WHERE EMAIL = #{email} -->
-<!-- 	</select> -->
+	<!-- 관리자 로그인 기능 -->
+	<select id="loginAdmin" parameterType="memDto" resultType="memDto">
+	SELECT EMAIL, NICKNAME, PASSWORD AUTH, WITHDRAWAL , JOINDATE 
+ 	FROM "MEMBER" m 
+  	WHERE EMAIL=#{email}
+  	AND PASSWORD =#{password}
+   	AND AUTH ='A'
+	</select>
 	
-	<!-- 비밀번호 변경 -->
-<update id="updatePw" >
-	update member set password = #{password} where email = #{email}
-</update>
+	<!-- 비밀번호 재설정 기능 -->
+	<update id="resetPassword" parameterType="java.util.Map">
+	UPDATE "MEMBER" SET PASSWORD =#{password} 
+	WHERE EMAIL = #{email}
+	</update>
 	
+	<!-- 회원탈퇴 기능 -->
+	<update id="deleteUser" parameterType="java.lang.String">
+	UPDATE "MEMBER" SET WITHDRAWAL ='Y'
+	WHERE EMAIL = #{email}
+	</update>
 	
+	<!-- 전체 회원을 조회 하는 기능(페이징) -->
+	<select id="allBoard" parameterType="java.util.Map" resultType="memDto">
+	SELECT EMAIL,NICKNAME,AUTH,WITHDRAWAL,JOINDATE 
+        FROM 
+	(SELECT EMAIL,NICKNAME,AUTH,WITHDRAWAL,JOINDATE, 
+     ROW_NUMBER () OVER (ORDER BY JOINDATE DESC) ONE
+       					 FROM "MEMBER" m)
+	WHERE ONE BETWEEN  #{start} AND #{last}
+	</select>
 	
 	
 </mapper>
