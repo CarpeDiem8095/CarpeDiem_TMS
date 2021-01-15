@@ -82,18 +82,12 @@ if(userdto != null){
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="#projects">PROJECTS</a>
                 </li>
-
-                <!-- Dropdown Menu -->          
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">ABOUT</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">TERMS CONDITIONS</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY POLICY</span></a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="./questionBoard.do">문의하기</a>
                 </li>
-                <!-- end of dropdown menu -->
-
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="./reportBoard.do">신고처리</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="#contact">CONTACT</a>
                 </li>
@@ -143,7 +137,7 @@ if(userdto != null){
                 <div class="col-lg-5">
                     <table class="memList">
                     <tr>
-                    	<th colspan="2">현제 접속 목록</th>
+                    	<th colspan="2">현재 접속 목록</th>
                     </tr>
                     <tr class="accessmembers">
                     </tr>

@@ -4,14 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.cp.tms.dto.Member;
 import com.cp.tms.dto.QuestionDto;
 
 public class SupportInputData {
 
 	private List<QuestionDto> questionLists;
+	private Member mem;
 	
 	public void setQuestionLists(List<QuestionDto> lists) {
 		this.questionLists = lists;
+	}
+
+	public void setMem(Member mem) {
+		this.mem = mem;
 	}
 
 	// 전체 글 목록
@@ -52,12 +58,15 @@ public class SupportInputData {
 		StringBuffer sb = new StringBuffer();
 		int n = 5;
 		
+		// 회원 등급에 따른 if문 주석처리 지우면 지워주기
 		if (dto.getDelflag().equalsIgnoreCase("N")) {
 			sb.append("<tr>");
 			// 체크박스는 관리자만 보이게
-			sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px;'>");
-			sb.append("		<input type='checkbox' name='chkVal' value='"+dto.getSeq()+"'>");
-			sb.append("	</td>");
+//			if (mem.getAuth().equalsIgnoreCase("A")) {
+				sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px;'>");
+				sb.append("		<input type='checkbox' name='chkVal' value='"+dto.getSeq()+"'>");
+				sb.append("	</td>");
+//			}
 			sb.append("	<td style='text-align: center; vertical-align: middle; width: 90px;'>"+dto.getSeq()+"</td>");
 			sb.append("	<td class='panel-heading' style='vertical-align: middle; height: 56px; width: 295px;'>");
 			sb.append("		<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+dto.getSeq()+"' onclick='collapse(\""+dto.getSeq()+"\")'>");
@@ -73,7 +82,10 @@ public class SupportInputData {
 			// 작성자: 회원, 관리자는 session 가져오기
 			sb.append("	</td>");
 			// 관리자는 삭제여부 필요
-//			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getDelflag()+"</td>");
+//			if (mem.getAuth().equalsIgnoreCase("A")) {
+//				sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getDelflag()+"</td>");
+//				n = 7;
+//			}
 			sb.append("</tr>");
 			sb.append("<tr>");
 			sb.append("	<td colspan='"+n+"'>");
@@ -82,10 +94,19 @@ public class SupportInputData {
 			sb.append("				<label>내용</label><br>");
 			// 내용: auth가 'U' or writer를 작성할 경우 비회원/회원은 글비밀번호가 일치하면 보이게
 			//		auth가 'A'면 보이게
-			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
-//			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
-//			sb.append("				<input type='button' class='btn-primary' value='비밀번호 입력' onclick='textPw(\""+dto.getSeq()+"\")'>");
-			
+//			if (mem.getAuth().equalsIgnoreCase("A")) {
+//				sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
+//			} else {
+				sb.append("				<textarea rows='7' class='form-control' style='display: none;' readonly>"+dto.getContent()+"</textarea>");
+				sb.append("				<div style='border: 1px solid #CCC; border-radius: 4px; background-color: #eee; width: 778.4px; height: 147px; text-align: center;'>");
+				sb.append("					<br>");
+				sb.append("					<br>");
+				sb.append("					<span>비밀글입니다.</span><br>");
+				sb.append("					<span style=\"color: tomato;\">글 비밀번호를 입력해주세요.</span>");
+				sb.append("					<br>");
+				sb.append("					<input type='button' class='btn-primary' style='margin-top: 10px;' value='비밀번호 입력' onclick='textPw(\""+dto.getSeq()+"\")'>");
+				sb.append("				</div>");
+//			}
 			sb.append("			</div>");
 			sb.append("			<div class='form-group'>");
 			// 수정버튼: 회원id와 게시글의 작성자가 동일하면 보이게
