@@ -32,10 +32,19 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.1.js"></script>
   	<script type="text/javascript">
+	$(document).ready(function(){
+		var id = '${mDto.email}';
+		if(id =='' || id == null){
+			$(".userboard").css("display","none");
+		}else{
+			$(".login").css('display','none');
+			$(".join").css('display','none');
+		}
+	});
+  	
 	function loginChkeck(){
 	var email = $("#InputEmail").val();
 	var password = $("#InputPassword").val();
-	
 	$.ajax({ 
 				type:"post",
 				url:"./loginCheckMap.do",
@@ -43,6 +52,7 @@
 				success:function(msg){
 					if(msg.isc=="성공"){
 					$(".login").css('display','none');
+					$(".join").css('display','none');
 					$(".userboard").css('display','block');
 					location.reload();
 					}else{
@@ -115,6 +125,11 @@ if(userdto != null){
 						data-toggle="modal" data-target="#myModal">회원가입</button>
 					<button type="button" class="btn btn-primary login"
 						data-toggle="modal" data-target="#loginModal">로그인</button>
+                </li>
+                <li class="userboard nav-item">
+                	회원 아이디 :${mDto.email}
+                	<br>
+                	회원 등급  :${mDto.auth}
                 </li>
             </ul>
         </div>
@@ -237,7 +252,7 @@ if(userdto != null){
 						</div>
 
 						<div class="form-group has-feedback">
-							<input type="password" id="InputPassword" class="form-control" value="tjrrb1111" placeholder="비밀번호" onkeyup="enterkey()">
+							<input type="password" id="InputPassword" class="form-control" value="tt001!" placeholder="비밀번호" onkeyup="enterkey()">
 							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 						
