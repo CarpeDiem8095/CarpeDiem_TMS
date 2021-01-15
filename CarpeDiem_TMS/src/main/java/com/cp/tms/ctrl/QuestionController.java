@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cp.tms.dto.Member;
 import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.QuestionDto;
 import com.cp.tms.model.support.IQuestionService;
@@ -33,7 +36,7 @@ public class QuestionController {
 	
 	// 문의 게시판으로 이동(전체 조회-페이징)
 	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
-	public String questionBoard(Model model, String page) {
+	public String questionBoard(Model model, String page, HttpSession session) {
 //		System.out.println("넘어온 page: "+page);
 		
 		if (page == null) {
@@ -91,6 +94,9 @@ public class QuestionController {
 		
 //		System.out.println("선택된 페이지의 글 목록: "+qUserDto);
 //		System.out.println("선택된 페이지의 페이징dto: "+p);
+		
+		Member mem = (Member)session.getAttribute("mem");
+		
 		
 		return "questionBoard";
 	}
@@ -173,5 +179,12 @@ public class QuestionController {
 		System.out.println("글 수정 성공여부: "+service.modifyQuestionboard(map));
 		return "redirect:/questionBoard.do";
 	}
+	
+	// 글 비밀번호 입력
+//	@RequestMapping(value = "/txtPwForm.do", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String txtPwForm() {
+//		
+//	}
 	
 }

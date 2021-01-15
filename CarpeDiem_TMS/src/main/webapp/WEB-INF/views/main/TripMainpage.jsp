@@ -71,9 +71,7 @@ if(userdto != null){
                     <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-
                     <a class="nav-link page-scroll" href="./notePaging.do">일정 관리</a>
-
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="#">리뷰 보기</a>
@@ -82,38 +80,12 @@ if(userdto != null){
                     <a class="nav-link page-scroll" href="./boardsearch.do">동행찾기 게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#projects">PROJECTS</a>
+                    <a class="nav-link page-scroll" href="./questionBoard.do">문의하기</a>
                 </li>
-
-                <!-- Dropdown Menu -->          
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">ABOUT</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">TERMS CONDITIONS</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY POLICY</span></a>
-                    </div>
-                </li>
-                <!-- end of dropdown menu -->
-
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#contact">CONTACT</a>
+                    <a class="nav-link page-scroll" href="./reportBoard.do">신고처리</a>
                 </li>
             </ul>
-            <span class="nav-item social-icons">
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-facebook-f fa-stack-1x"></i>
-                    </a>
-                </span>
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-twitter fa-stack-1x"></i>
-                    </a>
-                </span>
-            </span>
         </div>
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
