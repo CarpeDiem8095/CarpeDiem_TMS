@@ -59,6 +59,16 @@
 		FROM ONEDAY o JOIN PLACE p
 		ON o.ONEDAY_SEQ = p.ONEDAY_SEQ
 		WHERE o.ONEDAY_SEQ=#{oneday_seq}
-		ORDER BY STEP ASC
+		ORDER BY p.STEP ASC
+	</select>
+	
+	<!-- 해당 노트(note_seq)의 모든 하루일정의/ 모든 장소 조회 -->
+	<select id="noteCollectOnedayAP" parameterType="java.lang.String" resultMap="oneDto">
+		SELECT o.ONEDAY_SEQ , o.ONEDAY_TITLE, o.ONEDATE,
+		p.PLACE_SEQ, p.STEP, p.PLACE_NAME, p.XLAT, p.YLNG, p.MEMO
+		FROM ONEDAY o JOIN PLACE p
+		ON o.ONEDAY_SEQ = p.ONEDAY_SEQ
+		WHERE o.NOTE_SEQ = ${note_seq} AND ONEDAY_DELFLAG ='N'
+		ORDER BY o.ONEDATE ASC,p.STEP ASC
 	</select>
 </mapper>

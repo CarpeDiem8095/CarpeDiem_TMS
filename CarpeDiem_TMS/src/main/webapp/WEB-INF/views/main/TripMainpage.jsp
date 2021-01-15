@@ -71,7 +71,9 @@ if(userdto != null){
                     <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
+
                     <a class="nav-link page-scroll" href="./notePaging.do">일정 관리</a>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="#">리뷰 보기</a>

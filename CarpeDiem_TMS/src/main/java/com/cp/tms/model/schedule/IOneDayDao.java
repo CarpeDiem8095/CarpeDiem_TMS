@@ -13,5 +13,5 @@ public interface IOneDayDao {
 	public boolean modifyOneday(OnedayDto dto);
 	public boolean delOneday(String seq);
 	public List<OnedayDto> selDetailOneday(String seq);
-	
+	public List<OnedayDto> noteCollectOnedayAP(String note_seq);
 }
