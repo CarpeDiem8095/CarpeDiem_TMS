@@ -56,7 +56,7 @@ if(userdto != null){
         <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
         <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>
+        <a class="navbar-brand logo-image" href="index.html"><img src="images/calo.png" alt="alternative"></a>
         
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,16 +71,13 @@ if(userdto != null){
                     <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#intro">INTRO</a>
+                    <a class="nav-link page-scroll" href="./notePaging.do">일정 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#services">SERVICES</a>
+                    <a class="nav-link page-scroll" href="#">리뷰 보기</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./boardsearch.do">동행찾기 게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#projects">PROJECTS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./questionBoard.do">문의하기</a>
@@ -88,24 +85,7 @@ if(userdto != null){
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./reportBoard.do">신고처리</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#contact">CONTACT</a>
-                </li>
             </ul>
-            <span class="nav-item social-icons">
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-facebook-f fa-stack-1x"></i>
-                    </a>
-                </span>
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-twitter fa-stack-1x"></i>
-                    </a>
-                </span>
-            </span>
         </div>
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
@@ -137,7 +117,7 @@ if(userdto != null){
                 <div class="col-lg-5">
                     <table class="memList">
                     <tr>
-                    	<th colspan="2">현재 접속 목록</th>
+                    	<th colspan="2">현제 접속 목록</th>
                     </tr>
                     <tr class="accessmembers">
                     </tr>

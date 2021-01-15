@@ -17,6 +17,15 @@
 	</style>
 <body>
 <%-- ${fn:length(detail.odto)} --%>
+
+	<c:if test="${fn:length(ndto[0].odto) eq 0}">
+		<div style="text-align: center;">
+			하루일정을 생성해 주세요
+		</div>
+	</c:if>
+		<div style="border: 1px solid black; font-style: bold; background-color: white;">
+		
+		</div>
 	<form>
 		<table style="margin: 0px auto;">
 			<c:forEach var="ndto" items="${ndto}">
@@ -33,10 +42,17 @@
 		</table>
 		<div style="text-align: center;">
 			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'">
-			<input type = "button" value="하루일정생성" onclick="writeOneday(${seq})" style="text-align: center;">
+			<input type = "button" value="하루일정생성" onclick="writeOneday(${seq})">
 			<input type = "hidden" value="${seq}" id="noteSeq">
 		</div>
-		
+		<div style="text-align: center;">
+		<%-- ${fn:length(ndto[0].odto)} --%>
+		<c:if test="${fn:length(ndto[0].odto) > 1}">
+		<div>
+			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 450px">
+		</div>
+		</c:if>
+		</div>
 	</form>
 </body>
 
