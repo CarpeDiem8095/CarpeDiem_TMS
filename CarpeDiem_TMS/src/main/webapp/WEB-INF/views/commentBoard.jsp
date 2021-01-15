@@ -10,19 +10,44 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style type="text/css">
+#container {
+	width: 800px;
+	height: 540px;
+	margin: 40px auto;
+}
+
+a {
+	text-decoration: none;
+	vertical-align: -webkit-baseline-middle;
+	margin-left: 10px;
+}
+</style>
 <body>
 
 
 	<div><a href="./iLikeit.do">♡</a></div>
 		
  <div class="container">
-        <label for="content">comment</label>
-		<form action="./writeComment.do" method="post">
+ 	
+ 		<h3>하루 일정</h3>
+		
+<div class="w3-show-inline-block">
+	<div class="w3-bar w3-light-grey">
+		<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button">일정 보기</a> 
+		<a href="./onedayTableList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">일정표 보기</a> 
+		<a href="./commnetList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">댓글 보기</a>
+	</div>
+</div> 	
+ 	
+        <div><label for="content">comment</label></div>
+		<form action="./writeComment.do" id="writeForm" method="post">
 		<div class="input-group">
+			<input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
 			<input type="hidden" name="oneday_seq" value="${oneday_seq}">
-			<input type="text" class="form-control" name="content" placeholder="내용을 입력하세요.">
 			   <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">등록</button>
+                    <input type="submit" class="btn btn-default" value="등록">
                </span>
         </div>
 		</form>
@@ -33,15 +58,25 @@
 
 	<c:forEach var="i" items="${commentList}" varStatus="vs">
 	<div>
-		<span>
+	
+	<form action="./delComment.do" id="delComment" method="get">
+	<input type="hidden" name="comm_seq" value="${i.comm_seq}">
+	<input type="hidden" name="oneday_seq" value="${i.oneday_seq}">
+	<input type="hidden" name="reffer" value="${i.reffer}">
+	<input type="hidden" name="step" value="${i.step}">
+		<div style="width:665px; height:35px; float:left;">
 			${i.comm_seq}${i.email}${i.content}
-		</span>
-		<span class="showMeTheForm"><input type="button" value="답글" style="float:right;"></span>
+			<input type="button" onclick ="replyWrite()" class="btn btn-default" value="삭제" style="float:right;">
+			<input type="button" class="btn btn-default" value="수정" style="float:right;">
+		</div>
+	</form>
+	
+		<span class="showMeTheForm"><input type="button" class="btn btn-default" value="답글" style="float:right;"></span>
 	<form action="./writeReply.do" method="post">
-		<input type="hidden" name="oneday_seq" value="${oneday_seq}">
-<%-- 	<input type="hidden" name="comm_seq" value="${comm_seq}" > --%>
+		<input type="hidden" name="oneday_seq" value="${i.oneday_seq}">
+		<input type="hidden" name="comm_seq" value="${i.comm_seq}">
 		<div class="re_Form">
-		<div class="input-group">
+		<div class="input-group" style="width:670px;">
 			<input type="text" name="content" class ="form-control" placeholder="답글 내용을 입력하세요.">
 			  <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">등록</button>
@@ -81,17 +116,41 @@
 //     });
 // }
 
+// 댓글 삭제
+function replyWrite(){
+	var formData = $('#delComment').serialize();
+	console.log(formData);
+	
+	$.ajax({
+		type:'get',
+		url : 'delComment.do',
+		data : formData,
+		dataType:'json',
+		async:false,
+		contentType:'application/json; charset=utf-8',
+		success:function(data){
+        	alert(data);
+        	alert(성공);
+        	location.reload();
+		},
+	      error : function(err){
+	         alert("잘못된 요청입니다."+err);
+	      }
+		
+	})
+}
+
 
 // 대댓글 등록
 // function commentInsert(insertData){
 //     $.ajax({
 //         url : '/writeReply.do',
 //         type : 'post',
-//         data : insertData,
+//         data : {"content":content}
 //         success : function(data){
 //             if(data == 1) {
 //                 commentList(); //댓글 작성 후 댓글 목록 reload
-//                 $('[name=content]').val('');
+//                 $("#replyContent").val("");
 //             }
 //         }
 //     });
@@ -104,7 +163,7 @@
 $(document).ready(function() {	
 	$(".re_Form").hide();
 	$(".showMeTheForm").click(function(){
-		$(this).parent().find(".re_Form").slideToggle('slow');
+		$(this).parent().find(".re_Form").slideToggle('fast');
 	});
  });
 </script>

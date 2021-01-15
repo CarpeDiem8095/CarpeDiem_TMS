@@ -1,6 +1,7 @@
 package com.cp.tms.model.comment;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,8 @@ public class CommentServiceImpl implements ICommentService {
 
 
 	@Override
-	public boolean modifyComment(CommentDto dto) {
-		return dao.modifyComment(dto);
+	public boolean modifyComment(Map<String, Object> map) {
+		return dao.modifyComment(map);
 	}
 
 	@Override
