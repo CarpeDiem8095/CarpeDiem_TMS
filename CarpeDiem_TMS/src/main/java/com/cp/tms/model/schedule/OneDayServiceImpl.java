@@ -32,4 +32,9 @@ public class OneDayServiceImpl implements IOneDayService {
 		return dao.selDetailOneday(seq);
 	}
 
+	@Override
+	public List<OnedayDto> noteCollectOnedayAP(String note_seq) {
+		return dao.noteCollectOnedayAP(note_seq);
+	}
+
 }

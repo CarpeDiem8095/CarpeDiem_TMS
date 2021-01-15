@@ -35,4 +35,9 @@ public class OneDayDaoImpl implements IOneDayDao {
 		return session.selectList(NS+"selDetailOneday", seq);
 	}
 
+	@Override
+	public List<OnedayDto> noteCollectOnedayAP(String note_seq) {
+		return session.selectList(NS+"noteCollectOnedayAP", note_seq);
+	}
+
 }

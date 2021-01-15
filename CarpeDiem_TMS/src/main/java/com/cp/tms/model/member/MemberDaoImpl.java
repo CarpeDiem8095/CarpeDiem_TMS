@@ -32,8 +32,7 @@ public class MemberDaoImpl implements IMemberDao {
 
 	@Override
 	public Member loginMember(Map<String, Object> map) {
-		Member dto = SqlSession.selectOne("memDto.loginMember", map);
-		
+		Member dto = SqlSession.selectOne(CP+"loginMember", map);
 		return dto;
 		
 	}
