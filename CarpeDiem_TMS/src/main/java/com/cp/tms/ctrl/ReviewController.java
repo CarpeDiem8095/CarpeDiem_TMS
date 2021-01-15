@@ -37,6 +37,7 @@ public class ReviewController {
 	@Autowired
 	private IOneDayService oneService;
 	
+	// 이동
 	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
 	public String reviewList (Model model, String seq, String one_seq) {
 		System.out.println("장소 seq" + seq);
@@ -56,6 +57,17 @@ public class ReviewController {
 		return "reviewForm";
 	}
 	
+	// 테이블 리스트로 이동
+	@RequestMapping(value = "/onedayTableList.do", method = RequestMethod.GET)
+	public String onedayTableList(Model model, String oneday_seq) {
+		System.out.println("테이블 게시판 이동 : "+oneday_seq);
+		model.addAttribute("onedayList", oneService.selDetailOneday(oneday_seq));
+		model.addAttribute("oneday_seq", oneday_seq);
+		System.out.println(oneService.selDetailOneday(oneday_seq));
+		return "onedayTableList";
+	}
+	
+	// 글 작성 
 	@RequestMapping(value = "/fileUpload.do", method=RequestMethod.POST)
 	//@ResponseBody
 	public String fileUpload(HttpServletRequest req, Model model, ReviewDto dto) throws IOException {
