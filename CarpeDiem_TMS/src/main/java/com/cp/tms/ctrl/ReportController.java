@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.ReportDto;
-import com.cp.tms.model.support.IReportService;
+import com.cp.tms.model.report.IReportService;
 
 @Controller
 public class ReportController {
@@ -66,7 +66,7 @@ public class ReportController {
 		System.out.println("선택된 페이지의 글 목록: "+rDto);
 		System.out.println("선택된 페이지의 페이징dto: "+p);
 		
-		return "reportBoard";
+		return "reportBoard/reportBoard";
 	}
 	
 	// 상세글 조회
@@ -76,7 +76,7 @@ public class ReportController {
 		ReportDto dto = service.reportDetailBoard(seq);
 		System.out.println("상세글 결과값: "+dto);
 		model.addAttribute("detail", dto);
-		return "reportDetailBoard";
+		return "reportBoard/reportDetailBoard";
 	}
 	
 	// 신고처리(메일 전송)

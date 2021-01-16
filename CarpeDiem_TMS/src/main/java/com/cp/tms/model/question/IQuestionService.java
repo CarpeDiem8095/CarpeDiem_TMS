@@ -1,11 +1,11 @@
-package com.cp.tms.model.support;
+package com.cp.tms.model.question;
 
 import java.util.List;
 import java.util.Map;
 
 import com.cp.tms.dto.QuestionDto;
 
-public interface IQuestionDao {
+public interface IQuestionService {
 
 	// test용 전체글 조회
 //	public List<QuestionDto> userQuestionboardList();

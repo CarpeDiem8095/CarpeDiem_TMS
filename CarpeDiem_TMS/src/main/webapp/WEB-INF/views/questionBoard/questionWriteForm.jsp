@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,8 +25,13 @@
 					<th>작성자</th>
 					<td>
 						<!-- 비회원 -->
-						<input class="form-control" type="text" name="writer" placeholder="닉네임을 입력해 주세요." required>
+						<c:if test="${mDto.auth eq null}">
+							<input class="form-control" type="text" name="writer" placeholder="닉네임을 입력해 주세요." required>
+						</c:if>
 						<!-- 회원은 session 가져옴 -->
+						<c:if test="${mDto.auth ne null}">
+							<input class="form-control" type="text" name="writer" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" readonly>
+						</c:if>
 					</td>
 				</tr>
 				<tr>
@@ -34,12 +41,14 @@
 					</td>
 				</tr>
 				<!-- 비회원/회원만 보이게 -->
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input class="form-control" type="password" name="text_pw" placeholder="4자리 숫자를 입력해 주세요." maxlength="4" required>
-					</td>
-				</tr>
+				<c:if test="${mDto.auth ne 'A'}">
+					<tr>
+						<th>비밀번호</th>
+						<td>
+							<input class="form-control" type="password" name="text_pw" placeholder="4자리 숫자를 입력해 주세요." maxlength="4" required>
+						</td>
+					</tr>
+				</c:if>
 				<tr>
 					<th></th>
 					<td>
@@ -47,13 +56,15 @@
 					</td>
 				</tr>
 				<!-- 관리자만 보이게 -->
-				<tr>
-					<th>공개여부</th>
-					<td>
-						<input type="radio" name="public_status" checked="checked" value="공개글"> 공개글&nbsp;&nbsp;
-						<input type="radio" name="public_status" value="비밀글"> 비밀글
-					</td>
-				</tr>
+				<c:if test="${mDto.auth eq 'A'}">
+					<tr>
+						<th>공개여부</th>
+						<td>
+							<input type="radio" name="public_status" checked> 공개글&nbsp;&nbsp;
+							<input type="radio" name="public_status" value="${questionLists.public_status}"> 비밀글
+						</td>
+					</tr>
+				</c:if>
 			</table>
 			<div class="form-group" style="text-align: right">
 				<input type="submit" class="btn btn-primary" value="등록">

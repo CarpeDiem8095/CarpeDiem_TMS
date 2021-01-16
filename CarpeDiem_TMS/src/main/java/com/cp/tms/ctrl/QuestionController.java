@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cp.tms.dto.Member;
 import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.QuestionDto;
-import com.cp.tms.model.support.IQuestionService;
+import com.cp.tms.model.question.IQuestionService;
 
 @Controller
 public class QuestionController {
@@ -31,13 +31,19 @@ public class QuestionController {
 //		List<QuestionDto> lists = service.userQuestionboardList();
 //		model.addAttribute("questionLists", lists);
 //		System.out.println(lists);
-//		return "questionBoard";
+//		return "questionBoard/questionBoard";
 //	}
 	
 	// 문의 게시판으로 이동(전체 조회-페이징)
 	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
-	public String questionBoard(Model model, String page, HttpSession session) {
+	public String questionBoard(Model model, String page, HttpSession session, String seq) {
 //		System.out.println("넘어온 page: "+page);
+		
+		// 로그인된 사용자 정보
+		Member mDto = (Member)session.getAttribute("mDto");
+		System.out.println("session에 담긴 mDto: "+mDto);
+		
+		List<QuestionDto> qLists = null;
 		
 		if (page == null) {
 			page = "1";
@@ -49,10 +55,11 @@ public class QuestionController {
 		Paging p = new Paging();
 		
 		// 총 게시글의 수
-		// 비회원, 회원
-		p.setTotalCount(service.userTotalCount());
-		// 관리자
-//		p.setTotalcount(service.adminTotalCount());
+		if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
+			p.setTotalCount(service.adminTotalCount());
+		} else { // 비회원, 회원
+			p.setTotalCount(service.userTotalCount());
+		}
 		
 		// 보여줄 게시글의 수
 		p.setCountList(5);
@@ -80,25 +87,18 @@ public class QuestionController {
 //		System.out.println("시작 페이지: "+map.get("first"));
 //		System.out.println("마지막 페이지: "+map.get("last"));
 		
-		// 비회원, 회원
-		List<QuestionDto> qUserDto = service.userQuestionboardList(map);
-		// 관리자
-//		List<QuestionDto> qAdminDto = service.adminQuestionboardList(map);
-		
-		// 비회원, 회원
-		model.addAttribute("questionLists", qUserDto);
-		// 관리자
-//		model.addAttribute("questionLists", qAdminDto);
-		
+		if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
+			qLists = service.adminQuestionboardList(map);
+		} else { // 비회원, 회원
+			qLists = service.userQuestionboardList(map);
+		}
+		model.addAttribute("questionLists", qLists);
 		model.addAttribute("page", p);
 		
 //		System.out.println("선택된 페이지의 글 목록: "+qUserDto);
 //		System.out.println("선택된 페이지의 페이징dto: "+p);
 		
-		Member mem = (Member)session.getAttribute("mem");
-		
-		
-		return "questionBoard";
+		return "questionBoard/questionBoard";
 	}
 	
 	// 다중삭제
@@ -122,23 +122,41 @@ public class QuestionController {
 	// 글 입력 폼으로 이동
 	@RequestMapping(value = "/writeForm.do", method = RequestMethod.GET)
 	public String writeForm() {
-		return "questionWriteForm";
+		return "questionBoard/questionWriteForm";
 	}
 	
 	// 글 입력
 	@RequestMapping(value = "/write.do", method = RequestMethod.POST)
-	public String write(QuestionDto dto) {
-		boolean isc = service.userWriteQuestionboard(dto);
-		System.out.println("문의글 입력 성공여부: " + isc);
+	public String write(QuestionDto dto, HttpSession session, Model model) {
+		Member mDto = (Member)session.getAttribute("mDto");
+		
+		if (mDto.getAuth().equalsIgnoreCase("A")) {
+			boolean isc = service.adminWriteQuestionboard(dto);
+			System.out.println("공지글 입력 성공여부: " + isc);
+		} else {
+			boolean isc = service.userWriteQuestionboard(dto);
+			System.out.println("문의글 입력 성공여부: " + isc);
+		}
+		model.addAttribute("questionLists", dto);
+		System.out.println("questionLists: " + dto);
 		return "redirect:/questionBoard.do";
+		
 	}
 	
 	// 답글 입력 폼으로 이동
 	@RequestMapping(value = "/replyForm.do", method = RequestMethod.GET)
-	public String replyForm(Model model, String seq) {
+	public String replyForm(Model model, String seq, HttpSession session) {
 //		System.out.println(seq);
+		// 로그인된 사용자 정보
+		Member mDto = (Member)session.getAttribute("mDto");
+		// 원본글 정보
+		QuestionDto qDto = service.questionDetailBoard(seq);
+		
 		model.addAttribute("seq", seq);
-		return "questionReplyForm";
+		model.addAttribute("qDto", qDto);
+		model.addAttribute("mDto", mDto);
+		System.out.println("원본글 정보: "+qDto); // 왜 text_pw가 null이지....?
+		return "questionBoard/questionReplyForm";
 	}
 	
 	// 답글 입력
@@ -181,10 +199,14 @@ public class QuestionController {
 	}
 	
 	// 글 비밀번호 입력
-//	@RequestMapping(value = "/txtPwForm.do", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String txtPwForm() {
-//		
-//	}
+	@RequestMapping(value = "/txtPwForm.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String txtPwForm(Model model, String seq) {
+		// 원본글의 정보
+		QuestionDto qDto = service.questionDetailBoard(seq);
+		
+		model.addAttribute("qDto", qDto);
+		return model.toString();
+	}
 	
 }

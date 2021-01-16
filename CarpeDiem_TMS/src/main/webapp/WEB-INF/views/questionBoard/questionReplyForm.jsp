@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,21 +25,21 @@
 					<th>작성자</th>
 					<td>
 						<!-- session 가져옴 -->
-						<input class="form-control" type="text" name="writer" value="관리자" required readonly>
+						<input class="form-control" type="text" name="writer" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" required readonly>
 					</td>
 				</tr>
 				<tr>
 					<th>제목</th>
 					<td>
 						<!-- root글의 title -->
-						<input class="form-control" type="text" name="title" value="root글의 title" required readonly>
+						<input class="form-control" type="text" name="title" value="${qDto.title}" required readonly>
 					</td>
 				</tr>
-				<tr>
+				<tr style="display: none;">
 					<!-- root글의 text_pw -->
 					<th>비밀번호</th>
 					<td>
-						<input class="form-control" type="password" name="text_pw" value="root글의 text_pw" maxlength="4" required readonly>
+						<input class="form-control" type="password" name="text_pw" value="${qDto.text_pw}" maxlength="4" required readonly>
 					</td>
 				</tr>
 				<tr>
