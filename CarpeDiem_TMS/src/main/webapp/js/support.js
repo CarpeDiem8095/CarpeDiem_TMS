@@ -7,9 +7,9 @@ function reply(val) {
 }
 
 function textPw(val) {
-//	alert(val);
+	alert(val);
 //	pwCheckAjax(val);
-	$("#textPw").modal();
+//	$("#textPw").modal();
 }
 
 //var pwCheckAjax = function(val) {
@@ -28,6 +28,8 @@ function textPw(val) {
 //			html+= "<div class='modal-footer' style='text-align: center'>";
 //			html+= "	<input class='btn-primary' type='button' value='확인' onclick='checkPw()'/>";
 //			html+= "</div>";
+//			
+//			$("#frmPW").html(html);
 //		},
 //		error: function() {
 //			alert("잘못된 요청입니다.");

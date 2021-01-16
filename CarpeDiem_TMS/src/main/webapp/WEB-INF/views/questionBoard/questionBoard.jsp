@@ -44,8 +44,9 @@
 		width: 100px;
 		padding: 0;
 		margin: 0;
-		margin: 50px auto;
-		margin-top: 0;
+		margin: 30px auto;
+		margin-top: 5px;
+		margin-bottom: 5px;
 	}
 	
 	.modal-dialog {
@@ -65,20 +66,22 @@
 			<div class="panel-group" id="accordion">
 				<table class="table table-bordered">
 					<tr class="info">
-						<c:if test="${mem.auth eq 'A'}">
-							<th><input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"></th>
+						<c:if test="${mDto.auth eq 'A'}">
+							<th>
+								<input type="checkbox" id="allCheck" onclick="checkAll(this.checked)">
+							</th>
 						</c:if>
-						<th></th>
 						<th>글 번호</th>
 						<th>제목</th>
-						<th>등록일</th>
+						<th style="width: 150px;">등록일</th>
 						<th>작성자</th>
-						<c:if test="${mem.auth eq 'A'}">
-							<th>삭제여부</th>
+						<c:if test="${mDto.auth eq 'A'}">
+							<th style="width: 90px;">삭제여부</th>
 						</c:if>
 					</tr>
-					<jsp:useBean id="data" class="com.cp.tms.usebean.SupportInputData" scope="page"/>
+					<jsp:useBean id="data" class="com.cp.tms.usebean.QuestionInputData" scope="page"/>
 					<jsp:setProperty property="questionLists" name="data" value="${questionLists}"/>
+					<jsp:setProperty property="mDto" name="data" value="${mDto}"/>
 					<jsp:getProperty property="listForm" name="data"/>
 				</table>
 			</div>
@@ -103,7 +106,9 @@
 			<div style="text-align: center; padding-bottom: 20px;">
 	  			<input type="button" class="btn btn-primary" value="글쓰기" onclick="location.href='./writeForm.do'">
 	  			<!-- 관리자만 보이게 -->
-				<input type="submit" class="btn btn-primary" value="삭제" style="width: 68px">
+	  			<c:if test="${mDto.auth eq 'A'}">
+					<input type="submit" class="btn btn-primary" value="삭제" style="width: 68px">
+				</c:if>
 			</div>
 		</form>
 		
@@ -133,7 +138,6 @@
 			</div>
 		</div>
 		
-		
 		<!-- 수정 modal -->
 		<div id="modify" class="modal fade" role="dialog">
 			<div class="modal-dialog">
@@ -144,13 +148,11 @@
 					</div>
 					<div class="modal-body">
 						<form action="#" class="form-margin" method="post" id="frmModify">
-							
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		
 	</div>
 </body>
 <script type="text/javascript">

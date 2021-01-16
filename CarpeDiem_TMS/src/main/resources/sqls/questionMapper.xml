@@ -51,7 +51,7 @@
 	
 	<!-- 상세조회 -->
 	<select id="questionDetailBoard" parameterType="java.lang.String" resultType="qDto">
-		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, DELFLAG 
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_PW, TEXT_REGDATE, DELFLAG 
 			FROM QUESTIONBOARD
 				WHERE SEQ = #{seq}
 	</select>
@@ -77,6 +77,9 @@
 		VALUES(QUESTIONBOARD_SEQ.NEXTVAL, #{writer}, #{title},
 				#{content}, 'Y', (SELECT NVL(MAX(REFER),0)+1 FROM QUESTIONBOARD),
 				0, 'N', SYSDATE)
+		<selectKey keyProperty="seq" resultType="java.lang.Integer" order="AFTER">
+			SELECT QUESTIONBOARD_SEQ.CURRVAL AS SEQ FROM DUAL
+		</selectKey>
 	</insert>
 	
 	<!-- 답글 입력(관리자) -->

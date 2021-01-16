@@ -1,4 +1,4 @@
-package com.cp.tms.model.support;
+package com.cp.tms.model.question;
 
 import java.util.List;
 import java.util.Map;

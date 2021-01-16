@@ -302,7 +302,7 @@ if(userdto != null){
                 <div class="col-lg-5">
                     <table class="memList">
                     <tr>
-                    	<th colspan="2">현제 접속 목록</th>
+                    	<th colspan="2">현재 접속 목록</th>
                     </tr>
                     <tr class="accessmembers">
                     </tr>
