@@ -76,7 +76,6 @@ public class MemberController {
 		iMap.put("email", email);
 		iMap.put("password", password);
 		Member mDto = Service.loginMember(iMap);
-		System.out.println(mDto);
 		if (mDto != null) {
 			session.setAttribute("mDto", mDto);
 			map.put("isc","성공");

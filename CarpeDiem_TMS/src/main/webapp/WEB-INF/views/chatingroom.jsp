@@ -29,7 +29,7 @@
           $(".chat").focus();
           
           // 웹소켓 서버
-          ws = new WebSocket("ws://192.168.1.51:8091/CarpeDiem_TMS/tripChat.do");
+          ws = new WebSocket("ws://172.30.1.15:8091/CarpeDiem_TMS/tripChat.do");
           
           /// 웹소켓 서버가 오픈 됐을때
           ws.onopen = function() {
@@ -91,8 +91,8 @@
     	 allContent = document.getElementById("receive_msg").innerHTML;
   		$.ajax({
   					url : "./chatboardcontentinsert.do",
-  					type : "post",	
-  					//업데이트를 위해 db의 chatmember, content을 보냄
+  					type : "post",
+  					dataType:"json",
   					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
   					success : function(msg) {
   						var isc = msg;
@@ -104,23 +104,23 @@
    }
    
    //삭제 버튼 눌렀을때
-//    function delroom(){
-// 	   var chatmember = document.getElementById("chatmember").value;
-// 	   $.ajax({
-// 				url : "./chatdel.do",
-// 				type : "post",	
-// 				//업데이트를 위해 db의 chatmember, content을 보냄
-<%-- 				data : "chatgroupid="+chatmember+"&chatmyid="+<%=chat_id%>, --%>
-// 				success : function(msg) {
-// 					var isc = msg;
-// 					if(isc =="성공"){
-// 						alert(isc);
-// 					}
-// 				}
-// 			});
-//  	  self.close();
-//  	  disconnect();
-//    }
+   function delchat(){
+	   var chatmember = document.getElementById("chatmember").value;
+	   var chatmyid = "<%=chat_id%>";
+	   $.ajax({
+				url : "./chatdel.do",
+				type : "post",	
+				data : "chatgroupid="+chatmember+"&chatmyid="+chatmyid,
+				dataType:"json",
+				success : function(msg) {
+					if(msg.isc=="성공"){
+						alert(isc);
+					}
+				}
+			});
+ 	  self.close();
+ 	  disconnect();
+   }
    
    // ws server 종료
       function disconnect() {
@@ -175,6 +175,7 @@
 	</div>
 	<div style="display: inline-block;">
 		<div class="out_btn" onclick="roomClose()"></div>
+		<div class="delchat_btn" onclick="delchat()"></div>
 		<div id="reportchat_btn" onclick="chatreport()"></div>
 	</div>
 	<br>

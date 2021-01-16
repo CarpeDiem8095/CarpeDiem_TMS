@@ -2,9 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-	UserDto userdto = (UserDto) session.getAttribute("userdto");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,25 +51,37 @@
 					$(".login").css('display','none');
 					$(".join").css('display','none');
 					$(".userboard").css('display','block');
-					location.reload();
+					accessChating();
 					}else{
 						alert(isc);
 					}
+					location.reload();
 				},
 				error:function(){
 					alert("로그인에 문제가 발생했습니다.");
 				}
 			});
+		
+	}
+	
+	function accessChating(){
+		var email = $("#InputEmail").val();
+		$.ajax({
+			type:"post",
+			url:"./mainchat.do",
+			data:"userid="+email,
+			success:function(){
+				alert("접속성공");
+			},error:function(){
+				alert("채팅접속에 문제가 발생하였습니다.");
+			}
+		});
 	}
 	
 	</script>
-<% 
-if(userdto != null){
-%>
-	<script type="text/javascript" src="./js/mainchat.js"></script>
-<%
-	}
- %>
+	<c:if test="${mDto.email != '' || mDto.email !=null}">
+	<script type="text/javascript" src="./js/chatting/mainchat.js"></script>
+	</c:if>
 <body data-spy="scroll" data-target=".fixed-top">
 <!-- Preloader -->
 	<div class="spinner-wrapper">
@@ -247,7 +256,7 @@ if(userdto != null){
 				<div class="modal-body">
 					<form method="post" name="frm">
 						<div class="form-group has-feedback">
-							<input type="text" id="InputEmail" class="form-control" value="qr2277@naver.com" placeholder="이메일">
+							<input type="text" id="InputEmail" class="form-control" placeholder="이메일">
 							<span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
 						</div>
 
@@ -308,14 +317,12 @@ if(userdto != null){
                     </tr>
                     </table>
 	<hr>
-	<%
-	if(userdto != null){
-	%>
+<c:if test="${mDto.email != '' || mDto.email !=null}">
 	<table class="myChatList">
 	<tr>
 		<th colspan='2'>내 채팅 리스트</th>
 	</tr>
-	<c:set var="myid" value="<%=userdto.getUserid()%>" ></c:set>
+	<c:set var="myid" value="${mDto.email}"></c:set>
 	<c:forEach var="mychat" items="${myChatList}">
 		<tr>
 				<c:choose>
@@ -331,9 +338,7 @@ if(userdto != null){
 		</tr>
 	</c:forEach>
 	</table>
-	<%		
-		}
-	%>
+</c:if>
                 </div> <!-- end of col -->
                 <div class="col-lg-7">
                     <div class="image-container">

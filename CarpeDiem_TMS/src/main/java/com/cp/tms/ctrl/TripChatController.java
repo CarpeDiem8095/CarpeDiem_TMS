@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
 
 import com.cp.tms.dto.ChatingDto;
+import com.cp.tms.dto.Member;
 import com.cp.tms.dto.UserDto;
 import com.cp.tms.model.chat.ITripchatService;
 
@@ -33,13 +34,10 @@ public class TripChatController implements ServletConfigAware {
 	}
 	
 	@RequestMapping(value = "/mainchat.do", method = RequestMethod.POST)
-	public String loginChat(HttpSession session,String userid,Model model) {
-		
-		UserDto userdto=tripchatservice.logintest(userid);
-		session.setAttribute("userdto", userdto);
+	@ResponseBody
+	public void loginChat(HttpSession session,String userid,Model model) {
 		String gr_id = "main";
-		session.setAttribute("chat_id", userdto.getUserid());
-		
+		session.setAttribute("chat_id", userid);
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
 		if (chatList == null) {
 			chatList = new HashMap<String, String>();
@@ -53,7 +51,6 @@ public class TripChatController implements ServletConfigAware {
 		
 		List<ChatingDto> myChatList=tripchatservice.selmychatboard(userid);
 		model.addAttribute("myChatList", myChatList);
-		return "mainchat";
 	}
 	
 	@RequestMapping(value = "/viewChatList.do", method = RequestMethod.POST)

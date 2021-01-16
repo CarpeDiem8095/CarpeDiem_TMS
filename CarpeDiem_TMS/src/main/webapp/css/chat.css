@@ -41,7 +41,7 @@
 		margin-left: 10px;
 		width: 24px;
 		height: 24px;
-		background-image: url("../images/send_btn.png");
+		background-image: url("../images/chatroom/send_btn.png");
 		background-size: 100% 100%;
 		display: inline-block;
 		font
@@ -92,19 +92,21 @@
 	}
 	
 	.out_btn{
-		background-image: url(../images/out_btn.png);
-		width: 24px;
-		height: 24px;
+		background-image: url(../images/chatroom/close_btn.png);
+		width: 40px;
+		height: 40px;
 		margin-left: 50px;
 		position: absolute;
-		margin-top: 7px;
+		top: 50px;
 	}
 	
 	#reportchat_btn{
-	 background-image: url(../images/report_chat.png);
-	margin-left: 410px;
-	 width: 50px;
-	 height: 50px; 
+	 background-image: url(../images/chatroom/report_btn.png);
+	margin-left: 360px;
+	 width: 40px;
+	 height: 40px; 
+	 position: absolute;
+	 top: 50px;
 	}
 	#sendDiv{
 		position: relative;
@@ -149,6 +151,11 @@
 	#receivers{
 		float: left;
 	}
-
+	.delchat_btn{
+	 background-image: url(../images/chatroom/delchat_btn.png);
+	 	width: 40px;
+		height: 40px;
+		margin-left: 410px;
+	}
 	
 	
