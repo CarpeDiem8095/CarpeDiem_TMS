@@ -13,7 +13,9 @@ public interface ICommentService {
 	
 	public boolean reply(CommentDto dto);
 	
-	public boolean modifyComment(Map<String, Object> map);
+	public boolean modifyComment(CommentDto dto);
 	
 	public boolean delComment(CommentDto dto);
+	
+	public CommentDto getOneComment(CommentDto dto);
 }

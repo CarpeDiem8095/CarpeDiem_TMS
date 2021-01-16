@@ -36,7 +36,7 @@
 	(SELECT STEP FROM COMMENTBOARD WHERE COMM_SEQ = #{comm_seq})+1,SYSDATE,#{content})
 </insert>
 
- <update id="modifyComment" parameterType="java.util.Map">
+ <update id="modifyComment" parameterType="comDto">
  	UPDATE COMMENTBOARD SET CONTENT = #{content}
 	WHERE COMM_SEQ = #{comm_seq}
  </update>
@@ -47,7 +47,7 @@
 	AND REFFER = #{reffer} AND STEP >= #{step}
  </delete>
  
- <select id="getOneComment" parameterType="java.lang.String" resultType="comDto">
+ <select id="getOneComment" parameterType="comDto" resultType="comDto">
  	SELECT COMM_SEQ,ONEDAY_SEQ,
 	EMAIL,REFFER,DEPTH,
 	STEP,REGDATE,CONTENT, REPORTCHK FROM COMMENTBOARD

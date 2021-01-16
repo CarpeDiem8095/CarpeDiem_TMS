@@ -30,28 +30,6 @@
 	.table>tbody>tr>td {
 		padding: 0;
 	}
-	
-	.table>tbody>tr>td>div>div {
-		padding: 10px;
-	}
-	
-	.form-textPw {
-		height: 150px;
-		text-align: center;
-	}
-	
-	#text_pw {
-		width: 100px;
-		padding: 0;
-		margin: 0;
-		margin: 50px auto;
-		margin-top: 0;
-	}
-	
-	.modal-dialog {
-		width: 400px;
-		margin: 110px auto;
-	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -65,17 +43,15 @@
 			<div class="panel-group" id="accordion">
 				<table class="table table-bordered">
 					<tr class="info">
-						<c:if test="${mem.auth eq 'A'}">
-							<th><input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"></th>
-						</c:if>
+						<!-- 체크박스는 관리자만 보이게 -->
+<!-- 						<th><input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"></th> -->
 						<th></th>
 						<th>글 번호</th>
 						<th>제목</th>
 						<th>등록일</th>
 						<th>작성자</th>
-						<c:if test="${mem.auth eq 'A'}">
-							<th>삭제여부</th>
-						</c:if>
+						<!-- 관리자는 삭제여부 필요 -->
+<!-- 						<th>삭제여부</th> -->
 					</tr>
 					<jsp:useBean id="data" class="com.cp.tms.usebean.SupportInputData" scope="page"/>
 					<jsp:setProperty property="questionLists" name="data" value="${questionLists}"/>
@@ -111,16 +87,14 @@
 		<div id="textPw" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header textPw-header">
+					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h3 class="modal-title" style="text-align: center">글 비밀번호를 입력해 주세요.</h3>
+						<h3 class="modal-title" style="text-align: center">비밀번호를 입력해 주세요.</h3>
 					</div>
-					<div class="modal-body textPw-body">
+					<div class="modal-body">
 						<form action="#" class="form-margin" method="post" id="frmPW">
 							<input type="hidden" value="${dto.seq}" name="seq">
-							<div class="form-group form-textPw">
-								<br>
-								<br>
+							<div class="form-group">
 								<label for="text_pw">비밀번호</label>
 								<input class="form-control" type="password" id="text_pw" name="text_pw" maxlength="4" required>
 							</div>
