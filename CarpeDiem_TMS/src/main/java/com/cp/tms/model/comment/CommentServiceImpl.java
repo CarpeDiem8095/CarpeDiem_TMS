@@ -35,13 +35,18 @@ public class CommentServiceImpl implements ICommentService {
 
 
 	@Override
-	public boolean modifyComment(Map<String, Object> map) {
-		return dao.modifyComment(map);
+	public boolean modifyComment(CommentDto dto) {
+		return dao.modifyComment(dto);
 	}
 
 	@Override
 	public boolean delComment(CommentDto dto) {
 		return dao.delComment(dto);
+	}
+
+	@Override
+	public CommentDto getOneComment(CommentDto dto) {
+		return dao.getOneComment(dto);
 	}
 
 

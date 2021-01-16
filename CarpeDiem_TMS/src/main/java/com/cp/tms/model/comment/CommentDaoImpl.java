@@ -41,8 +41,8 @@ public class CommentDaoImpl implements ICommentDao {
 	}
 
 	@Override
-	public boolean modifyComment(Map<String, Object> map) {
-		int cnt = session.update(NS+"modifyComment", map);
+	public boolean modifyComment(CommentDto dto) {
+		int cnt = session.update(NS+"modifyComment", dto);
 		return cnt>0?true:false;
 	}
 
@@ -50,6 +50,11 @@ public class CommentDaoImpl implements ICommentDao {
 	public boolean delComment(CommentDto dto) {
 		int cnt = session.delete(NS+"delComment", dto);
 		return cnt>0?true:false;
+	}
+
+	@Override
+	public CommentDto getOneComment(CommentDto dto) {
+		return session.selectOne(NS+"getOneComment", dto);
 	}
 	
 }

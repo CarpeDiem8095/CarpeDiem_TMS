@@ -31,7 +31,6 @@
 	$(document).ready(function() {	
 		$(".revForm").hide();
 		$(".showMeTheForm").click(function(){
-			$(".revForm").hide();
 			$(this).parent().find(".revForm").slideToggle('slow');
 		});
 	 });
