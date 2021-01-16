@@ -56,8 +56,8 @@ public class INoteServiceImpl implements INoteService{
 	}
 
 	@Override
-	public int countNote() {
-		return dao.countNote();
+	public int countNote(String email) {
+		return dao.countNote(email);
 	}
 	
 }

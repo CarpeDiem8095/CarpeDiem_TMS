@@ -27,14 +27,13 @@ a {
 <body>
 	<div id="container">
 		<h3>하루 일정</h3>
-		
-<div class="w3-show-inline-block">
-	<div class="w3-bar w3-light-grey">
-		<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
-		<a href="./onedayTableList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">일정표 보기</a> 
-		<a href="./commnetList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">댓글 보기</a>
-	</div>
-</div> 	
+		<div class="w3-show-inline-block">
+			<div class="w3-bar w3-light-grey">
+				<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
+				<a href="./onedayTableList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">일정표 보기</a> 
+				<a href="./commnetList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">댓글 보기</a>
+			</div>
+		</div> 
 			<div class="panel-group" id="accordion">
 				<c:forEach var="oneday" items="${selDetailOneday}">
 					<div style="font-style:italic; color: red;">${oneday.oneday_title}</div>
@@ -92,8 +91,8 @@ a {
 						</c:forEach>
 					</c:forEach>
 				</div>
+				<div id="map" style="width: 500px; height: 400px; margin: 0px auto;"></div>
 			</div>
-	<div id="map" style="width: 500px; height: 400px;"></div>
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>

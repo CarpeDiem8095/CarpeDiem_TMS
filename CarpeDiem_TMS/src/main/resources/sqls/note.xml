@@ -90,11 +90,11 @@
 	</select>
 
 	<!-- 노트의 총 개수 -->
-	<select id="countNote" resultType="java.lang.Integer">
+	<select id="countNote" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*)
 		FROM NOTE
 		WHERE
-		NOTE_DEL = 'N'
+		NOTE_DEL = 'N' AND EMAIL= #{email}
 	</select>
 
 </mapper>

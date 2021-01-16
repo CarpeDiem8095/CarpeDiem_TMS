@@ -239,7 +239,7 @@ a {
 	    			
 	    			var customOverlay = new kakao.maps.CustomOverlay({
 	    			    position: new daum.maps.LatLng(x[i], y[i]),
-	    			    content: '<div style="color: red;">'+(i+1+"번째")+'</div><div style="border: 1px solid black; background-color: white;">'+title[i].substring(0,5)+'</div>'
+	    			    content: '<div style="border: 1px solid black; background-color: white;">'+(i+1+". ")+title[i].substring(0,8)+'</div>'
 	    			});
 	    			
 	    		    var infowindow = new kakao.maps.InfoWindow({

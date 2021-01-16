@@ -1,5 +1,6 @@
 package com.cp.tms.ctrl;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cp.tms.dto.CalendarDto;
+import com.cp.tms.dto.Member;
 import com.cp.tms.dto.NoteDto;
 import com.cp.tms.dto.Paging;
+import com.cp.tms.model.schedule.ICalendarService;
 import com.cp.tms.model.schedule.INoteService;
+import com.cp.tms.usebean.CalendarInputData;
 
 @Controller
 public class NoteController {
@@ -24,8 +29,13 @@ public class NoteController {
 	INoteService service;
 	
 	@RequestMapping(value = "/notePaging.do", method = RequestMethod.GET)
-	public String notePaging(Model model, String page, HttpSession session) {
-		session.setAttribute("email", "A001"); //원래는 받아와서 써야함 
+	public String notePaging(Model model, String page, 	HttpSession session) {
+		
+		Member member = (Member) session.getAttribute("mDto");
+		if(member.equals(null) || member.equals("")) {
+			return "login";
+		}
+		System.out.println(member.getEmail());
 		
 		System.out.println("넘어온 page의 값은"+page);
 		if(page == null || page == "") {
@@ -37,7 +47,7 @@ public class NoteController {
 		Paging p = new Paging();
 		
 		//페이지의 총 개수 넣어주기
-		p.setTotalCount(service.countNote());
+		p.setTotalCount(service.countNote(member.getEmail()));
 		
 		//페이지의 글개수를 적어준다.
 		p.setCountList(5);
@@ -59,7 +69,7 @@ public class NoteController {
 		p.setEndPage(p.getCountPage());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("email", session.getAttribute("email"));
+		map.put("email", member.getEmail());
 		map.put("first", (p.getPage()-1)*p.getCountList()+1);
 		map.put("last", p.getPage()*p.getCountList());
 		
@@ -69,24 +79,26 @@ public class NoteController {
 		
 		model.addAttribute("pageList",pageList);
 		model.addAttribute("page", p);
-//		model.addAttribute("email", session.getAttribute("email"));
-		return "notePaging";
+		return "schedules/notePaging";
 	}
 	
 	
 	@RequestMapping(value ="/writeNoteForm.do", method = RequestMethod.GET)
 	public String writeNoteForm(Model model) {
-		return "writeNoteForm";
+		return "schedules/writeNoteForm";
 	}
 	
 	@RequestMapping(value = "/writeNote.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String writeNote(String title, String email) {
-		System.out.println(email);
+	public String writeNote(String title, HttpSession session) {
+		Member member = (Member) session.getAttribute("mDto");
+		System.out.println(member.getEmail());
 		NoteDto dto = new NoteDto();
-		dto.setEmail(email);
+		
+		dto.setEmail(member.getEmail());
 		dto.setNote_title(title);
 		service.writeNote(dto);
+		
 		return title;
 	}
 	
@@ -94,11 +106,13 @@ public class NoteController {
 	
 	@RequestMapping(value ="/delOneNote.do", method = RequestMethod.POST)
 	public String delOneNote(String seq, HttpSession session) {
+		Member member = (Member) session.getAttribute("mDto");
+		
 		System.out.println(seq);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("note_seq", seq);
-		map.put("email", session.getAttribute("email"));
+		map.put("email", member.getEmail());
 		
 		boolean isc = service.delOneNote(map);
 		System.out.println(isc);
@@ -119,14 +133,15 @@ public class NoteController {
 	@RequestMapping(value = "/modifyNoteForm.do", method = RequestMethod.GET)
 	public String modifyNoteForm(Model model, String seq) {
 		model.addAttribute("seq", seq);
-		return "modifyNoteForm";
+		return "schedules/modifyNoteForm";
 	}
 	
 	@RequestMapping(value = "/modifyNote", method = RequestMethod.POST)
 	@ResponseBody
-	public String modifyNote(String seq, String email, String title) {
+	public String modifyNote(String seq, String title, HttpSession session) {
+		Member member = (Member) session.getAttribute("mDto");
 		NoteDto dto = new NoteDto();
-		dto.setEmail(email);
+		dto.setEmail(member.getEmail());
 		dto.setNote_seq(seq);
 		dto.setNote_title(title);
 		
@@ -142,6 +157,24 @@ public class NoteController {
 		model.addAttribute("ndto", ndto);
 		model.addAttribute("seq",seq);
 		model.addAttribute("page",page);
-		return "detailNote";
+		return "schedules/detailNote";
 	}
+	
+	//칼랜다로 이동해보기
+	// 일정달력 test
+	@RequestMapping(value = "/calendar.do", method = RequestMethod.GET)
+	public String calendar(String seq, Model model, String page) {
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH)+1;
+		String yyyymm = year + CalendarInputData.twoDigits(String.valueOf(month));
+		
+		List<NoteDto> ndto = service.selDetailNote(seq);
+		model.addAttribute("ndto", ndto);
+		model.addAttribute("seq",seq);
+		model.addAttribute("page",page);
+		
+		return "schedules/calendar";
+	}
+	
 }

@@ -27,7 +27,7 @@
 						<div>
 							<input type="checkbox" name="box" value="${note.note_seq}">
 							<a href="./detailNote.do?seq=${note.note_seq}&page=${page.page}">${note.note_title}</a><br>
-							
+							<a href="./calendar.do?seq=${note.note_seq}&page=${page.page}">${note.note_title}</a><br>
 						</div>
 						<div>
 							<input type = "button" value="수정" style="float: right;" onclick="modifyNote(${note.note_seq})">
@@ -58,12 +58,7 @@
 		</div>
 	</form>
 	
-<!-- 	<div> -->
-<%-- 	${pageList} --%>
-<!-- 	</div> -->
-<!-- 	<div> -->
-<%-- 	${page} --%>
-<!-- 	</div> -->
+	
 	
 </body>
 	<script type="text/javascript">
