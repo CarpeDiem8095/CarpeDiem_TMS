@@ -13,5 +13,5 @@ public interface INoteService {
 	public boolean delOneNote(Map<String, Object> map);
 	public boolean delMultiNote(Map<String, Object[]> map);
 	public List<NoteDto> selPagingNote(Map<String, Object> map);
-	public int countNote();
+	public int countNote(String email);
 }

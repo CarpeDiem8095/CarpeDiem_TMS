@@ -58,8 +58,8 @@ public class NoteDaoImpl implements NoteDao{
 	}
 
 	@Override
-	public int countNote() {
-		return session.selectOne(NS+"countNote");
+	public int countNote(String email) {
+		return session.selectOne(NS+"countNote",email);
 	}
 	
 }

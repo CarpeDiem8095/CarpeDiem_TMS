@@ -29,7 +29,7 @@ public class OnedayController {
 	public String writeOneDayForm(Model model, String seq) {
 		model.addAttribute("seq",seq);
 		System.out.println("노트의 seq "+seq+" 값입니다.");
-		return "writeOneDayForm";
+		return "schedules/writeOneDayForm";
 	}
 	
 	@RequestMapping(value = "/writeOneDay.do", method = RequestMethod.POST)
@@ -53,7 +53,7 @@ public class OnedayController {
 		List<NoteDto> ndto = nService.selDetailNote(noteSeq);
 		model.addAttribute("ndto", ndto);
 		model.addAttribute("seq",noteSeq);
-		return "detailNote";
+		return "schedules/detailNote";
 	}
 	
 	@RequestMapping(value="/insertPlacePage.do", method = RequestMethod.GET)
@@ -67,7 +67,7 @@ public class OnedayController {
 		model.addAttribute("note_seq", noteSeq);
 		model.addAttribute("onedaySeq", seq);
 		model.addAttribute("oneDto", oneDto);
-		return "insertPlace";
+		return "schedules/insertPlace";
 	}
 	
 	@RequestMapping(value = "/NoteCollectOneday.do", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class OnedayController {
 		model.addAttribute("oneDto", oneDto);
 		model.addAttribute("seq",note_seq);
 		model.addAttribute("page",page);
-		return "NoteCollectOneday";
+		return "schedules/NoteCollectOneday";
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -31,7 +31,7 @@ public class HomeController {
 		return "hello";
 	}
 	
-	// 일정달력 test
+	/*
 	@RequestMapping(value = "/calendar.do", method = RequestMethod.GET)
 	public String calBoard(Model model) {
 		Calendar cal = Calendar.getInstance();
@@ -46,5 +46,5 @@ public class HomeController {
 		List<CalendarDto> clists = calService.getCalViewList(map);
 		System.out.println("controller clists: "+clists);
 		return "calendar";
-	}
+	}*/
 }

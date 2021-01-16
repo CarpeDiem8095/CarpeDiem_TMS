@@ -7,6 +7,9 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +19,8 @@
 	#calendar {
     border: 1px solid #ccc;
     border-collapse: collapse;
+   	text-align: center;
+   	margin: 0px auto;
   }
   
   #calendar th {
@@ -38,7 +43,6 @@
 </style>
 </head>
 <body>
-	<h3>일정 달력</h3>
 	<%
 		// 현재 날짜의 년도와 월
 		Calendar cal = Calendar.getInstance();
@@ -74,7 +78,8 @@
 		int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
 		// 달력에 표출한 게시판 데이터를 가져오는 dao
-		ICalendarDao dao = new CalendarDaoImpl();
+// 		ICalendarDao dao = new CalendarDaoImpl();
+		NoteDao dao = new NoteDaoImpl();
 				
 		// yyyymm
 		System.out.printf("year, month : %s, %s", year, month);
@@ -112,8 +117,9 @@
 		    %>
 		    	<td id="<%=i%>">
 		    		<a href="#" class="countView" style="color:<%=CalendarInputData.fontColor(i, dayOfWeek)%>">&nbsp;<%=i%></a>
-		    		<!-- 해당 년도 월 일에 해당하는 글을 출력, 글자수 제한(...표시) -->
-		    		<div class="clist"></div>
+		    		<div class="clist">
+		    		<input type = "button" value="생성" onclick="writeOneday(${seq})">
+		    		</div>
 		    	</td>
 		    	<%
 		    		// 마지막 날이 토요일이면 공백 출력X
@@ -128,7 +134,65 @@
 		    	}
 		    	%>
 		    </tr>
+		    
+			<c:forEach var="ndto" items="${ndto}">
+				<tr>
+					<c:forEach var="onedto" items="${ndto.odto}">
+						<td class="frameTD" style="text-align: center;">
+							<a href="./insertPlacePage.do?seq=${onedto.oneday_seq}&noteSeq=${seq}">${onedto.oneday_title}</a>
+							<input type = "button" value="X" style="float: right;" onclick="delOneday(${onedto.oneday_seq})">
+						<input type = "button" value="수정" onclick="modifyNote(${onedto.oneday_seq})" style="text-align: center; float: right;">
+						</td>
+					</c:forEach>
+				</tr>
+			</c:forEach>
+			<!-- 
+				
+				insert할 때 달력의 해당하는 날짜를 받고 제목만 입력하게 하고
+				select할 때 날짜를 받아서 해당하는 날짜에 값을 집어넣는 방식인데.. 
+				
+				update는 제목과 날짜를 기입해서 수정하게 함
+				
+			 -->
 		</table>
+		<div style="text-align: center;">
+			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'">
+			<input type = "button" value="하루일정생성" onclick="writeOneday(${seq})">
+			<input type = "hidden" value="${seq}" id="noteSeq">
+		</div>
+		<div style="text-align: center;">
+		<%-- ${fn:length(ndto[0].odto)} --%>
+		<c:if test="${fn:length(ndto[0].odto) > 1}">
+		<div>
+			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 450px">
+		</div>
+		</c:if>
+		</div>
+		
 	</div>
 </body>
+
+<script type="text/javascript">
+	function writeOneday(seq){
+		var url = "./writeOneDayForm.do?seq="+seq;
+		var title = "하루 일정 작성 폼 입니다.";
+		var attr = "width=400px, height=200px";
+		var wirteOneDay = window.open(url, title, attr);
+	}
+
+	function delOneday(seq){
+		var noteSeq = document.getElementById("noteSeq").value;
+		var delConfirm = confirm('당신의 하루 일정이 삭제됩니다.');
+		   if (delConfirm) {
+					var form = document.forms[0];
+					form.action = "./delOneday.do?seq="+seq+"&noteSeq="+noteSeq;
+					form.method = "post";
+					form.submit();
+			   }
+			   else {
+			      alert('삭제가 취소되었습니다.');
+			  }
+	}
+	
+</script>
 </html>

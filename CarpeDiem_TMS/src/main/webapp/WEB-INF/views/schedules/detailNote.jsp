@@ -58,7 +58,6 @@
 
 <script type="text/javascript">
 	function writeOneday(seq){
-		alert(seq+"가 넘어와야 합니다");
 		var url = "./writeOneDayForm.do?seq="+seq;
 		var title = "하루 일정 작성 폼 입니다.";
 		var attr = "width=400px, height=200px";

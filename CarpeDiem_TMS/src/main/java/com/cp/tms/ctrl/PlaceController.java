@@ -61,6 +61,6 @@ public class PlaceController {
 		List<OnedayDto> selDetailOneday = oService.selDetailOneday(seq);
 		model.addAttribute("selDetailOneday", selDetailOneday);
 		model.addAttribute("oneday_seq", seq);
-		return selDetailOneday.size()>0?"onedayAllPlace":"error";
+		return selDetailOneday.size()>0?"schedules/onedayAllPlace":"error";
 	}
 }
