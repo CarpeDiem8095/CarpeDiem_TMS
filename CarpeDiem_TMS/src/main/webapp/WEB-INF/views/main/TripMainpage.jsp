@@ -129,12 +129,38 @@ if(userdto != null){
                 <li class="userboard nav-item">
                 	회원 아이디 :${mDto.email}
                 	<br>
-                	회원 등급  :${mDto.auth}
+                	회원 이름  :${mDto.auth}
                 </li>
             </ul>
         </div>
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
+    
+    <script type="text/javascript">
+	function emailSend(){
+	var sendCheckNum = $("#divinputCheckNum").val();
+	$.ajax({ 
+				type:"post",
+				url:"./divinputCheckNum.do",
+				data:{userEmail.clientEmail},
+				success:function(data){
+				error:function(){
+				}
+					alert("오류입니다. 잠시 후 다시 시도해주세요");
+					
+				}
+			});
+	}else{
+		alert('이메일 형식에 알맞게 일벽해 주세요.');
+	}
+        
+    function isEmail(asValue){
+    	var regExp = \^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    	return regExp.test(asValue); // 형식에 맞으면 true
+    }
+    
+    
+    </script>
 
   <!-- The Modal -->
 		<div class="modal fade" id="myModal">
@@ -164,7 +190,7 @@ if(userdto != null){
 									style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divinputCheckNum">
 									<button type="button" class="btn btn-primary btn-block"
-										id="sendCheckNum">
+										id="sendCheckNum" onclick="emailSend()">
 										<span class="glyphicon glyphicon-envelope"></span>인증
 									</button>
 								</div>
@@ -181,7 +207,7 @@ if(userdto != null){
 								<div class="form-group" style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divCheckConfirm">
 									<button type="button" class="btn btn-primary btn-block"
-										id="checkConfirm" name="checkConfirm">
+										id="checkConfirm" name="checkConfirm" onclick="emailCertification()">
 										<span class="glyphicon glyphicon-ok"></span>확인
 									</button>
 								</div>
