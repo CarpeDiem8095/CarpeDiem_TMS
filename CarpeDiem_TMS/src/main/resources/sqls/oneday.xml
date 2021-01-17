@@ -58,7 +58,7 @@
 		p.MEMO
 		FROM ONEDAY o JOIN PLACE p
 		ON o.ONEDAY_SEQ = p.ONEDAY_SEQ
-		WHERE o.ONEDAY_SEQ=#{oneday_seq}
+		WHERE o.ONEDAY_SEQ=#{oneday_seq} AND ONEDAY_DELFLAG ='N'
 		ORDER BY p.STEP ASC
 	</select>
 	
