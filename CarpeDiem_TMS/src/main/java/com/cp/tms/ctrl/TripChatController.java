@@ -48,9 +48,8 @@ public class TripChatController implements ServletConfigAware {
 			chatList.put(userid,gr_id);
 			servletContext.setAttribute("chatList", chatList);
 		}
-		
-		List<ChatingDto> myChatList=tripchatservice.selmychatboard(userid);
-		model.addAttribute("myChatList", myChatList);
+		List<ChatingDto> myChatLists=tripchatservice.selmychatboard(userid);
+		session.setAttribute("myChatLists", myChatLists);
 	}
 	
 	@RequestMapping(value = "/viewChatList.do", method = RequestMethod.POST)
@@ -71,21 +70,22 @@ public class TripChatController implements ServletConfigAware {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("chatmyid",session.getAttribute("chat_id"));
 		map.put("chatyourid", dto.getChatyourid());
-		// 가져오기 바꿔서 가져오기
 		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
-		if(seldto == null) {
-			Map<String, Object> map1 = new HashMap<String, Object>();
-			map1.put("chatmyid",dto.getChatyourid());
-			map1.put("chatyourid", session.getAttribute("chat_id"));
-			seldto=tripchatservice.selchatboardcontent(map1);
-			System.out.println("바꿔서도 조회"+seldto);
-		}
+//		if(seldto == null) {
+//			Map<String, Object> map1 = new HashMap<String, Object>();
+//			map1.put("chatmyid",dto.getChatyourid());
+//			map1.put("chatyourid", session.getAttribute("chat_id"));
+//			seldto=tripchatservice.selchatboardcontent(map1);
+//			System.out.println("바꿔서도 조회"+seldto);
+//		}
 		System.out.println("현제 세션아이디"+ session.getAttribute("chat_id"));
 		if(seldto == null) {
 			// 새로 생성
 			dto.setChatmyid((String)session.getAttribute("chat_id"));
 			boolean isc=tripchatservice.chatboardinsert(dto);
 			System.out.println("채팅생성 : "+isc);
+			seldto=tripchatservice.selchatboardcontent(map);
+		}else {
 			seldto=tripchatservice.selchatboardcontent(map);
 		}
 		seldto.setChatgroupid(dto.getChatgroupid());

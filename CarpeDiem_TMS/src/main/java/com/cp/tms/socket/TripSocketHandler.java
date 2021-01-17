@@ -48,20 +48,22 @@ public class TripSocketHandler extends TextWebSocketHandler {
 		String myGrSession = (String) mySession.get("gr_id"); // 접속자의 그룹 아이디
 		String myMemSession = (String) mySession.get("chat_id"); // 접속자 아이디
 
-		System.out.println("접속자의 그룹 아이디" + myGrSession);
-		System.out.println("text 접속자 아이디" + myMemSession);
-		System.out.println(msg.indexOf("sung"));
 		if (msg != null && !msg.equals("")) {
 			if (msg.indexOf("#$nick_") > -1) {
 				for (WebSocketSession s : list) {
 					Map<String, Object> ChatSession = s.getAttributes();
 					String otherGrSession = (String) ChatSession.get("gr_id");
 					String otherMemSession = (String) ChatSession.get("chat_id");
-					System.out.println("다른사람들 그룹 : " + otherGrSession + "다른사람들 아이디" + otherMemSession);
-					if (myGrSession.equals(otherGrSession)) { 
+					String[] other_gr_session = otherGrSession.split(",");
+					if ((other_gr_session[0].equals(myMemSession) && other_gr_session[1].equals(otherMemSession))) { 
 						s.sendMessage(
 								new TextMessage("<font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다.</font>"));
 					}
+					if(myGrSession.equals(otherGrSession)) {
+						s.sendMessage(
+								new TextMessage("<font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다.</font>"));
+					}
+					
 				}
 			} else {
 				String msg2 = msg.substring(0, msg.indexOf(":")).trim();
@@ -70,24 +72,27 @@ public class TripSocketHandler extends TextWebSocketHandler {
 					String otherGrSession = (String) sessionMap.get("gr_id");
 					String otherMemSession = (String) sessionMap.get("chat_id");
 					String[] other_gr_session = otherGrSession.split(",");
-					if (other_gr_session[0].equals(myMemSession) || other_gr_session[1].equals(myMemSession)) {
-						if (msg2.equals(otherMemSession)) {
-							String newMsg = myMemSession + ":"
+					if (myGrSession.equals(otherGrSession)) {
+							String newMsg = myMemSession + ": 위에껄로 보낸거"
 									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
-							System.out.println("나는 수정전 msg야:" + msg);
-							System.out.println("나는 newMsg야 : " + newMsg);
 							String msgLog = myMemSession
 									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
-							System.out.println("나는 msgLog야 : " + msgLog);
 							logger.info("newMsg:" + msgLog);
 							txt = newMsg;
-						} else {
-							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
-							System.out.println("나는 상대방이 보낸 메세지(수정전) : " + part1);
-							String part2 = part1 + ":" + msg.substring(msg.trim().indexOf(":") + 1);
-							System.out.println("나는 상대방이 보낸 메세지(수정후) : " + part2);
-							txt = part2;
-						}
+						s.sendMessage(new TextMessage(txt));
+					}
+					System.out.println("다른세션"+otherMemSession);
+					System.out.println("나의세션"+myMemSession);
+					System.out.println("비교1"+other_gr_session[0].equals(otherMemSession));
+					System.out.println("비교2"+other_gr_session[1].equals(myMemSession));
+					System.out.println("결과 :" +(other_gr_session[0].equals(otherMemSession)&&other_gr_session[1].equals(myMemSession)));
+					if(other_gr_session[0].equals(otherMemSession)&&other_gr_session[1].equals(myMemSession)) {
+							String newMsg = myMemSession + ": 밑에꺼로 보낸거"
+									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
+							String msgLog = myMemSession
+									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
+							logger.info("newMsg:" + msgLog);
+							txt = newMsg;
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
@@ -102,15 +107,17 @@ public class TripSocketHandler extends TextWebSocketHandler {
 		Map<String, Object> mySession = session.getAttributes();
 		String myGrSession = (String) mySession.get("gr_id");
 		String myMemSession = (String) mySession.get("chat_id");
-		System.out.println("삭제전"+list);
 		list.remove(session);
-		System.out.println("삭제후"+list);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String now = sdf.format(new Date());
-		System.out.println("사이즈"+list.size());
 		for (WebSocketSession a : list) {
 			Map<String, Object> sessionMap = a.getAttributes();
 			String otherGrSession = (String) sessionMap.get("gr_id");
+			String otherMemSession = (String) sessionMap.get("chat_id");
+			String[] other_gr_session = otherGrSession.split(",");
+			if((other_gr_session[0].equals(myMemSession) && other_gr_session[1].equals(otherMemSession) ||other_gr_session[0].equals(otherMemSession) && other_gr_session[1].equals(myMemSession))) {
+				a.sendMessage(new TextMessage("<font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now + ")</font>"));
+			}
 			if (myGrSession.equals(otherGrSession)) {
 				a.sendMessage(new TextMessage("<font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now + ")</font>"));
 			}
