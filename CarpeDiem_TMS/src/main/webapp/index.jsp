@@ -64,7 +64,7 @@
 	<hr>
 	<h6>
 		신고하기 test &nbsp;
-		<input type="button" value="신고하기" onclick="report3()">
+		<input type="button" value="신고하기" onclick="report()">
 	</h6>
 	<h3><a href="./reportBoard.do">신고처리 게시판</a></h3>
 </body>
