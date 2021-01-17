@@ -53,7 +53,7 @@ public interface IQuestionDao {
 
 	/**
 	 * 글 입력(관리자)
-	 * @param dto(writer, title, content)
+	 * @param dto(writer, title, content, public_status)
 	 * @return t/f
 	 */
 	public boolean adminWriteQuestionboard(QuestionDto dto);

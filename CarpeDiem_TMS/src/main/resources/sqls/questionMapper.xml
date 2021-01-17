@@ -75,7 +75,7 @@
 				CONTENT, PUBLIC_STATUS, REFER, 
 				"DEPTH", DELFLAG, TEXT_REGDATE)
 		VALUES(QUESTIONBOARD_SEQ.NEXTVAL, #{writer}, #{title},
-				#{content}, 'Y', (SELECT NVL(MAX(REFER),0)+1 FROM QUESTIONBOARD),
+				#{content}, #{public_status}, (SELECT NVL(MAX(REFER),0)+1 FROM QUESTIONBOARD),
 				0, 'N', SYSDATE)
 		<selectKey keyProperty="seq" resultType="java.lang.Integer" order="AFTER">
 			SELECT QUESTIONBOARD_SEQ.CURRVAL AS SEQ FROM DUAL

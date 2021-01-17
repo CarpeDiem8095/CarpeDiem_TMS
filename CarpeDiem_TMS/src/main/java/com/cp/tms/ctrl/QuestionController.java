@@ -17,13 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cp.tms.dto.Member;
 import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.QuestionDto;
+import com.cp.tms.dto.ReportDto;
 import com.cp.tms.model.question.IQuestionService;
+import com.cp.tms.model.report.IReportService;
 
 @Controller
 public class QuestionController {
 
 	@Autowired
 	private IQuestionService service;
+	
+	@Autowired
+	private IReportService rService;
 	
 	// 문의 게시판으로 이동(전체 조회)
 //	@RequestMapping(value = "/questionBoard.do", method = RequestMethod.GET)
@@ -138,7 +143,9 @@ public class QuestionController {
 			System.out.println("문의글 입력 성공여부: " + isc);
 		}
 		model.addAttribute("questionLists", dto);
+		model.addAttribute("email", mDto.getEmail());
 		System.out.println("questionLists: " + dto);
+		System.out.println("session에 담긴 email: " + mDto.getEmail());
 		return "redirect:/questionBoard.do";
 		
 	}
@@ -153,9 +160,9 @@ public class QuestionController {
 		QuestionDto qDto = service.questionDetailBoard(seq);
 		
 		model.addAttribute("seq", seq);
-		model.addAttribute("qDto", qDto);
 		model.addAttribute("mDto", mDto);
-		System.out.println("원본글 정보: "+qDto); // 왜 text_pw가 null이지....?
+		model.addAttribute("qDto", qDto);
+		System.out.println("원본글 정보: " + qDto);
 		return "questionBoard/questionReplyForm";
 	}
 	
@@ -206,7 +213,45 @@ public class QuestionController {
 		QuestionDto qDto = service.questionDetailBoard(seq);
 		
 		model.addAttribute("qDto", qDto);
+//		model.addAttribute("text_pw", qDto.getText_pw());
+		System.out.println("원본글 정보 qDto: " + qDto);
+		System.out.println("원본글 정보 text_pw: " + qDto.getText_pw());
 		return model.toString();
+	}
+	
+	
+	// 신고하기 test
+	// 신고하기 폼으로 이동
+	@RequestMapping(value = "/reportForm.do", method = RequestMethod.GET)
+	public String reportForm(Model model, HttpSession session, String seq, String email) {
+		System.out.println("seq: " + seq);
+		System.out.println("email: " + email);
+		
+		Member mDto = (Member)session.getAttribute("mDto");
+		System.out.println("session에 담긴 mDto: " + mDto);
+		
+		// 원본글의 정보
+		QuestionDto qDto = service.questionDetailBoard(seq);
+		
+		ReportDto rDto = rService.reportDetailBoard(seq);
+		
+		model.addAttribute("seq", seq);
+		model.addAttribute("email", email);
+		model.addAttribute("mDto", mDto);
+		model.addAttribute("qDto", qDto);
+		model.addAttribute("rDto", rDto);
+		System.out.println("qDto: " + qDto);
+		System.out.println("rDto: " + rDto);
+		return "questionBoard/reportForm";
+	}
+	
+	// 신고하기
+	@RequestMapping(value = "/report.do", method = RequestMethod.POST)
+	public String report(ReportDto dto) {
+		boolean isc = rService.report(dto);
+		System.out.println("dto: " + dto);
+		System.out.println("신고 성공여부: " + isc);
+		return "redirect:/questionBoard.do";
 	}
 	
 }

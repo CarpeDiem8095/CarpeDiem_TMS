@@ -42,4 +42,12 @@
 			WHERE SEQ = #{seq}
 	</update>
 	
+	<!-- 신고하기 test -->
+	<insert id="report" parameterType="rDto">
+		INSERT INTO REPORTBOARD(SEQ, EMAIL, REPORT_TYPE, 
+								CONTENT, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE)
+		VALUES(REPORTBOARD_SEQ.NEXTVAL, #{email}, #{report_type}, 
+				#{content}, SYSDATE, 'N', #{board_type})
+	</insert>
+	
 </mapper>

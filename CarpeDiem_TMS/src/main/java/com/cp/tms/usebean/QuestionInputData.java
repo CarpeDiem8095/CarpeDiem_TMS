@@ -112,6 +112,7 @@ public class QuestionInputData {
 			sb.append("				<input type='button' class='btn btn-primary' value='수정' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='삭제' onclick='del(\""+dto.getSeq()+"\")'>");
 		}
+		sb.append("				<input type='button' class='btn-info' value='신고' onclick='report(\""+dto.getSeq()+"\")'/>");
 		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("	</td>");

@@ -39,4 +39,9 @@ public class ReportServiceImpl implements IReportService {
 		return dao.changeProcessingStatus(seq);
 	}
 
+	@Override
+	public boolean report(ReportDto dto) {
+		return dao.report(dto);
+	}
+
 }
