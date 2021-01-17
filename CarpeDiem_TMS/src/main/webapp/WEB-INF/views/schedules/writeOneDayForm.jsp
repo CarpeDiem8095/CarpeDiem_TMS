@@ -15,7 +15,7 @@
 		 		<input type="text" name="title" value="제주도 N일차"><br>
 		 	</div>
 		 	<div>
-		 		<input type="text" name="oneDate" value="2020-12-31">
+		 		<input type="hidden" name="oneDate" value="${year}${month}${date}">
 		 	</div>
 		 	<div>
 		 		<input type="button" value="작성하기" id="writeSubmit">
