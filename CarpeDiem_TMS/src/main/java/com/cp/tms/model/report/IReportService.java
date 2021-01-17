@@ -41,4 +41,12 @@ public interface IReportService {
 	 */
 	public boolean changeProcessingStatus(String seq);
 	
+	
+	// 신고하기 test
+	/**
+	 * 신고하기
+	 * @param dto(email, report_type, content, board_type)
+	 * @return t/f
+	 */
+	public boolean report(ReportDto dto);
 }

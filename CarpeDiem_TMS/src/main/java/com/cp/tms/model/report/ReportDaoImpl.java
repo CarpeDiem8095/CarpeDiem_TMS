@@ -49,4 +49,10 @@ public class ReportDaoImpl implements IReportDao {
 		return cnt>0?true:false;
 	}
 
+	@Override
+	public boolean report(ReportDto dto) {
+		int cnt = sqlSession.insert(NS+"report", dto);
+		return cnt>0?true:false;
+	}
+
 }

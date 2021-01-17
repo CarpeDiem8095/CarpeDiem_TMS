@@ -50,7 +50,7 @@
 	</select>
 	
 	<!-- 비밀번호 재설정 기능 -->
-	<update id="resetPassword" parameterType="java.util.Map">
+	<update id="resetPassword">
 	UPDATE "MEMBER" SET PASSWORD =#{password} 
 	WHERE EMAIL = #{email}
 	</update>

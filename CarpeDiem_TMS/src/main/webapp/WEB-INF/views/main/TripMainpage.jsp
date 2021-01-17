@@ -36,6 +36,7 @@
 		}else{
 			$(".login").css('display','none');
 			$(".join").css('display','none');
+			accessChating();
 		}
 	});
   	
@@ -51,8 +52,8 @@
 					$(".login").css('display','none');
 					$(".join").css('display','none');
 					$(".userboard").css('display','block');
-					accessChating();
 					}else{
+						alert("이메일 또는 비밀번호가 맞지 않습니다.");
 						alert(isc);
 					}
 					location.reload();
@@ -65,7 +66,7 @@
 	}
 	
 	function accessChating(){
-		var email = $("#InputEmail").val();
+		var email = '${mDto.email}';
 		$.ajax({
 			type:"post",
 			url:"./mainchat.do",
@@ -79,7 +80,7 @@
 	}
 	
 	</script>
-	<c:if test="${mDto.email != '' || mDto.email !=null}">
+	<c:if test="${mDto.email !=null}">
 	<script type="text/javascript" src="./js/chatting/mainchat.js"></script>
 	</c:if>
 <body data-spy="scroll" data-target=".fixed-top">
@@ -139,39 +140,38 @@
                 	회원 아이디 :${mDto.email}
                 	<br>
                 	회원 이름  :${mDto.auth}
+                	<a href="./logout.do">로그아웃</a>
                 </li>
             </ul>
         </div>
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
-    
-    <script type="text/javascript">
-	function emailSend(){
-	var sendCheckNum = $("#divinputCheckNum").val();
-	$.ajax({ 
-				type:"post",
-				url:"./divinputCheckNum.do",
-				data:{userEmail.clientEmail},
-				success:function(data){
-				error:function(){
-				}
-					alert("오류입니다. 잠시 후 다시 시도해주세요");
-					
-				}
-			});
-	}else{
-		alert('이메일 형식에 알맞게 일벽해 주세요.');
-	}
-        
-    function isEmail(asValue){
-    	var regExp = \^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    	return regExp.test(asValue); // 형식에 맞으면 true
-    }
-    
-    
-    </script>
+    <input type="hidden" id="userid" value="${mDto.email}">
 
   <!-- The Modal -->
+  <script>
+  function emailcheck(){
+		var sendCheckNum = $("#sendCheckNum").val();
+		$.ajax({ 
+			type:"post",
+			url:"./auth.do",
+			data:"email="+sendCheckNum,
+			success:function(mv){
+				if(mv!=null){
+					alert("이메일 전송");
+				}else{
+					alert("이메일 전송 실패");
+				}
+			},
+			error:function(){
+				alert("요청하신 메일을 전송할수 없습니다.");
+			}
+		});
+	
+}
+  
+
+</script>
 		<div class="modal fade" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -199,7 +199,7 @@
 									style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divinputCheckNum">
 									<button type="button" class="btn btn-primary btn-block"
-										id="sendCheckNum" onclick="emailSend()">
+										id="sendCheckNum" onclick="emailcheck()">
 										<span class="glyphicon glyphicon-envelope"></span>인증
 									</button>
 								</div>
@@ -336,31 +336,24 @@
             <div class="row">
                 <div class="col-lg-5">
                     <table class="memList">
+                    <thead>
                     <tr>
                     	<th colspan="2">현재 접속 목록</th>
                     </tr>
-                    <tr class="accessmembers">
-                    </tr>
+                    </thead>
+                    <tbody class="accessmembers">
+                    </tbody>
                     </table>
 	<hr>
-<c:if test="${mDto.email != '' || mDto.email !=null}">
+<c:if test="${mDto.email != null}">
 	<table class="myChatList">
 	<tr>
 		<th colspan='2'>내 채팅 리스트</th>
 	</tr>
-	<c:set var="myid" value="${mDto.email}"></c:set>
-	<c:forEach var="mychat" items="${myChatList}">
+	<c:forEach var="myChatLists" items="${myChatLists}" varStatus="vs">
 		<tr>
-				<c:choose>
-				<c:when test="${mychat.chatyourid eq myid}">
-					<td class="mychatname">${mychat.chatmyid}</td>
-					<td><input type="button" value="채팅하기" onclick="goSocket2('${mychat.chatgroupid}','${mychat.chatmyid}','${mychat.chatyourid}')"></td>
-				</c:when>
-				<c:otherwise>
-				<td class="mychatname">${mychat.chatyourid}</td>
-				<td><input type="button" value="채팅하기" onclick="goSocket2('${mychat.chatgroupid}','${mychat.chatmyid}','${mychat.chatyourid}')"></td>
-				</c:otherwise>
-				</c:choose>
+				<td class="mychatname">${myChatLists.chatyourid}</td>
+				<td><input type="button" value="채팅하기" onclick="goSocket2('${myChatLists.chatgroupid}','${myChatLists.chatmyid}','${myChatLists.chatyourid}')"></td>
 		</tr>
 	</c:forEach>
 	</table>

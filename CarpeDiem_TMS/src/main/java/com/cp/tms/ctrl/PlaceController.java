@@ -30,10 +30,9 @@ public class PlaceController {
 		
 		PlaceDto dto = new PlaceDto();
 		dto.setOneday_seq(day);
+		dto.setPlace_name(placeName);
 		dto.setXlat(Xlat);
 		dto.setYlng(Ylng);
-		dto.setPlace_name(placeName);
-		
 		System.out.println(dto);
 		boolean isc = service.writePlace(dto);
 		
