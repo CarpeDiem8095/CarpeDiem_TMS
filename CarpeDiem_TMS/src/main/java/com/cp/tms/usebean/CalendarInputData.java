@@ -1,5 +1,10 @@
 package com.cp.tms.usebean;
 
+import java.util.List;
+
+import com.cp.tms.dto.NoteDto;
+import com.cp.tms.dto.OnedayDto;
+
 public class CalendarInputData {
 
 	// 한 자리의 숫자를 두 자리로 변경
@@ -20,4 +25,47 @@ public class CalendarInputData {
 		}
 	}
 	
+	public static String getCalView(int year, int month, int i, List<NoteDto> clist, String noteSeq) {
+		String res = "";
+		
+		String getYear =Integer.toString(year);
+		String getMonth =Integer.toString(month);
+		String getI =Integer.toString(i);
+		
+		String conMonth = "";
+		String conI = "";
+		
+		if(getMonth.length() == 1) {
+			conMonth = "0"+getMonth;
+		}else {
+			conMonth = getMonth;
+		}
+		
+		if(getI.length() == 1) {
+			conI = "0"+getI;
+		}else {
+			conI = getI;
+		}
+		
+		String compairDate = getYear+"-"+conMonth+"-"+conI;
+
+		for(NoteDto dto : clist) {
+			
+			for(OnedayDto oneDto : dto.getOdto()) {
+				if(oneDto.getOnedate().substring(0,10).trim().equals(compairDate)) {
+					
+					System.out.println("달력에 들어간 일정 : "+oneDto.getOnedate().substring(0,10).trim());
+					
+					StringBuffer sb = new StringBuffer();
+					sb.append("<div>");
+					sb.append("<a href='./insertPlacePage.do?seq="+oneDto.getOneday_seq()+"&noteSeq="+noteSeq+"&selDate="+compairDate+"'>"+oneDto.getOneday_title()+"</a>");
+					sb.append("<input type = 'button' value='X' style='float: right;' onclick='delOneday("+oneDto.getOneday_seq()+")'>");
+					sb.append("<input type = 'button' value='수정' onclick='modifyOneday("+oneDto.getOneday_seq()+")' style='text-align: center; float: right;'>");
+					sb.append("</div>");
+					res+=sb.toString();
+				}
+			}
+		}
+		return res;
+	}
 }

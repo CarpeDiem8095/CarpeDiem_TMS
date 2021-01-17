@@ -150,13 +150,17 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value = "/detailNote.do", method = RequestMethod.GET)
-	public String detailNote(String seq, Model model, String page) {
+	public String detailNote(String seq, Model model, String page, String year, String month) {
 		List<NoteDto> ndto = service.selDetailNote(seq);
 		
 		System.out.println(ndto);
 		model.addAttribute("ndto", ndto);
 		model.addAttribute("seq",seq);
 		model.addAttribute("page",page);
+		
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		
 		return "schedules/detailNote";
 	}
 	
@@ -164,17 +168,13 @@ public class NoteController {
 	// 일정달력 test
 	@RequestMapping(value = "/calendar.do", method = RequestMethod.GET)
 	public String calendar(String seq, Model model, String page) {
-		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH)+1;
-		String yyyymm = year + CalendarInputData.twoDigits(String.valueOf(month));
 		
 		List<NoteDto> ndto = service.selDetailNote(seq);
 		model.addAttribute("ndto", ndto);
 		model.addAttribute("seq",seq);
 		model.addAttribute("page",page);
 		
+		
 		return "schedules/calendar";
 	}
-	
 }

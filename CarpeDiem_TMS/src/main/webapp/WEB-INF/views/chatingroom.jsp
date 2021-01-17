@@ -81,6 +81,8 @@
       					type : "post",	
       					//업데이트를 위해 db의 chatmember, content을 보냄
       					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
+      					success : function(msg) {
+      					}
       				});
       }
       
@@ -92,10 +94,8 @@
   		$.ajax({
   					url : "./chatboardcontentinsert.do",
   					type : "post",
-  					dataType:"json",
   					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
-  					success : function(msg) {
-  						var isc = msg;
+  					success : function() {
   					}
   				});
     	  alert("서버와의 연결이 종료되었습니다.");
@@ -112,10 +112,7 @@
 				type : "post",	
 				data : "chatgroupid="+chatmember+"&chatmyid="+chatmyid,
 				dataType:"json",
-				success : function(msg) {
-					if(msg.isc=="성공"){
-						alert(isc);
-					}
+				success : function() {
 				}
 			});
  	  self.close();

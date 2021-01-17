@@ -265,7 +265,7 @@
 		</table>
 		<div>
 			<input type="hidden" value="${note_seq}" name="note_seq">
-			<input type="button" value="뒤로가기" onclick="location.href='./detailNote.do?seq=${note_seq}'">
+			<input type="button" value="뒤로가기" onclick="location.href='./calendar.do?year=${year}&month=${month}&seq=${note_seq}'">
 			<!-- place값이 없으면 활성화 안되게 해야함 -->
 			<input type="button" value="상세 페이지로 이동" onclick="moveDetail(${onedaySeq})">
 		</div>

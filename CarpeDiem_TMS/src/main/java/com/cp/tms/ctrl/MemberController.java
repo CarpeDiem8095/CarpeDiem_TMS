@@ -3,6 +3,7 @@ package com.cp.tms.ctrl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import com.cp.tms.ctrl.MailHandler;
@@ -31,7 +32,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cp.tms.dto.ChatingDto;
 import com.cp.tms.dto.Member;
+import com.cp.tms.model.chat.ITripchatService;
 import com.cp.tms.model.member.IMemberService;
 
 
@@ -49,7 +52,6 @@ public class MemberController {
 
 	@Autowired
 	private IMemberService Service;
-	
 
 	//회원가입 페이지
 	@RequestMapping(value="/register.do" , method = RequestMethod.GET)
@@ -239,9 +241,6 @@ public class MemberController {
 //		}
 //		return key;
 //	}
-	
-	
-	
 	
 		
 	
