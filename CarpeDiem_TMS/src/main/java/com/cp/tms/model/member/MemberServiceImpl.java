@@ -3,6 +3,9 @@ package com.cp.tms.model.member;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +31,33 @@ public class MemberServiceImpl implements IMemberService {
 		return Dao.singupMember(dto);
 	}
 	
-	//이메일 중복체크
+	 //회원 인증관련 메소드
 	@Override
-	public boolean idDuplicateCheck(String email) {
-		logger.info("이메일 중복 검사 idDuplicateCheck:{}", email);
-		return Dao.idDuplicateCheck(email);
+	public void authentication(Member dto) {
+		Dao.authentication(dto);
+		
 	}
+
+
+	//이메일 중복 체크
+	@Override
+	public boolean email_check(String e_mail) {
+		boolean result = Dao.email_check(e_mail);
+		return result;
+	}
+
+
+
+
+
+	@Override
+	public void sendEmail(Member vo, String dto) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 	
 	//로그인
 	@Override
@@ -42,6 +66,32 @@ public class MemberServiceImpl implements IMemberService {
 		return Dao.loginMember(map);
 		
 	}
+	//로그아웃
+	@Override
+	public void logout(HttpSession session) {
+		Dao.logout(session);
+		
+	}
+
+
+
+	@Override
+	public void findPw(HttpServletResponse resp, Member vo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	
+
+	
+
+
+
+	
 	
 
 

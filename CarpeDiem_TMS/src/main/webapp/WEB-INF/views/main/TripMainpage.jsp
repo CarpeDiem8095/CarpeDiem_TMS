@@ -51,8 +51,10 @@
 					$(".login").css('display','none');
 					$(".join").css('display','none');
 					$(".userboard").css('display','block');
+					
 					accessChating();
 					}else{
+						alert("이메일 또는 비밀번호가 맞지 않습니다.");
 						alert(isc);
 					}
 					location.reload();
@@ -139,39 +141,36 @@
                 	회원 아이디 :${mDto.email}
                 	<br>
                 	회원 이름  :${mDto.auth}
+                	<a href="./logout.do">로그아웃</a>
                 </li>
             </ul>
         </div>
-    </nav> <!-- end of navbar -->
-    <!-- end of navbar -->
-    
-    <script type="text/javascript">
-	function emailSend(){
-	var sendCheckNum = $("#divinputCheckNum").val();
-	$.ajax({ 
-				type:"post",
-				url:"./divinputCheckNum.do",
-				data:{userEmail.clientEmail},
-				success:function(data){
-				error:function(){
-				}
-					alert("오류입니다. 잠시 후 다시 시도해주세요");
-					
-				}
-			});
-	}else{
-		alert('이메일 형식에 알맞게 일벽해 주세요.');
-	}
-        
-    function isEmail(asValue){
-    	var regExp = \^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    	return regExp.test(asValue); // 형식에 맞으면 true
-    }
-    
-    
-    </script>
+    </nav> 
 
   <!-- The Modal -->
+  <script>
+  function emailcheck(){
+		var sendCheckNum = $("#sendCheckNum").val();
+		$.ajax({ 
+			type:"post",
+			url:"./auth.do",
+			data:"email="+sendCheckNum,
+			success:function(mv){
+				if(mv!=null){
+					alert("이메일 전송");
+				}else{
+					alert("이메일 전송 실패");
+				}
+			},
+			error:function(){
+				alert("요청하신 메일을 전송할수 없습니다.");
+			}
+		});
+	
+}
+  
+
+</script>
 		<div class="modal fade" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -199,7 +198,7 @@
 									style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divinputCheckNum">
 									<button type="button" class="btn btn-primary btn-block"
-										id="sendCheckNum" onclick="emailSend()">
+										id="sendCheckNum" onclick="emailcheck()">
 										<span class="glyphicon glyphicon-envelope"></span>인증
 									</button>
 								</div>

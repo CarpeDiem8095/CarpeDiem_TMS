@@ -175,6 +175,7 @@
 					$(".userboard").css('display','block');
 					location.reload();
 					}else{
+						alert("이메일 또는 비밀번호가 다릅니다.");
 						alert(isc);
 					}
 				},
