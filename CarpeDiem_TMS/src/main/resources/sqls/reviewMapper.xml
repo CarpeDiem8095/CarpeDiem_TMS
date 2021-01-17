@@ -14,10 +14,21 @@
 </update>
 
 <update id="deleteReview" parameterType="java.lang.String">
-	UPDATE TOGETHER.REVIEWBOARD
-	SET UUID_NAME=NULL , ORIGIN_NAME=NULL, IMG_URL=NULL, CONTENT=NULL 
+	DELETE FROM REVIEWBOARD
 	WHERE PLACE_SEQ=#{place_seq}
 </update>
   
+<select id="reviewList" parameterType="java.lang.String" resultType="revDto"> 
+	SELECT PLACE_SEQ, UUID_NAME, ORIGIN_NAME, IMG_URL, CONTENT FROM REVIEWBOARD
+	WHERE PLACE_SEQ=#{place_seq}
+</select>
+
+<select id="oneBoardList" resultType="oDto">
+	SELECT ONEDAY_SEQ, NOTE_SEQ, ONEDAY_DELFLAG, ONEDAY_TITLE, ONEDATE, REPORTCHK, ONE_READCNT, ONEDAY_PUBLIC
+	FROM TRIP.ONEDAY
+	WHERE ONEDAY_DELFLAG = 'N' AND ONEDAY_PUBLIC = 'Y'
+	ORDER BY ONEDATE DESC
+</select>
+
 
 </mapper>

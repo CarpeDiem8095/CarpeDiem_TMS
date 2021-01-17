@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -37,25 +38,25 @@ public class ReviewController {
 	@Autowired
 	private IOneDayService oneService;
 	
-	// 이동
-	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
-	public String reviewList (Model model, String seq, String one_seq) {
-		System.out.println("장소 seq" + seq);
-		System.out.println("하루 일정 seq" + one_seq);
-		//System.out.println(plService.reviewList(seq));
-		//System.out.println(oneService.selDetailOneday(one_seq));
-		model.addAttribute("reviewList",plService.reviewList(seq));
-		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
-		model.addAttribute("oneday_seq", one_seq);
-		model.addAttribute("seq", seq);
-		return "reviewsList";
-	}
-	
-	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
-	public String reviewForm() {
-		
-		return "reviewForm";
-	}
+//	// 이동
+//	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
+//	public String reviewList (Model model, String seq, String one_seq) {
+//		System.out.println("장소 seq" + seq);
+//		System.out.println("하루 일정 seq" + one_seq);
+//		//System.out.println(plService.reviewList(seq));
+//		//System.out.println(oneService.selDetailOneday(one_seq));
+//		model.addAttribute("reviewList",plService.reviewList(seq));
+//		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
+//		model.addAttribute("oneday_seq", one_seq);
+//		model.addAttribute("seq", seq);
+//		return "reviewsList";
+//	}
+//	
+//	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
+//	public String reviewForm() {
+//		
+//		return "reviewForm";
+//	}
 	
 	// 테이블 리스트로 이동
 	@RequestMapping(value = "/onedayTableList.do", method = RequestMethod.GET)
@@ -83,9 +84,13 @@ public class ReviewController {
 
 		MultipartRequest multi = new MultipartRequest(req, directory, maxPortSize, encoding, new DefaultFileRenamePolicy());
 
-		String one_seq = multi.getParameter("oneday_seq");
+		String oneday_seq = multi.getParameter("oneday_seq");
 		String seq = multi.getParameter("seq");
+		
 		String content = multi.getParameter("content");
+		String place_seq = multi.getParameter("place_seq");
+		System.out.println("fileupload place seq : " + place_seq);
+		
 		System.out.println("받아오는 컨텐트 값 : "+content);
 		
 		// 파일 내용 
@@ -102,7 +107,7 @@ public class ReviewController {
 		dto.setOrigin_name(origin_name);
 		dto.setUuid_name(uuid_name);
 		dto.setImg_url(directory);
-		dto.setPlace_seq("2");
+		dto.setPlace_seq(place_seq);
 		dto.setContent(content);
 		
 		System.out.println("완성된 파일 DTO : "+ dto);
@@ -112,12 +117,45 @@ public class ReviewController {
 		boolean isc = service.writeReveiw(dto);
 		System.out.println(isc);
 		
-		return "redirect:/reviewsList.do?seq="+seq+"&one_seq="+one_seq;
+		return "redirect:/selDetailOneday.do?seq="+oneday_seq;
+				//"redirect:/reviewsList.do?one_seq="+one_seq;
 				
 				
 	}
 	
-	//"redirect:/reviewsList.do?seq="+seq+"&one_seq="+one_seq;
-	//"redirect:/reviewForm.do"
 	
+	//조회 
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/reviewList.do", method= RequestMethod.GET,
+			produces = "application/text; charset=UTF-8;"			)
+	@ResponseBody
+	public String reviewList(String place_seq) {
+		
+		JSONObject json = new JSONObject();
+		System.out.println("조회 아작스 seq : " + place_seq);
+		
+		ReviewDto dto = service.reviewList(place_seq);
+		System.out.println("조회 아작스 dto : " + dto);
+		
+		json.put("place_seq", dto.getPlace_seq());
+		json.put("content", dto.getContent());
+		json.put("origin_name", dto.getOrigin_name());
+		return json.toString();
+	}
+	
+	
+	// 글목록 조회 
+	@RequestMapping(value="/oneBoardList.do", method=RequestMethod.GET)
+	public String oneBoardList(Model model) {
+		model.addAttribute("oneBoardList", service.oneBoardList());
+		return "review/reviewsBoard"; 
+	}
+	
+	// 상세 글 조회 
+	@RequestMapping(value="/selOneBoard.do", method=RequestMethod.GET)
+	public String reviewSelOneBoard(String oneday_seq, Model model) {
+		model.addAttribute("selDetailOneday",oneService.selDetailOneday(oneday_seq));
+		model.addAttribute("oneday_seq", oneday_seq);
+		return "review/detailOnedayBoard";
+	}
 }

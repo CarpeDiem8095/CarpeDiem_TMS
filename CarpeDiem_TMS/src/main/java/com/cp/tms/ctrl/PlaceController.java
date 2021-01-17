@@ -32,9 +32,8 @@ public class PlaceController {
 		dto.setOneday_seq(day);
 		dto.setXlat(Xlat);
 		dto.setYlng(Ylng);
-		dto.setStep("5");
 		dto.setPlace_name(placeName);
-//		
+		
 		System.out.println(dto);
 		boolean isc = service.writePlace(dto);
 		
