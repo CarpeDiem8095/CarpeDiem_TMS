@@ -33,7 +33,6 @@ public class PlaceController {
 		dto.setPlace_name(placeName);
 		dto.setXlat(Xlat);
 		dto.setYlng(Ylng);
-//		
 		System.out.println(dto);
 		boolean isc = service.writePlace(dto);
 		

@@ -1,53 +1,60 @@
-	// forData에 담을 요소 
-    //ID가 btnSave를 클릭할때 onclick="save(${p.place_seq})
-
-// 	function save(id) {
+// 조회 ajax 
+function selReview(val){
+	var place_seq = val;
+	alert(place_seq);
+	
+	$.ajax({
+		type:'get',
+		url : 'reviewList.do',
+		data : {"place_seq":place_seq},
+		dataType: 'json',
+		contentType:'application/json; charset=utf-8',
+		success:function(data){
+			alert (data.origin_name);
+			html = "<form>"
+ 			html += "<div>";
+ 			html += "	<input type='hidden' name='place_seq' value='"+data.place_seq+"'>";
+			html += "	<div>"+data.origin_name+"</div>";
+			html += "	<div>";
+			html += "		<input type='button' value='수정' onclick='modifyComment()'>";
+        	html += "		<input type='button' value='삭제'>";
+            html += "	</div>";
+        	html += "</div>";
+			html += "</form>";
+        	
+ 			$('#placeInfo').html(html);
+		},
+	      error : function(err){
+	         alert("잘못된 요청입니다."+err);
+	      }
 		
-//     	var formData = {};
-    	
-//     	formData.content = document.getElementById('content_'+id).value;
-//     	//formData.filename = document.getElementById('uploadFile_' + id).value;
-//     	formData.filename = document.getElementById('uploadFile_' + id).files[0];
-//     	console.table(formData);
-//         //비동기 요청
-//          $.ajax({
-//             type : "post", 
-//             url : "fileUpload.do", 
-//             data : formData, 
-//             contentType : 'multipart/form-data', // true=application/x-www-form-urlencoded, false=multipart/form-data
-//             processData : false,
-//             success : function(data) { //성공시
-//             	if(data == "success"){
-//     				alert("등록이 완료되었습니다.")
-//     				document.location.href="./reviewsList.do";
-//     			}
-//     		},
-//             error : function(error) {
-//                 alert("오류 발생"+ error);
-//             }
-//         });
-//     }
+	})
+}
+
+
+
+
 	// 아코디언 메뉴 롤업
-	$(document).ready(function() {	
-		$(".revForm").hide();
-		$(".showMeTheForm").click(function(){
-			$(this).parent().find(".revForm").slideToggle('slow');
-		});
-	 });
+//	$(document).ready(function() {	
+//		$(".revForm").hide();
+//		$(".showMeTheForm").click(function(){
+//			$(this).parent().find(".revForm").slideToggle('slow');
+//		});
+//	 });
 	
 	
-	// 등록 된 이미지 미리보기
-	function readInputFile(input) {
-	    if(input.files && input.files[0]) {
-	        var reader = new FileReader();
-	        reader.onload = function (e) {
-	            $('#preview_${p.place_seq}').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
-	        }
-	        reader.readAsDataURL(input.files[0]);
-	    }
-	}
+//	// 등록 된 이미지 미리보기
+//	function readInputFile(input) {
+//	    if(input.files && input.files[0]) {
+//	        var reader = new FileReader();
+//	        reader.onload = function (e) {
+//	            $('#preview').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
+//	        }
+//	        reader.readAsDataURL(input.files[0]);
+//	    }
+//	}
 	 
 	// 등록된 이미지 바꾸기 
-	$(".uploadFile").on('change', function(){
-	    readInputFile(this);
-	});	
+//	$(".uploadFile").on('change', function(){
+//	    readInputFile(this);
+//	});	

@@ -119,7 +119,7 @@
                     <a class="nav-link page-scroll" href="./notePaging.do">일정 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#">리뷰 보기</a>
+                    <a class="nav-link page-scroll" href="./oneBoardList.do">리뷰 보기</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./boardsearch.do">동행찾기 게시판</a>

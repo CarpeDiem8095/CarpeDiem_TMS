@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>하루 일정 조회</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="./js/review.js"></script>
+<title>Insert title here</title>
 </head>
 <style type="text/css">
 #container {
@@ -25,8 +21,10 @@ a {
 }
 </style>
 <body>
+<%-- ${oneDto} --%>
+
 	<div id="container">
-		<h3>하루 일정</h3>
+		<h3>하루 일정</h3>	<button>신고하기</button>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
 				<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
@@ -239,4 +237,6 @@ a {
 	 }
 	</script>
 
+</html>
+</body>
 </html>
