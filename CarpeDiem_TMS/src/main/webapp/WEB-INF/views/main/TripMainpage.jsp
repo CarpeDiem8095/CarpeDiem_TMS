@@ -53,6 +53,7 @@
 					$(".join").css('display','none');
 					$(".userboard").css('display','block');
 					}else{
+						alert("이메일 또는 비밀번호가 맞지 않습니다.");
 						alert(isc);
 					}
 					location.reload();
@@ -139,6 +140,7 @@
                 	회원 아이디 :${mDto.email}
                 	<br>
                 	회원 이름  :${mDto.auth}
+                	<a href="./logout.do">로그아웃</a>
                 </li>
             </ul>
         </div>
@@ -147,6 +149,29 @@
     <input type="hidden" id="userid" value="${mDto.email}">
 
   <!-- The Modal -->
+  <script>
+  function emailcheck(){
+		var sendCheckNum = $("#sendCheckNum").val();
+		$.ajax({ 
+			type:"post",
+			url:"./auth.do",
+			data:"email="+sendCheckNum,
+			success:function(mv){
+				if(mv!=null){
+					alert("이메일 전송");
+				}else{
+					alert("이메일 전송 실패");
+				}
+			},
+			error:function(){
+				alert("요청하신 메일을 전송할수 없습니다.");
+			}
+		});
+	
+}
+  
+
+</script>
 		<div class="modal fade" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -174,7 +199,7 @@
 									style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divinputCheckNum">
 									<button type="button" class="btn btn-primary btn-block"
-										id="sendCheckNum" onclick="emailSend()">
+										id="sendCheckNum" onclick="emailcheck()">
 										<span class="glyphicon glyphicon-envelope"></span>인증
 									</button>
 								</div>
