@@ -40,9 +40,9 @@
 				</tr>
 			</table>
 			<div style="text-align: center; padding-bottom: 20px;">
-				<input class="btn btn-info" type="submit" value="메일전송">
-  				<input class="btn btn-info" type="reset" value="다시작성">
-				<input class="btn btn-info" type="button" value="취소" onclick="location.href='./boardList.do'" style="width: 82px;">
+				<input type="submit" class="btn btn-info" value="메일전송">
+  				<input type="reset" class="btn btn-info" value="다시작성">
+				<input type="button" class="btn btn-info" value="취소" onclick="location.href='./reportDetail.do'" style="width: 82px;">
 			</div>
 		</form>
 	</div>

@@ -27,10 +27,10 @@ function textPw(val) {
 //			html+= "	<br>";
 //			html+= "	<br>";
 //			html+= "	<label for='text_pw'>비밀번호</label>";
-//			html+= "	<input class='form-control' type='password' id='text_pw' name='text_pw' maxlength='4' required>";
+//			html+= "	<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>";
 //			html+= "</div>";
 //			html+= "<div class='modal-footer' style='text-align: center'>";
-//			html+= "	<input class='btn-primary' type='button' value='확인' onclick='checkPw()'/>";
+//			html+= "	<input type='button' class='btn-primary' value='확인' onclick='checkPw()'/>";
 //			html+= "</div>";
 //			
 //			$("#frmPW").html(html);
@@ -58,20 +58,28 @@ var modifyAjax = function(val) {
 			 html = "  <input type='hidden' value='"+v.seq+"' name='seq'>";
 			html += "  <div class='form-group'>";
 			html += "    <label for='writer'>작성자</label>";
-			html += "	 <input class='form-control' type='text' id='writer' name='writer' value='"+v.writer+"' required>";
+			html += "	 <input type='text' class='form-control' id='writer' name='writer' value='"+v.writer+"' required>";
 			html += "  </div>";
+			
 			html += "  <div class='form-group'>";
 			html += "    <label for='title'>제목</label>";
-			html += "	 <input class='form-control' type='text' id='title' name='title' value='"+v.title+"' required>";
+			html += "	 <input type='text' class='form-control' id='title' name='title' value='"+v.title+"' required>";
 			html += "  </div>";
+			
 			html += "  <div class='form-group'>";
 			html += "    <label for='content'>내용</label>";
 			html += "	 <textarea class='form-control' rows='5' id='content' name='content' required>"+v.content+"</textarea>";
 			html += "  </div>";
 			
+			html += "  <div class='form-group'>";
+			html += "    <label for='content'>공개여부</label>";
+			html += "	 <input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp;";
+			html += "	 <input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글";
+			html += "  </div>";
+			
 			html += "  <div class='modal-footer' style='text-align: center'>";
-			html += "    <input class='btn-primary' type='button' value='확인' onclick='update()'/>";
-			html += "	 <input class='btn-primary' type='reset' value='초기화'/>";
+			html += "    <input type='button' class='btn-primary' value='확인' onclick='update()'/>";
+			html += "	 <input type='reset' class='btn-primary' value='초기화'/>";
 			html += "  </div>";
 			
 			$('#frmModify').html(html);

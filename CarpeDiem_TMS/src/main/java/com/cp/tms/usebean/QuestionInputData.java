@@ -60,25 +60,26 @@ public class QuestionInputData {
 		
 		sb.append("<tr>");
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
-			sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px;'>");
+			sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px; width: 40px;'>");
 			sb.append("		<input type='checkbox' name='chkVal' value='"+dto.getSeq()+"'>");
 			sb.append("	</td>");
 		}
-		sb.append("	<td style='text-align: center; vertical-align: middle; width: 90px;'>"+dto.getSeq()+"</td>");
-		sb.append("	<td class='panel-heading' style='vertical-align: middle; height: 56px; width: 295px;'>");
+		sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getSeq()+"</td>");
+		sb.append("	<td class='panel-heading' style='vertical-align: middle; height: 56px;'>");
 		sb.append("		<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+dto.getSeq()+"' onclick='collapse(\""+dto.getSeq()+"\")'>");
 		sb.append(replyImage(dto.getDepth()) + dto.getTitle());
 		sb.append("		</a>");
 		sb.append("	</td>");
-		sb.append("	<td style='text-align: center; vertical-align: middle; width: 150px;'>");
+		sb.append("	<td style='text-align: center; vertical-align: middle;'>");
 		sb.append(dateFormat(dto.getText_regdate()));
 		sb.append("	</td>");
 		sb.append("	<td style='text-align: center; vertical-align: middle;'>");
 		sb.append(dto.getWriter());
 		sb.append("	</td>");
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
-			sb.append("	<td style='text-align: center; vertical-align: middle; width: 90px;'>"+dto.getDelflag()+"</td>");
-			n = 6;
+			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getPublic_status()+"</td>");
+			sb.append("	<td style='text-align: center; vertical-align: middle;'>"+dto.getDelflag()+"</td>");
+			n = 7;
 		}
 		sb.append("</tr>");
 		sb.append("<tr>");
@@ -95,7 +96,7 @@ public class QuestionInputData {
 //			sb.append("					<br>");
 //			sb.append("					<p>비밀글입니다.</p>");
 //			sb.append("					<p style='color: tomato;'>글 비밀번호를 입력해주세요.</p>");
-//			sb.append("					<input class='form-control' type='password' id='text_pw' name='text_pw' maxlength='4' required>");
+//			sb.append("					<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>");
 ////			sb.append("					<input type='button' class='btn-primary' value='확인' onclick='textPw(\""+dto.getSeq()+"\")'>");
 //			sb.append("					<input type='submit' class='btn-primary' value='확인' onclick='textPw(\""+dto.getText_pw()+"\")'>");
 //			sb.append("				</div>");
@@ -112,7 +113,7 @@ public class QuestionInputData {
 			sb.append("				<input type='button' class='btn btn-primary' value='수정' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='삭제' onclick='del(\""+dto.getSeq()+"\")'>");
 		}
-		sb.append("				<input type='button' class='btn-info' value='신고' onclick='report(\""+dto.getSeq()+"\")'/>");
+		sb.append("				<input type='button' class='btn btn-warning' value='신고' onclick='report(\""+dto.getSeq()+"\")'/>");
 		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("	</td>");

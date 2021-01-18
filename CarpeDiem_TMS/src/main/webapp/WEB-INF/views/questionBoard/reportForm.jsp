@@ -22,7 +22,7 @@
 // 		alert("size: " + size);
 		for (var i = 0; i < size; i++) {
 			if (document.getElementsByName("report_type")[i].checked) {
-				 alert("value: " + document.getElementsByName("report_type")[i].value);
+				alert("value: " + document.getElementsByName("report_type")[i].value);
 			}
 		}
 	}
@@ -34,12 +34,15 @@
 		<hr>
 		<form action="./report.do" method="post">
 			<input type="hidden" name="seq" value="${seq}">
+			<!-- session이 담고 있는 신고하는 사람의 email -->
 			<input type="hidden" name="email" value="${email}">
 			<div class="form-group">
+				<!-- 신고대상 글 제목-->
 				<label for="title">제목</label>
 				<input type="text" class="form-control" name="title" value="${qDto.title}" readonly>
 			</div>
 			<div class="form-group">
+				<!-- 신고대상 글 작성자 -->
 				<label for="writer">작성자</label>
 				<input type="text" class="form-control" name="writer" value="${qDto.writer}" readonly>
 			</div>
