@@ -21,12 +21,13 @@ public class QuestionDto implements Serializable {
 		super();
 	}
 
-	public QuestionDto(String writer, String title, String text_pw, String content) {
+	public QuestionDto(String writer, String title, String content, String text_pw, String public_status) {
 		super();
 		this.writer = writer;
 		this.title = title;
-		this.text_pw = text_pw;
 		this.content = content;
+		this.text_pw = text_pw;
+		this.public_status = public_status;
 	}
 
 	public QuestionDto(String writer, String title, String content) {

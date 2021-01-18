@@ -147,7 +147,6 @@ public class QuestionController {
 		System.out.println("questionLists: " + dto);
 		System.out.println("session에 담긴 email: " + mDto.getEmail());
 		return "redirect:/questionBoard.do";
-		
 	}
 	
 	// 답글 입력 폼으로 이동
@@ -233,15 +232,11 @@ public class QuestionController {
 		// 원본글의 정보
 		QuestionDto qDto = service.questionDetailBoard(seq);
 		
-		ReportDto rDto = rService.reportDetailBoard(seq);
-		
 		model.addAttribute("seq", seq);
 		model.addAttribute("email", email);
 		model.addAttribute("mDto", mDto);
 		model.addAttribute("qDto", qDto);
-		model.addAttribute("rDto", rDto);
 		System.out.println("qDto: " + qDto);
-		System.out.println("rDto: " + rDto);
 		return "questionBoard/reportForm";
 	}
 	

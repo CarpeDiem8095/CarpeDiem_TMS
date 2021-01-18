@@ -4,15 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cp.tms.dto.Member;
 import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.ReportDto;
 import com.cp.tms.model.report.IReportService;
@@ -22,6 +25,9 @@ public class ReportController {
 
 	@Autowired
 	private IReportService service;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	// 신고처리 게시판으로 이동(전체글 조회-페이징)
 	@RequestMapping(value = "/reportBoard.do", method = RequestMethod.GET)
@@ -83,12 +89,64 @@ public class ReportController {
 	}
 	
 	// 신고처리(메일 전송)
+	// 메일 작성 폼으로 이동
+	@RequestMapping(value = "/mailForm.do", method = RequestMethod.GET)
+	public String mailForm() {
+		return "reportBoard/mailForm";
+	}
 	
+	// 메일 전송
+	@RequestMapping(value = "/sendMail.do", method = RequestMethod.POST)
+	public String sendMail(@RequestParam Map<String, String> mailMap) {
+		System.out.println(mailMap.get("receiver"));
+		
+		// 내 메일 주소 필요
+		String sender = "joseokgyu12@gmail.com";
+		
+		// 메일의 내용을 전송하기 위한 객체  // 담아서 보내면 SMTP가 받아서 처리
+		MimeMessage message = mailSender.createMimeMessage();
+		
+		// MimeMessage, 파일하고 text 같이 할건지 t/f, Encoding
+		try {
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setFrom(sender); // 보내는 사람(생략하면 오류 발생함)
+			messageHelper.setTo(mailMap.get("receiver")); // 받는 사람
+			messageHelper.setSubject(mailMap.get("title")); // 메일의 제목(생략 가능함)
+			messageHelper.setText(mailMap.get("content"));
+//			messageHelper.setText(text, html); // 글자, true라면 전송되는 글자를 html로 인식하겠다.
+//			messageHelper.setText(mailMap.get("content"),true);
+			
+			// MimeMessageHelper에 옵션중에 multipart를 true로 했을 경우
+			// 파일 첨부 가능
+			// 절대경로, 상대경로 중 편한걸로 사용하면 됨
+//			FileSystemResource fileResource = new FileSystemResource("C:/Users/yasmi/OneDrive/바탕 화면/YEJI/구디아카데미/수업 교재 및 자료/자료/ogu2.png"); // 절대경로
+			// 파일명 변경
+//			messageHelper.addAttachment("오구.png", fileResource);
+			
+			mailSender.send(message);
+			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/reportDetail.do";
+	}
 	
 	// 신고처리(탈퇴여부 변경)
+	@RequestMapping(value = "/changeWithdrawal.do", method = RequestMethod.GET)
+	public String changeWithdrawal(String email) {
+		boolean isc = service.changeWithdrawal(email);
+		System.out.println("탈퇴여부 변경 성공여부: " + isc);
+		return "redirect:/reportDetail.do";
+	}
 	
 	
 	// 신고처리 완료(처리여부 변경)
-	
+	@RequestMapping(value = "/changeProcessingStatus.do", method = RequestMethod.GET)
+	public String changeProcessingStatus(String seq) {
+		boolean isc = service.changeProcessingStatus(seq);
+		System.out.println("처리여부 변경 성공여부: " + isc);
+		return "reportBoard/reportBoard";
+	}
 	
 }

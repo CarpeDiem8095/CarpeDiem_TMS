@@ -29,9 +29,9 @@
 	
 	<!-- 전체조회(관리자-페이징) -->
 	<select id="adminQuestionboardList" parameterType="java.util.Map" resultType="qDto">
-		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", PUBLIC_STATUS, DELFLAG
 			FROM(SELECT ROW_NUMBER() OVER(ORDER BY REFER DESC) RN,
-					SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", DELFLAG
+					SEQ, WRITER, TITLE, CONTENT, TEXT_REGDATE, REFER, "DEPTH", PUBLIC_STATUS, DELFLAG
 					FROM QUESTIONBOARD)
 				WHERE RN BETWEEN #{first} AND #{last}
 	</select>
@@ -51,7 +51,7 @@
 	
 	<!-- 상세조회 -->
 	<select id="questionDetailBoard" parameterType="java.lang.String" resultType="qDto">
-		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_PW, TEXT_REGDATE, DELFLAG 
+		SELECT SEQ, WRITER, TITLE, CONTENT, TEXT_PW, TEXT_REGDATE, PUBLIC_STATUS, DELFLAG 
 			FROM QUESTIONBOARD
 				WHERE SEQ = #{seq}
 	</select>
@@ -102,7 +102,7 @@
 	
 	<!-- 글 수정(관리자) -->
 	<update id="modifyQuestionboardAdmin" parameterType="java.util.Map">
-		UPDATE QUESTIONBOARD SET TITLE = #{title}, CONTENT = #{content}, PUBLIC_STATUS = 'Y'
+		UPDATE QUESTIONBOARD SET TITLE = #{title}, CONTENT = #{content}, PUBLIC_STATUS = #{public_status}
 			WHERE SEQ=#{seq}
 	</update>
 	

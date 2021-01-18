@@ -20,17 +20,23 @@
 	<!-- email 인증 관련 -->
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="joseokgyu12@gmail.com" />
-		<property name="password" value="tjrrbsla1@" />
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="carpediem8095@gmail.com"/>
+		<property name="password" value="zkfmvpeldpa!"/>
+		<!-- 특수문자 처리하는 방법 -->
+<!-- 		<property name="password"> -->
+<!-- 			<value> -->
+<!-- 				<![CDATA[tjrrbsla1@]]> -->
+<!-- 			</value> -->
+<!-- 		</property> -->
 		<property name="javaMailProperties">
 			<!-- 보안연결 SSL과 관련된 설정 -->
 			<props>
-				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.debug">true</prop>
 				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.debug">true</prop>
 			</props>
 		</property>
 	</bean>

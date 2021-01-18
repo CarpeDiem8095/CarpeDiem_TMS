@@ -28,6 +28,7 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/support.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -38,7 +39,7 @@
 					<th>글 번호</th>
 					<th>신고사유</th>
 					<th>등록일</th>
-					<th>작성자</th>
+					<th>신고대상</th>
 					<th>처리여부</th>
 					<th>게시판 종류</th>
 				</tr>
@@ -70,6 +71,10 @@
 					<li><a href="./reportBoard.do?page=${page.totalPage}">▶▶</a></li>
 				</c:if>
 			</ul>
+		</div>
+		
+		<div>
+			<input type="button" class="btn btn-warning" value="메인으로" onclick="location.href='./mainpage.do'">
 		</div>
 		
 	</div>

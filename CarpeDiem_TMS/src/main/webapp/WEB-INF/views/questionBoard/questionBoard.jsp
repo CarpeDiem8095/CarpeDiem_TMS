@@ -73,10 +73,11 @@
 						</c:if>
 						<th>글 번호</th>
 						<th>제목</th>
-						<th style="width: 150px;">등록일</th>
+						<th>등록일</th>
 						<th>작성자</th>
 						<c:if test="${mDto.auth eq 'A'}">
-							<th style="width: 90px;">삭제여부</th>
+							<th>공개여부</th>
+							<th>삭제여부</th>
 						</c:if>
 					</tr>
 					<jsp:useBean id="data" class="com.cp.tms.usebean.QuestionInputData" scope="page"/>
@@ -109,6 +110,7 @@
 	  			<c:if test="${mDto.auth eq 'A'}">
 					<input type="submit" class="btn btn-primary" value="삭제" style="width: 68px">
 				</c:if>
+				<input type="button" class="btn btn-warning" value="메인으로" onclick="location.href='./mainpage.do'">
 			</div>
 		</form>
 		
@@ -127,10 +129,10 @@
 								<br>
 								<br>
 								<label for="text_pw">비밀번호</label>
-								<input class="form-control" type="password" id="text_pw" name="text_pw" maxlength="4" required>
+								<input type="password"  class="form-control"id="text_pw" name="text_pw" maxlength="4" required>
 							</div>
 							<div class="modal-footer" style="text-align: center">
-								<input class="btn-primary" type="button" value="확인" onclick="checkPw()"/>
+								<input type="button" class="btn-primary" value="확인" onclick="checkPw()"/>
 							</div>
 						</form>
 					</div>

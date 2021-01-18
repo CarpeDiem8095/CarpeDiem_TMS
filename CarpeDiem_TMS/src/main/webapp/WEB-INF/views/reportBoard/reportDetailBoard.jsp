@@ -14,6 +14,7 @@
 		margin: 40px auto;
 	}
 </style>
+<script type="text/javascript" src="../js/support.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -22,17 +23,17 @@
 			<input type = "hidden" name="seq" value="${seq}">
 			<table class="table">
 				<tr>
-					<th>신고대상</th>
-					<!-- 원본글 작성자 -->
+					<!-- 신고한 사람 -->
+					<th>신고자</th>
 					<td>
-						<input type="text" class="form-control" name="" value="케이티(katie@N)" readonly>
+						<input type="text" class="form-control" name="reporter" value="신고한 사람" readonly>
 					</td>
 				</tr>
 				<tr>
-					<th>신고자</th>
-					<!-- 신고글 작성자 -->
+					<!-- 신고당한 사람 -->
+					<th>신고대상</th>
 					<td>
-						<input type="text" class="form-control" name="" value="테디(teddy@N)" readonly>
+						<input type="text" class="form-control" name="report_subject" value="${detail.email}" readonly>
 					</td>
 				</tr>
 				<tr>
@@ -49,10 +50,22 @@
 				</tr>
 			</table>
 			<div style="text-align: center;">
-				<input type="button" class="btn-primary" value="신고처리 완료" onclick="location.href='./reportProcessing.do'">
+				<!-- email전송 test용 버튼 -->
+				<input type="button" class="btn-warning" value="메일작성" onclick="location.href='./mailForm.do'">
+				<input type="button" class="btn-warning" value="회원탈퇴" onclick="changeWithdrawal(${mDto.email})">
+				<input type="button" class="btn-primary" value="신고처리" onclick="changeProcessingStatus(${detail.seq})">
 				<input type="button" class="btn-primary" value="전체글목록" onclick="location.href='./reportBoard.do'">
 			</div>
 		</form>
 	</div>
 </body>
+<script type="text/javascript">
+	function changeWithdrawal(val) {
+		location.href="./changeWithdrawal.do?email=" + val;
+	}
+
+	function changeProcessingStatus(val) {
+		location.href="./changeProcessingStatus.do?seq=" + val;
+	}
+</script>
 </html>

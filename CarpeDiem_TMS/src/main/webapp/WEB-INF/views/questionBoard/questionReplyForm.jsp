@@ -25,21 +25,21 @@
 					<th>작성자</th>
 					<td>
 						<!-- session 가져옴 -->
-						<input class="form-control" type="text" name="writer" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" required readonly>
+						<input type="text" class="form-control" name="writer" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" required readonly>
 					</td>
 				</tr>
 				<tr>
 					<th>제목</th>
 					<td>
 						<!-- root글의 title -->
-						<input class="form-control" type="text" name="title" value="${qDto.title}" required readonly>
+						<input type="text" class="form-control" name="title" value="${qDto.title}" required readonly>
 					</td>
 				</tr>
 				<tr style="display: none;">
 					<!-- root글의 text_pw -->
 					<th>비밀번호</th>
 					<td>
-						<input class="form-control" type="password" name="text_pw" value="${qDto.text_pw}" maxlength="4" required readonly>
+						<input type="password" class="form-control" name="text_pw" value="${qDto.text_pw}" maxlength="4" required readonly>
 					</td>
 				</tr>
 				<tr>
@@ -50,8 +50,8 @@
 				</tr>
 			</table>
 			<div class="form-group" style="text-align: right">
-				<input type="submit" value="등록">
-				<input type="button" value="취소" onclick="location.href='./questionBoard.do'">
+				<input type="submit" class="btn-primary" value="등록">
+				<input type="button" class="btn-primary" value="취소" onclick="location.href='./questionBoard.do'">
 			</div>
 		</form>
 	</div>
