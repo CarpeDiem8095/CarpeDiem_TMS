@@ -94,8 +94,13 @@
   		$.ajax({
   					url : "./chatboardcontentinsert.do",
   					type : "post",
+  					dataType :"json",
   					data : "chatgroupid="+chatmember+"&chatcontent="+allContent,
-  					success : function() {
+  					success : function(data) {
+  						alert(data);
+  					},
+  					error: function(data){
+  						alert(data);
   					}
   				});
     	  alert("서버와의 연결이 종료되었습니다.");
@@ -107,14 +112,20 @@
    function delchat(){
 	   var chatmember = document.getElementById("chatmember").value;
 	   var chatmyid = "<%=chat_id%>";
+	   alert(chatmyid);
+	   alert(chatmember);
 	   $.ajax({
-				url : "./chatdel.do",
-				type : "post",	
+				url : "./delchatboard.do",
+				type : "post",
+				dataType :"json",
 				data : "chatgroupid="+chatmember+"&chatmyid="+chatmyid,
-				dataType:"json",
-				success : function() {
+				success : function(data) {
+					alert(data);
+				},error : function(data){
+					alert(data);
 				}
 			});
+	   alert("서버와의 연결이 종료되었습니다."); 
  	  self.close();
  	  disconnect();
    }
@@ -151,18 +162,18 @@
 		$.ajax({
 			url : "./reportchatboard.do",
 			type : "post",
-			datatype :"json",
+			dataType :"json",
 			data :"groupid="+groupid,
 			success : function(data) {
-					alert("신고가 접수되었습니다.");
+				alert(data);
+			},error: function(data){
+				alert(data);
 			}
 		});
 		roomClose();
 	  	self.close();
   	    disconnect();
 	}
-
-
 </script>
 <body>
 	<br>

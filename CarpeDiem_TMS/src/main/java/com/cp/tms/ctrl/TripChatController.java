@@ -42,15 +42,22 @@ public class TripChatController implements ServletConfigAware {
 		if (chatList == null) {
 			chatList = new HashMap<String, String>();
 			chatList.put(userid,gr_id);
-			System.out.println(chatList);
 			servletContext.setAttribute("chatList", chatList);
 		} else {
 			chatList.put(userid,gr_id);
 			servletContext.setAttribute("chatList", chatList);
 		}
-		List<ChatingDto> myChatLists=tripchatservice.selmychatboard(userid);
-		session.setAttribute("myChatLists", myChatLists);
 	}
+	
+	@RequestMapping(value = "/selmychatboard.do",method = RequestMethod.POST)
+	@ResponseBody
+	public void selmychatboard(HttpSession session) {
+		Member mDto=(Member)session.getAttribute("mDto");
+		List<ChatingDto> myChatLists=tripchatservice.selmychatboard(mDto.getEmail());
+		session.setAttribute("myChatLists", myChatLists);
+		
+	}
+	
 	
 	@RequestMapping(value = "/viewChatList.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -71,13 +78,6 @@ public class TripChatController implements ServletConfigAware {
 		map.put("chatmyid",session.getAttribute("chat_id"));
 		map.put("chatyourid", dto.getChatyourid());
 		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
-//		if(seldto == null) {
-//			Map<String, Object> map1 = new HashMap<String, Object>();
-//			map1.put("chatmyid",dto.getChatyourid());
-//			map1.put("chatyourid", session.getAttribute("chat_id"));
-//			seldto=tripchatservice.selchatboardcontent(map1);
-//			System.out.println("바꿔서도 조회"+seldto);
-//		}
 		System.out.println("현제 세션아이디"+ session.getAttribute("chat_id"));
 		if(seldto == null) {
 			// 새로 생성
@@ -130,14 +130,16 @@ public class TripChatController implements ServletConfigAware {
 	public String reportchatboard(String groupid) {
 		System.out.println(groupid);
 		boolean isc=tripchatservice.reportchatboard(groupid);
-		return isc == true ? "성공" : "실패";
+		return isc == true ? "신고성공" : "신고실패";
 	}
 	
-	@RequestMapping(value = "/chatdel.do",method = RequestMethod.POST)
+	@RequestMapping(value = "/delchatboard.do",method = RequestMethod.POST)
 	@ResponseBody
 	public String chatdel(ChatingDto dto) {
+		System.out.println("삭제");
+		System.out.println(dto);
 		boolean isc=tripchatservice.delchatboard(dto);
-		return isc== true ?"성공":"실패";
+		return isc== true ?"삭제성공":"삭제실패";
 	}
 }
 
