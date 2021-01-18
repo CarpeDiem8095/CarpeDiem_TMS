@@ -37,60 +37,59 @@ a {
 		<div class="panel-group" id="accordion">
 			<c:forEach var="oneday" items="${selDetailOneday}">
 				<div>${oneday.oneday_title}</div>
+
 				<c:forEach var="p" items="${oneday.placeDto}">
-				<div>
-					<div class="showMeTheForm" >
-						<button class="w3-btn w3-block w3-black w3-left-align">
-						${p.place_name} ${p.place_seq}
-						</button>
-					</div>
-				<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
-				<input type="hidden" name="oneday_seq" value="${oneday_seq}">
-				<input type="hidden" name="seq" value="${seq}">
-					<div class="revForm" class="w3-container w3-hide">
-						<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
-						<div>
-							<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-							<div><input type="text" style="width:540px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
-							<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
+					<div>
+						<div class="showMeTheForm">
+							<button class="w3-btn w3-block w3-black w3-left-align">
+								${p.place_name}</button>
 						</div>
-					</div>
-					</form>
-				</div>
+						<div></div>
+					</div>	
 				</c:forEach>
 			</c:forEach>
+
+
 		</div>
+
 	</div>
-	
+
 	<script type="text/javascript">
-	// forData에 담을 요소 
-    //ID가 btnSave를 클릭할때 onclick="save(${p.place_seq})
-// 	function save(id) {
+	// 조회 ajax 
+	function selReview(val){
+		var place_seq = val;
+		alert(place_seq);
 		
-//     	var formData = {};
-    	
-//     	formData.content = document.getElementById('content_'+id).value;
-//     	//formData.filename = document.getElementById('uploadFile_' + id).value;
-//     	formData.filename = document.getElementById('uploadFile_' + id).files[0];
-//     	console.table(formData);
-//         //비동기 요청
-//          $.ajax({
-//             type : "post", 
-//             url : "fileUpload.do", 
-//             data : formData, 
-//             contentType : 'multipart/form-data', // true=application/x-www-form-urlencoded, false=multipart/form-data
-//             processData : false,
-//             success : function(data) { //성공시
-//             	if(data == "success"){
-//     				alert("등록이 완료되었습니다.")
-//     				document.location.href="./reviewsList.do";
-//     			}
-//     		},
-//             error : function(error) {
-//                 alert("오류 발생"+ error);
-//             }
-//         });
-//     }
+		$.ajax({
+			type:'get',
+			url : 'reviewList.do',
+			data : {"place_seq":place_seq},
+			dataType: 'json',
+			contentType:'application/json; charset=utf-8',
+			success:function(data){
+				alert (data.origin_name);
+				html = "<form>"
+	 			html += "<div>";
+	 			html += "	<input type='hidden' name='place_seq' value='"+data.place_seq+"'>";
+				html += "	<div>"+data.origin_name+"</div>";
+				html += "	<div>"+data.content+"</div>";
+				html += "	<div><img src='Users/EUNSOL/CarpeDiem_TMS_WorkSpace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/"+data.origin_name+"'></div>";
+				html += "	<div>";
+				html += "		<input type='button' value='수정' onclick='modifyComment()'>";
+	        	html += "		<input type='button' value='삭제'>";
+	            html += "	</div>";
+	        	html += "</div>";
+				html += "</form>";
+	        	
+	 			$('#placeInfo').html(html);
+			},
+		      error : function(err){
+		         alert("잘못된 요청입니다."+err);
+		      }
+			
+		})
+	}
+
 	// 아코디언 메뉴 롤업
 	$(document).ready(function() {	
 		$(".revForm").hide();

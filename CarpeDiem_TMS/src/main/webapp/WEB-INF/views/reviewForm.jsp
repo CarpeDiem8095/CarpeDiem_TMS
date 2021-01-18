@@ -9,16 +9,32 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <body>
-<form action="./fileUpload.do" enctype="multipart/form-data" method="post">
+	<form action="./fileUploadTest.do" enctype="multipart/form-data"
+		method="post">
 
-<div><input type="button" id="showMeTheForm" value="후기"> </div>
-<div id="rev_Form">
-	<div><input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*"></div>
-	<div><div id="preview" style="border: 1px solid black; width: 200px; height: 200px;"></div><div><textarea></textarea></div></div>
-	<div><input type="submit" value="submit" /></div>
-</div>
-</form>
-<script type="text/javascript">
+		<div>
+			<input type="button" id="showMeTheForm" value="후기">
+		</div>
+		<div id="rev_Form">
+			<div>
+				<input type="file" id="uploadFile" name="filename"
+					class="uploadFile" accept="image/*">
+			</div>
+			<div>
+				<div id="preview"
+					style="border: 1px solid black; width: 200px; height: 200px;"></div>
+				<div>
+					<textarea></textarea>
+				</div>
+			</div>
+			<div>
+				<input type="submit" value="submit" />
+			</div>
+		</div>
+	</form>
+
+
+	<script type="text/javascript">
 // 후기 버튼 클릭 시 리뷰 작성 폼 보이기
 	$(document).ready(function() {
 		$("#rev_Form").hide();
