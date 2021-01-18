@@ -52,11 +52,11 @@ public class ReviewController {
 //		return "reviewsList";
 //	}
 //	
-//	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
-//	public String reviewForm() {
-//		
-//		return "reviewForm";
-//	}
+	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
+	public String reviewForm() {
+		
+		return "reviewForm";
+	}
 	
 	// 테이블 리스트로 이동
 	@RequestMapping(value = "/onedayTableList.do", method = RequestMethod.GET)
@@ -72,7 +72,6 @@ public class ReviewController {
 	@RequestMapping(value = "/fileUpload.do", method=RequestMethod.POST)
 	//@ResponseBody
 	public String fileUpload(HttpServletRequest req, Model model, ReviewDto dto) throws IOException {
-		// seq 받아옴
 		
 		
 		// 경로
@@ -85,7 +84,6 @@ public class ReviewController {
 		MultipartRequest multi = new MultipartRequest(req, directory, maxPortSize, encoding, new DefaultFileRenamePolicy());
 
 		String oneday_seq = multi.getParameter("oneday_seq");
-		String seq = multi.getParameter("seq");
 		
 		String content = multi.getParameter("content");
 		String place_seq = multi.getParameter("place_seq");
@@ -117,6 +115,12 @@ public class ReviewController {
 		boolean isc = service.writeReveiw(dto);
 		System.out.println(isc);
 		
+		File oldFile = new File(directory+"/"+multi.getFilesystemName("filenaem"));
+		File newFile = new File(directory+"/"+uuid_name);
+		oldFile.renameTo(newFile);
+		
+		System.out.println("리네이밍 : "+newFile);
+		
 		return "redirect:/selDetailOneday.do?seq="+oneday_seq;
 				//"redirect:/reviewsList.do?one_seq="+one_seq;
 				
@@ -140,6 +144,8 @@ public class ReviewController {
 		json.put("place_seq", dto.getPlace_seq());
 		json.put("content", dto.getContent());
 		json.put("origin_name", dto.getOrigin_name());
+		json.put("uuid_name", dto.getOrigin_name());
+		
 		return json.toString();
 	}
 	

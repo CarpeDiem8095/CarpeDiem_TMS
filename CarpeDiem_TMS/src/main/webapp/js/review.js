@@ -15,6 +15,8 @@ function selReview(val){
  			html += "<div>";
  			html += "	<input type='hidden' name='place_seq' value='"+data.place_seq+"'>";
 			html += "	<div>"+data.origin_name+"</div>";
+			html += "	<div>"+data.content+"</div>";
+			html += "	<div><img src='Users/EUNSOL/CarpeDiem_TMS_WorkSpace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/"+data.origin_name+"'></div>";
 			html += "	<div>";
 			html += "		<input type='button' value='수정' onclick='modifyComment()'>";
         	html += "		<input type='button' value='삭제'>";
@@ -43,18 +45,15 @@ function selReview(val){
 //	 });
 	
 	
-//	// 등록 된 이미지 미리보기
-//	function readInputFile(input) {
-//	    if(input.files && input.files[0]) {
-//	        var reader = new FileReader();
-//	        reader.onload = function (e) {
-//	            $('#preview').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
-//	        }
-//	        reader.readAsDataURL(input.files[0]);
-//	    }
-//	}
-	 
-	// 등록된 이미지 바꾸기 
-//	$(".uploadFile").on('change', function(){
-//	    readInputFile(this);
-//	});	
+	// 등록 된 이미지 미리보기
+
+	function readInputFile(input) {
+	    if(input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	            $('#preview').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
+	        }
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+	 	

@@ -82,11 +82,14 @@ a {
 									<input type="hidden" name="place_seq" value="${p.place_seq}">
 										
 										<div class="revForm" class="w3-container w3-hide">
-											<div><input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*"></div>
+											<div>
+												<input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*">
+												</div>
 											<div>
 												<div id="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
 												<div><input type="text" style="width:540px; height: 250px;" name="content" id="content"></div>
 												<div><input type="submit" id="btnSave"  value="save" style="float:right;"/></div>
+												<div><input type="button" value="reset" onclick="reset();" style="float:right;"/></div>
 											</div>
 										</div>
 									</form>
