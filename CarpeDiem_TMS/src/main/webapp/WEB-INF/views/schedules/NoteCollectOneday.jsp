@@ -13,7 +13,7 @@
 </head>
 <style type="text/css">
 #container {
-	width: 850px;
+	width: 650px;
 	height: 540px;
 	margin: 40px auto;
 }
@@ -25,6 +25,15 @@ a {
 	text-decoration: none;
 	vertical-align: -webkit-baseline-middle;
 	margin-left: 10px;
+}
+
+.placeTitleCss{
+	margin: 0px;
+	padding: 0px;
+}
+
+.w3-rigth-align{
+	float: right;
 }
 </style>
 <body>
@@ -38,10 +47,10 @@ a {
 				<c:choose>
 					<c:when test="${p.step eq '1'}">
 					<div>
-						<div class="showMeTheForm" >
-							<button class="w3-btn w3-block w3-black w3-left-align">
-							${p.place_name}
-							</button>
+						<div class="w3-panel w3-black placeTitleCss">
+							<button class="w3-btn w3-black">${p.place_name}</button>
+							<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
+							<button class="w3-btn w3-purple w3-rigth-align" onclick="showMeTheMemo(${p.oneday_seq},${p.place_seq})">메모작성</button>
 							<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
 						</div>
 						<form action="./fileUpload.do" method="post">
@@ -50,34 +59,47 @@ a {
 								<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
 								<div>
 									<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-									<div><input type="text" style="width:540px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
+									<div><input type="text" style="width:400px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
 									<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
 								</div>
+							</div>
+						</form>
+						<!-- 메모추가 부분 -->
+						<form>
+							<div class="memoForm">
+								<textarea rows="" cols="" style="width: 650px; height: 200px;"></textarea>
+								<input type="button" value="메모저장" onclick="addMemo()">
 							</div>
 						</form>
 					</div>
 					</c:when>
 					<c:otherwise>
 						<div>
-							<div><input type="button" onclick="viewPath(${p.place_name})" value="경로보기"/></div>
-							<div>
-								<div class="showMeTheForm" >
-								<button class="w3-btn w3-block w3-black w3-left-align">
-								${p.place_name}
-								</button>
-								<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
-								</div>
+							<div><input type="button" onclick="viewPath(${p.oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
+						<div>
+						<div class="w3-panel w3-black placeTitleCss"> 
+							<button class="w3-btn w3-black">${p.place_name}</button>
+							<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
+							<button class="w3-btn w3-purple w3-rigth-align" onclick="showMeTheMemo(${p.oneday_seq},${p.place_seq})">메모작성</button>
+						</div>
 								<form action="./fileUpload.do" method="post">
 								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 									<div class="revForm" class="w3-container w3-hide">
 										<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
 										<div>
 											<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-											<div><input type="text" style="width:540px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
+											<div><input type="text" style="width:400px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
 											<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
 										</div>
 									</div>
 								</form>
+							<!-- 메모추가 부분 -->
+							<form>
+								<div class="memoForm">
+									<textarea rows="" cols="" style="width: 650px; height: 200px;"></textarea>
+									<input type="button" value="메모저장" onclick="addMemo()">
+								</div>
+							</form>
 							</div>
 						</div>
 					</c:otherwise>
@@ -95,7 +117,7 @@ a {
 <%-- 				</c:forEach> --%>
 			
 			</div>
-			<div style="text-align: center; margin-top: 500px;">	
+			<div style="position: absolute; left: 1380px;  top: 40px;">	
 				<div id="map" style="width: 500px; height: 400px;"></div>
 				<div>
 					<c:forEach var="oneday" items="${oneDto}" varStatus="onedayVs"> <!-- 버튼을 클릭하면 얘의 seq로 select태워서 아작스처리 -->
@@ -104,7 +126,6 @@ a {
 				</div>
 			</div>
 		</div>
-		
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
@@ -114,15 +135,6 @@ a {
 			level : 10
 		};
 		var container = document.getElementById('map');
-	</script>
-	<script type="text/javascript">
-	 function viewPath(pname){
-		 alert(pname);
-// 			var url = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C523953%2C1084098&rt1=넥슨코리아본사&rr2="+name+"&rtIds=%2C&rtTypes=%2C"
-// 			var title = "길찾기";
-// 			var attr = "width=400px, height=200px";
-// 		 window.open(url, title, attr);
-	 }
 	</script>
 	<script type="text/javascript">
 	// forData에 담을 요소 
@@ -153,12 +165,49 @@ a {
 //             }
 //         });
 //     }
+	
+	// 메모 클릭시 제어
+	
+	function showMeTheMemo(onedaySeq, placeSeq){
+// 		alert(onedaySeq);
+// 		alert(placeSeq);
+			$.ajax({
+			 type : "post", 
+	        url : "showMemo.do",
+	        data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+	        dataType : "json",
+	        success : function(json) {
+				alert(json.memo);
+				alert(json.onedaySeq);
+				alert(json.placeSeq);
+				
+	        }
+		});
+	}
+	
+// 	$(".showMeTheMemo").click(function(){
+// 		alert('클릭함 ㅎ');
+// 		$.ajax({
+// 			 type : "post", 
+// 	         url : "addMemo.do",
+// 	         data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+// 	         dataType : "json",
+// 	         success : function(json) {
+// 	  			var url = "http://map.daum.net/?sName="+json.firstPName+"&eName="+json.secondPName+"";
+// 	  			var title = "길찾기";
+// 	  			var attr = "width=1200px, height=600px";
+// 	  			var pathControl = window.open(url, title, attr);
+// 	         }
+// 		});
+// 	});
+	
 	// 아코디언 메뉴 롤업
 	$(document).ready(function() {	
 		$(".revForm").hide();
 		$(".showMeTheForm").click(function(){
 			$(".revForm").hide();
-			$(this).parent().find(".revForm").slideToggle('slow');
+// 			alert($(this).parent().parent().find(".revForm").val());
+			$(this).parent().parent().find(".revForm").slideToggle('slow');
 		});
 	 });
 	
@@ -190,10 +239,6 @@ a {
 	         dataType : "json",
 	         success : function(json) { //성공시
 	         
-// 	         	alert(json.A_place_name);
-// 	         	alert(json.A_xlat);
-// 	         	alert(json.A_ylng);
-	         	
 	         	var title = json.A_place_name.split('/');
 	         	var x = json.A_xlat.split('/');
 	         	var y = json.A_ylng.split('/');
@@ -317,5 +362,22 @@ a {
 		}
 	
 	</script>
+	<script type="text/javascript">
+	 function viewPath(onedaySeq, placeSeq){
+		 $.ajax({
+			 type : "post", 
+	         url : "viewPath.do", 
+	         data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+	         dataType : "json",
+	         success : function(json) {
+	  			var url = "http://map.daum.net/?sName="+json.firstPName+"&eName="+json.secondPName+"";
+	  			var title = "길찾기";
+	  			var attr = "width=1200px, height=600px";
+	  			var pathControl = window.open(url, title, attr);
+	         }
+		 })
+	 }
+	 </script>
+	 
 	
 </html>

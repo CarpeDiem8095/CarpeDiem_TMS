@@ -9,9 +9,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <body>
 	<form style="text-align: center;" id="frm">
+		<p>당신의 노트를 수정해 주세요</p>
 		<input type="hidden" name="seq" value="${seq}">
-	 	<input type="text" name="title">
-	 	<input type="button" value="수정하기" id="modifySubmit">
+	 	<input type="text" name="title" value="${note_Title}">
+	 	<input type="button" value="변경하기" id="modifySubmit">
 	</form>
 </body>
 
@@ -35,6 +36,7 @@
             }
         });
     });
+	
 
 </script>
 </html>

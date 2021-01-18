@@ -87,4 +87,22 @@
 	SET MEMO=#{memo}
 	WHERE PLACE_SEQ=#{place_seq}
 	</update>
+	
+	<!-- 해당하는 하루일정의 해당하는 장소 1개 조회  -->
+	<select id="viewPath" parameterType="pDto" resultType="pDto">
+	SELECT p.PLACE_SEQ, p.STEP, p.PLACE_NAME, p.XLAT, p.YLNG, p.MEMO
+	FROM  PLACE p
+	WHERE p.ONEDAY_SEQ=#{oneday_seq} AND p.PLACE_SEQ=#{place_seq}
+	ORDER BY STEP ASC
+	</select>
+	
+	<!-- 해당하는 하루일정 장소를 ONEDAY_SEQ와 step으로 조회  -->
+	<select id="viewPathFirst" parameterType="pDto" resultType="pDto">
+	SELECT p.ONEDAY_SEQ, p.PLACE_SEQ, p.STEP, p.PLACE_NAME, p.XLAT, p.YLNG, p.MEMO
+	FROM  PLACE p
+	WHERE p.ONEDAY_SEQ=#{oneday_seq} AND p.STEP = #{step}
+	ORDER BY STEP ASC
+	</select>
+	
+
 </mapper>

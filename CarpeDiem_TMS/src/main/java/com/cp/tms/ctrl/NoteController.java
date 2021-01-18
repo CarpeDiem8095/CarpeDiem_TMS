@@ -32,9 +32,10 @@ public class NoteController {
 	public String notePaging(Model model, String page, 	HttpSession session) {
 		
 		Member member = (Member) session.getAttribute("mDto");
-		if(member.equals(null) || member.equals("")) {
-			return "login";
-		}
+//		if(member.equals(null) || member.equals("")) {
+//			return "login";
+//		}
+		
 		System.out.println(member.getEmail());
 		
 		System.out.println("넘어온 page의 값은"+page);
@@ -133,6 +134,8 @@ public class NoteController {
 	@RequestMapping(value = "/modifyNoteForm.do", method = RequestMethod.GET)
 	public String modifyNoteForm(Model model, String seq) {
 		model.addAttribute("seq", seq);
+		model.addAttribute("note_Title", service.selNoteOne(seq));
+		
 		return "schedules/modifyNoteForm";
 	}
 	

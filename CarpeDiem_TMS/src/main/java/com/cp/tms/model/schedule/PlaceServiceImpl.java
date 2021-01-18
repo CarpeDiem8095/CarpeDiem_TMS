@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cp.tms.dto.OnedayDto;
 import com.cp.tms.dto.PlaceDto;
 
 @Service
@@ -17,22 +18,27 @@ public class PlaceServiceImpl implements IPlaceService {
 		return dao.writePlace(dto);
 	}
 
-	/* 사용하는 dto의 값이 다른데 이건 아닌 것 같음*/
-	@Transactional
 	@Override
-	public boolean modifyUpPlace(PlaceDto dto) {
-		boolean isc1 = dao.modifyUpPlace1(dto);
-		boolean isc2 = dao.modifyUpPlace2(dto);
-		return (isc1 || isc2)?true:false;
+	public boolean modifyUpPlace1(PlaceDto dto) {
+		return dao.modifyUpPlace1(dto);
 	}
 
-	/* 사용하는 dto의 값이 다른데 이건 아닌 것 같음*/
-	@Transactional
+
 	@Override
-	public boolean modifyDownPlace(PlaceDto dto) {
-		boolean isc1 = dao.modifyDownPlace1(dto);
-		boolean isc2 = dao.modifyDownPlace2(dto);
-		return (isc1 || isc2)?true:false;
+	public boolean modifyUpPlace2(PlaceDto dto) {
+		return dao.modifyUpPlace2(dto);
+	}
+
+
+	@Override
+	public boolean modifyDownPlace1(PlaceDto dto) {
+		return dao.modifyDownPlace1(dto);
+	}
+
+
+	@Override
+	public boolean modifyDownPlace2(PlaceDto dto) {
+		return dao.modifyDownPlace2(dto);
 	}
 
 	/* 사용하는 seq의 값이 같기 때문에 괜찮음*/
@@ -52,6 +58,16 @@ public class PlaceServiceImpl implements IPlaceService {
 	@Override
 	public PlaceDto reviewList(String seq) {
 		return dao.reviewList(seq);
+	}
+
+	@Override
+	public PlaceDto viewPath(PlaceDto dto) {
+		return dao.viewPath(dto);
+	}
+
+	@Override
+	public PlaceDto viewPathFirst(PlaceDto dto) {
+		return dao.viewPathFirst(dto);
 	}
 
 }

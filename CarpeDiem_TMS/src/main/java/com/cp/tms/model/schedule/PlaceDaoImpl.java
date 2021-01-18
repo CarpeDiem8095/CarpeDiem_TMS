@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cp.tms.dto.OnedayDto;
 import com.cp.tms.dto.PlaceDto;
 
 @Repository
@@ -58,5 +59,17 @@ public class PlaceDaoImpl implements IPlaceDao{
 	public PlaceDto reviewList(String seq) {
 		return session.selectOne(NS+"reviewList", seq);
 	}
+
+	@Override
+	public PlaceDto viewPath(PlaceDto dto) {
+		return session.selectOne(NS+"viewPath", dto);
+	}
+
+	@Override
+	public PlaceDto viewPathFirst(PlaceDto dto) {
+		return session.selectOne(NS+"viewPathFirst", dto);
+	}
+
+
 
 }

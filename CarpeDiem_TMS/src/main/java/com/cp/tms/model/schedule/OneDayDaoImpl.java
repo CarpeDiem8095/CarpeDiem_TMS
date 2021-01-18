@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cp.tms.dto.OnedayDto;
+import com.cp.tms.dto.PlaceDto;
 @Repository
 public class OneDayDaoImpl implements IOneDayDao {
 
@@ -38,6 +39,11 @@ public class OneDayDaoImpl implements IOneDayDao {
 	@Override
 	public List<OnedayDto> noteCollectOnedayAP(String note_seq) {
 		return session.selectList(NS+"noteCollectOnedayAP", note_seq);
+	}
+	
+	@Override
+	public OnedayDto selOnedayOne(String oneday_seq) {
+		return session.selectOne(NS+"selOnedayOne", oneday_seq);
 	}
 
 }

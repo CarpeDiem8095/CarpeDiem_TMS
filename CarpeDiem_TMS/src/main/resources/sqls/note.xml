@@ -96,5 +96,12 @@
 		WHERE
 		NOTE_DEL = 'N' AND EMAIL= #{email}
 	</select>
+	
+	<!-- 노트 조회 (일정 수정시 화면에 제목) -->
+	<select id="selNoteOne" parameterType="java.lang.String" resultType="java.lang.String">
+	SELECT NOTE_TITLE
+	FROM NOTE n 
+	WHERE NOTE_SEQ = #{note_seq}
+	</select>
 
 </mapper>

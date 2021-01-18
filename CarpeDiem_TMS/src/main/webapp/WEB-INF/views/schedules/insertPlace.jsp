@@ -7,6 +7,10 @@
 <meta charset="utf-8">
 <title>일정 등록</title>
 <style>
+.pname{
+	text-align: left;
+}
+
 .map_wrap, .map_wrap * {
 	margin: 0;
 	padding: 0;
@@ -192,6 +196,12 @@
 	cursor: default;
 	color: #777;
 }
+
+#right_wrap{
+	position: absolute;
+	top: 0px;
+	left: 850px;
+}
 </style>
 </head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -200,7 +210,6 @@
 		<div id="map"
 			style="width: 500px; height: 500px; position: relative; overflow: hidden; left: 300px">
 		</div>
-		
 	<div id="menu_wrap" class="bg_white">
 		<div class="option">
 			<div>
@@ -214,46 +223,67 @@
 		<ul id="placesList"></ul>
 		<div id="pagination"></div>
 	</div>
-	</div>
-	<div>
+	
+	<div id="right_wrap">
 	<form id="oneDayPlace">
 		<div id="insertDB" style="border: 1px">
-			<input type="hidden" name="day" value="${onedaySeq}">
+			<input type="hidden" name="day" value="${onedaySeq}" id="onedSeq">
+			<input type="hidden" name="selDate" value="${selDate}" id="onedSeq">
 		</div>
 		<table style="text-align: right;">
 			<c:forEach var="onedto" items="${oneDto}">
 				<tr>
-					<td style="text-align: center; font-style:italic; color: red;">하루 일정 제목 : ${onedto.oneday_title}</td>
+					<td style="text-align: center; font-style:italic; color: red;" >하루 일정 제목 : ${onedto.oneday_title}</td>
 				</tr>
 					<c:forEach var="placeDto" items="${onedto.placeDto}" varStatus="vs">
 						<c:choose>
 							<c:when test="${placeDto.step eq 1}">
 							<tr>
-								<td>
+								<td class="pname">
 									${placeDto.place_name}
-									<input type="button" value="▼" onclick=""/>
-									<input type="button" value="X" onclick="location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}'"/>
+								</td>
+								<td colspan="2">
+									<input type="button" value="▼" onclick="down(${onedto.oneday_seq},${placeDto.place_seq})"/>
+								</td>
+								<td>
+									<input type="button" value="X" onclick="delonePlace(${onedto.oneday_seq}, ${placeDto.place_seq})"/>
+								</td>
+								<td>
 									${placeDto.step}
 								</td>
 							</tr>
 							</c:when>
 							<c:when test="${placeDto.step eq vs.last}">
 							<tr>
-								<td>
+								<td class="pname">
 									${placeDto.place_name}
-									<input type="button" value="▲" onclick="up(${placeDto.place_seq}, <!-- 다음 placeDteo의 seq 절대 못 가져옴-->)"/>
-									<input type="button" value="▼" onclick="down()"/>
-									<input type="button" value="X" onclick="location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}'"/>
+								</td>
+								<td>
+									<input type="button" value="▲" onclick="up(${onedto.oneday_seq},${placeDto.place_seq})"/>
+								</td>
+								<td>
+									<input type="button" value="▼" onclick="down(${onedto.oneday_seq},${placeDto.place_seq})"/>
+								</td>
+								<td>
+									<input type="button" value="X" onclick="delonePlace(${onedto.oneday_seq}, ${placeDto.place_seq})"/>
+								</td>
+								<td>
 									${placeDto.step}
 								</td>
 							</tr>
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td>
+									<td class="pname">
 										${placeDto.place_name}
-										<input type="button" value="▲" onclick="up(${placeDto.place_seq}, <!-- 다음 placeDteo의 seq 절대 못 가져옴-->)"/>
-										<input type="button" value="X" onclick="location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}'"/>
+									</td>
+									<td colspan="2">
+										<input type="button" value="▲" onclick="up(${onedto.oneday_seq},${placeDto.place_seq})"/>
+									</td>
+									<td>
+										<input type="button" value="X" onclick="delonePlace(${onedto.oneday_seq}, ${placeDto.place_seq})"/>
+									</td>
+									<td>
 										${placeDto.step}
 									</td>
 								</tr>
@@ -270,6 +300,8 @@
 			<input type="button" value="상세 페이지로 이동" onclick="moveDetail(${onedaySeq})">
 		</div>
 	</form>
+	</div>
+	
 	</div>
 	
 
@@ -501,12 +533,28 @@
 
 			var insertDB = document.getElementById('insertDB');
 			
-			
 			insertDB.innerHTML += "<div>"+
 								"<input type='hidden' name='placeName' value='"+myTitle+"'/>"+
 								"<input type='hidden' name='myX' value='"+myX+"'/>"+
 								"<input type='hidden' name='myY' value='"+myY+"'/></div>";
+			
+// 			var day = document.getElementById("onedSeq").value;
 
+// 			alert(day);
+	//         $.ajax({
+	//         type : "post", 
+	//         url : "insertPlace.do",
+	//         contentType:'application/json; charset=utf-8',
+	//         data : formData,
+			   
+	//         success : function(json) { //성공시
+	// 			alert("성공")
+	// 			},
+	// 		      error : function(err){
+	// 			   alert("잘못된 요청입니다."+err);
+	// 			  }
+	//   		 });
+								
 			var form = document.getElementById("oneDayPlace");
 			form.method = "post";
 			form.action = "./insertPlace.do";
@@ -527,6 +575,41 @@
 			location.href="./selDetailOneday.do?seq="+seq;
 		}
 		
+		function delonePlace(oneday_seq, place_seq){
+			 $.ajax({
+				 type : "post", 
+		         url : "delPlace.do", 
+		         data : {"onedaySeq":oneday_seq, "placeSeq":place_seq},
+		         success : function(json) {
+		        	 location.reload();
+		         }
+			 });
+		}
+		 //location.href='./delPlace.do?seq=${placeDto.place_seq}&onedaySeq=${onedaySeq}&note_seq=${note_seq}&selDate=${selDate}
+	</script>
+	
+	<script type="text/javascript">
+		function up(oneday_seq, place_seq){
+			 $.ajax({
+				 type : "post", 
+		         url : "modifyUpPlace.do", 
+		         data : {"onedaySeq":oneday_seq, "placeSeq":place_seq},
+		         success : function(json) {
+		        	 location.reload();
+		         }
+			 });
+		}
+		
+		function down(oneday_seq, place_seq){
+			 $.ajax({
+				 type : "post", 
+		         url : "modifyDownPlace.do", 
+		         data : {"onedaySeq":oneday_seq, "placeSeq":place_seq},
+		         success : function(json) {
+		        	 location.reload();
+		         }
+			 });
+		}
 	</script>
 </body>
 </html>
