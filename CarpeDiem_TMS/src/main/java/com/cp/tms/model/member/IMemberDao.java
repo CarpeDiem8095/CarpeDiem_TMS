@@ -15,8 +15,8 @@ public interface IMemberDao {
     //회원 인증관련 메소드
     public void authentication(Member dto);        
     
-    //이메일 중복 체크
-    public boolean email_check(String e_mail);
+  //이메일 중복 체크
+    public int userEmailCheck(String userEmail);
     
     // 로그인 처리
     public Member loginMember(Map<String, Object> map);

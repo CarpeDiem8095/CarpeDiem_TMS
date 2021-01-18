@@ -16,7 +16,8 @@ public interface IMemberService {
     public void authentication(Member dto);        
     
     //이메일 중복 체크
-    public boolean email_check(String e_mail);
+    public int userEmailCheck(String userEmail);
+    
     
     
     
