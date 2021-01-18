@@ -20,4 +20,8 @@ public interface IPlaceDao {
 	public boolean addMemo(PlaceDto dto);
 	
 	public PlaceDto reviewList(String seq);
+	
+	public PlaceDto viewPath(PlaceDto dto);
+	public PlaceDto viewPathFirst(PlaceDto dto);
+	
 }

@@ -23,9 +23,15 @@ a {
 	vertical-align: -webkit-baseline-middle;
 	margin-left: 10px;
 }
+
+#map{
+	position: absolute;
+    left: 1480px;
+    top: 140px;
+}
 </style>
 <body>
-	<div id="container">
+		<div id="container">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
@@ -41,8 +47,8 @@ a {
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div class="showMeTheForm" >
-								<button class="w3-btn w3-block w3-black w3-left-align">
+							<div>
+								<button class="w3-btn w3-block w3-black w3-left-align" class="showMeTheForm">
 								${p.place_name}
 								</button>
 								<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
@@ -65,7 +71,14 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${p.place_name})" value="경로보기"/></div>
+								<div></div>
+								<div>
+									<input type="button" onclick="addMemo()" value="메모 작성하기"/>
+								</div>
+								<div>
+									<textarea rows="" cols=""></textarea>
+								</div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
 								<div>
 									<div class="showMeTheForm" >
 									<button  class="w3-btn w3-block w3-black w3-left-align" onclick ="selReview(${p.place_seq})">
@@ -103,7 +116,7 @@ a {
 					</c:forEach>
 				</div>
 				<div id="map" style="width: 500px; height: 400px; margin: 0px auto;"></div>
-			</div>
+				</div>
 			
 			
 					
@@ -163,7 +176,7 @@ a {
 			
 			var customOverlay = new kakao.maps.CustomOverlay({
 			    position: new daum.maps.LatLng(x[i].value, y[i].value),
-			    content: (i+1)+'<br><br><div>'+title[i].value.substring(0,3)+'</div>'
+			    content: '<div style="border: 1px solid black; background-color: white;">'+(i+1+". ")+title[i].value.substring(0,8)+'</div>'
 			});
 			
 		    var infowindow = new kakao.maps.InfoWindow({
@@ -230,13 +243,21 @@ a {
 		}
 	</script>
 	<script type="text/javascript">
-	 function viewPath(pname){
-		 alert(pname);
-// 			var url = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C523953%2C1084098&rt1=넥슨코리아본사&rr2="+name+"&rtIds=%2C&rtTypes=%2C"
-// 			var title = "길찾기";
-// 			var attr = "width=400px, height=200px";
-// 		 window.open(url, title, attr);
+	 function viewPath(onedaySeq, placeSeq){
+		 $.ajax({
+			 type : "post", 
+	         url : "viewPath.do", 
+	         data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+	         dataType : "json",
+	         success : function(json) {
+	  			var url = "http://map.daum.net/?sName="+json.firstPName+"&eName="+json.secondPName+"";
+	  			var title = "길찾기";
+	  			var attr = "width=1200px, height=600px";
+	  			var pathControl = window.open(url, title, attr);
+	         }
+		 })
 	 }
-	</script>
+	 </script>
+
 
 </html>

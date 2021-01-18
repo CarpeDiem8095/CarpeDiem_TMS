@@ -9,6 +9,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <body>
 	<form style="text-align: center;" id="frm">
+		<p>당신의 노트를 생성해 주세요</p>
 	 	<input type="text" name="title">
 	 	<input type="button" value="작성하기" id="writeSubmit">
 	</form>
@@ -28,7 +29,7 @@
             url : "./writeNote.do",
             data : frm, 
             success : function(data){
-            	alert("성공");
+            	alert("노트가 생성 되었습니다.");
                 self.close();
                 window.opener.location.reload();
             }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cp.tms.dto.NoteDto;
 import com.cp.tms.dto.OnedayDto;
+import com.cp.tms.dto.PlaceDto;
 import com.cp.tms.model.schedule.INoteService;
 import com.cp.tms.model.schedule.IOneDayService;
 
@@ -70,16 +71,14 @@ public class OnedayController {
 	}
 	
 	@RequestMapping(value="/ModifyOneDayForm.do", method = RequestMethod.GET)
-	public String ModifyOneDayForm(String onedaySeq, String noteSeq, Model model) {
+	public String ModifyOneDayForm(String onedaySeq, Model model) {
 		
 		
-		List<OnedayDto> dto = service.selDetailOneday(onedaySeq);
+		OnedayDto dto = service.selOnedayOne(onedaySeq);
 		
 		model.addAttribute("onedaySeq", onedaySeq);
-		model.addAttribute("noteSeq", noteSeq);
+		
 		model.addAttribute("oneDto", dto);
-		
-		
 		
 		return "schedules/ModifyOneDayForm";
 	}
@@ -94,7 +93,6 @@ public class OnedayController {
 		dto.setOneday_title(oneTitle);
 		
 		service.modifyOneday(dto);
-		
 		return oneDate;
 	}
 	
@@ -125,11 +123,10 @@ public class OnedayController {
 		String month = splitDate[1];
 		model.addAttribute("year", year);
 		model.addAttribute("month", month);
+		model.addAttribute("selDate", year+"-"+month);
 		}
 		
 		/*뒤로가기 시 get에 보낼 year month */
-		
-		
 		
 		model.addAttribute("note_seq", noteSeq);
 		model.addAttribute("onedaySeq", seq);

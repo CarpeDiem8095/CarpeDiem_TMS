@@ -71,4 +71,12 @@
 		WHERE o.NOTE_SEQ = ${note_seq} AND ONEDAY_DELFLAG ='N'
 		ORDER BY o.ONEDATE ASC,p.STEP ASC
 	</select>
+	
+	<!-- 하루 일정 조회(게시판 수정시 화면에 제목과 날짜 출력) -->
+	<select id="selOnedayOne" parameterType="java.lang.String" resultType="oDto">
+	SELECT ONEDAY_TITLE , ONEDATE 
+	FROM ONEDAY
+	WHERE ONEDAY_SEQ = #{oneday_seq}
+	</select>
+	
 </mapper>

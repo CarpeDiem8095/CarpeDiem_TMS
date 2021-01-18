@@ -59,5 +59,10 @@ public class INoteServiceImpl implements INoteService{
 	public int countNote(String email) {
 		return dao.countNote(email);
 	}
+
+	@Override
+	public String selNoteOne(String seq) {
+		return dao.selNoteOne(seq);
+	}
 	
 }
