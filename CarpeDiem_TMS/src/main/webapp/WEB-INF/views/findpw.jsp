@@ -3,71 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-	$(function(){
-		$("#findBtn").click(function(){
-			$.ajax({
-				url : "/findpw.do",
-				type : "POST",
-				data : {
-					id : $("#id").val(),
-					email : $("#email").val()
-				},
-				success : function(result) {
-					alert(result);
-				},
-			})
-		});
-	})
-</script>
-<style type="text/css">
-.mybtn{
-  width:150px;
-  height:40px;
-  padding:0;
-  display:inline; 
-  border-radius: 4px; 
-  background: #212529;
-  color: #fff;
-  margin-top: 20px;
-  border: solid 2px #212529; 
-  transition: all 0.5s ease-in-out 0s;
-}
-.mybtn:hover .mybtn:focus {
-  background: white;
-  color: #212529;
-  text-decoration: none;
-}
-</style>
-
-<title>비밀번호 찾기</title>
-</head>
 <body>
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4 w3-auto" style="width: 382px;height: 456.3px;">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>비밀번호 찾기</h3>
-			</div>
-			<div>
-				<p>
-					<label>닉네임</label>
-					<input class="w3-input" type="text" id="id" name="id" placeholder="회원가입한 닉네임를 입력하세요" required>
-				</p>
-				<p>
-					<label>이메일</label>
-					<input class="w3-input" type="text" id="email" name="email" placeholder="회원가입한 이메일주소를 입력하세요" required>
-				</p>
-				<p class="w3-center">
-					<button type="button" id="findBtn" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">찾기</button>
-					<button type="button" onclick="history.go(-1);" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">로그인으로</button>
-				</p>
-			</div>
-		</div>
+<div class="modal_box">
+	<div class="title_box">
+		<!--비밀번호 찾기-->비밀번호 찾기	<img src="/res/img/modal/common/modal_close_btn.gif" class="modal_btn_close" alt="" onclick="et_modal_close();">
 	</div>
+	<div class="modal_content">
+		<form action="/member/find_pw" method="post">
+		<div class="input_title">
+			<!--가입한 이메일-->이메일 주소		</div>
+		<input type="text" name="email_address" id="email_address" class="modal_input" onkeyup="vali_mail();">
+		<div class="input_sub_desc">
+			등록한 이메일 주소를 입력해 주세요.<br>비밀번호 설정 방법을 이메일로 보내드립니다.<br>장시간 메일이 오지 않을 경우 스팸 메일함을 확인해<br>주세요.			
+		</div>
+	</form></div>
+	<div class="modal_footer">
+		<input type="button" class="m_btn_submit" id="form_submit" value="비밀번호 재설정">
+	</div>
+</div>
+</head>
 </body>
 </html>

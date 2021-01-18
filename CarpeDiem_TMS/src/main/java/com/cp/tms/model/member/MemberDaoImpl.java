@@ -59,11 +59,26 @@ public class MemberDaoImpl implements IMemberDao {
 
 
 
-	@Override
-	public boolean email_check(String e_mail) {
-		String email = SqlSession.selectOne(CP+"EMDuplicateCheck", e_mail);
-		return (email==null)?true:false;
-	}
+
+
+
+
+//	회원가입 (이메일 중복확인)
+
+		public static int confirmEmail(String email){
+			return 0;
+
+			
+
+		}
+
+
+
+		@Override
+		public int userEmailCheck(String userEmail) {
+			
+			return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
+		}
 
 
 

@@ -39,12 +39,7 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
-	//이메일 중복 체크
-	@Override
-	public boolean email_check(String e_mail) {
-		boolean result = Dao.email_check(e_mail);
-		return result;
-	}
+	
 
 
 
@@ -79,6 +74,14 @@ public class MemberServiceImpl implements IMemberService {
 	public void findPw(HttpServletResponse resp, Member vo) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public int userEmailCheck(String userEmail) {
+		
+		return Dao.userEmailCheck(userEmail);
 	}
 
 

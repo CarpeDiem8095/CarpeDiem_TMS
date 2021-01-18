@@ -14,6 +14,17 @@
 	font-size: 13px;
 	padding: 5px;
 	border-bottom: 0.5px solid #B4B4B4;
+	
+	/* 중복아이디 존재하지 않는경우 */
+	.glyphicon glyphicon-user{
+		color : green;
+		display : none;
+	}
+	/* 중복아이디 존재하는 경우 */
+	.id_input_re_2{
+		color : red;
+		display : none;
+	}
 }
 </style>
 <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
@@ -150,25 +161,53 @@
 
   <!-- The Modal -->
   <script>
-  function emailcheck(){
-		var sendCheckNum = $("#sendCheckNum").val();
-		$.ajax({ 
-			type:"post",
-			url:"./auth.do",
-			data:"email="+sendCheckNum,
-			success:function(mv){
-				if(mv!=null){
-					alert("이메일 전송");
-				}else{
-					alert("이메일 전송 실패");
-				}
-			},
-			error:function(){
-				alert("요청하신 메일을 전송할수 없습니다.");
-			}
-		});
+//이메일 중복검사
+  $('.email').on("propertychange change keyup paste input", function(){
+//   	console.log("keyup 테스트");	
+	var memberId = $('.email').val();	// .email에 입력되는 값
+	var data = {memberId : memberId}	// '컨트롤에 넘길 데이터 이름' : '데이터(.email에 입력되는 값)'
 	
-}
+	$.ajax({
+		type : "post",
+		url : "./memberIdChk.do",
+		data : data,
+		success : function(result){
+// 		 console.log("성공 여부" + result);
+			if(result != 'fail'){
+				$('.glyphicon glyphicon-user').css("display","inline-block");
+				$('.id_input_re_2').css("display", "none");				
+			} else {
+				$('.id_input_re_2').css("display","inline-block");
+				$('.glyphicon glyphicon-user').css("display", "none");				
+			}
+			
+		}// success 종료
+	}); // ajax 종료
+
+
+  });// function 종료
+  
+  
+  
+/* 인증번호 이메일 전송 */
+$("#sendCheckNum").click(function(){
+	
+	var email = $("#email").val();
+// 	alert("이메일 전송");
+	$.ajax({
+		
+		type:"GET",
+		url:"./mailCheck.do?email="+email,
+		success:function(data){
+			console.log("data:" +data);
+			
+		}
+	});
+	
+});
+
+
+
   
 
 </script>
@@ -183,23 +222,25 @@
 
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form class="form-horizontal" method="POST" id="Frm" name="Frm">
+						<form action="form-horizontal" class="form-horizontal" method="POST" id="Frm" name="Frm">
 							<div class="modal-body"
 								style="padding: 30px 50px; height: 500px;">
 								<div class="form-group" style="text-align: left; width: 72%"
 									id="divEmail">
 								
 									<!-- 이메일 확인 -->
-									<label for="email"><span
+									<label for="email">
+									<span
 										class="glyphicon glyphicon-user"></span> 이메일</label> <input
 										type="text" class="email form-control" id="email" name="email"
 										placeholder="이메일을 입력하세요">
 								</div>
+			
 								<div class="form-group"
 									style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divinputCheckNum">
 									<button type="button" class="btn btn-primary btn-block"
-										id="sendCheckNum" onclick="emailcheck()">
+										id="sendCheckNum">
 										<span class="glyphicon glyphicon-envelope"></span>인증
 									</button>
 								</div>
@@ -216,9 +257,10 @@
 								<div class="form-group" style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divCheckConfirm">
 									<button type="button" class="btn btn-primary btn-block"
-										id="checkConfirm" name="checkConfirm" onclick="emailCertification()">
+										id="checkConfirm" name="checkConfirm">
 										<span class="glyphicon glyphicon-ok"></span>확인
 									</button>
+									<input type="hidden" id="certificationYN" value="false">
 								</div>
 								<hr>
 								<!-- 닉네임 확인 -->
