@@ -10,8 +10,8 @@
 </head>
 <body>
 <form action="./searchboardwrite.do" method="post">
-<input type="hidden" name="userid" value="sung9606071@gmail.com">
-<input type="hidden" name="nickname" value="우성">
+<input type="hidden" name="userid" value="${mDto.email}">
+<input type="hidden" name="nickname" value="${mDto.nickname}">
 <table>
 	<tr>
 		<th>작성자</th>
