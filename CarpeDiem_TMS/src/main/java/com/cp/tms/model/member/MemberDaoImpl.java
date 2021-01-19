@@ -23,7 +23,7 @@ public class MemberDaoImpl implements IMemberDao {
 
 	@Override
 	public boolean singupMember(Member dto) {
-		int cnt = SqlSession.insert(CP+"signupMember",dto);
+		int cnt = SqlSession.insert(CP+"memberList",dto);
 		return (cnt>0)?true:false;
 	}
 	
@@ -42,12 +42,6 @@ public class MemberDaoImpl implements IMemberDao {
 		session.invalidate();
 	}
 
-
-
-	@Override
-	public int updatePw(Member vo) throws Exception {
-		return SqlSession.update(CP+"resetPassword", vo);
-	}
 
 
 
@@ -80,6 +74,34 @@ public class MemberDaoImpl implements IMemberDao {
 			return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
 		}
 
+
+		//이메일 발송
+		@Override
+		public void sendEmail(Member vo, String dto) {
+			
+			
+		}
+
+
+		//비밀번호 찾기
+		@Override
+		public void findPw(HttpServletResponse resp, Member vo) {
+			
+			
+		}
+
+
+
+		@Override
+		public int updatePw(Member vo) throws Exception {
+			
+			return SqlSession.update(CP+"resetPassword", vo);
+		}
+
+
+
+		
+	
 
 
 	
