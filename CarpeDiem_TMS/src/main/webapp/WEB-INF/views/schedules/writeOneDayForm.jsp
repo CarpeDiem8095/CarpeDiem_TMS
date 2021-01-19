@@ -12,7 +12,7 @@
 		<form style="text-align: center;" id="frm">
 			<input type="hidden" name="seq" value="${seq}">
 			<div>
-		 		<input type="text" name="title" value="제주도 N일차"><br>
+		 		<input type="text" name="title" value="제주도 N일차" maxlength="10"><br>
 		 	</div>
 		 	<div>
 		 		<input type="hidden" name="oneDate" value="${year}${month}${date}">
