@@ -37,6 +37,14 @@ public interface IMemberService {
     //비밀번호찾기
     public void findPw(HttpServletResponse resp, Member vo);
 
+	public Member readMember(String email);
+
+	public boolean idCheck(boolean b);
+
+	public Object idCheck(String email);
+
+	public void update(String pw);
+
 	
 
 	

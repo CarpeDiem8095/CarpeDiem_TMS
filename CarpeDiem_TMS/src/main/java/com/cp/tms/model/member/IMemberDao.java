@@ -25,13 +25,18 @@ public interface IMemberDao {
     public void logout(HttpSession session);
     
     
+ 
+    
+  
+    //이메일 발송
+    public void sendEmail(Member vo, String dto);
+    
+    //비밀번호찾기
+    public void findPw(HttpServletResponse resp, Member vo);
     
  // 비밀번호 변경
     public int updatePw(Member vo) throws Exception;
 
-    
-  
-    
     
     
     

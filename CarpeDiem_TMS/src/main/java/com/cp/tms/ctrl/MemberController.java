@@ -25,6 +25,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,44 +58,33 @@ public class MemberController {
 	@Autowired
 	private IMemberDao Dao;
 
-	//회원가입 페이지
+	//회원가입 페이지 이동
 	@RequestMapping(value="/register.do" , method = RequestMethod.GET)
 	public String homeController() throws Exception {
 		return "home";
 	}
 	
-	// 아이디 중복 검사
-		@RequestMapping(value = "/memberIdChk.do", method = RequestMethod.POST)
-		@ResponseBody
-		public String memberIdChkPOST(String memberId) throws Exception{
-			
-		logger.info("memberIdChk() 진입");
-		
-		
-		String userEmail;
-		int result = Service.userEmailCheck(memberId);
-		
-		logger.info("결과값 = " + result);
-		
-		if(result != 0) {
-			
-			return "fail";	// 중복 아이디가 존재
-			
-		} else {
-			
-			return "success";	// 중복 아이디 x
-			
-		}	
-			
+	@RequestMapping(value = "/joinform.do", method = RequestMethod.POST)
+	public String joinfrom(Model model, Member dto) {
+		System.out.println(dto);
+		boolean isc = Service.singupMember(dto);
+		if (isc) {
+			model.addAttribute("<script>alert('회원가입에 성공하셨습니다')</script>");
+		}else {
+			model.addAttribute("<script>alert('회원가입에 실패하셨습니다')</script>");
 		}
+		
+		return "main/TripMainpage";
+		
+	}
 	
 	
 	
 	//이메일 인증
-	@RequestMapping(value = "/mailCheck.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/mailCheck.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mailCheckGET(String email) {
-	
+	public Map<String, String> mailCheckGET(String email) {
+		MimeMessage message = mailSender.createMimeMessage();
 		//view로부터 넘어온 데이터 확인
 		logger.info("이메일 데이터 전송 확인");
 		logger.info("인증번호 : "+ email);
@@ -104,6 +94,7 @@ public class MemberController {
         Random random = new Random();
         int checkNum = random.nextInt(888888) + 111111;
         logger.info("인증번호 " + checkNum);
+        
         
         /* 이메일 보내기 */
         String setFrom = "joseokgyu12@gmail.com";
@@ -116,22 +107,21 @@ public class MemberController {
                 "<br>" + 
                 "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
         
-//        try {
-//            
-//            MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-//            helper.setFrom(setFrom);
-//            helper.setTo(toMail);
-//            helper.setSubject(title);
-//            helper.setText(content,true);
-//            mailSender.send(message);
-//            
-//        }catch(Exception e) {
-//            e.printStackTrace();
-//        }
-        String num = Integer.toString(checkNum);
-        
-		return num;
+        try {
+        	MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        mailSender.send(message);
+       Map<String, String> map = new HashMap<String, String>();
+       String checkNum1= checkNum+"";
+       	map.put("checkNum", checkNum1);
+		return map;
 	}
 
 	
@@ -178,19 +168,92 @@ public class MemberController {
 	}
 	
 	
+	/* 비밀번호 찾기 */
+	@RequestMapping(value = "/findpw", method = RequestMethod.GET)
+	public void findPwGET() throws Exception{
+	}
+
+	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
+	public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
+		Service.findPw(response, member);
+	}
+	
 
 	
-	//비밀번호 찾기
-	//Email과 name의 일치여부를 check하는 컨트롤러
-//	 @RequestMapping("/findPw.do")
-//	    public @ResponseBody Map<String, Boolean> pw_find(String userEmail, String userName){
-//	        Map<String,Boolean> json = new HashMap<>();
-//	        boolean pwFindCheck = Service.userEmailCheck(userEmail,userName);
-//
-//	        System.out.println(pwFindCheck);
-//	        json.put("check", pwFindCheck);
-//	        return json;
+	//비밀번호 찾기 이메일발송
+	public void sendEmail(Member vo, String div) throws Exception {
+		// Mail Server 설정
+		String charSet = "utf-8";
+		String hostSMTP = "smtp.gmail.com"; //네이버 이용시 smtp.naver.com
+		String hostSMTPid = "joseokgyu12@gmail.com";
+		String hostSMTPpwd = "tjrrbsla1@";
 
-//
-//	 }
+		// 보내는 사람 EMail, 제목, 내용
+		String fromEmail = "joseokgyu12@gmail.com";
+		String fromName = "카르페디엠";
+		String subject = "";
+		String msg = "";
+
+		if(div.equals("findpw")) {
+			subject = "카르페디엠 임시 비밀번호 입니다.";
+			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+			msg += "<h3 style='color: blue;'>";
+			msg += vo.getNickname()+ "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+			msg += "<p>임시 비밀번호 : ";
+			msg += vo.getPassword() + "</p></div>";
+		}
+
+		// 받는 사람 E-Mail 주소
+		String mail = vo.getEmail();
+		try {
+			HtmlEmail email = new HtmlEmail();
+			email.setDebug(true);
+			email.setCharset(charSet);
+			email.setSSL(true);
+			email.setHostName(hostSMTP);
+			email.setSmtpPort(465); //네이버 이용시 587
+
+			email.setAuthentication(hostSMTPid, hostSMTPpwd);
+			email.setTLS(true);
+			email.addTo(mail, charSet);
+			email.setFrom(fromEmail, fromName, charSet);
+			email.setSubject(subject);
+			email.setHtmlMsg(msg);
+			email.send();
+		} catch (Exception e) {
+			System.out.println("메일발송 실패 : " + e);
+		}
+	}
+
+	//비밀번호찾기
+	public void findPw(HttpServletResponse response, Member vo) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		Member ck = Service.readMember(vo.getEmail());
+		PrintWriter out = response.getWriter();
+		
+		if(Service.idCheck(vo.getNickname()) == null) {
+			out.print("등록되지 않은 닉네임입니다.");
+			out.close();
+		}
+		// 가입된 이메일이 아니면
+		else if(!vo.getEmail().equals(ck.getEmail())) {
+			out.print("등록되지 않은 이메일입니다.");
+			out.close();
+		}else {
+			// 임시 비밀번호 생성
+			String pw = "";
+			for (int i = 0; i < 12; i++) {
+				pw += (char) ((Math.random() * 26) + 97);
+			}
+			((Member) vo).setPassword(pw);
+			// 비밀번호 변경;
+			
+			Service.update(pw);
+			// 비밀번호 변경 메일 발송
+			sendEmail(vo, "findpw");
+
+			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
+			out.close();
+		}
+	}
 }

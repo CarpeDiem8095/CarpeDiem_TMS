@@ -39,19 +39,16 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
-	
-
-
-
-
-
 	@Override
 	public void sendEmail(Member vo, String dto) {
-		// TODO Auto-generated method stub
-		
+		Dao.sendEmail(vo, dto);
 	}
 	
-	
+	@Override
+	public void findPw(HttpServletResponse resp, Member vo) {
+		Dao.findPw(resp, vo);
+		
+	}
 	
 	
 	//로그인
@@ -70,11 +67,7 @@ public class MemberServiceImpl implements IMemberService {
 
 
 
-	@Override
-	public void findPw(HttpServletResponse resp, Member vo) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 
@@ -82,6 +75,30 @@ public class MemberServiceImpl implements IMemberService {
 	public int userEmailCheck(String userEmail) {
 		
 		return Dao.userEmailCheck(userEmail);
+	}
+
+	@Override
+	public Member readMember(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean idCheck(boolean b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object idCheck(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update(String pw) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
