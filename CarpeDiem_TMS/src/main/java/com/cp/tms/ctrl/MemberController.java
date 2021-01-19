@@ -25,6 +25,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,32 +61,16 @@ public class MemberController {
 	//회원가입 페이지
 	@RequestMapping(value="/register.do" , method = RequestMethod.GET)
 	public String homeController() throws Exception {
-		return "home";
+		
+		return "redircet:/mainpage.do";
 	}
 	
 	// 아이디 중복 검사
 		@RequestMapping(value = "/memberIdChk.do", method = RequestMethod.POST)
 		@ResponseBody
 		public String memberIdChkPOST(String memberId) throws Exception{
-			
 		logger.info("memberIdChk() 진입");
-		
-		
-		String userEmail;
-		int result = Service.userEmailCheck(memberId);
-		
-		logger.info("결과값 = " + result);
-		
-		if(result != 0) {
-			
-			return "fail";	// 중복 아이디가 존재
-			
-		} else {
-			
-			return "success";	// 중복 아이디 x
-			
-		}	
-			
+			return "";
 		}
 	
 	
@@ -93,8 +78,8 @@ public class MemberController {
 	//이메일 인증
 	@RequestMapping(value = "/mailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
-	public String mailCheckGET(String email) {
-	
+	public Map<String, String> mailCheckGET(String email) {
+		MimeMessage message = mailSender.createMimeMessage();
 		//view로부터 넘어온 데이터 확인
 		logger.info("이메일 데이터 전송 확인");
 		logger.info("인증번호 : "+ email);
@@ -116,22 +101,20 @@ public class MemberController {
                 "<br>" + 
                 "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
         
-//        try {
-//            
-//            MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-//            helper.setFrom(setFrom);
-//            helper.setTo(toMail);
-//            helper.setSubject(title);
-//            helper.setText(content,true);
-//            mailSender.send(message);
-//            
-//        }catch(Exception e) {
-//            e.printStackTrace();
-//        }
-        String num = Integer.toString(checkNum);
-        
-		return num;
+        try {
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+        helper.setFrom(setFrom);
+        helper.setTo(toMail);
+        helper.setSubject(title);
+        helper.setText(content,true);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        mailSender.send(message);
+        Map<String, String> map = new HashMap<String, String>();
+		String checkNum1 = checkNum+"";
+        map.put("checkNum", checkNum1); // {checkNum = "2121231"}
+        return map;
 	}
 
 	

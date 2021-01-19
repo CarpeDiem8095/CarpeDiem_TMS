@@ -6,7 +6,7 @@
 	<!-- 회원가입 -->
 	<insert id="memberList" parameterType="memDto">
 	INSERT INTO "MEMBER" (EMAIL,NICKNAME,PASSWORD,AUTH,WITHDRAWAL,JOINDATE)
-	VALUES(#{email},#{pw},#{nickname},'U','N',SYSDATE)
+	VALUES(#{email},#{password},#{nickname},'U','N',SYSDATE)
 	</insert>
 	
 	<!-- API 회원가입 -->

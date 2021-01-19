@@ -15,30 +15,18 @@
 	font-size: 13px;
 	padding: 5px;
 	border-bottom: 0.5px solid #B4B4B4;
-	
-	/* 중복아이디 존재하지 않는경우 */
-	.glyphicon glyphicon-user{
-		color : green;
-		display : none;
-	}
-	/* 중복아이디 존재하는 경우 */
-	.id_input_re_2{
-		color : red;
-		display : none;
-	}
-}
+}	
 </style>
-<link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/swiper.css" rel="stylesheet">
 	<link href="css/magnific-popup.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-
+	<link href="css/fontawesome-all.css" rel="stylesheet">
     <link rel="icon" href="images/favicon.png">
 </head>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
   	<script type="text/javascript">
 	$(document).ready(function(){
 		var id = '${mDto.email}';
@@ -74,7 +62,6 @@
 					alert("로그인에 문제가 발생했습니다.");
 				}
 			});
-		
 	}
 	
 	function accessChating(){
@@ -101,6 +88,15 @@
 				alert("채팅목록 실패");
 			}
 		});
+	}
+	
+	function checklogining(){
+		var email = '${mDto.email}';
+		if(email==null || email==''){
+			alert("로그인을 하셔야 합니다.");
+		}else{
+			$("#boardserch").prop('href', "./boardsearch.do");
+		}
 	}
 	
 	</script>
@@ -146,7 +142,7 @@
                     <a class="nav-link page-scroll" href="./oneBoardList.do">리뷰 보기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="./boardsearch.do">동행찾기 게시판</a>
+                    <a class="nav-link page-scroll" id="boardserch" onclick="checklogining()">동행찾기 게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./questionBoard.do">문의하기</a>
@@ -177,28 +173,21 @@
 //이메일 중복검사
   $('.email').on("propertychange change keyup paste input", function(){
 //   	console.log("keyup 테스트");	
-	var memberId = $('.email').val();	// .email에 입력되는 값
-	var data = {memberId : memberId}	// '컨트롤에 넘길 데이터 이름' : '데이터(.email에 입력되는 값)'
-	
-	$.ajax({
-		type : "post",
-		url : "./memberIdChk.do",
-		data : data,
-		success : function(result){
-// 		 console.log("성공 여부" + result);
-			if(result != 'fail'){
-				$('.glyphicon glyphicon-user').css("display","inline-block");
-				$('.id_input_re_2').css("display", "none");				
-			} else {
-				$('.id_input_re_2').css("display","inline-block");
-				$('.glyphicon glyphicon-user').css("display", "none");				
-			}
-			
-		}// success 종료
-	}); // ajax 종료
-
-
+	var memberId = $('.email').val();	// .email에 입력되는 값	// '컨트롤에 넘길 데이터 이름' : '데이터(.email에 입력되는 값)'
   });// function 종료
+  
+  function emailchek(){
+	  var emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	  var email = $("#email").val();
+	  if(!emailRule.test(email)) {
+		  $("#emailcheck").css("color","green");
+          $("#emailcheck").html("잘못된 형식입니다.");
+		}else{
+			$("#emailcheck").css("color","red");
+			$("#emailcheck").html("올바른 형식입니다.");
+		}
+  }
+  
   
   
   
@@ -234,19 +223,19 @@ $("#sendCheckNum").click(function(){
 					</div>
 
 					<!-- Modal body -->
+					<form action="form-horizontal" class="form-horizontal" method="POST" id="Frm" name="Frm" onsubmit="return false;">
 					<div class="modal-body">
-						<form action="form-horizontal" class="form-horizontal" method="POST" id="Frm" name="Frm">
 							<div class="modal-body"
 								style="padding: 30px 50px; height: 500px;">
 								<div class="form-group" style="text-align: left; width: 72%"
 									id="divEmail">
-								
 									<!-- 이메일 확인 -->
 									<label for="email">
 									<span
 										class="glyphicon glyphicon-user"></span> 이메일</label> <input
 										type="text" class="email form-control" id="email" name="email"
-										placeholder="이메일을 입력하세요">
+										placeholder="이메일을 입력하세요" onkeyup="emailchek()">
+									<div id="emailcheck" class="glyphicon glyphicon-user"></div>
 								</div>
 			
 								<div class="form-group"
@@ -300,14 +289,13 @@ $("#sendCheckNum").click(function(){
 								</div>
 								
 								
-							</div>
-						</form>
+							
 					</div>
 
 					<!-- 완료 -->
 					<div class="modal-footer">
 						
-						<button type="button" id="signYes" name="signYes"
+						<button type="submit" id="signYes" name="signYes"
 							class="btn btn-success btn-default pull-left" value="Send"
 							style="margin: 10px; margin-right: 270px">
 							<span class="glyphicon glyphicon-plus"></span>완 료
@@ -318,6 +306,8 @@ $("#sendCheckNum").click(function(){
 							<span class="glyphicon glyphicon-remove"></span>취 소
 						</button>
 					</div>
+					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -388,10 +378,10 @@ $("#sendCheckNum").click(function(){
                </div>
             </div>
             <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-            <img src="images/left.png" alt="#" />
+            <img src="images/left.png"/>
             </a>
             <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-            <img src="images/right.png" alt="#" />
+            <img src="images/right.png"/>
             </a>
          </div>
       </div>
@@ -1411,33 +1401,18 @@ $("#sendCheckNum").click(function(){
     
     	
     <!-- Scripts -->
-    <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
-    <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
     <script src="js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->
     <script src="js/jquery.magnific-popup.js"></script> <!-- Magnific Popup for lightboxes -->
     <script src="js/morphext.min.js"></script> <!-- Morphtext rotating text in the header -->
     <script src="js/isotope.pkgd.min.js"></script> <!-- Isotope for filter -->
     <script src="js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script> <!-- Custom scripts -->
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
      <script type="text/javascript">
          $(function () {
-        	 
-        	 'use strict';
-        	 
              $('.navbar ul li a.search').on('click', function (e) {
                  e.preventDefault();
-             });
-             $('.navbar a.search').on('click', function () {
-                 $('.navbar form').fadeToggle();
-             });
-             
-             $('.navbar ul.navbar-nav li a').on('click', function (e) {
-                 
-                 var getAttr = $(this).attr('href');
-                 
-                 e.preventDefault();
-                 $('html').animate({scrollTop: $(getAttr).offset().top}, 1000);
              });
          })
       </script>
