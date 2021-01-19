@@ -1,6 +1,7 @@
 package com.cp.tms.model.member;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -39,19 +40,16 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 
-	
-
-
-
-
-
 	@Override
 	public void sendEmail(Member vo, String dto) {
-		// TODO Auto-generated method stub
-		
+		Dao.sendEmail(vo, dto);
 	}
 	
-	
+	@Override
+	public void findPw(HttpServletResponse resp, Member vo) {
+		Dao.findPw(resp, vo);
+		
+	}
 	
 	
 	//로그인
@@ -70,11 +68,7 @@ public class MemberServiceImpl implements IMemberService {
 
 
 
-	@Override
-	public void findPw(HttpServletResponse resp, Member vo) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 
@@ -84,26 +78,48 @@ public class MemberServiceImpl implements IMemberService {
 		return Dao.userEmailCheck(userEmail);
 	}
 
+	@Override
+	public Member readMember(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public boolean idCheck(boolean b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
+	@Override
+	public Object idCheck(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public void update(String pw) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
-
 	
+	// 회원탈퇴 기능
+	@Override
+	public boolean deleteUser(String email) {
+		return Dao.deleteUser(email);
+	}
 
+	// 전체 회원 조회(탈퇴test용)
+	@Override
+	public List<Member> allMember() {
+		return Dao.allMember();
+	}
 
+	// 글 개수
+	@Override
+	public int allBoardTotal() {
+		return Dao.allBoardTotal();
+	}
 
-	
-	
-
-
-
-
-
-	
-
-	
-
-	
 }

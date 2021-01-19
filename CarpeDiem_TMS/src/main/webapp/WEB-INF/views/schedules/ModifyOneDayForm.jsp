@@ -13,7 +13,7 @@
 		<form style="text-align: center;" id="frm">
 			<input type="hidden" name="onedaySeq" value="${onedaySeq}">
 			<div>
-		 		<input type="text" name="oneTitle" value="${oneDto.oneday_title}" ><br>
+		 		<input type="text" name="oneTitle" value="${oneDto.oneday_title}" maxlength="10"><br>
 		 	</div>
 		 	<div>
 		 		<input type="text" name="oneDate" value="${fn:substring(oneDto.onedate, 0, 10)}" maxlength="10">

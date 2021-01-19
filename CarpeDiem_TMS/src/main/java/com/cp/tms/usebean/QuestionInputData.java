@@ -88,19 +88,19 @@ public class QuestionInputData {
 		sb.append("			<div class='form-group'>");
 		sb.append("				<label>내용</label><br>");
 		// 내용은 auth가 'A'가 아니라면 글 비밀번호가 일치해야 볼 수 있음
-//		if (mDto.getAuth().equalsIgnoreCase("A")) {
+		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
-//		} else {
-//			sb.append("				<textarea rows='7' class='form-control' style='display: none;' readonly>"+dto.getContent()+"</textarea>");
-//			sb.append("				<div style='border: 1px solid #CCC; border-radius: 4px; background-color: #eee; width: 778.4px; height: 150px; text-align: center;'>");
-//			sb.append("					<br>");
-//			sb.append("					<p>비밀글입니다.</p>");
-//			sb.append("					<p style='color: tomato;'>글 비밀번호를 입력해주세요.</p>");
-//			sb.append("					<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>");
-////			sb.append("					<input type='button' class='btn-primary' value='확인' onclick='textPw(\""+dto.getSeq()+"\")'>");
-//			sb.append("					<input type='submit' class='btn-primary' value='확인' onclick='textPw(\""+dto.getText_pw()+"\")'>");
-//			sb.append("				</div>");
-//		}
+		} else {
+			sb.append("				<textarea rows='7' class='form-control' style='display: none;' readonly>"+dto.getContent()+"</textarea>");
+			sb.append("				<div style='border: 1px solid #CCC; border-radius: 4px; background-color: #eee; width: 778.4px; height: 150px; text-align: center;'>");
+			sb.append("					<br>");
+			sb.append("					<p>비밀글입니다.</p>");
+			sb.append("					<p style='color: tomato;'>글 비밀번호를 입력해주세요.</p>");
+			sb.append("					<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>");
+			sb.append("					<input type='button' class='btn-primary' value='확인' onclick='txtPwChk(\""+dto.getSeq()+"\")'>");
+//			sb.append("					<input type='submit' class='btn-primary' value='확인' onclick='txtPwChk(\""+dto.getText_pw()+"\")'>");
+			sb.append("				</div>");
+		}
 		sb.append("			</div>");
 		sb.append("			<div class='form-group'>");
 		// 수정, 삭제 버튼은 글 비밀번호가 일치해야 볼 수 있음

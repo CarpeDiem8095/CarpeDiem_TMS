@@ -1,5 +1,6 @@
 package com.cp.tms.model.member;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,9 +38,25 @@ public interface IMemberService {
     //비밀번호찾기
     public void findPw(HttpServletResponse resp, Member vo);
 
+	public Member readMember(String email);
+
+	public boolean idCheck(boolean b);
+
+	public Object idCheck(String email);
+
+	public void update(String pw);
+
 	
 
 	
     
+    // 회원탈퇴 기능
+    public boolean deleteUser(String email);
+    
+    // 전체 회원 조회(탈퇴test용)
+    public List<Member> allMember();
+    
+    // 글 개수
+    public int allBoardTotal();
     
 }

@@ -15,7 +15,7 @@
 	font-size: 13px;
 	padding: 5px;
 	border-bottom: 0.5px solid #B4B4B4;
-}	
+}
 </style>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
@@ -171,48 +171,166 @@
   <!-- The Modal -->
   <script>
 //이메일 중복검사
-  $('.email').on("propertychange change keyup paste input", function(){
-//   	console.log("keyup 테스트");	
-	var memberId = $('.email').val();	// .email에 입력되는 값	// '컨트롤에 넘길 데이터 이름' : '데이터(.email에 입력되는 값)'
-  });// function 종료
-  
-  function emailchek(){
-	  var emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	  var email = $("#email").val();
-	  if(!emailRule.test(email)) {
-		  $("#emailcheck").css("color","green");
-          $("#emailcheck").html("잘못된 형식입니다.");
-		}else{
-			$("#emailcheck").css("color","red");
-			$("#emailcheck").html("올바른 형식입니다.");
-		}
-  }
-  
-  
-  
-  
-/* 인증번호 이메일 전송 */
-$("#sendCheckNum").click(function(){
+function emailCheck(){
+	//이메일 정규식
+	var emailRule = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	 var email = $("#email").val();
+	if(!emailRule.test(email)) {
+	   $("#emailCheck").css("color","red");
+	   $("#emailCheck").html("잘못된 형식입니다.");
+	   $("#allcheckemail").attr("value","0");
+	}else{
+		$("#emailCheck").css("color","green");
+		$("#emailCheck").html("올바른 형식입니다.");
+		$("#allcheckemail").attr("value","1");
+		$("#sendCheckNum").attr("onclick","emailsend()");
+	}
 	
+}
+//이메일 인증 처리
+function emailsend(){
+// 	alert("작동");
 	var email = $("#email").val();
-// 	alert("이메일 전송");
 	$.ajax({
 		
-		type:"GET",
-		url:"./mailCheck.do?email="+email,
+		type:"POST",
+		url:"./mailCheck.do",
+		data:"email="+email,
 		success:function(data){
-			console.log("data:" +data);
-			
+		alert("인증번호전송");
+		$("#checkNum").attr("value",data.checkNum);
+// 		alert($("#checkNum").val());
 		}
 	});
+}
+
+function emailOk(){
+	var Checkinput = $("#inputCheckNum").val();
+	var checkrm = $("#checkNum").val();
+// 	alert(checkrm);
+	console.log(Checkinput);
+	console.log(checkNum);
+	if (Checkinput==checkrm) {
+		$("#Checkinput").css("color","green");
+		$("#Checkinput").html("인증번호가 일치합니다.");
+		$("#sendCheckNum").css('display','none');
+		$("#checkConfirm").css('display','none');
+		$("#inputCheckNum").attr("readonly","readonly")
+		$("#allchecknum").attr("value","1");
+	}else{
+		$("#Checkinput").css("color","red");
+		$("#Checkinput").html("인증번호가 일치하지않습니다.");
+		$("#allchecknum").attr("value","0");
+	}
+
+}
+
+//닉네임 정규화
+function nicknameCheck(){
+// 	alert("작동");
+	var nickNameCheck = /^[가-힣a-zA-Z0-9]{2,10}$/;
+	var nickname = $("#nickname").val();
+// 	alert(nickname);
 	
-});
+	if(!nickNameCheck.test(nickname)){
+		$("#nicknameCheck").css("color","red");
+		$("#nicknameCheck").html("잘못된 형식입니다.");
+		$("#allcheckninkname").attr("value","0");
+	}else{
+		$("#nicknameCheck").css("color","green");
+		$("#nicknameCheck").html("올바른 형식입니다.");
+		$("#allcheckninkname").attr("value","1");
+	}
+
+}
+
+
+//비밀번호 정규화
+function passwordcheck(){
+// 	alert("작동");
+	var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+
+	var passwordch1 = $("#pwd").val();
+	if(!regExpPw.test(passwordch1)) {
+		$("#passwordch1").css("color","red");
+		$("#passwordch1").html("잘못된 형식입니다.");
+		$("#allcheckpwd1").attr("value","0");
+	}else{
+		$("#passwordch1").css("color","green");
+		$("#passwordch1").html("올바른 형식입니다.");
+		$("#allcheckpwd1").attr("value","1");
+	}
+}
+
+function passwordch2(){
+	var passwordch1 = $("#pwd").val();
+	var passwordch2 = $("#pwd2").val();
+	
+	
+	if (passwordch1==passwordch2) {
+		$("#passwordch2").css("color","green");
+		$("#passwordch2").html("비밀번호가 일치합니다.");
+		$("#allcheckpwd2").attr("value","1");
+	}else{
+		$("#passwordch2").css("color","red");
+		$("#passwordch2").html("비밀번호가 일치하지 않습니다.");
+		$("#allcheckpwd2").attr("value","0");
+	}
+	
+	
+}
+
+function checkall(){
+	var allemail = $("#allcheckemail").val();
+	var allnum = $("#allchecknum").val();
+	var allninkname = $("#allcheckninkname").val();
+	var allpwd1= $("#allcheckpwd1").val();
+	var allpwd2= $("#allcheckpwd2").val();
+
+	if (allemail==0) {
+		$("#allcheckemail").focus();
+		alert("이메일이 확인이 되지 않았습니다.");
+		return false;
+	}else if (allnum==0) {
+		$("#allchecknum").focus();
+		alert("인증번호가 확인이 되지 않았습니다.");
+		return false;
+	}else if (allninkname==0) {
+		$("#allcheckninkname").focus();
+		alert("닉네임이 확인이 되지 않았습니다.");
+		return false;
+	}else if (allpwd1==0) {
+		$("#allcheckpwd1").focus();
+		alert("비밀번호가 확인이 되지 않았습니다.");
+		return false;
+	}else if (allpwd2==0) {
+		$("#allcheckpwd2").focus();
+		alert("비밀번호가 확인이 되지 않았습니다.");
+		return false;
+	}else{
+		return true;
+	}
+
+
+
+}
+
+
+
 
 
 
   
 
 </script>
+<!-- 모든 인증이 완료되면 회원가입실행 -->
+<input type="hidden" id="allcheckemail" value="0">
+<input type="hidden" id="allchecknum" value="0">
+<input type="hidden" id="allcheckninkname" value="0">
+<input type="hidden" id="allcheckpwd1" value="0">
+<input type="hidden" id="allcheckpwd2" value="0">
+
+<input type="hidden" id="checkNum">
 		<div class="modal fade" id="myModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -223,10 +341,10 @@ $("#sendCheckNum").click(function(){
 					</div>
 
 					<!-- Modal body -->
-					<form action="form-horizontal" class="form-horizontal" method="POST" id="Frm" name="Frm" onsubmit="return false;">
-					<div class="modal-body">
+          <div class="modal-body">
+					<form action="./joinform.do" class="form-horizontal" method="POST" id="Frm" name="Frm" onsubmit="return checkall();">
 							<div class="modal-body"
-								style="padding: 30px 50px; height: 500px;">
+								style="padding: 30px 50px; height: 620px;">
 								<div class="form-group" style="text-align: left; width: 72%"
 									id="divEmail">
 									<!-- 이메일 확인 -->
@@ -234,8 +352,8 @@ $("#sendCheckNum").click(function(){
 									<span
 										class="glyphicon glyphicon-user"></span> 이메일</label> <input
 										type="text" class="email form-control" id="email" name="email"
-										placeholder="이메일을 입력하세요" onkeyup="emailchek()">
-									<div id="emailcheck" class="glyphicon glyphicon-user"></div>
+										placeholder="이메일을 입력하세요" onkeyup="emailCheck()">
+										<span id="emailCheck" class="glyphicon glyphicon-user email"></span>
 								</div>
 			
 								<div class="form-group"
@@ -254,15 +372,16 @@ $("#sendCheckNum").click(function(){
 										class="glyphicon glyphicon-envelope"></span> 인증번호</label> <input
 										type="text" class="form-control" id="inputCheckNum"
 										name="inputCheckNum" placeholder="인증번호를 입력하세요">
+										<span id="Checkinput" class="glyphicon glyphicon-envelope inputCheckNum"></span>
 								</div>
 								<!-- 인증번호 확인및 완료 -->
 								<div class="form-group" style="float: right; margin-top: -53px; margin-right: 10px"
 									id="divCheckConfirm">
 									<button type="button" class="btn btn-primary btn-block"
-										id="checkConfirm" name="checkConfirm">
+										id="checkConfirm" name="checkConfirm" onclick="emailOk()">
 										<span class="glyphicon glyphicon-ok"></span>확인
 									</button>
-									<input type="hidden" id="certificationYN" value="false">
+									
 								</div>
 								<hr>
 								<!-- 닉네임 확인 -->
@@ -271,25 +390,25 @@ $("#sendCheckNum").click(function(){
 									<label for="nickname"> <span
 										class="glyphicon glyphicon-apple"></span> 닉네임
 									</label> <input type="text" class="pwd form-control" id="nickname"
-										name="nickname" placeholder="사용하실 닉네임을 입력하세요.(2자리 이상)">
+										name="nickname" placeholder="사용하실 닉네임을 입력하세요.(2자리 이상)" onclick="nicknameCheck()">
+										<span id="nicknameCheck" class="glyphicon glyphicon-apple nickname"></span>
 								</div>
 								<!-- 비밀번호 -->
 								<div class="form-group" id="divPwd" style="text-align: left;">
 									<label for="psw"> <span
 										class="glyphicon glyphicon-eye-open"></span> 1차 비밀번호
 									</label> <input type="password" class="pwd form-control" id="pwd"
-										name="pwd" placeholder="1차 비밀번호를 입력하세요(8자리 이상)">
+										name="password" placeholder="1차 비밀번호를 입력하세요(8자리 이상)" onkeyup="passwordcheck()">
+										<span id="passwordch1" class="glyphicon glyphicon-eye-open passwordch1"></span>
 								</div>
 								<!-- 2차비밀번호 -->
 								<div class="form-group" id="divPwd2" style="text-align: left;">
 									<label for="psw"><span
 										class="glyphicon glyphicon-eye-open"></span> 2차 비밀번호</label> <input
 										type="password" class="form-control" id="pwd2" name="pwd2"
-										placeholder="2차 비밀번호를 입력하세요(8자리 이상)">
+										placeholder="2차 비밀번호를 입력하세요(8자리 이상)" onkeyup="passwordch2()">
+										<span id="passwordch2" class="glyphicon glyphicon-eye-open passwordch2"></span>
 								</div>
-								
-								
-							
 					</div>
 
 					<!-- 완료 -->
@@ -305,14 +424,38 @@ $("#sendCheckNum").click(function(){
 							data-dismiss="modal" value="Input Button" style="margin: 10px">
 							<span class="glyphicon glyphicon-remove"></span>취 소
 						</button>
+						</div>
+						</form>
 					</div>
 					</div>
 					</form>
 				</div>
 			</div>
 		</div>
-			<!-- 로그인 모달 -->
+<!-- 로그인 모달 -->
 	<!-- The Modal -->
+	<script>
+//로그인 중복검사
+function loginEmail(){
+// 	alert("작동");
+// 	이메일 정규식
+	var emailRul = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	 var InputEmail = $("#InputEmail").val();
+// 	 alert(InputEmail)
+	if(!emailRul.test(InputEmail)) {
+	   $("#loginEmail").css("color","red");
+	   $("#loginEmail").html("잘못된 형식입니다.");
+// 	   $("#allcheckemail").attr("value","0");
+	}else{
+		$("#loginEmail").css("color","green");
+		$("#loginEmail").html("올바른 형식입니다.");
+// 		$("#allcheckemail").attr("value","1");
+// 		$("#sendCheckNum").attr("onclick","emailsend()");
+// 	}
+	
+}
+</script>	
+	
 	<div class="modal fade" id="loginModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -327,8 +470,8 @@ $("#sendCheckNum").click(function(){
 				<div class="modal-body">
 					<form method="post" name="frm">
 						<div class="form-group has-feedback">
-							<input type="text" id="InputEmail" class="form-control" placeholder="이메일">
-							<span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
+							<input type="text" id="InputEmail" class="form-control" placeholder="이메일" onkeyup="loginEmail()">
+							<span id="loginEmail" class="glyphicon glyphicon-exclamation-sign form-control-feedback InputEmail"></span>
 						</div>
 
 						<div class="form-group has-feedback">
@@ -345,10 +488,8 @@ $("#sendCheckNum").click(function(){
 						<hr>
 						
 						<div id="naver_id_login" style="text-align: center">
-							<a href="#" class="btn btn-success"> N+네이버 계정 로그인 </a> <a
-								href="#" class="btn btn-primary"> <i class="fa">&#xf0d5;</i>
-								구글 계정으로 로그인
-							</a>
+							<a href="#" class="btn btn-success"> N+네이버 계정 로그인 </a> 
+							<a href="#" class="btn btn-primary"> G+구글 계정  로그인</a>
 						</div>
 					</form>
 				</div>

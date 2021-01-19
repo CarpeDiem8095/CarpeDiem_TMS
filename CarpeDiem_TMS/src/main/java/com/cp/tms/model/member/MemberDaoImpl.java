@@ -1,6 +1,7 @@
 package com.cp.tms.model.member;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,7 @@ public class MemberDaoImpl implements IMemberDao {
 
 	@Override
 	public boolean singupMember(Member dto) {
-		int cnt = SqlSession.insert(CP+"signupMember",dto);
+		int cnt = SqlSession.insert(CP+"memberList",dto);
 		return (cnt>0)?true:false;
 	}
 	
@@ -44,12 +45,6 @@ public class MemberDaoImpl implements IMemberDao {
 
 
 
-	@Override
-	public int updatePw(Member vo) throws Exception {
-		return SqlSession.update(CP+"resetPassword", vo);
-	}
-
-
 
 	@Override
 	public void authentication(Member dto) {
@@ -65,38 +60,59 @@ public class MemberDaoImpl implements IMemberDao {
 
 //	회원가입 (이메일 중복확인)
 
-		public static int confirmEmail(String email){
-			return 0;
+	public static int confirmEmail(String email){
+		return 0;
+	}
 
+
+	@Override
+	public int userEmailCheck(String userEmail) {
+		return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
+	}
+
+		//이메일 발송
+		@Override
+		public void sendEmail(Member vo, String dto) {
 			
+			
+		}
 
+
+		//비밀번호 찾기
+		@Override
+		public void findPw(HttpServletResponse resp, Member vo) {
+			
+			
 		}
 
 
 
 		@Override
-		public int userEmailCheck(String userEmail) {
+		public int updatePw(Member vo) throws Exception {
 			
-			return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
+			return SqlSession.update(CP+"resetPassword", vo);
 		}
 
 
-
-	
-
-	
-
-
-
-
-
-
-
-
-
 	
 	
+	// 회원탈퇴 기능
+	@Override
+	public boolean deleteUser(String email) {
+		int cnt = SqlSession.update(CP+"deleteUser", email);
+		return cnt>0?true:false;
+	}
 
-	
-	
+	// 전체 회원 조회(탈퇴test용)
+	@Override
+	public List<Member> allMember() {
+		return SqlSession.selectList(CP+"allBoard");
+	}
+
+	// 글 개수
+	@Override
+	public int allBoardTotal() {
+		return SqlSession.selectOne(CP+"allBoardTotal");
+	}
+
 }

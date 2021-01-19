@@ -1,5 +1,6 @@
 package com.cp.tms.model.member;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,17 +26,27 @@ public interface IMemberDao {
     public void logout(HttpSession session);
     
     
+ 
+    
+  
+    //이메일 발송
+    public void sendEmail(Member vo, String dto);
+    
+    //비밀번호찾기
+    public void findPw(HttpServletResponse resp, Member vo);
     
  // 비밀번호 변경
     public int updatePw(Member vo) throws Exception;
 
     
+    
+    // 회원탈퇴 기능
+    public boolean deleteUser(String email);
   
+    // 전체 회원 조회(탈퇴test용)
+    public List<Member> allMember();
     
-    
-    
-    
-  
-
+    // 글 개수
+    public int allBoardTotal();
 
 }

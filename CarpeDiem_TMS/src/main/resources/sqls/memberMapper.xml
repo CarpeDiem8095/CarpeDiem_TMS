@@ -6,7 +6,7 @@
 	<!-- 회원가입 -->
 	<insert id="memberList" parameterType="memDto">
 	INSERT INTO "MEMBER" (EMAIL,NICKNAME,PASSWORD,AUTH,WITHDRAWAL,JOINDATE)
-	VALUES(#{email},#{password},#{nickname},'U','N',SYSDATE)
+	VALUES(#{email},#{nickname},#{password},'U','N',SYSDATE)
 	</insert>
 	
 	<!-- API 회원가입 -->
@@ -69,6 +69,18 @@
      ROW_NUMBER () OVER (ORDER BY JOINDATE DESC) ONE
        					 FROM "MEMBER" m)
 	WHERE ONE BETWEEN  #{start} AND #{last}
+	</select>
+	
+	<!-- 전체 회원 조회(탈퇴test용) -->
+	<select id="allMember" resultType="memDto">
+		SELECT EMAIL,NICKNAME,AUTH,WITHDRAWAL,JOINDATE 
+			FROM "MEMBER"
+	</select>
+	
+	<!-- 글 개수 -->
+	<select id="allBoardTotal" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM "MEMBER"
 	</select>
 	
 	

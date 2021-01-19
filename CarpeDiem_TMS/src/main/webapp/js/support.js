@@ -7,39 +7,52 @@ function reply(val) {
 }
 
 function report(val) {
-	location.href="./reportForm.do?seq=" + val;
+//	location.href="./reportForm.do?seq=" + val;
+	$.ajax({
+		url: "./reportForm.do",
+		method: "post",
+		data: "seq="+val,
+		dataType: "json",
+		success: function(v) {
+			var url = "./reportForm.do?seq=" + v.seq;
+			var title
+		},
+		error: function() {
+			
+		}
+	});
 }
 
-function textPw(val) {
+function txtPwChk(val) {
 	alert(val);
 //	pwCheckAjax(val);
-//	$("#textPw").modal();
+	$("#textPw").modal();
 }
 
-//var pwCheckAjax = function(val) {
-//	$.ajax({
-//		url: "./txtPwForm.do",
-//		type: "post",
-//		data: "seq="+val,
-//		success: function(c) {
-//			 html= "<input type='hidden' value='"+c.seq+"' name='seq'>";
-//			html+= "<div class='form-group form-textPw'>";
-//			html+= "	<br>";
-//			html+= "	<br>";
-//			html+= "	<label for='text_pw'>비밀번호</label>";
-//			html+= "	<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>";
-//			html+= "</div>";
-//			html+= "<div class='modal-footer' style='text-align: center'>";
-//			html+= "	<input type='button' class='btn-primary' value='확인' onclick='checkPw()'/>";
-//			html+= "</div>";
-//			
-//			$("#frmPW").html(html);
-//		},
-//		error: function() {
-//			alert("잘못된 요청입니다.");
-//		}
-//	});
-//}
+var pwCheckAjax = function(val) {
+	$.ajax({
+		url: "./txtPwChk.do",
+		type: "post",
+		data: "seq="+val,
+		success: function(c) {
+			 html= "<input type='hidden' value='"+c.seq+"' name='seq'>";
+			html+= "<div class='form-group form-textPw'>";
+			html+= "	<br>";
+			html+= "	<br>";
+			html+= "	<label for='text_pw'>비밀번호</label>";
+			html+= "	<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>";
+			html+= "</div>";
+			html+= "<div class='modal-footer' style='text-align: center'>";
+			html+= "	<input type='button' class='btn-primary' value='확인' onclick='checkPw()'/>";
+			html+= "</div>";
+			
+			$("#frmPW").html(html);
+		},
+		error: function() {
+			alert("잘못된 요청입니다.");
+		}
+	});
+}
 
 function modify(val) {
 	modifyAjax(val);
