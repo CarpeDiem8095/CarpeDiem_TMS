@@ -122,4 +122,5 @@ public class MemberServiceImpl implements IMemberService {
 		return Dao.allBoardTotal();
 	}
 
+
 }

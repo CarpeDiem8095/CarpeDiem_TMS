@@ -48,5 +48,7 @@ public interface IMemberDao {
     
     // 글 개수
     public int allBoardTotal();
+    
+
 
 }

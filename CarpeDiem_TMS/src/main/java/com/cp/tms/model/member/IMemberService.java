@@ -59,4 +59,6 @@ public interface IMemberService {
     // 글 개수
     public int allBoardTotal();
     
+
+    
 }

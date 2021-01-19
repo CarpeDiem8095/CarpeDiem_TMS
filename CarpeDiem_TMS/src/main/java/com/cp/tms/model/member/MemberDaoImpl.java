@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -21,9 +22,13 @@ public class MemberDaoImpl implements IMemberDao {
 	
 	@Autowired
 	private SqlSessionTemplate SqlSession;
+	
+	@Autowired
+	private PasswordEncoder passwordencoder;
 
 	@Override
 	public boolean singupMember(Member dto) {
+		dto.setPassword(passwordencoder.encode(dto.getPassword()));
 		int cnt = SqlSession.insert(CP+"memberList",dto);
 		return (cnt>0)?true:false;
 	}
@@ -33,8 +38,11 @@ public class MemberDaoImpl implements IMemberDao {
 	@Override
 	public Member loginMember(Map<String, Object> map) {
 		Member dto = SqlSession.selectOne(CP+"loginMember", map);
+		String dbPW=SqlSession.selectOne(CP+"security",map.get("email"));
+		if(passwordencoder.matches((String)map.get("password"), dbPW)) {
+			return SqlSession.selectOne(CP+"securitylogin",map);
+		}
 		return dto;
-		
 	}
 
 	@Override

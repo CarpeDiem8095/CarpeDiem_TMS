@@ -83,5 +83,15 @@
 			FROM "MEMBER"
 	</select>
 	
+	<!-- 시큐리티에 저장된 password 가져오기 -->
+	<select id="security" parameterType="java.lang.String" resultType="java.lang.String">
+	SELECT PASSWORD FROM "MEMBER"
+	WHERE EMAIL =#{email}
+	</select>
 	
+	<!-- 시큐리티를 적용한 password 일치시 email을 통해 DB에서 정보 가져오기 -->
+	<select id="securitylogin" parameterType="java.util.Map" resultType="memDto">
+		SELECT EMAIL, NICKNAME, AUTH, JOINDATE FROM "MEMBER"
+		WHERE EMAIL=#{email}
+	</select>
 </mapper>
