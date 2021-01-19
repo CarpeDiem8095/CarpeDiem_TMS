@@ -18,7 +18,7 @@
 <body>
 	<div id="container" class="table-responsive">
 		<h3>메일 작성</h3>
-		<form action="./sendMail.do" method="post">
+		<form action="./sendEmail.do" method="post">
 			<table class="table">
 				<tr>
 					<th>받는 사람</th>
