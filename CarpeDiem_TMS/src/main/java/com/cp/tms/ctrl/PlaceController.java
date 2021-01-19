@@ -227,4 +227,34 @@ public class PlaceController {
 		return json.toString();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/addMemo", method = RequestMethod.POST,
+			produces = "application/text; charset=UTF-8;")
+	@ResponseBody
+	public String addMemo(String onedaySeq, String placeSeq,String memo) {
+		
+		System.out.println(onedaySeq);
+		System.out.println(placeSeq);
+		System.out.println(memo);
+		
+		
+		PlaceDto dto = new PlaceDto();
+		dto.setOneday_seq(onedaySeq);
+		dto.setPlace_seq(placeSeq);
+		dto.setMemo(memo);
+		
+		service.addMemo(dto);
+		
+		dto = service.viewPath(dto);
+		dto.setOneday_seq(onedaySeq);
+		
+		JSONObject json = new JSONObject();
+		json.put("memo",dto.getMemo());
+		json.put("placeSeq", dto.getPlace_seq());
+		json.put("onedaySeq", dto.getOneday_seq());
+//		
+		return json.toString();
+//		return null;
+	}
+	
 }

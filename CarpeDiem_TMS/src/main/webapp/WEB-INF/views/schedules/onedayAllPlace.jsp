@@ -13,7 +13,7 @@
 </head>
 <style type="text/css">
 #container {
-	width: 800px;
+	width: 650px;
 	height: 540px;
 	margin: 40px auto;
 }
@@ -26,9 +26,20 @@ a {
 
 #map{
 	position: absolute;
-    left: 1480px;
+    left: 1380px;
     top: 140px;
 }
+
+.placeTitleCss{
+	margin: 0px;
+	padding: 0px;
+}
+
+.w3-rigth-align{
+	float: right;
+}
+
+
 </style>
 <body>
 		<div id="container">
@@ -47,13 +58,13 @@ a {
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div>
-								<button class="w3-btn w3-block w3-black w3-left-align" class="showMeTheForm">
-								${p.place_name}
-								</button>
-								<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
+							<div class="w3-panel w3-black placeTitleCss">
+								<button class="w3-btn w3-black">${p.place_name}</button>
+								<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
+								<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+								<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+								<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 							</div>
-						
 							<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
 								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 								<input type="hidden" name="place_seq" value="${p.place_seq}">
@@ -61,32 +72,38 @@ a {
 										<div><input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*"></div>
 										<div>
 											<div id="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-											<div><input type="text" style="width:540px; height: 250px;" name="content" id="content"></div>
+											<div><input type="text" style="width:400px; height: 250px;" name="content" id="content"></div>
 											<div><input type="submit" id="btnSave"  value="save" style="float:right;"/></div>
 										</div>
 									</div>
 							</form>
+							<!-- 메모추가 부분 -->
+							<form>
+								<div class="memoForm" class ="w3-container w3-hide" >
+									<div>
+										<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+									</div>
+									<div>
+										<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+										<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+										<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+									</div>
+								</div>
+							</form>	
 						</div>
 						
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div></div>
-								<div>
-									<input type="button" onclick="addMemo()" value="메모 작성하기"/>
-								</div>
-								<div>
-									<textarea rows="" cols=""></textarea>
-								</div>
 								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
 								<div>
-									<div class="showMeTheForm" >
-									<button  class="w3-btn w3-block w3-black w3-left-align" onclick ="selReview(${p.place_seq})">
-									${p.place_name}
-									</button>
-									<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
-<!-- 									</div> -->
-										
+								<div class="w3-panel w3-black placeTitleCss">
+										<button class="w3-btn w3-black">${p.place_name}</button>
+										<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
+										<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+										<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+										<input type="hidden" class="this_place_seq" value="${p.place_seq}">
+								</div>
 									<div id ="placeInfo">
 									
 									</div>
@@ -100,15 +117,26 @@ a {
 												</div>
 											<div>
 												<div id="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-												<div><input type="text" style="width:540px; height: 250px;" name="content" id="content"></div>
+												<div><input type="text" style="width:400px; height: 250px;" name="content" id="content"></div>
 												<div><input type="submit" id="btnSave"  value="save" style="float:right;"/></div>
 												<div><input type="button" value="reset" onclick="reset();" style="float:right;"/></div>
 											</div>
 										</div>
 									</form>
-							
+									<!-- 메모추가 부분 -->
+									<form>
+										<div class="memoForm" class ="w3-container w3-hide" >
+											<div>
+												<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+											</div>
+										<div>
+											<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+											<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+											<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+										</div>
+										</div>
+									</form>							
 								</div>
-							</div>
 							</div>
 						</c:otherwise>
 						</c:choose>
@@ -260,6 +288,74 @@ a {
 	         }
 		 })
 	 }
+	 </script>
+	 
+	 <script type="text/javascript">
+		// 메모 보여주기
+		$(".showMeTheMemo").click(function(){
+			console.log($(this).parent().parent().find(".memoForm").html());
+			
+//	 		var memo = $(this).parent().parent().find(".memoArea").val("왜 아작스 처리 후에는 this가 안먹는거지????");
+			var memo = $(this).parent().parent().find(".memoArea").val();
+			console.log(memo);
+			var onedaySeq = $(this).parent().find(".this_oneday_seq").val();
+			var placeSeq = $(this).parent().find(".this_place_seq").val();
+			$(".revForm").hide();
+			
+			$(".memoForm").hide();
+			$(this).parent().parent().find(".memoForm").slideToggle('slow');
+			
+			$.ajax({
+				type : "post", 
+		        url : "showMemo.do",
+		        data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+		        dataType : "json",
+		        success : function(json) {
+		        	console.log($(this).parent().parent().find(".memoForm").html());
+//	 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
+//	 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
+		        	
+//	 				memo = json.memo;
+//	 				console.log(json.memo);
+//	 				console.log(memo);
+//	 				memo = json.memo;
+					$(".memoArea").val(json.memo);
+		        }
+			});
+			return memo;
+		});
+		
+		// 메모 인설트
+		$(".addMemo").click(function(){
+			var memo = $(this).parent().parent().find(".memoArea").val();
+			var placeSeq = $(this).parent().find(".memo_place_seq").val();
+			var onedaySeq = $(this).parent().find(".memo_oneday_seq").val();
+			console.log(placeSeq);
+			console.log(onedaySeq);
+			
+			$.ajax({
+				type : "post", 
+		        url : "addMemo.do",
+		        data : {"memo":memo, "placeSeq":placeSeq, "onedaySeq":onedaySeq},
+		        dataType : "json",
+		        success : function(json) {
+//	 	        	console.log($(this).parent().parent().find(".memoForm").html());
+					$(".memoArea").val(json.memo);
+					alert("메모가 추가 되었습니다.");
+		        }
+			});
+		});
+		
+		// 아코디언 메뉴 롤업
+		$(document).ready(function() {	
+			$(".revForm").hide();
+			$(".memoForm").hide();
+			$(".showMeTheForm").click(function(){
+				$(".revForm").hide();
+				console.log($(this).parent().parent().find(".revForm").html());
+				$(this).parent().parent().find(".revForm").slideToggle('slow');
+			});
+		 });
 	 </script>
 
 
