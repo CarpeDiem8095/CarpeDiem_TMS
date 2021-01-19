@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cp.tms.dto.Member;
 import com.cp.tms.dto.Paging;
 import com.cp.tms.dto.ReportDto;
+import com.cp.tms.model.member.IMemberService;
 import com.cp.tms.model.report.IReportService;
 
 @Controller
@@ -28,6 +30,9 @@ public class ReportController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private IMemberService mService;
 	
 	// 신고처리 게시판으로 이동(전체글 조회-페이징)
 	@RequestMapping(value = "/reportBoard.do", method = RequestMethod.GET)
@@ -80,11 +85,15 @@ public class ReportController {
 	
 	// 상세글 조회
 	@RequestMapping(value = "/reportDetail.do", method = RequestMethod.GET)
-	public String reportDetail(Model model, String seq) {
-		System.out.println("상세글 seq: "+seq);
+	public String reportDetail(Model model, String seq, String email) {
+		System.out.println("상세글 seq: " + seq);
+		System.out.println("상세글 subject_email: " + email);
 		ReportDto dto = service.reportDetailBoard(seq);
-		System.out.println("상세글 결과값: "+dto);
+//		Member mDto = (Member)mService.allMember();
+		System.out.println("상세글 결과값: " + dto);
 		model.addAttribute("detail", dto);
+		model.addAttribute("subject_email", dto.getSubject_email());
+		System.out.println("신고대상 email: " + dto.getSubject_email());
 		return "reportBoard/reportDetailBoard";
 	}
 	
@@ -96,12 +105,12 @@ public class ReportController {
 	}
 	
 	// 메일 전송
-	@RequestMapping(value = "/sendMail.do", method = RequestMethod.POST)
-	public String sendMail(@RequestParam Map<String, String> mailMap) {
+	@RequestMapping(value = "/sendEmail.do", method = RequestMethod.POST)
+	public String sendEmail(@RequestParam Map<String, String> mailMap) {
 		System.out.println(mailMap.get("receiver"));
 		
 		// 내 메일 주소 필요
-		String sender = "joseokgyu12@gmail.com";
+		String sender = "carpediem8095@gmail.com";
 		
 		// 메일의 내용을 전송하기 위한 객체  // 담아서 보내면 SMTP가 받아서 처리
 		MimeMessage message = mailSender.createMimeMessage();
@@ -134,19 +143,21 @@ public class ReportController {
 	
 	// 신고처리(탈퇴여부 변경)
 	@RequestMapping(value = "/changeWithdrawal.do", method = RequestMethod.GET)
-	public String changeWithdrawal(String email) {
-		boolean isc = service.changeWithdrawal(email);
+	public String changeWithdrawal(String email, String seq) {
+		boolean isc = mService.deleteUser(email);
+		System.out.println("email: " + email);
 		System.out.println("탈퇴여부 변경 성공여부: " + isc);
-		return "redirect:/reportDetail.do";
+		boolean isc2 = service.changeProcessingStatus(seq);
+		System.out.println("처리여부 변경 성공여부: " + isc2);
+		return "redirect:/reportBoard.do";
 	}
 	
-	
-	// 신고처리 완료(처리여부 변경)
-	@RequestMapping(value = "/changeProcessingStatus.do", method = RequestMethod.GET)
-	public String changeProcessingStatus(String seq) {
-		boolean isc = service.changeProcessingStatus(seq);
-		System.out.println("처리여부 변경 성공여부: " + isc);
-		return "reportBoard/reportBoard";
-	}
+//	// 신고처리 완료(처리여부 변경)
+//	@RequestMapping(value = "/changeProcessingStatus.do", method = RequestMethod.GET)
+//	public String changeProcessingStatus(String seq) {
+//		boolean isc = service.changeProcessingStatus(seq);
+//		System.out.println("처리여부 변경 성공여부: " + isc);
+//		return "redirect:/reportBoard.do";
+//	}
 	
 }

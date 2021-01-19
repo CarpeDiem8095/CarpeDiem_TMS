@@ -8,7 +8,8 @@ public class ReportDto implements Serializable {
 	private static final long serialVersionUID = 2712529924623742976L;
 	
 	private int seq;
-	private String email;
+	private String reporter_email;
+	private String subject_email;
 	private String report_type;
 	private String content;
 	private Date text_regdate;
@@ -21,9 +22,9 @@ public class ReportDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ReportDto [seq=" + seq + ", email=" + email + ", report_type=" + report_type + ", content=" + content
-				+ ", text_regdate=" + text_regdate + ", processing_status=" + processing_status + ", board_type="
-				+ board_type + "]";
+		return "ReportDto [seq=" + seq + ", reporter_email=" + reporter_email + ", subject_email=" + subject_email + ", report_type="
+				+ report_type + ", content=" + content + ", text_regdate=" + text_regdate + ", processing_status="
+				+ processing_status + ", board_type=" + board_type + "]";
 	}
 
 	public int getSeq() {
@@ -34,12 +35,20 @@ public class ReportDto implements Serializable {
 		this.seq = seq;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getReporter_email() {
+		return reporter_email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setReporter_email(String reporter_email) {
+		this.reporter_email = reporter_email;
+	}
+
+	public String getSubject_email() {
+		return subject_email;
+	}
+
+	public void setSubject_email(String subject_email) {
+		this.subject_email = subject_email;
 	}
 
 	public String getReport_type() {

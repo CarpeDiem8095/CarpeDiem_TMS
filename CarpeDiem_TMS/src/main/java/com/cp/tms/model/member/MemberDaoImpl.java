@@ -1,6 +1,7 @@
 package com.cp.tms.model.member;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,38 +66,34 @@ public class MemberDaoImpl implements IMemberDao {
 
 //	회원가입 (이메일 중복확인)
 
-		public static int confirmEmail(String email){
-			return 0;
+	public static int confirmEmail(String email){
+		return 0;
+	}
 
-			
-
-		}
-
-
-
-		@Override
-		public int userEmailCheck(String userEmail) {
-			
-			return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
-		}
-
-
-
-	
-
-	
-
-
-
-
-
-
-
-
+	@Override
+	public int userEmailCheck(String userEmail) {
+		return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
+	}
 
 	
 	
+	// 회원탈퇴 기능
+	@Override
+	public boolean deleteUser(String email) {
+		int cnt = SqlSession.update(CP+"deleteUser", email);
+		return cnt>0?true:false;
+	}
 
-	
-	
+	// 전체 회원 조회(탈퇴test용)
+	@Override
+	public List<Member> allMember() {
+		return SqlSession.selectList(CP+"allBoard");
+	}
+
+	// 글 개수
+	@Override
+	public int allBoardTotal() {
+		return SqlSession.selectOne(CP+"allBoardTotal");
+	}
+
 }

@@ -125,6 +125,7 @@
 					<div class="modal-body textPw-body">
 						<form action="#" class="form-margin" method="post" id="frmPW">
 							<input type="hidden" value="${dto.seq}" name="seq">
+							<input type="hidden" value="${dto.text_pw}" name="text_pw">
 							<div class="form-group form-textPw">
 								<br>
 								<br>
@@ -132,7 +133,7 @@
 								<input type="password"  class="form-control"id="text_pw" name="text_pw" maxlength="4" required>
 							</div>
 							<div class="modal-footer" style="text-align: center">
-								<input type="button" class="btn-primary" value="확인" onclick="checkPw()"/>
+								<input type="button" class="btn-primary" value="확인" onclick="txtPwChk(${dto.text_pw})"/>
 							</div>
 						</form>
 					</div>

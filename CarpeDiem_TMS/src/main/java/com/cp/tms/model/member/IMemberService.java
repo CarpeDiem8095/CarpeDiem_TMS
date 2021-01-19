@@ -1,5 +1,6 @@
 package com.cp.tms.model.member;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,5 +42,13 @@ public interface IMemberService {
 
 	
     
+    // 회원탈퇴 기능
+    public boolean deleteUser(String email);
+    
+    // 전체 회원 조회(탈퇴test용)
+    public List<Member> allMember();
+    
+    // 글 개수
+    public int allBoardTotal();
     
 }

@@ -204,17 +204,18 @@ public class QuestionController {
 		return "redirect:/questionBoard.do";
 	}
 	
-	// 글 비밀번호 입력
-	@RequestMapping(value = "/txtPwForm.do", method = RequestMethod.POST)
+	// 글 비밀번호 확인
+	@RequestMapping(value = "/txtPwChk.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String txtPwForm(Model model, String seq) {
+	public String txtPwChk(Model model, String seq, String text_pw) {
 		// 원본글의 정보
 		QuestionDto qDto = service.questionDetailBoard(seq);
 		
 		model.addAttribute("qDto", qDto);
-//		model.addAttribute("text_pw", qDto.getText_pw());
+		model.addAttribute("text_pw", qDto.getText_pw());
 		System.out.println("원본글 정보 qDto: " + qDto);
 		System.out.println("원본글 정보 text_pw: " + qDto.getText_pw());
+		
 		return model.toString();
 	}
 	
@@ -226,14 +227,15 @@ public class QuestionController {
 		System.out.println("seq: " + seq);
 		System.out.println("email: " + email);
 		
+		// 신고자 정보
 		Member mDto = (Member)session.getAttribute("mDto");
 		System.out.println("session에 담긴 mDto: " + mDto);
 		
-		// 원본글의 정보
+		// 신고대상의 정보(email 필요)
 		QuestionDto qDto = service.questionDetailBoard(seq);
 		
-		model.addAttribute("seq", seq);
-		model.addAttribute("email", email);
+		model.addAttribute("seq", seq); // 글번호
+		model.addAttribute("reporter_email", email); // 신고자의 이메일
 		model.addAttribute("mDto", mDto);
 		model.addAttribute("qDto", qDto);
 		System.out.println("qDto: " + qDto);

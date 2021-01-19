@@ -4,15 +4,15 @@
 
 	<!-- 전체조회 -->
 <!-- 	<select id="reportboardList" parameterType="java.util.Map" resultType="rDto"> -->
-<!-- 		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE -->
+<!-- 		SELECT SEQ, REPORTER_EMAIL, SUBJECT_EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE -->
 <!-- 			FROM REPORTBOARD r -->
 <!-- 	</select> -->
 
 	<!-- 전체조회(페이징) -->
 	<select id="reportboardList" parameterType="java.util.Map" resultType="rDto">
-		SELECT SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
+		SELECT SEQ, REPORTER_EMAIL, SUBJECT_EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
 			FROM (SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) RN,
-					SEQ, EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE
+					SEQ, REPORTER_EMAIL, SUBJECT_EMAIL, REPORT_TYPE, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE
 					FROM REPORTBOARD r)
 				WHERE RN BETWEEN #{first} AND #{last}
 	</select>
@@ -25,7 +25,7 @@
 	
 	<!-- 상세조회 -->
 	<select id="reportDetailBoard" parameterType="java.lang.String" resultType="rDto">
-		SELECT SEQ, EMAIL, REPORT_TYPE, CONTENT, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
+		SELECT SEQ, REPORTER_EMAIL, SUBJECT_EMAIL, REPORT_TYPE, CONTENT, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE 
 			FROM REPORTBOARD r 
 				WHERE SEQ = #{seq}
 	</select>
@@ -44,10 +44,12 @@
 	
 	<!-- 신고하기 test -->
 	<insert id="report" parameterType="rDto">
-		INSERT INTO REPORTBOARD(SEQ, EMAIL, REPORT_TYPE, 
-								CONTENT, TEXT_REGDATE, PROCESSING_STATUS, BOARD_TYPE)
-		VALUES(REPORTBOARD_SEQ.NEXTVAL, #{email}, #{report_type}, 
-				#{content}, SYSDATE, 'N', #{board_type})
+		INSERT INTO REPORTBOARD(SEQ, REPORTER_EMAIL, SUBJECT_EMAIL, 
+								REPORT_TYPE, CONTENT, TEXT_REGDATE, 
+								PROCESSING_STATUS, BOARD_TYPE)
+		VALUES(REPORTBOARD_SEQ.NEXTVAL, #{reporter_email}, #{subject_email}, 
+				#{report_type}, #{content}, SYSDATE, 
+				'N', #{board_type})
 	</insert>
 	
 </mapper>

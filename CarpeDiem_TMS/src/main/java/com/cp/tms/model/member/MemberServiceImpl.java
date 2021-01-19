@@ -1,6 +1,7 @@
 package com.cp.tms.model.member;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -84,26 +85,24 @@ public class MemberServiceImpl implements IMemberService {
 		return Dao.userEmailCheck(userEmail);
 	}
 
-
-
-
-
-	
-
-	
-
-
-
 	
 	
+	// 회원탈퇴 기능
+	@Override
+	public boolean deleteUser(String email) {
+		return Dao.deleteUser(email);
+	}
 
+	// 전체 회원 조회(탈퇴test용)
+	@Override
+	public List<Member> allMember() {
+		return Dao.allMember();
+	}
 
+	// 글 개수
+	@Override
+	public int allBoardTotal() {
+		return Dao.allBoardTotal();
+	}
 
-
-
-	
-
-	
-
-	
 }
