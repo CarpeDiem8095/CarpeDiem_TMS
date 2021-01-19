@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
 <table>
 	<tr>
 		<th>작성자</th>
-		<td><input type="text" value="우성(sung960607@G)" readonly="readonly"></td>
+		<td><input type="text" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" readonly="readonly"></td>
 	</tr>
 	<tr>
 		<th>제목</th>

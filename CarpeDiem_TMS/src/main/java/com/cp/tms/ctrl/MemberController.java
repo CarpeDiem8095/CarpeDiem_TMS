@@ -61,9 +61,11 @@ public class MemberController {
 	//회원가입 페이지 이동
 	@RequestMapping(value="/register.do" , method = RequestMethod.GET)
 	public String homeController() throws Exception {
-		return "home";
+		
+		return "redircet:/mainpage.do";
 	}
 	
+
 	@RequestMapping(value = "/joinform.do", method = RequestMethod.POST)
 	public String joinfrom(Model model, Member dto) {
 		System.out.println(dto);
@@ -113,7 +115,6 @@ public class MemberController {
             helper.setTo(toMail);
             helper.setSubject(title);
             helper.setText(content,true);
-            
         }catch(Exception e) {
             e.printStackTrace();
         }

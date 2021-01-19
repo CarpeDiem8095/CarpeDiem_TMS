@@ -15,23 +15,18 @@
 	font-size: 13px;
 	padding: 5px;
 	border-bottom: 0.5px solid #B4B4B4;
-	
 }
-
-
-
 </style>
-<link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/swiper.css" rel="stylesheet">
 	<link href="css/magnific-popup.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-
+	<link href="css/fontawesome-all.css" rel="stylesheet">
     <link rel="icon" href="images/favicon.png">
 </head>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
   	<script type="text/javascript">
 	$(document).ready(function(){
 		var id = '${mDto.email}';
@@ -67,7 +62,6 @@
 					alert("로그인에 문제가 발생했습니다.");
 				}
 			});
-		
 	}
 	
 	function accessChating(){
@@ -94,6 +88,15 @@
 				alert("채팅목록 실패");
 			}
 		});
+	}
+	
+	function checklogining(){
+		var email = '${mDto.email}';
+		if(email==null || email==''){
+			alert("로그인을 하셔야 합니다.");
+		}else{
+			$("#boardserch").prop('href', "./boardsearch.do");
+		}
 	}
 	
 	</script>
@@ -139,7 +142,7 @@
                     <a class="nav-link page-scroll" href="./oneBoardList.do">리뷰 보기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="./boardsearch.do">동행찾기 게시판</a>
+                    <a class="nav-link page-scroll" id="boardserch" onclick="checklogining()">동행찾기 게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./questionBoard.do">문의하기</a>
@@ -338,13 +341,12 @@ function checkall(){
 					</div>
 
 					<!-- Modal body -->
-					<div class="modal-body">
-						<form action="./joinform.do" class="form-horizontal" method="POST" id="Frm" name="Frm" onsubmit="return checkall();">
+          <div class="modal-body">
+					<form action="./joinform.do" class="form-horizontal" method="POST" id="Frm" name="Frm" onsubmit="return checkall();">
 							<div class="modal-body"
 								style="padding: 30px 50px; height: 620px;">
 								<div class="form-group" style="text-align: left; width: 72%"
 									id="divEmail">
-								
 									<!-- 이메일 확인 -->
 									<label for="email">
 									<span
@@ -407,10 +409,7 @@ function checkall(){
 										placeholder="2차 비밀번호를 입력하세요(8자리 이상)" onkeyup="passwordch2()">
 										<span id="passwordch2" class="glyphicon glyphicon-eye-open passwordch2"></span>
 								</div>
-								
-								
-							</div>
-					
+					</div>
 
 					<!-- 완료 -->
 					<div class="modal-footer">
@@ -428,6 +427,8 @@ function checkall(){
 						</div>
 						</form>
 					</div>
+					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -518,10 +519,10 @@ function loginEmail(){
                </div>
             </div>
             <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-            <img src="images/left.png" alt="#" />
+            <img src="images/left.png"/>
             </a>
             <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-            <img src="images/right.png" alt="#" />
+            <img src="images/right.png"/>
             </a>
          </div>
       </div>
@@ -1541,15 +1542,14 @@ function loginEmail(){
     
     	
     <!-- Scripts -->
-    <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
-    <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
     <script src="js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->
     <script src="js/jquery.magnific-popup.js"></script> <!-- Magnific Popup for lightboxes -->
     <script src="js/morphext.min.js"></script> <!-- Morphtext rotating text in the header -->
     <script src="js/isotope.pkgd.min.js"></script> <!-- Isotope for filter -->
     <script src="js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script> <!-- Custom scripts -->
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
      <script type="text/javascript">
          $(function () {
              $('.navbar ul li a.search').on('click', function (e) {
