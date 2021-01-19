@@ -37,6 +37,7 @@ a {
 }
 </style>
 <body>
+	<div class="fck"></div>
 	<div id="container">
 		<div class="panel-group" id="accordion">
 			<c:forEach var="oneday" items="${oneDto}" varStatus="onedayVs">
@@ -50,8 +51,9 @@ a {
 						<div class="w3-panel w3-black placeTitleCss">
 							<button class="w3-btn w3-black">${p.place_name}</button>
 							<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-							<button class="w3-btn w3-purple w3-rigth-align" onclick="showMeTheMemo(${p.oneday_seq},${p.place_seq})">메모작성</button>
-							<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
+							<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+							<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+							<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 						</div>
 						<form action="./fileUpload.do" method="post">
 							<input type="hidden" name="oneday_seq" value="${oneday_seq}">
@@ -66,9 +68,15 @@ a {
 						</form>
 						<!-- 메모추가 부분 -->
 						<form>
-							<div class="memoForm">
-								<textarea rows="" cols="" style="width: 650px; height: 200px;"></textarea>
-								<input type="button" value="메모저장" onclick="addMemo()">
+							<div class="memoForm" class ="w3-container w3-hide" >
+							<div>
+								<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+							</div>
+							<div>
+								<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+								<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+								<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+							</div>
 							</div>
 						</form>
 					</div>
@@ -80,7 +88,9 @@ a {
 						<div class="w3-panel w3-black placeTitleCss"> 
 							<button class="w3-btn w3-black">${p.place_name}</button>
 							<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-							<button class="w3-btn w3-purple w3-rigth-align" onclick="showMeTheMemo(${p.oneday_seq},${p.place_seq})">메모작성</button>
+							<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+							<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+							<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 						</div>
 								<form action="./fileUpload.do" method="post">
 								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
@@ -94,12 +104,18 @@ a {
 									</div>
 								</form>
 							<!-- 메모추가 부분 -->
-							<form>
-								<div class="memoForm">
-									<textarea rows="" cols="" style="width: 650px; height: 200px;"></textarea>
-									<input type="button" value="메모저장" onclick="addMemo()">
+						<form>
+							<div class="memoForm" class ="w3-container w3-hide" >
+								<div>
+									<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
 								</div>
-							</form>
+								<div>
+									<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+									<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+									<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+								</div>
+							</div>
+						</form>
 							</div>
 						</div>
 					</c:otherwise>
@@ -166,47 +182,68 @@ a {
 //         });
 //     }
 	
-	// 메모 클릭시 제어
-	
-	function showMeTheMemo(onedaySeq, placeSeq){
-// 		alert(onedaySeq);
-// 		alert(placeSeq);
-			$.ajax({
-			 type : "post", 
+	// 메모 보여주기
+	$(".showMeTheMemo").click(function(){
+		console.log($(this).parent().parent().find(".memoForm").html());
+		
+// 		var memo = $(this).parent().parent().find(".memoArea").val("왜 아작스 처리 후에는 this가 안먹는거지????");
+		var memo = $(this).parent().parent().find(".memoArea").val();
+		console.log(memo);
+		var onedaySeq = $(this).parent().find(".this_oneday_seq").val();
+		var placeSeq = $(this).parent().find(".this_place_seq").val();
+		$(".revForm").hide();
+		
+		$(".memoForm").hide();
+		$(this).parent().parent().find(".memoForm").slideToggle('slow');
+		
+		$.ajax({
+			type : "post", 
 	        url : "showMemo.do",
 	        data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
 	        dataType : "json",
 	        success : function(json) {
-				alert(json.memo);
-				alert(json.onedaySeq);
-				alert(json.placeSeq);
-				
+	        	console.log($(this).parent().parent().find(".memoForm").html());
+// 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
+// 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
+	        	
+// 				memo = json.memo;
+// 				console.log(json.memo);
+// 				console.log(memo);
+// 				memo = json.memo;
+				$(".memoArea").val(json.memo);
 	        }
 		});
-	}
+		return memo;
+	});
 	
-// 	$(".showMeTheMemo").click(function(){
-// 		alert('클릭함 ㅎ');
-// 		$.ajax({
-// 			 type : "post", 
-// 	         url : "addMemo.do",
-// 	         data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
-// 	         dataType : "json",
-// 	         success : function(json) {
-// 	  			var url = "http://map.daum.net/?sName="+json.firstPName+"&eName="+json.secondPName+"";
-// 	  			var title = "길찾기";
-// 	  			var attr = "width=1200px, height=600px";
-// 	  			var pathControl = window.open(url, title, attr);
-// 	         }
-// 		});
-// 	});
+	// 메모 인설트
+	$(".addMemo").click(function(){
+		var memo = $(this).parent().parent().find(".memoArea").val();
+		var placeSeq = $(this).parent().find(".memo_place_seq").val();
+		var onedaySeq = $(this).parent().find(".memo_oneday_seq").val();
+		console.log(placeSeq);
+		console.log(onedaySeq);
+		
+		$.ajax({
+			type : "post", 
+	        url : "addMemo.do",
+	        data : {"memo":memo, "placeSeq":placeSeq, "onedaySeq":onedaySeq},
+	        dataType : "json",
+	        success : function(json) {
+// 	        	console.log($(this).parent().parent().find(".memoForm").html());
+				$(".memoArea").val(json.memo);
+				alert("메모가 추가 되었습니다.");
+	        }
+		});
+	});
 	
 	// 아코디언 메뉴 롤업
 	$(document).ready(function() {	
 		$(".revForm").hide();
+		$(".memoForm").hide();
 		$(".showMeTheForm").click(function(){
 			$(".revForm").hide();
-// 			alert($(this).parent().parent().find(".revForm").val());
+			console.log($(this).parent().parent().find(".revForm").html());
 			$(this).parent().parent().find(".revForm").slideToggle('slow');
 		});
 	 });

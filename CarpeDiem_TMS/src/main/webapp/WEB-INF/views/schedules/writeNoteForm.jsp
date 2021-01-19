@@ -10,7 +10,7 @@
 <body>
 	<form style="text-align: center;" id="frm">
 		<p>당신의 노트를 생성해 주세요</p>
-	 	<input type="text" name="title">
+	 	<input type="text" name="title" maxlength="10">
 	 	<input type="button" value="작성하기" id="writeSubmit">
 	</form>
 
