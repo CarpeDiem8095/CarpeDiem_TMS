@@ -20,12 +20,12 @@
 	<select id="EMDuplicateCheck" parameterType="memDto" resultType="java.lang.Integer">
 	SELECT COUNT(EMAIL) EMAIL
 	FROM "MEMBER" 
-	WHERE EMAIL = #{email};
+	WHERE EMAIL = #{email}
 	</select>
 	
 	<!-- 일반 회원 로그인 기능 -->
 	<select id="loginMember" parameterType="memDto" resultType="memDto">
-	SELECT EMAIL, NICKNAME, AUTH, JOINDATE FROM "MEMBER"
+	SELECT EMAIL, NICKNAME, PASSWORD, AUTH, JOINDATE FROM "MEMBER"
 	WHERE EMAIL = #{email}
 	AND PASSWORD = #{password}
 	AND WITHDRAWAL  ='N'
@@ -40,15 +40,13 @@
         AND WITHDRAWAL ='N'
 	</select>
 	
-	<!-- 관리자 로그인 기능 -->
-	<select id="loginAdmin" parameterType="memDto" resultType="memDto">
-	SELECT EMAIL, NICKNAME, PASSWORD AUTH, WITHDRAWAL , JOINDATE 
- 	FROM "MEMBER" m 
-  	WHERE EMAIL=#{email}
-  	AND PASSWORD =#{password}
-   	AND AUTH ='A'
-	</select>
+	<!-- 회원정보 수정 -->
+	<update id="update_mypage" parameterType="memDto">
+		UPDATE "MEMBER" SET NICKNAME =#{nickname}, PASSWORD =#{password}
+		WHERE EMAIL = #{email}
+		
 	
+	</update>
 	<!-- 비밀번호 재설정 기능 -->
 	<update id="resetPassword">
 	UPDATE "MEMBER" SET PASSWORD =#{password} 
@@ -83,5 +81,15 @@
 			FROM "MEMBER"
 	</select>
 	
+	<!-- 시큐리티에 저장된 password 가져오기 -->
+	<select id="security" parameterType="java.lang.String" resultType="java.lang.String">
+	SELECT PASSWORD FROM "MEMBER"
+	WHERE EMAIL =#{email}
+	</select>
 	
+	<!-- 시큐리티를 적용한 password 일치시 email을 통해 DB에서 정보 가져오기 -->
+	<select id="securitylogin" parameterType="java.util.Map" resultType="memDto">
+		SELECT EMAIL, NICKNAME, AUTH, JOINDATE FROM "MEMBER"
+		WHERE EMAIL=#{email}
+	</select>
 </mapper>

@@ -73,9 +73,8 @@ public class MemberServiceImpl implements IMemberService {
 
 
 	@Override
-	public int userEmailCheck(String userEmail) {
-		
-		return Dao.userEmailCheck(userEmail);
+	public int userEmailCheck(Member mdto) {
+		return Dao.userEmailCheck(mdto);
 	}
 
 	@Override
@@ -121,5 +120,12 @@ public class MemberServiceImpl implements IMemberService {
 	public int allBoardTotal() {
 		return Dao.allBoardTotal();
 	}
+	
+	//마이페이지
+	@Override
+	public int update_mypage(Member mdto) {
+		return Dao.update_mypage(mdto);
+	}
+
 
 }

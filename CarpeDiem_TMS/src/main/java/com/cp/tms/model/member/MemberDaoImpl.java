@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -21,9 +22,13 @@ public class MemberDaoImpl implements IMemberDao {
 	
 	@Autowired
 	private SqlSessionTemplate SqlSession;
+	
+	@Autowired
+	private PasswordEncoder passwordencoder;
 
 	@Override
 	public boolean singupMember(Member dto) {
+		dto.setPassword(passwordencoder.encode(dto.getPassword()));
 		int cnt = SqlSession.insert(CP+"memberList",dto);
 		return (cnt>0)?true:false;
 	}
@@ -33,8 +38,11 @@ public class MemberDaoImpl implements IMemberDao {
 	@Override
 	public Member loginMember(Map<String, Object> map) {
 		Member dto = SqlSession.selectOne(CP+"loginMember", map);
+		String dbPW=SqlSession.selectOne(CP+"security",map.get("email"));
+		if(passwordencoder.matches((String)map.get("password"), dbPW)) {
+			return SqlSession.selectOne(CP+"securitylogin",map);
+		}
 		return dto;
-		
 	}
 
 	@Override
@@ -64,10 +72,10 @@ public class MemberDaoImpl implements IMemberDao {
 		return 0;
 	}
 
-
+	//이메일 중복 확인
 	@Override
-	public int userEmailCheck(String userEmail) {
-		return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
+	public int userEmailCheck(Member mdto) {
+		return SqlSession.selectOne(CP+"EMDuplicateCheck", mdto);
 	}
 
 		//이메일 발송
@@ -113,6 +121,13 @@ public class MemberDaoImpl implements IMemberDao {
 	@Override
 	public int allBoardTotal() {
 		return SqlSession.selectOne(CP+"allBoardTotal");
+	}
+
+
+	//마이페이지
+	@Override
+	public int update_mypage(Member mdto) {
+		return SqlSession.update(CP+"update_mypage", mdto);
 	}
 
 }

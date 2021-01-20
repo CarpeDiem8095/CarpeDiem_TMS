@@ -109,6 +109,9 @@ public class QuestionController {
 		}
 		model.addAttribute("questionLists", qLists);
 		model.addAttribute("page", p);
+		if(session.getAttribute("mDto")==null) {
+			model.addAttribute("mDto.auth","U");
+		}
 //		System.out.println("선택된 페이지의 글 목록: "+qUserDto);
 //		System.out.println("선택된 페이지의 페이징dto: "+p);
 		
