@@ -99,6 +99,15 @@
 		}
 	}
 	
+	function checklogining_schedules(){
+		var email = '${mDto.email}';
+		if(email==null || email==''){
+			alert("로그인을 하셔야 합니다.");
+		}else{
+			$(".checklogining_schedules").prop('href', "./notePaging.do");
+		}
+	}
+	
 	</script>
 	<c:if test="${mDto.email !=null}">
 	<script type="text/javascript" src="./js/chatting/mainchat.js"></script>
@@ -136,7 +145,7 @@
                     <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="./notePaging.do">일정 관리</a>
+                    <a class="nav-link page-scroll checklogining_schedules" onclick="checklogining_schedules()">일정 관리</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./oneBoardList.do">리뷰 보기</a>
