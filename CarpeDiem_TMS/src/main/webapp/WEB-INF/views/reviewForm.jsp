@@ -50,6 +50,7 @@
 	// 등록 된 이미지 미리보기
 	function readInputFile(input) {
 	    if(input.files && input.files[0]) {
+	        	alert("아무거나 찍어보기");
 	        var reader = new FileReader();
 	        reader.onload = function (e) {
 	            $('#preview').html("<img src="+ e.target.result +" style='width: 200px; height: 200px;'>");
