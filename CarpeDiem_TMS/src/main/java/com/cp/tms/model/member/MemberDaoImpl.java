@@ -64,10 +64,10 @@ public class MemberDaoImpl implements IMemberDao {
 		return 0;
 	}
 
-
+	//이메일 중복 확인
 	@Override
-	public int userEmailCheck(String userEmail) {
-		return SqlSession.selectOne(CP+"EMDuplicateCheck", userEmail);
+	public int userEmailCheck(Member mdto) {
+		return SqlSession.selectOne(CP+"EMDuplicateCheck", mdto);
 	}
 
 		//이메일 발송
@@ -113,6 +113,13 @@ public class MemberDaoImpl implements IMemberDao {
 	@Override
 	public int allBoardTotal() {
 		return SqlSession.selectOne(CP+"allBoardTotal");
+	}
+
+
+	//마이페이지
+	@Override
+	public int update_mypage(Member mdto) {
+		return SqlSession.update(CP+"update_mypage", mdto);
 	}
 
 }

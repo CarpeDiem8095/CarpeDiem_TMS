@@ -55,8 +55,7 @@ public class MemberController {
 
 	@Autowired
 	private IMemberService Service;
-	@Autowired
-	private IMemberDao Dao;
+
 
 	//회원가입 페이지 이동
 	@RequestMapping(value="/register.do" , method = RequestMethod.GET)
@@ -65,7 +64,7 @@ public class MemberController {
 		return "redircet:/mainpage.do";
 	}
 	
-
+	//회언가입
 	@RequestMapping(value = "/joinform.do", method = RequestMethod.POST)
 	public String joinfrom(Model model, Member dto) {
 		System.out.println(dto);
@@ -76,10 +75,23 @@ public class MemberController {
 			model.addAttribute("<script>alert('회원가입에 실패하셨습니다')</script>");
 		}
 		
-		return "main/TripMainpage";
+		return "redirect:index.jsp";
 		
 	}
 	
+	//회원탈퇴
+	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
+	public String Withdrawal() {
+//		System.out.println("탈퇴페이지로옴");
+		return "member/Withdrawal";
+	}
+	
+	@RequestMapping(value = "/delUser.do", method = RequestMethod.POST)
+	public String delUser(String email, HttpSession session) {
+		Service.deleteUser(email);
+		Service.logout(session);
+		return "main/TripMainpage";
+	}
 	
 	
 	//이메일 인증
@@ -88,40 +100,50 @@ public class MemberController {
 	public Map<String, String> mailCheckGET(String email) {
 		MimeMessage message = mailSender.createMimeMessage();
 		//view로부터 넘어온 데이터 확인
-		logger.info("이메일 데이터 전송 확인");
-		logger.info("인증번호 : "+ email);
 		
+		Map<String, String> map = new HashMap<String, String>();
+		Member mdto = new Member();
+		mdto.setEmail(email);
+		int cnt = Service.userEmailCheck(mdto);
+		System.out.println(cnt);
+		
+		if (cnt>0) {
 
-        /* 인증번호(난수) 생성 */
-        Random random = new Random();
-        int checkNum = random.nextInt(888888) + 111111;
-        logger.info("인증번호 " + checkNum);
-        
-        
-        /* 이메일 보내기 */
-        String setFrom = "joseokgyu12@gmail.com";
-        String toMail = email;
-        String title = "회원가입 인증 이메일 입니다.";
-        String content = 
-                "홈페이지를 방문해주셔서 감사합니다." +
-                "<br><br>" + 
-                "인증 번호는 " + checkNum + "입니다." + 
-                "<br>" + 
-                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-        
-        try {
-        	MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-            helper.setFrom(setFrom);
-            helper.setTo(toMail);
-            helper.setSubject(title);
-            helper.setText(content,true);
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        mailSender.send(message);
-       Map<String, String> map = new HashMap<String, String>();
-       String checkNum1= checkNum+"";
-       	map.put("checkNum", checkNum1);
+			map.put("checkNum", "false");
+		}else {
+
+			 /* 인증번호(난수) 생성 */
+	        Random random = new Random();
+	        int checkNum = random.nextInt(888888) + 111111;
+	        logger.info("인증번호 " + checkNum);
+	        
+	        
+	        /* 이메일 보내기 */
+	        String setFrom = "joseokgyu12@gmail.com";
+	        String toMail = email;
+	        String title = "카르페 디엠 회원가입 인증 이메일 입니다.";
+	        String content = 
+	                "카르페디엠을  방문해주셔서 감사합니다." +
+	                "<br><br>" + 
+	                "인증 번호는 " + checkNum + "입니다." + 
+	                "<br>" + 
+	                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+	        
+	        try {
+	        	MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content,true);
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        mailSender.send(message);
+	       String checkNum1= checkNum+"";
+	       	map.put("checkNum", checkNum1);
+		}
+	
+
 		return map;
 	}
 
@@ -170,13 +192,14 @@ public class MemberController {
 	
 	
 	/* 비밀번호 찾기 */
-	@RequestMapping(value = "/findpw", method = RequestMethod.GET)
+	@RequestMapping(value = "/findpw.do", method = RequestMethod.GET)
 	public void findPwGET() throws Exception{
 	}
 
-	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
+	@RequestMapping(value = "/findpw.do", method = RequestMethod.POST)
 	public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
 		Service.findPw(response, member);
+//		return "";
 	}
 	
 
@@ -257,4 +280,26 @@ public class MemberController {
 			out.close();
 		}
 	}
+	//마이페이지 이동
+	@RequestMapping(value = "/mypage.do")
+	public String mypage() {
+		return "/member/mypage";
+	}
+	
+	//마이페이지 처리
+	@RequestMapping(value = "/update_mypage.do", method = RequestMethod.POST)
+	public String update_mypage (Model model, Member mdto, HttpSession session) {
+		System.out.println(mdto);
+		int cnt = Service.update_mypage(mdto);
+		if (cnt>0) {
+			model.addAttribute("<script>alert('회원정보 수정 완료');</script>");
+		}else {
+			model.addAttribute("<script>alert('회원정보 수정 실패');</script>");
+		}
+			model.addAttribute(session);
+		return "main/TripMainpage";
+		
+	}
+	
+	
 }
