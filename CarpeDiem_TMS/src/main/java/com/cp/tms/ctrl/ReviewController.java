@@ -38,20 +38,6 @@ public class ReviewController {
 	@Autowired
 	private IOneDayService oneService;
 	
-//	// 이동
-//	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
-//	public String reviewList (Model model, String seq, String one_seq) {
-//		System.out.println("장소 seq" + seq);
-//		System.out.println("하루 일정 seq" + one_seq);
-//		//System.out.println(plService.reviewList(seq));
-//		//System.out.println(oneService.selDetailOneday(one_seq));
-//		model.addAttribute("reviewList",plService.reviewList(seq));
-//		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
-//		model.addAttribute("oneday_seq", one_seq);
-//		model.addAttribute("seq", seq);
-//		return "reviewsList";
-//	}
-//	
 	@RequestMapping(value="/reviewForm.do", method = RequestMethod.GET)
 	public String reviewForm() {
 		
@@ -75,9 +61,10 @@ public class ReviewController {
 		
 		
 		// 경로
-		String directory = "/Users/EUNSOL/CarpeDiem_TMS_WorkSpace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps";
+		String path = req.getSession().getServletContext().getRealPath("/");
+	
+		String directory = path+"uploadFiles";
 		//System.out.println("절대경로 :"+directory);
-		
 		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
 		String encoding = "UTF-8";
 
@@ -115,11 +102,10 @@ public class ReviewController {
 		boolean isc = service.writeReveiw(dto);
 		System.out.println(isc);
 		
-		File oldFile = new File(directory+"/"+multi.getFilesystemName("filenaem"));
-		File newFile = new File(directory+"/"+uuid_name);
-		oldFile.renameTo(newFile);
+//		File oldFile = new File(directory+"/"+multi.getFilesystemName("filename"));
+//		File newFile = new File(directory+"/"+uuid_name);
+//		oldFile.renameTo(newFile);
 		
-		System.out.println("리네이밍 : "+newFile);
 		
 		return "redirect:/selDetailOneday.do?seq="+oneday_seq;
 				//"redirect:/reviewsList.do?one_seq="+one_seq;
@@ -138,17 +124,93 @@ public class ReviewController {
 		JSONObject json = new JSONObject();
 		System.out.println("조회 아작스 seq : " + place_seq);
 		
-		ReviewDto dto = service.reviewList(place_seq);
-		System.out.println("조회 아작스 dto : " + dto);
+		ReviewDto dto = new ReviewDto();
 		
-		json.put("place_seq", dto.getPlace_seq());
-		json.put("content", dto.getContent());
-		json.put("origin_name", dto.getOrigin_name());
-		json.put("uuid_name", dto.getOrigin_name());
+		if(service.reviewList(place_seq) == null) {
+			System.out.println("x");
 		
-		return json.toString();
+			return json.toString();
+	
+		}else{
+			
+			dto = service.reviewList(place_seq);
+			System.out.println("조회 아작스 dto : " + dto);
+			json.put("place_seq", dto.getPlace_seq());
+			json.put("content", dto.getContent());
+			json.put("origin_name", dto.getOrigin_name());
+			json.put("uuid_name", dto.getOrigin_name());
+			
+			return json.toString();
+		}
 	}
 	
+	
+	// 수정 폼 생성 
+//	@SuppressWarnings("unchecked")
+//	@RequestMapping(value = "/modifyRevForm.do", method = RequestMethod.GET,
+//			produces = "application/text; charset=UTF-8;")
+//	@ResponseBody
+//	public String modifyRevForm(String place_seq) {
+//		JSONObject json = new JSONObject();
+//		ReviewDto dto = new ReviewDto();
+//		dto.setPlace_seq(place_seq);
+//		json.put("content", dto.getContent());
+//		json.put("place_seq",dto.getPlace_seq());
+//		return json.toString();
+//	}
+	
+	@RequestMapping(value="/modifyRev.do", method = RequestMethod.POST)
+	public String modifyRev(HttpServletRequest req, Model model, ReviewDto dto) throws IOException {
+		
+		// 경로
+		String path = req.getSession().getServletContext().getRealPath("/");
+	
+		String directory = path+"uploadFiles";
+		//System.out.println("절대경로 :"+directory);
+		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
+		String encoding = "UTF-8";
+
+		MultipartRequest multi = new MultipartRequest(req, directory, maxPortSize, encoding, new DefaultFileRenamePolicy());
+
+		String oneday_seq = multi.getParameter("oneday_seq");
+		
+		String content = multi.getParameter("content");
+		String place_seq = multi.getParameter("place_seq");
+		System.out.println("fileupload place seq : " + place_seq);
+		
+		System.out.println("받아오는 컨텐트 값 : "+content);
+		
+		// 파일 내용 
+		String origin_name = multi.getOriginalFileName("filename");
+		
+		System.out.println("전달 받은 파일명 :"+origin_name);
+		
+		// 파일 받기
+		String uuid_name = UUID.randomUUID().toString().replaceAll("-", "");
+		origin_name.substring(origin_name.lastIndexOf("."));
+			
+		System.out.println("저장 할 파일 명 : "+uuid_name);
+			
+		dto.setOrigin_name(origin_name);
+		dto.setUuid_name(uuid_name);
+		dto.setImg_url(directory);
+		dto.setPlace_seq(place_seq);
+		dto.setContent(content);
+		
+		System.out.println("완성된 파일 DTO : "+ dto);
+		
+		
+		// 서비스 실행
+		boolean isc = service.modifyReview(dto);
+		System.out.println(isc);
+		
+//		File oldFile = new File(directory+"/"+multi.getFilesystemName("filename"));
+//		File newFile = new File(directory+"/"+uuid_name);
+//		oldFile.renameTo(newFile);
+		
+		
+		return "redirect:/selDetailOneday.do?seq="+oneday_seq;
+	}
 	
 	// 글목록 조회 
 	@RequestMapping(value="/oneBoardList.do", method=RequestMethod.GET)

@@ -10,21 +10,39 @@
 <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
-	$(function(){
-		$("#findBtn").click(function(){
-			$.ajax({
-				url : "./findpw",
-				type : "POST",
-				data : {
-					id : $("#id").val(),
-					email : $("#email").val()
-				},
-				success : function(result) {
-					alert(result);
-				},
-			})
-		});
-	})
+function finBtn(){
+// 	alert("작동");
+	var id = $("#id").val();
+	var email = $("#email").val();
+	
+	$.ajax({
+		type:"post",
+		url:"./findpw.do",
+		data:"id="+id+"&email="+email,
+		success:function(msg){
+			
+		}
+		
+	});
+	
+	
+}
+
+// 	$(function(){
+// 		$("#findBtn").click(function(){
+// 			$.ajax({
+// 				url : "./findpw",
+// 				type : "POST",
+// 				data : {
+// 					id : $("#id").val(),
+// 					email : $("#email").val()
+// 				},
+// 				success : function(result) {
+// 					alert(result);
+// 				},
+// 			})
+// 		});
+// 	})
 </script>
 <style type="text/css">
 .mybtn{
@@ -63,7 +81,7 @@
 					<input class="w3-input" type="text" id="email" name="email" placeholder="회원가입한 이메일주소를 입력하세요" required>
 				</p>
 				<p class="w3-center">
-					<button type="button" id="findBtn" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">찾기</button>
+					<button type="button" id="findBtn" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn findBtn" onclick="finBtn()">찾기</button>
 					<button type="button" onclick="history.go(-1);" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">로그인으로</button>
 				</p>
 			</div>
