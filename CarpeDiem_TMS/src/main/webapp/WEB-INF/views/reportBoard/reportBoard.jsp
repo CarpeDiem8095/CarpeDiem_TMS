@@ -46,7 +46,7 @@
 				<c:forEach var="dto" items="${reDto}">
 				<tr>
 					<td style="text-align: center; vertical-align: middle; width: 90px;">${dto.seq}</td>
-					<td style="text-align: center; vertical-align: middle; height: 56px;"><a href="./reportDetail.do?seq=${dto.seq}&email=${dto.subject_email}">${dto.report_type}</a></td>
+					<td style="text-align: center; vertical-align: middle; height: 56px;"><a href="./reportDetail.do?seq=${dto.seq}&reporter_email=${dto.reporter_email}&subject_email=${dto.subject_email}">${dto.report_type}</a></td>
 					<td style="text-align: center; vertical-align: middle;"><fmt:formatDate value="${dto.text_regdate}" pattern="yyyy-MM-dd"/></td>
 					<td style="text-align: center; vertical-align: middle;">${dto.subject_email}</td>
 					<td style="text-align: center; vertical-align: middle;">${dto.processing_status}</td>

@@ -32,7 +32,7 @@
 	<div id="container">
 		<h3 style="padding-bottom: 10px">글쓰기</h3>
 		<form action="./write.do" method="post">
-		<input type="hidden" name="email" value="${mDto.email}">
+<%-- 		<input type="hidden" name="email" value="${mDto.email}"> --%>
 			<table class="table">
 				<tr>
 					<th>작성자</th>

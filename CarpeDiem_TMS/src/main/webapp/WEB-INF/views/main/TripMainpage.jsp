@@ -147,9 +147,11 @@
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./questionBoard.do">문의하기</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="./reportBoard.do">신고처리</a>
-                </li>
+                <c:if test="${mDto.auth eq 'A'}">
+	                <li class="nav-item">
+	                    <a class="nav-link page-scroll" href="./reportBoard.do">신고처리</a>
+	                </li>
+                </c:if>
                 <li>
                 	<button type="button" class="btn btn-primary join"
 						data-toggle="modal" data-target="#myModal">회원가입</button>

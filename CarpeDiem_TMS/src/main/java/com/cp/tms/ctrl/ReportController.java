@@ -85,23 +85,42 @@ public class ReportController {
 	
 	// 상세글 조회
 	@RequestMapping(value = "/reportDetail.do", method = RequestMethod.GET)
-	public String reportDetail(Model model, String seq, String email) {
+	public String reportDetail(Model model, String seq, String reporter_email, String subject_email) {
 		System.out.println("상세글 seq: " + seq);
-		System.out.println("상세글 subject_email: " + email);
+//		System.out.println("상세글 reporter_email: " + reporter_email);
+//		System.out.println("상세글 subject_email: " + subject_email);
 		ReportDto dto = service.reportDetailBoard(seq);
 //		Member mDto = (Member)mService.allMember();
 		System.out.println("상세글 결과값: " + dto);
 		model.addAttribute("detail", dto);
+		model.addAttribute("reporter_email", dto.getReporter_email());
 		model.addAttribute("subject_email", dto.getSubject_email());
+		System.out.println("신고자 email: " + dto.getReporter_email());
 		System.out.println("신고대상 email: " + dto.getSubject_email());
 		return "reportBoard/reportDetailBoard";
 	}
 	
 	// 신고처리(메일 전송)
-	// 메일 작성 폼으로 이동
+	// 메일 작성 폼으로 이동_to.신고자
 	@RequestMapping(value = "/mailForm.do", method = RequestMethod.GET)
-	public String mailForm() {
+	public String mailForm(Model model, String seq, String reporter_email) {
+		System.out.println("상세글 seq: " + seq);
+		ReportDto dto = service.reportDetailBoard(seq);
+		model.addAttribute("rDto", dto);
+		model.addAttribute("reporter_email", dto.getReporter_email());
+		System.out.println("상세글 reporter_email: " + reporter_email);
 		return "reportBoard/mailForm";
+	}
+	
+	// 메일 작성 폼으로 이동_to.신고대상
+	@RequestMapping(value = "/mailForm2.do", method = RequestMethod.GET)
+	public String mailForm2(Model model, String seq, String subject_email) {
+		System.out.println("상세글 seq: " + seq);
+		ReportDto dto = service.reportDetailBoard(seq);
+		model.addAttribute("rDto", dto);
+		model.addAttribute("subject_email", dto.getSubject_email());
+		System.out.println("상세글 subject_email: " + subject_email);
+		return "reportBoard/mailForm2";
 	}
 	
 	// 메일 전송
@@ -141,7 +160,7 @@ public class ReportController {
 		return "redirect:/reportDetail.do";
 	}
 	
-	// 신고처리(탈퇴여부 변경)
+	// 신고처리(탈퇴여부/처리여부 변경)
 	@RequestMapping(value = "/changeWithdrawal.do", method = RequestMethod.GET)
 	public String changeWithdrawal(String email, String seq) {
 		boolean isc = mService.deleteUser(email);
@@ -151,13 +170,5 @@ public class ReportController {
 		System.out.println("처리여부 변경 성공여부: " + isc2);
 		return "redirect:/reportBoard.do";
 	}
-	
-//	// 신고처리 완료(처리여부 변경)
-//	@RequestMapping(value = "/changeProcessingStatus.do", method = RequestMethod.GET)
-//	public String changeProcessingStatus(String seq) {
-//		boolean isc = service.changeProcessingStatus(seq);
-//		System.out.println("처리여부 변경 성공여부: " + isc);
-//		return "redirect:/reportBoard.do";
-//	}
 	
 }

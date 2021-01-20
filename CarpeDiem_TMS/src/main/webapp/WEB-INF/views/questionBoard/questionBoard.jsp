@@ -68,7 +68,7 @@
 					<tr class="info">
 						<c:if test="${mDto.auth eq 'A'}">
 							<th>
-								<input type="checkbox" id="allCheck" onclick="checkAll(this.checked)">
+<!-- 								<input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"> -->
 							</th>
 						</c:if>
 						<th>글 번호</th>
@@ -118,10 +118,12 @@
 		<div id="textPw" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
+					<!-- modal header -->
 					<div class="modal-header textPw-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h3 class="modal-title" style="text-align: center">글 비밀번호를 입력해 주세요.</h3>
 					</div>
+					<!-- modal body -->
 					<div class="modal-body textPw-body">
 						<form action="#" class="form-margin" method="post" id="frmPW">
 							<input type="hidden" value="${dto.seq}" name="seq">
@@ -130,10 +132,10 @@
 								<br>
 								<br>
 								<label for="text_pw">비밀번호</label>
-								<input type="password"  class="form-control"id="text_pw" name="text_pw" maxlength="4" required>
+								<input type="password"  class="form-control" id="text_pw" name="text_pw" maxlength="4" required>
 							</div>
 							<div class="modal-footer" style="text-align: center">
-								<input type="button" class="btn-primary" value="확인" onclick="txtPwChk(${dto.text_pw})"/>
+								<input type="button" class="btn-primary" value="확인" onclick="txtPwChk()"/>
 							</div>
 						</form>
 					</div>
@@ -151,6 +153,31 @@
 					</div>
 					<div class="modal-body">
 						<form action="#" class="form-margin" method="post" id="frmModify">
+<%-- 							<input type='hidden' id="auth" name='auth' value='${mDto.auth}'> --%>
+<%-- 							<input type='hidden' value='${dto.seq}' name='seq'> --%>
+<!-- 							<div class='form-group'> -->
+<!-- 								<label for='writer'>작성자</label> -->
+<%-- 								<input type='text' class='form-control' id='writer' name='writer' value='${dto.writer}' required> --%>
+<!-- 							</div> -->
+<!-- 							<div class='form-group'> -->
+<!-- 								<label for='title'>제목</label> -->
+<%-- 								<input type='text' class='form-control' id='title' name='title' value='${dto.title}' required> --%>
+<!-- 							</div> -->
+<!-- 							<div class='form-group'> -->
+<!-- 								<label for='content'>내용</label> -->
+<%-- 								<textarea class='form-control' rows='5' id='content' name='content' required>${dto.content}</textarea> --%>
+<!-- 							</div> -->
+<%-- 							<c:if test="${mDto.auth eq 'A'}"> --%>
+<!-- 								<div class='form-group'> -->
+<!-- 									<label for='content'>공개여부</label> -->
+<!-- 									<input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp; -->
+<!-- 									<input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글 -->
+<!-- 								</div> -->
+<%-- 							</c:if> --%>
+<!-- 							<div class='modal-footer' style='text-align: center'> -->
+<!-- 								<input type='button' class='btn-primary' value='확인' onclick='update()'/> -->
+<!-- 								<input type='reset' class='btn-primary' value='초기화'/> -->
+<!-- 							</div> -->
 						</form>
 					</div>
 				</div>
@@ -182,6 +209,28 @@
 			swal("삭제 오류","한개 이상의 글을 선택하세요");
 			return false;
 		}
+	}
+	
+	function txtPwChk() {
+		var seq = "${dto.seq}";
+		var qDtoText_pw = "${dto.text_pw}";
+		var text_pw = $("#text_pw").val();
+		$.ajax({
+			type: "post",
+			url: "./txtPwChk.do",
+			data: "seq="+seq+"&qDtoText_pw="+qDtoText_pw+"&text_pw="+text_pw,
+			success: function() {
+				if (qDtoText_pw.val() == text_pw.val()) {
+					$(".text_pw").css("display", "none");
+				} else {
+					alert("글 비밀번호를 확인해 주세요.");
+					$(".qDtoContent").css("display", "none");
+				}
+			},
+			error: function() {
+				alert("잘못된 요청입니다.");
+			}
+		});
 	}
 </script>
 </html>

@@ -46,7 +46,12 @@ public class QuestionController {
 		
 		// 로그인된 사용자 정보
 		Member mDto = (Member)session.getAttribute("mDto");
-		System.out.println("session에 담긴 mDto: "+mDto);
+//		System.out.println("session에 담긴 mDto: "+mDto);
+		
+		if (session.getAttribute("mDto") == null) {
+			mDto = new Member();
+			mDto.setAuth("U");
+		}
 		
 		List<QuestionDto> qLists = null;
 		
@@ -60,9 +65,12 @@ public class QuestionController {
 		Paging p = new Paging();
 		
 		// 총 게시글의 수
+//		if (session.getAttribute("mDto") == null) { // 비회원
+//			model.addAttribute("mDto.auto", "U");
+//			p.setTotalCount(service.userTotalCount());
 		if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
 			p.setTotalCount(service.adminTotalCount());
-		} else { // 비회원, 회원
+		} else { // 회원
 			p.setTotalCount(service.userTotalCount());
 		}
 		
@@ -92,14 +100,15 @@ public class QuestionController {
 //		System.out.println("시작 페이지: "+map.get("first"));
 //		System.out.println("마지막 페이지: "+map.get("last"));
 		
+//		if (session.getAttribute("mDto") == null) {
+//			qLists = service.userQuestionboardList(map);
 		if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
 			qLists = service.adminQuestionboardList(map);
-		} else { // 비회원, 회원
-			qLists = service.userQuestionboardList(map);
+		} else { // 회원
+			qLists = service.userQuestionboardList(map);		
 		}
 		model.addAttribute("questionLists", qLists);
 		model.addAttribute("page", p);
-		
 //		System.out.println("선택된 페이지의 글 목록: "+qUserDto);
 //		System.out.println("선택된 페이지의 페이징dto: "+p);
 		
@@ -135,7 +144,11 @@ public class QuestionController {
 	public String write(QuestionDto dto, HttpSession session, Model model) {
 		Member mDto = (Member)session.getAttribute("mDto");
 		
-		if (mDto.getAuth().equalsIgnoreCase("A")) {
+		if (session.getAttribute("mDto") == null) { // 비회원
+			model.addAttribute("mDto.auto", "U");
+			boolean isc = service.userWriteQuestionboard(dto);
+			System.out.println("문의글 입력 성공여부: " + isc);
+		} else if (mDto.getAuth().equalsIgnoreCase("A")) {
 			boolean isc = service.adminWriteQuestionboard(dto);
 			System.out.println("공지글 입력 성공여부: " + isc);
 		} else {
@@ -143,9 +156,9 @@ public class QuestionController {
 			System.out.println("문의글 입력 성공여부: " + isc);
 		}
 		model.addAttribute("questionLists", dto);
-		model.addAttribute("email", mDto.getEmail());
+//		model.addAttribute("email", mDto.getEmail());
 		System.out.println("questionLists: " + dto);
-		System.out.println("session에 담긴 email: " + mDto.getEmail());
+//		System.out.println("session에 담긴 email: " + mDto.getEmail());
 		return "redirect:/questionBoard.do";
 	}
 	
@@ -180,13 +193,15 @@ public class QuestionController {
 			produces = "application/text; charset=UTF-8;")
 	@ResponseBody
 	public String modifyForm(String seq) {
+		// 원본글 정보
 		QuestionDto dto = service.questionDetailBoard(seq);
+		
 		JSONObject json = new JSONObject();
 		json.put("seq", dto.getSeq());
 		json.put("writer", dto.getWriter());
 		json.put("title", dto.getTitle());
 		json.put("content", dto.getContent());
-//		System.out.println("선택된 글의 값: "+json.toString());
+		System.out.println("선택된 글의 값: "+json.toString());
 		return json.toString();
 	}
 	
