@@ -68,6 +68,7 @@ public class MemberController {
 	@RequestMapping(value = "/joinform.do", method = RequestMethod.POST)
 	public String joinfrom(Model model, Member dto) {
 		System.out.println(dto);
+		
 		boolean isc = Service.singupMember(dto);
 		if (isc) {
 			model.addAttribute("<script>alert('회원가입에 성공하셨습니다')</script>");

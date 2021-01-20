@@ -127,4 +127,5 @@ public class MemberServiceImpl implements IMemberService {
 		return Dao.update_mypage(mdto);
 	}
 
+
 }

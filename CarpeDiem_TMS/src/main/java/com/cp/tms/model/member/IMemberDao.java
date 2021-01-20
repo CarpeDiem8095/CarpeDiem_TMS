@@ -49,12 +49,8 @@ public interface IMemberDao {
     // 글 개수
     public int allBoardTotal();
     
-    
  // 마이페이지
  	public int update_mypage(Member mdto);
 
- 	
-    
-    
 
 }

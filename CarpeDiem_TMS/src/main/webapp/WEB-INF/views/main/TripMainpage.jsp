@@ -453,7 +453,7 @@ function checkall(){
 		</div>
 <!-- 로그인 모달 -->
 	<!-- The Modal -->
-	<script>
+<script type="text/javascript">
 //로그인 중복검사
 function loginEmail(){
 
