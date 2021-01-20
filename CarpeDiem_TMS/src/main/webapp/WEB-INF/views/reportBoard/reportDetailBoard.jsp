@@ -21,6 +21,7 @@
 		<h3>신고처리 게시판</h3>
 		<form action="#">
 			<input type = "hidden" name="seq" value="${seq}">
+			<input type = "hidden" name="reporter_email" value="${detail.reporter_email}">
 			<input type = "hidden" name="subject_email" value="${detail.subject_email}">
 			<table class="table">
 				<tr>
@@ -44,16 +45,16 @@
 					</td>
 				</tr>
 				<tr>
-					<th></th>
+					<th>내용</th>
 					<td>
 						<textarea rows="5" cols="65" class="form-control" name="content" readonly>${detail.content}</textarea>
 					</td>
 				</tr>
 			</table>
 			<div style="text-align: center;">
-				<!-- email전송 test용 버튼 -->
-				<input type="button" class="btn-warning" value="메일작성" onclick="location.href='./mailForm.do'">
-				<input type="button" class="btn-warning" value="회원탈퇴" onclick="changeWithdrawal('${detail.subject_email}', '${detail.seq}')">
+				<input type="button" class="btn-primary" value="to.신고자" onclick="location.href='./mailForm.do?seq=${detail.seq}&reporter_email=${detail.reporter_email}'">
+				<input type="button" class="btn-primary" value="to.신고대상" onclick="location.href='./mailForm2.do?seq=${detail.seq}&subject_email=${detail.subject_email}'">
+				<input type="button" class="btn-primary" value="신고처리 완료" onclick="changeWithdrawal('${detail.subject_email}', '${detail.seq}')">
 <%-- 				<input type="button" class="btn-primary" value="신고처리" onclick="changeProcessingStatus(${detail.seq})"> --%>
 				<input type="button" class="btn-primary" value="전체글목록" onclick="location.href='./reportBoard.do'">
 			</div>
