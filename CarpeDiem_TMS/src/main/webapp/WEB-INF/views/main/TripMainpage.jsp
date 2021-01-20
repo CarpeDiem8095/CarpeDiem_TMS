@@ -54,7 +54,7 @@
 					selmychatboard();
 					}else{
 						alert("이메일 또는 비밀번호가 맞지 않습니다.");
-						alert(isc);
+// 						alert(isc);
 					}
 					location.reload();
 				},
@@ -150,7 +150,13 @@
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="./reportBoard.do">신고처리</a>
                 </li>
-                <li>
+                <li class="userboard nav-item">
+                <a class="nav-link page-scroll" href="./mypage.do">마이페이지(${mDto.email})</a>
+                </li>
+                 <li class="userboard nav-item">
+                <a class="nav-link page-scroll" href="./carepeDiem.do">관리자페이지(${mDto.auth})</a>
+                </li>
+                  <li>
                 	<button type="button" class="btn btn-primary join"
 						data-toggle="modal" data-target="#myModal">회원가입</button>
 					<button type="button" class="btn btn-primary login"
@@ -197,9 +203,13 @@ function emailsend(){
 		url:"./mailCheck.do",
 		data:"email="+email,
 		success:function(data){
-		alert("인증번호전송");
-		$("#checkNum").attr("value",data.checkNum);
-// 		alert($("#checkNum").val());
+			if (data.checkNum=="false") {
+				alert("이미 존재하는 이메일 입니다.");
+			}else{
+				alert("인증번호전송");
+				$("#checkNum").attr("value",data.checkNum);	
+			}
+
 		}
 	});
 }
@@ -390,7 +400,7 @@ function checkall(){
 									<label for="nickname"> <span
 										class="glyphicon glyphicon-apple"></span> 닉네임
 									</label> <input type="text" class="pwd form-control" id="nickname"
-										name="nickname" placeholder="사용하실 닉네임을 입력하세요.(2자리 이상)" onclick="nicknameCheck()">
+										name="nickname" placeholder="사용하실 닉네임을 입력하세요.(2자리 이상)" onkeyup="nicknameCheck()">
 										<span id="nicknameCheck" class="glyphicon glyphicon-apple nickname"></span>
 								</div>
 								<!-- 비밀번호 -->
@@ -437,8 +447,7 @@ function checkall(){
 	<script>
 //로그인 중복검사
 function loginEmail(){
-// 	alert("작동");
-// 	이메일 정규식
+
 	var emailRul = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	 var InputEmail = $("#InputEmail").val();
 // 	 alert(InputEmail)
@@ -451,7 +460,7 @@ function loginEmail(){
 		$("#loginEmail").html("올바른 형식입니다.");
 // 		$("#allcheckemail").attr("value","1");
 // 		$("#sendCheckNum").attr("onclick","emailsend()");
-// 	}
+	}
 	
 }
 </script>	
@@ -1555,7 +1564,7 @@ function loginEmail(){
              $('.navbar ul li a.search').on('click', function (e) {
                  e.preventDefault();
              });
-         })
+         });
       </script>
 </body>
 </html>
