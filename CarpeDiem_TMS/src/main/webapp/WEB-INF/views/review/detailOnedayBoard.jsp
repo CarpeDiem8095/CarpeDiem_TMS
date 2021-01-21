@@ -5,11 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>후기 조회</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="./js/review.js"></script>
 </head>
 <style type="text/css">
 #container {
-	width: 800px;
+	width: 650px;
 	height: 540px;
 	margin: 40px auto;
 }
@@ -19,12 +24,28 @@ a {
 	vertical-align: -webkit-baseline-middle;
 	margin-left: 10px;
 }
+
+#map{
+	position: absolute;
+    left: 1380px;
+    top: 140px;
+}
+
+.placeTitleCss{
+	margin: 0px;
+	padding: 0px;
+}
+
+.w3-rigth-align{
+	float: right;
+}
+
 </style>
 <body>
 <%-- ${oneDto} --%>
 
-	<div id="container">
-		<h3>하루 일정</h3>	<button>신고하기</button>
+<div id="container">
+		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
 				<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
@@ -39,58 +60,111 @@ a {
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div class="showMeTheForm" >
-								<button class="w3-btn w3-block w3-black w3-left-align">
-								${p.place_name}
-								</button>
-								<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
+							<div class="w3-panel w3-black placeTitleCss">
+								<button class="w3-btn w3-black">${p.place_name}</button>
+								<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
+								<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+								<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+								<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 							</div>
-						
-							<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
+						<div>
+							<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
 								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 								<input type="hidden" name="place_seq" value="${p.place_seq}">
 									<div class="revForm" class="w3-container w3-hide">
-										<div><input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*"></div>
+										<div><input type="file" name="filename" class="uploadFile" accept="image/*" multiple="multiple"></div>
 										<div>
-											<div id="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-											<div><input type="text" style="width:540px; height: 250px;" name="content" id="content"></div>
-											<div><input type="submit" id="btnSave"  value="save" style="float:right;"/></div>
+											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
+											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+											
+											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+											
 										</div>
 									</div>
 							</form>
+						</div>
+								<!-- 수정 Modal -->
+								<div class="modal fade" id="modifyRev" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- 수정 Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title"> 후기 수정 </h4>
+											</div>
+											<div class="modal-body">
+												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- 메모추가 부분 -->
+							<form>
+								<div class="memoForm" class ="w3-container w3-hide" >
+									<div>
+										<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+									</div>
+									<div>
+										<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+										<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+										<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+									</div>
+								</div>
+							</form>	
 						</div>
 						
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${p.place_name})" value="경로보기"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
 								<div>
-									<div class="showMeTheForm" >
-									<button  class="w3-btn w3-block w3-black w3-left-align" onclick ="selReview(${p.place_seq})">
-									${p.place_name}
-									</button>
-									<%-- <input type="hidden" name="nameP" value="${p.place_name}"> --%>
-<!-- 									</div> -->
-										
-									<div id ="placeInfo">
-									
-									</div>
-									<form enctype="multipart/form-data" action="./fileUpload.do" method="post">
+								<div class="w3-panel w3-black placeTitleCss">
+										<button class="w3-btn w3-black">${p.place_name}</button>
+										<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
+										<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+										<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+										<input type="hidden" class="this_place_seq" value="${p.place_seq}">
+								</div>
+								<div>
+									<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
 									<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 									<input type="hidden" name="place_seq" value="${p.place_seq}">
 										
 										<div class="revForm" class="w3-container w3-hide">
-											<div><input type="file" id="uploadFile" name="filename" class="uploadFile" accept="image/*"></div>
 											<div>
-												<div id="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-												<div><input type="text" style="width:540px; height: 250px;" name="content" id="content"></div>
-												<div><input type="submit" id="btnSave"  value="save" style="float:right;"/></div>
+												<input type="file" name="filename" class="uploadFile" accept="image/*"> 
+												</div>
+											<div>
+												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
+												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+												
+												<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+												<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
 									</form>
-							
 								</div>
-							</div>
+								
+									<!-- 메모추가 부분 -->
+									<form>
+										<div class="memoForm" class ="w3-container w3-hide" >
+											<div>
+												<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+											</div>
+										<div>
+											<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+											<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+											<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+										</div>
+										</div>
+									</form>							
+								</div>
 							</div>
 						</c:otherwise>
 						</c:choose>
@@ -101,14 +175,13 @@ a {
 					</c:forEach>
 				</div>
 				<div id="map" style="width: 500px; height: 400px; margin: 0px auto;"></div>
-			</div>
 			
-			
-					
+				</div>
+				
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
-	<script>
+<script>
 		var container = document.getElementById('map');
 		var x = document.getElementsByName("myX");
 		var y = document.getElementsByName("myY");
@@ -161,7 +234,7 @@ a {
 			
 			var customOverlay = new kakao.maps.CustomOverlay({
 			    position: new daum.maps.LatLng(x[i].value, y[i].value),
-			    content: (i+1)+'<br><br><div>'+title[i].value.substring(0,3)+'</div>'
+			    content: '<div style="border: 1px solid black; background-color: white;">'+(i+1+". ")+title[i].value.substring(0,8)+'</div>'
 			});
 			
 		    var infowindow = new kakao.maps.InfoWindow({
@@ -201,7 +274,7 @@ a {
 		}
 		
 		function displayCircleDot(position) {
-			console.log(myOrder);
+			//console.log(myOrder);
 			if (distance > 0) {
 				// 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
 				var distanceOverlay = new daum.maps.CustomOverlay(
@@ -226,17 +299,139 @@ a {
 		        infowindow.close();
 		    };
 		}
-	</script>
-	<script type="text/javascript">
-	 function viewPath(pname){
-		 alert(pname);
-// 			var url = "https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=%2C%2C523953%2C1084098&rt1=넥슨코리아본사&rr2="+name+"&rtIds=%2C&rtTypes=%2C"
-// 			var title = "길찾기";
-// 			var attr = "width=400px, height=200px";
-// 		 window.open(url, title, attr);
+</script>
+<script type="text/javascript">
+	 function viewPath(onedaySeq, placeSeq){
+		 $.ajax({
+			 type : "post", 
+	         url : "viewPath.do", 
+	         data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+	         dataType : "json",
+	         success : function(json) {
+	  			var url = "http://map.daum.net/?sName="+json.firstPName+"&eName="+json.secondPName+"";
+	  			var title = "길찾기";
+	  			var attr = "width=1200px, height=600px";
+	  			var pathControl = window.open(url, title, attr);
+	         }
+		 })
 	 }
 	</script>
+	 
+<script type="text/javascript">
+		// 메모 보여주기
+		$(".showMeTheMemo").click(function(){
+			console.log($(this).parent().parent().find(".memoForm").html());
+			
+//	 		var memo = $(this).parent().parent().find(".memoArea").val("왜 아작스 처리 후에는 this가 안먹는거지????");
+			var memo = $(this).parent().parent().find(".memoArea").val();
+			console.log(memo);
+			var onedaySeq = $(this).parent().find(".this_oneday_seq").val();
+			var placeSeq = $(this).parent().find(".this_place_seq").val();
+			$(".revForm").hide();
+			
+			$(".memoForm").hide();
+			$(this).parent().parent().find(".memoForm").slideToggle('slow');
+			
+			$.ajax({
+				type : "post", 
+		        url : "showMemo.do",
+		        data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
+		        dataType : "json",
+		        success : function(json) {
+		        	console.log($(this).parent().parent().find(".memoForm").html());
+//	 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
+//	 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
+		        	
+//	 				memo = json.memo;
+//	 				console.log(json.memo);
+//	 				console.log(memo);
+//	 				memo = json.memo;
+					$(".memoArea").val(json.memo);
+		        }
+			});
+			return memo;
+		});
+		
+		// 메모 인설트
+		$(".addMemo").click(function(){
+			var memo = $(this).parent().parent().find(".memoArea").val();
+			var placeSeq = $(this).parent().find(".memo_place_seq").val();
+			var onedaySeq = $(this).parent().find(".memo_oneday_seq").val();
+			console.log(placeSeq);
+			console.log(onedaySeq);
+			
+			$.ajax({
+				type : "post", 
+		        url : "addMemo.do",
+		        data : {"memo":memo, "placeSeq":placeSeq, "onedaySeq":onedaySeq},
+		        dataType : "json",
+		        success : function(json) {
+//	 	        	console.log($(this).parent().parent().find(".memoForm").html());
+					$(".memoArea").val(json.memo);
+					alert("메모가 추가 되었습니다.");
+		        }
+			});
+		});
 
-</html>
-</body>
+		// 리뷰 폼 보이기
+		$(document).ready(function() {	
+			$(".revForm").hide();
+			$(".memoForm").hide();
+			
+		 });
+		
+		
+		$(".showMeTheForm").click(function(){
+			var placeSeq = $(this).parent().find(".this_place_seq");
+			//alert(placeSeq);
+				if ($(".revForm").is(':visible')) {
+					$(".revForm").slideUp('300');
+				} else {
+					$.ajax({
+						type:'get',
+						url : 'reviewList.do',
+						data : {"place_seq":placeSeq.val()},
+						dataType: 'json',
+						contentType:'application/json; charset=utf-8',
+						success:function(data){
+				 			if(data.content != null || data.origin_name !=null){
+					        	placeSeq.parent().parent().find(".preview").html("<img src=./uploadFiles/"+data.uuid_name+" style='width: 225px; height: 225px;'>");
+					        	placeSeq.parent().parent().find(".content").html(data.content);
+					        	placeSeq.parent().parent().find(".btnSave").css("display","none");
+					        	placeSeq.parent().parent().find(".btnReset").css("display","none");
+					        	placeSeq.parent().parent().find(".uploadFile").css("display","none");
+				 			}else{
+				 				console.log("====null====");
+				 				placeSeq.parent().parent().find(".btnModify").css("display","none");
+				 			}
+						},
+					      error : function(err){
+					         alert("잘못된 요청입니다."+err);
+					      }
+						
+					})
+				//console.log($(this).parent().parent().find(".revForm").html());
+				$(this).parent().parent().find(".revForm").slideToggle('slow');
+				}
+			});
+		
+		
+		// 등록된 이미지 미리보기 
+		$(".uploadFile").on('change', function(){
+		    readInputFile(this);
+		});
+
+
+		function readInputFile(input) {
+		    if(input.files && input.files[0]) {
+		        var reader = new FileReader();
+		        reader.onload = function (e) {
+		        	//alert(input);
+		            $('.preview').html("<img src="+ e.target.result +" style='width: 225px; height: 225px;'>");
+		      }
+		        reader.readAsDataURL(input.files[0]);
+		    }
+		}
+</script>
+
 </html>

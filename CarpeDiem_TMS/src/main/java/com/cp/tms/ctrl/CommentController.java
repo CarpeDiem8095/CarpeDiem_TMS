@@ -32,7 +32,7 @@ public class CommentController {
 		//System.out.println("댓글 게시판 Welcome! 하루 일정 seq : " + oneday_seq);
 		model.addAttribute("commentList", service.commnetList(oneday_seq));
 		model.addAttribute("oneday_seq", oneday_seq);
-		return "commentBoard";
+		return "review/commentBoard";
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.cp.tms.model.review;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,14 @@ public class ReviewServiceImpl implements IReviewService {
 	}
 
 	@Override
-	public List<OnedayDto> oneBoardList() {
-		return dao.oneBoardList();
+	public List<OnedayDto> oneBoardList(Map<String, Object> map) {
+		return dao.oneBoardList(map);
+	}
+
+	@Override
+	public int totalCount() {
+		return dao.totalCount();
+				
 	}
 
 }

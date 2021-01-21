@@ -13,14 +13,16 @@ public class OnedayDto {
 	private String reportchk;
 	private String one_readcnt;
 	private String note_public;
-	
+	private String email; // reviewBoard에서 사용하기 위해서 컬럼 추가
 	private List<PlaceDto> placeDto;
+
 
 	@Override
 	public String toString() {
 		return "OnedayDto [oneday_seq=" + oneday_seq + ", note_seq=" + note_seq + ", oneday_delflag=" + oneday_delflag
 				+ ", oneday_title=" + oneday_title + ", onedate=" + onedate + ", reportchk=" + reportchk
-				+ ", one_readcnt=" + one_readcnt + ", note_public=" + note_public + ", placeDto=" + placeDto + "]";
+				+ ", one_readcnt=" + one_readcnt + ", note_public=" + note_public + ", email=" + email + ", placeDto="
+				+ placeDto + "]";
 	}
 
 	public OnedayDto() {
@@ -40,8 +42,9 @@ public class OnedayDto {
 		this.note_public = note_public;
 	}
 
+
 	public OnedayDto(String oneday_seq, String note_seq, String oneday_delflag, String oneday_title, String onedate,
-			String reportchk, String one_readcnt, String note_public, List<PlaceDto> placeDto) {
+			String reportchk, String one_readcnt, String note_public, String email, List<PlaceDto> placeDto) {
 		super();
 		this.oneday_seq = oneday_seq;
 		this.note_seq = note_seq;
@@ -51,6 +54,7 @@ public class OnedayDto {
 		this.reportchk = reportchk;
 		this.one_readcnt = one_readcnt;
 		this.note_public = note_public;
+		this.email = email;
 		this.placeDto = placeDto;
 	}
 
@@ -111,6 +115,14 @@ public class OnedayDto {
 	}
 	public void setNote_public(String note_public) {
 		this.note_public = note_public;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

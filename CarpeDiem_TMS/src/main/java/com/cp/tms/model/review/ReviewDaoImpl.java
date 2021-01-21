@@ -1,6 +1,7 @@
 package com.cp.tms.model.review;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,14 @@ public class ReviewDaoImpl implements IReviewDao {
 	}
 
 	@Override
-	public List<OnedayDto> oneBoardList() {
-		return session.selectList(NS+"oneBoardList");
+	public List<OnedayDto> oneBoardList(Map<String, Object> map) {
+		return session.selectList(NS+"oneBoardList",map);
+	}
+
+	@Override
+	public int totalCount() {
+		int cnt = session.selectOne(NS+"totalCount");
+		return cnt;
 	}
 
 }

@@ -23,12 +23,18 @@
 	WHERE PLACE_SEQ=#{place_seq}
 </select>
 
-<select id="oneBoardList" resultType="oDto">
-	SELECT ONEDAY_SEQ, NOTE_SEQ, ONEDAY_DELFLAG, ONEDAY_TITLE, ONEDATE, REPORTCHK, ONE_READCNT, ONEDAY_PUBLIC
-	FROM TRIP.ONEDAY
-	WHERE ONEDAY_DELFLAG = 'N' AND ONEDAY_PUBLIC = 'Y'
-	ORDER BY ONEDATE DESC
+<select id="oneBoardList" resultType="oDto" parameterType="java.util.Map" >
+	SELECT ONEDAY_SEQ, NOTE_SEQ, ONEDAY_DELFLAG, ONEDAY_TITLE, ONEDATE, REPORTCHK, ONE_READCNT, ONEDAY_PUBLIC, EMAIL
+        FROM (SELECT ROW_NUMBER () OVER (ORDER BY ONEDAY_SEQ DESC) RN,
+        ONEDAY_SEQ, o.NOTE_SEQ, ONEDAY_DELFLAG, ONEDAY_TITLE, ONEDATE, REPORTCHK, ONE_READCNT, ONEDAY_PUBLIC,EMAIL
+                  FROM ONEDAY o JOIN NOTE n 
+                  ON o.NOTE_SEQ = n.NOTE_SEQ
+                  WHERE ONEDAY_DELFLAG = 'N' AND ONEDAY_PUBLIC = 'Y')
+        WHERE RN BETWEEN #{start} AND #{last}
 </select>
 
+<select id="totalCount" resultType="java.lang.Integer">
+	SELECT COUNT(ONEDAY_SEQ) FROM ONEDAY 
+</select>
 
 </mapper>

@@ -7,8 +7,9 @@
 <meta charset="UTF-8">
 <title>하루 일정 조회</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="./js/review.js"></script>
 </head>
 <style type="text/css">
@@ -72,19 +73,36 @@ a {
 									<div class="revForm" class="w3-container w3-hide">
 										<div><input type="file" name="filename" class="uploadFile" accept="image/*" multiple="multiple"></div>
 										<div>
-											<div class="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-											<div><textarea style="width:400px; height: 250px;" name="content" class="content"></textarea></div>
+											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
+											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 											
-											<div><input type="submit" class="btnSave"  value="SAVE" style="float:right;"/></div>
-											<div><input type="button" class="btnReset" value="reset" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify" value="수정"  onclick="modifyForm()" style="float:right;"/></div>
-																					
+											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+											
 										</div>
 									</div>
 							</form>
 						</div>
+								<!-- 수정 Modal -->
+								<div class="modal fade" id="modifyRev" role="dialog">
+									<div class="modal-dialog">
 
-							<!-- 메모추가 부분 -->
+										<!-- 수정 Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title"> 후기 수정 </h4>
+											</div>
+											<div class="modal-body">
+												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- 메모추가 부분 -->
 							<form>
 								<div class="memoForm" class ="w3-container w3-hide" >
 									<div>
@@ -121,15 +139,17 @@ a {
 												<input type="file" name="filename" class="uploadFile" accept="image/*"> 
 												</div>
 											<div>
-												<div class="preview" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-												<div><textarea style="width:400px; height: 250px;" name="content" class="content"></textarea></div>
-												<div><input type="submit" class="btnSave"  value="SAVE" style="float:right;"/></div>
-												<div><input type="button" class="btnReset" value="reset" onclick="reset();" style="float:right;"/></div>
-												<div><input type="button" class="btnModify" value="수정" onclick="modifyForm()" style="float:right;"/></div>
+												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
+												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+												
+												<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+												<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
 									</form>
 								</div>
+								
 									<!-- 메모추가 부분 -->
 									<form>
 										<div class="memoForm" class ="w3-container w3-hide" >
@@ -374,10 +394,11 @@ a {
 						contentType:'application/json; charset=utf-8',
 						success:function(data){
 				 			if(data.content != null || data.origin_name !=null){
-					        	placeSeq.parent().parent().find(".preview").html("<img src=./uploadFiles/"+data.origin_name+">");
+					        	placeSeq.parent().parent().find(".preview").html("<img src=./uploadFiles/"+data.uuid_name+" style='width: 225px; height: 225px;'>");
 					        	placeSeq.parent().parent().find(".content").html(data.content);
 					        	placeSeq.parent().parent().find(".btnSave").css("display","none");
 					        	placeSeq.parent().parent().find(".btnReset").css("display","none");
+					        	placeSeq.parent().parent().find(".uploadFile").css("display","none");
 				 			}else{
 				 				console.log("====null====");
 				 				placeSeq.parent().parent().find(".btnModify").css("display","none");
@@ -405,35 +426,13 @@ a {
 		        var reader = new FileReader();
 		        reader.onload = function (e) {
 		        	//alert(input);
-		            $('.preview').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
+		            $('.preview').html("<img src="+ e.target.result +" style='width: 225px; height: 225px;'>");
 		      }
 		        reader.readAsDataURL(input.files[0]);
 		    }
 		}
 </script>
 
-<script type="text/javascript">
-// 후기 수정 
-function modifyForm(){
-	var form = $(this).parent().parent().parent().parent().parent().find(".fileForm").attr("action", "modifyRev.do");
-	form.submit();
-	// alert(place_seq);
-// 		$.ajax({
-// 			type:'post',
-// // 			url:'modifyRevForm.do',
-// 			url:'modifyRev.do',
-// 			data:{"place_seq":place_seq},
-// 			dataType:'json',
-// 			contentType:'application/json; charset=utf-8',
-// 			success:function(data){
-				
-// 			}, 
-// 			error : function(err){
-// 		         alert("잘못된 요청입니다."+err)
-// 		    }
-// 	})
-}
 
-</script>
 
 </html>
