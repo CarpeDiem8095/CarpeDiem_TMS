@@ -241,9 +241,10 @@ public class QuestionController {
 	// 신고하기 test
 	// 신고하기 폼으로 이동
 	@RequestMapping(value = "/reportForm.do", method = RequestMethod.GET)
-	public String reportForm(Model model, HttpSession session, String seq, String email) {
+	public String reportForm(Model model, HttpSession session, String seq, String reporter_email, String subject_email) {
 		System.out.println("seq: " + seq);
-		System.out.println("email: " + email);
+		System.out.println("reporter_email: " + reporter_email);
+		System.out.println("subject_email: " + subject_email);
 		
 		// 신고자 정보
 		Member mDto = (Member)session.getAttribute("mDto");
@@ -253,7 +254,9 @@ public class QuestionController {
 		QuestionDto qDto = service.questionDetailBoard(seq);
 		
 		model.addAttribute("seq", seq); // 글번호
-		model.addAttribute("reporter_email", email); // 신고자의 이메일
+//		model.addAttribute("reporter_email", email); // 신고자의 이메일
+		model.addAttribute("reporter_email", mDto.getEmail()); // 신고자의 이메일
+		model.addAttribute("subject_email", qDto.getWriter()); // 신고대상의 이메일
 		model.addAttribute("mDto", mDto);
 		model.addAttribute("qDto", qDto);
 		System.out.println("qDto: " + qDto);

@@ -6,6 +6,10 @@ function reply(val) {
 	location.href="./replyForm.do?seq=" + val;
 }
 
+function report(val) {
+	location.href="./reportForm.do?seq=" + val;
+}
+
 //function report(val) {
 ////	location.href="./reportForm.do?seq=" + val;
 //	$.ajax({

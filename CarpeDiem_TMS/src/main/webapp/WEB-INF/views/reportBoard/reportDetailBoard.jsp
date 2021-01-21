@@ -63,11 +63,7 @@
 </body>
 <script type="text/javascript">
 	function changeWithdrawal(email, seq) {
-		location.href="./changeWithdrawal.do?email=" + email + "&seq=" + seq;
+		location.href="./reportProcessing.do?email=" + email + "&seq=" + seq;
 	}
-
-// 	function changeProcessingStatus(val) {
-// 		location.href="./changeProcessingStatus.do?seq=" + val;
-// 	}
 </script>
 </html>
