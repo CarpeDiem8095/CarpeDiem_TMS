@@ -150,14 +150,12 @@ public class OnedayController {
 			produces = "application/text; charset=UTF-8;")
 	@ResponseBody
 	public String selectOneDay(String seq) {
-		List<OnedayDto> oneDto = service.selDetailOneday(seq);
+		List<OnedayDto> oneDto = service.selDetailOneday(seq);  
 		
-//		System.out.println(oneDto.get(0).getPlaceDto().size());
 		int size = oneDto.get(0).getPlaceDto().size();
 		
-		
-		String A_place_name = "";
-		String A_xlat = "";
+		String A_place_name = ""; 
+		String A_xlat = ""; 
 		String A_ylng = "";
 		
 		for (int i = 0; i < size; i++) {
@@ -165,10 +163,6 @@ public class OnedayController {
 			A_xlat += oneDto.get(0).getPlaceDto().get(i).getXlat()+"/";
 			A_ylng += oneDto.get(0).getPlaceDto().get(i).getYlng()+"/";
 		}
-		
-		System.out.println(A_place_name);
-		System.out.println(A_xlat);
-		System.out.println(A_ylng);
 		
 		JSONObject json = new JSONObject();
 		json.put("A_place_name", A_place_name);

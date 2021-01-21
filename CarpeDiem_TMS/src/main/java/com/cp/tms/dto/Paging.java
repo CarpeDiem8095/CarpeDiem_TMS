@@ -5,8 +5,8 @@ public class Paging {
 	private int page; // 현재 선택된 페이지 0
 	private int countList; // 페이지당 몇 개의 게시글을 보여줄건지 1(8) 2(8) 3(1)
 	private int totalCount; // 총 게시글의 개수 17
-	private int countPage; // 화면에 몇 개의 페이지를 보여줄건지 -123-
-	private int totalPage; // -123- -456- -7-
+	private int countPage; // 화면에 몇 개의 페이지를 보여줄건지 
+	private int totalPage; // 
 	private int startPage; // 현재 화면의 시작 페이지 번호  1 / 4 / 7 
 	private int endPage; // 현재 화면의 끝 페이지 번호         3 / 6 / 7
 	

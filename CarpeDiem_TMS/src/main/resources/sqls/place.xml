@@ -81,7 +81,7 @@
 	</delete>
 	
 	<!-- 장소에 대한 메모 추가 -->
-	<!-- PLACE_SEQ, MEMO							DTO			Integer		addMemo				addMemo.do -->
+	<!-- PLACE_SEQ, MEMO	DTO	Integer	addMemo addMemo.do -->
 	<update id="addMemo" parameterType="pDto">
 	UPDATE PLACE
 	SET MEMO=#{memo}
