@@ -38,8 +38,6 @@ public class PlaceController {
 		System.out.println(dto);
 		boolean isc = service.writePlace(dto);
 		
-		
-		
 		return isc?"redirect:/insertPlacePage.do?seq="+day+"&noteSeq="+note_seq+"&selDate="+selDate+"":"error";
 	}
 
@@ -252,9 +250,7 @@ public class PlaceController {
 		json.put("memo",dto.getMemo());
 		json.put("placeSeq", dto.getPlace_seq());
 		json.put("onedaySeq", dto.getOneday_seq());
-//		
 		return json.toString();
-//		return null;
 	}
 	
 }

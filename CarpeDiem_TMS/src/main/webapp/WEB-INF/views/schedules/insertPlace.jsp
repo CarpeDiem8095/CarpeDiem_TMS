@@ -513,8 +513,6 @@
 		}
 
 		// 검색결과 목록 또는 마커를 클릭 했을 때 호출되는 함수입니다
-		// 인포윈도우에 장소명을 표시합니다
-		
 		function displayInfowindow(marker, title) {
 			var content = '<div style="padding:5px;z-index:1;">' + title
 					+ '</div>';
@@ -538,23 +536,6 @@
 								"<input type='hidden' name='placeName' value='"+myTitle+"'/>"+
 								"<input type='hidden' name='myX' value='"+myX+"'/>"+
 								"<input type='hidden' name='myY' value='"+myY+"'/></div>";
-			
-// 			var day = document.getElementById("onedSeq").value;
-
-// 			alert(day);
-	//         $.ajax({
-	//         type : "post", 
-	//         url : "insertPlace.do",
-	//         contentType:'application/json; charset=utf-8',
-	//         data : formData,
-			   
-	//         success : function(json) { //성공시
-	// 			alert("성공")
-	// 			},
-	// 		      error : function(err){
-	// 			   alert("잘못된 요청입니다."+err);
-	// 			  }
-	//   		 });
 								
 			var form = document.getElementById("oneDayPlace");
 			form.method = "post";
