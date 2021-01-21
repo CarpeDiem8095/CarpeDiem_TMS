@@ -28,7 +28,7 @@ public class ReportServiceImpl implements IReportService {
 	public ReportDto reportDetailBoard(String seq) {
 		return dao.reportDetailBoard(seq);
 	}
-
+	
 	@Override
 	public boolean changeWithdrawal(String email) {
 		return dao.changeWithdrawal(email);

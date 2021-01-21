@@ -6,30 +6,31 @@ function reply(val) {
 	location.href="./replyForm.do?seq=" + val;
 }
 
-function report(val) {
-//	location.href="./reportForm.do?seq=" + val;
-	$.ajax({
-		url: "./reportForm.do",
-		method: "post",
-		data: "seq="+val,
-		dataType: "json",
-		success: function(v) {
-			var url = "./reportForm.do?seq=" + v.seq;
-			var title
-		},
-		error: function() {
-			
-		}
-	});
-}
+//function report(val) {
+////	location.href="./reportForm.do?seq=" + val;
+//	$.ajax({
+//		url: "./reportForm.do",
+//		method: "post",
+//		data: "seq="+val,
+//		dataType: "json",
+//		success: function(v) {
+//			var url = "./reportForm.do?seq=" + v.seq;
+//			var title
+//		},
+//		error: function() {
+//			
+//		}
+//	});
+//}
 
-function txtPwChk(val) {
-	alert(val);
-//	pwCheckAjax(val);
-	$("#textPw").modal();
-}
+//function txtPwChk(val) {
+//	alert(val);
+////	pwCheckAjax(val);
+//	$("#textPw").modal();
+//}
 
 var pwCheckAjax = function(val) {
+//	var text_pw = $("#text_pw").val();
 	$.ajax({
 		url: "./txtPwChk.do",
 		type: "post",
@@ -60,13 +61,15 @@ function modify(val) {
 }
 
 var modifyAjax = function(val) {
+//	var auth = $("#auth").val();
 	$.ajax({
 		url: "./modifyForm.do",
 		method: "post",
 		data: "seq="+val,
 		dataType: "json",
 		success: function(v) {
-			console.log(v.seq, v.writer, v.title, v.content)
+			console.log(v.seq, v.writer, v.title, v.content);
+//			console.log(auth);
 			
 			 html = "  <input type='hidden' value='"+v.seq+"' name='seq'>";
 			html += "  <div class='form-group'>";
@@ -84,11 +87,13 @@ var modifyAjax = function(val) {
 			html += "	 <textarea class='form-control' rows='5' id='content' name='content' required>"+v.content+"</textarea>";
 			html += "  </div>";
 			
-			html += "  <div class='form-group'>";
-			html += "    <label for='content'>공개여부</label>";
-			html += "	 <input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp;";
-			html += "	 <input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글";
-			html += "  </div>";
+//			if () { // 관리자한테만 보여줘야 하는데 session이 담고 있는 auth를 어떻게 조건으로 추가하지..? 여기서 그게 가능한가..?
+				html += "  <div class='form-group'>";
+				html += "    <label for='content'>공개여부</label>";
+				html += "	 <input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp;";
+				html += "	 <input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글";
+				html += "  </div>";
+//			}
 			
 			html += "  <div class='modal-footer' style='text-align: center'>";
 			html += "    <input type='button' class='btn-primary' value='확인' onclick='update()'/>";

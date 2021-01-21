@@ -59,6 +59,10 @@ public class QuestionInputData {
 		int n = 5;
 		
 		sb.append("<tr>");
+		if (mDto == null) {
+			mDto = new Member();
+			mDto.setAuth("U");
+		}
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("	<td style='text-align: center; vertical-align: middle; height: 56px; width: 40px;'>");
 			sb.append("		<input type='checkbox' name='chkVal' value='"+dto.getSeq()+"'>");
@@ -91,20 +95,20 @@ public class QuestionInputData {
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
 		} else {
-			sb.append("				<textarea rows='7' class='form-control' style='display: none;' readonly>"+dto.getContent()+"</textarea>");
-			sb.append("				<div style='border: 1px solid #CCC; border-radius: 4px; background-color: #eee; width: 778.4px; height: 150px; text-align: center;'>");
+			sb.append("				<textarea rows='7' class='form-control qDtoContent' style='display: none;' readonly>"+dto.getContent()+"</textarea>");
+			sb.append("				<div style='border: 1px solid #CCC; border-radius: 4px; background-color: #eee; width: 778.4px; height: 150px; text-align: center;' class='text_pw'>");
 			sb.append("					<br>");
-			sb.append("					<p>비밀글입니다.</p>");
-			sb.append("					<p style='color: tomato;'>글 비밀번호를 입력해주세요.</p>");
-			sb.append("					<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>");
-			sb.append("					<input type='button' class='btn-primary' value='확인' onclick='txtPwChk(\""+dto.getSeq()+"\")'>");
+			sb.append("					<p style='margin-top: 10px;' class='text_pw'>비밀글입니다.</p>");
+			sb.append("					<p style='color: tomato;' class='text_pw'>글 비밀번호를 입력해주세요.</p>");
+//			sb.append("					<input type='password' class='form-control' id='text_pw' name='text_pw' maxlength='4' required>");
+//			sb.append("					<input type='button' class='btn-primary text_pw' value='비밀번호 입력' onclick='txtPwChk(\""+dto.getSeq()+"\")'>");
 //			sb.append("					<input type='submit' class='btn-primary' value='확인' onclick='txtPwChk(\""+dto.getText_pw()+"\")'>");
+			sb.append("					<input type='button' class='btn-primary text_pw' value='비밀번호 입력' data-toggle='modal' data-target='#textPw'>");
 			sb.append("				</div>");
 		}
 		sb.append("			</div>");
 		sb.append("			<div class='form-group'>");
 		// 수정, 삭제 버튼은 글 비밀번호가 일치해야 볼 수 있음
-		// 관리자는 관리자가 작성한 글만 수정 가능(questionBoard에 AUTH가 있어야할것같은데 이거 하나 비교하자고 만드는게 맞나..?)
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("				<input type='button' class='btn btn-primary' value='수정' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='답변' onclick='reply(\""+dto.getSeq()+"\")'>");
@@ -112,8 +116,8 @@ public class QuestionInputData {
 		} else {
 			sb.append("				<input type='button' class='btn btn-primary' value='수정' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='삭제' onclick='del(\""+dto.getSeq()+"\")'>");
+			sb.append("				<input type='button' class='btn btn-warning' value='신고' onclick='report(\""+dto.getSeq()+"\")'/>");
 		}
-		sb.append("				<input type='button' class='btn btn-warning' value='신고' onclick='report(\""+dto.getSeq()+"\")'/>");
 		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("	</td>");

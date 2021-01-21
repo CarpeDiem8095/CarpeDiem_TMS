@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+#bottomInfo{
+	width: 900px;
+	position: relative;
+	color: gray;
+	font-size: 10px;
+}
+
+#button{
+	margin-top: 40px;
+	position: relative;
+	text-align: center;
+}

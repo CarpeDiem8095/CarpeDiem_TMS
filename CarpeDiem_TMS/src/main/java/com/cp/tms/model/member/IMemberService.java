@@ -17,7 +17,7 @@ public interface IMemberService {
     public void authentication(Member dto);        
     
     //이메일 중복 체크
-    public int userEmailCheck(String userEmail);
+    public int userEmailCheck(Member mdto);
     
     
     
@@ -59,6 +59,7 @@ public interface IMemberService {
     // 글 개수
     public int allBoardTotal();
     
-
+ // 마이페이지
+  	public int update_mypage(Member mdto);
     
 }

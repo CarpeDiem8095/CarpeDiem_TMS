@@ -16,23 +16,23 @@
 </style>
 </head>
 <body>
-	<!-- 신고자에게 보내는 메일 -->
+	<!-- 신고대상에게 보내는 메일 -->
 	<div id="container" class="table-responsive">
 		<h3>메일 작성</h3>
 		<form action="./sendEmail.do" method="post">
 			<input type = "hidden" name="seq" value="${seq}">
-			<input type = "hidden" name="reporter_email" value="${rDto.reporter_email}">
+			<input type = "hidden" name="subject_email" value="${rDto.subject_email}">
 			<table class="table">
 				<tr>
 					<th>받는 사람</th>
 					<td>
-						<input type="email" class="form-control" name="receiver" value="${rDto.reporter_email}" readonly>
+						<input type="email" class="form-control" name="receiver" value="${rDto.subject_email}" readonly>
 					</td>
 				</tr>
 				<tr>
 					<th>제목</th>
 					<td>
-						<input type="text" class="form-control" name="title" value="회원님께서 신고하신 내역에 대한 답변입니다." readonly>
+						<input type="text" class="form-control" name="title" value="다른 회원이 신고하여 신고처리 되었습니다." readonly>
 					</td>
 				</tr>
 				<tr>
