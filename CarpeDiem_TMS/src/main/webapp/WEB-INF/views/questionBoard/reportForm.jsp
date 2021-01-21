@@ -35,7 +35,8 @@
 		<form action="./report.do" method="post">
 			<input type="hidden" name="seq" value="${seq}">
 			<!-- session이 담고 있는 신고하는 사람의 email -->
-			<input type="hidden" name="email" value="${email}">
+			<input type = "hidden" name="reporter_email" value="${detail.reporter_email}">
+			<input type = "hidden" name="subject_email" value="${detail.subject_email}">
 			<div class="form-group">
 				<!-- 신고대상 글 제목-->
 				<label for="title">제목</label>

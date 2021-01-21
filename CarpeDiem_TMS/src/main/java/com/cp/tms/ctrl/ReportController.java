@@ -161,7 +161,7 @@ public class ReportController {
 	}
 	
 	// 신고처리(탈퇴여부/처리여부 변경)
-	@RequestMapping(value = "/changeWithdrawal.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/reportProcessing.do", method = RequestMethod.GET)
 	public String changeWithdrawal(String email, String seq) {
 		boolean isc = mService.deleteUser(email);
 		System.out.println("email: " + email);

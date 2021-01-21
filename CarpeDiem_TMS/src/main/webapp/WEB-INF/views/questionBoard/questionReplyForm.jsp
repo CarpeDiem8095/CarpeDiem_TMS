@@ -43,7 +43,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th></th>
+					<th>내용</th>
 					<td>
 						<textarea class="form-control" rows="10" cols="90" name="content" placeholder="내용을 입력하세요." required></textarea>
 					</td>
