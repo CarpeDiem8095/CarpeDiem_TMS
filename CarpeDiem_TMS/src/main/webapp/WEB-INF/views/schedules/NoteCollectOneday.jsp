@@ -39,6 +39,13 @@ a {
 <body>
 	<div class="fck"></div>
 	<div id="container">
+	<h3>노트 모아 보기 </h3>
+	<div class="w3-show-inline-block">
+			<div class="w3-bar w3-light-grey">
+				<a href="./NoteCollectOneday.do?note_seq=${note_seq}&page=${page}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
+				<a href="./NoteTableList.do?note_seq=${note_seq}" class="w3-bar-item w3-button">일정표 보기</a> 
+			</div>
+		</div> 
 		<div class="panel-group" id="accordion">
 			<c:forEach var="oneday" items="${oneDto}" varStatus="onedayVs">
 				<div class="onedeyTitle">

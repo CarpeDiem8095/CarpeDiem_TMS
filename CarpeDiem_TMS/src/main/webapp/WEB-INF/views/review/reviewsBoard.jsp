@@ -11,7 +11,6 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script type="text/javascript" src="./js/support.js"></script>
 <style type="text/css">
 	#container {
@@ -51,14 +50,32 @@
 		</tr>
 	<c:forEach var="board" items="${oneBoardList}" varStatus="vs">
 		<tr>
-			<td>${vs.count}</td>
+			<td>${board.oneday_seq}</td>
 			<td><a href="./selOneBoard.do?oneday_seq=${board.oneday_seq}">${board.oneday_title}</a></td>
-			<td>작성자 조인해서 추가</td>
+			<td>${board.email}</td>
 			<td>${board.one_readcnt}</td>
 			<td>${board.onedate}</td>
 		</tr>
 	</c:forEach>
 </table>
+	
+	<!-- 페이징 -->
+			<div class="center" style="text-align: center;">
+				<ul class="pagination">
+					<c:if test="${pb.startPage ne 1}">
+						<li><a href="./oneBoardList.do?page=1">◀◀</a></li>
+						<li><a href="./oneBoardList.do?page=${pb.startPage-1}">◁</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pb.startPage}" end="${pb.endPage}" step="1">
+						<li><a href="./oneBoardList.do?page=${i}">&nbsp;&nbsp;${i}&nbsp;&nbsp;</a></li>
+					</c:forEach>
+					<c:if test= "${pb.startPage+pb.countPage le pb.totalPage}">
+						<li><a href="./oneBoardList.do?page=${pb.endPage+1}">▷</a></li>
+						<li><a href="./oneBoardList.do?page=${pb.totalPage}">▶▶</a></li>
+					</c:if>
+				</ul>
+			</div>
+		
 </div>
 </body>
 </html>
