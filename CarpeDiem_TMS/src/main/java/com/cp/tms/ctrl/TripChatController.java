@@ -88,6 +88,10 @@ public class TripChatController implements ServletConfigAware {
 		}else {
 			seldto=tripchatservice.selchatboardcontent(map);
 		}
+		if(seldto.getReport_status()=="Y") {
+			model.addAttribute("<script>alert('신고된 채팅방입니다.신고처리후 사용해주세요');</script>");
+			return "main/TripMainpage";
+		}
 		seldto.setChatgroupid(dto.getChatgroupid());
 		model.addAttribute("chatDto", seldto);
 		session.setAttribute("gr_id", seldto.getChatgroupid());
