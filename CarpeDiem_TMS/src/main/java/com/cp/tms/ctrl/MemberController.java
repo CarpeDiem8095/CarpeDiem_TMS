@@ -205,50 +205,58 @@ public class MemberController {
 	
 
 	
-	//비밀번호 찾기 이메일발송
-	public void sendEmail(Member vo, String div) throws Exception {
-		// Mail Server 설정
-		String charSet = "utf-8";
-		String hostSMTP = "smtp.gmail.com"; //네이버 이용시 smtp.naver.com
-		String hostSMTPid = "joseokgyu12@gmail.com";
-		String hostSMTPpwd = "tjrrbsla1@";
+	//이메일 인증
+		@RequestMapping(value = "/mailCCk.do", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String, String> mailCheck(String email) {
+			MimeMessage message = mailSender.createMimeMessage();
+			//view로부터 넘어온 데이터 확인
+			
+			Map<String, String> map = new HashMap<String, String>();
+			Member mdto = new Member();
+			mdto.setEmail(email);
+			int cnt = Service.userEmailCheck(mdto);
+			System.out.println(cnt);
+			
+			if (cnt>0) {
 
-		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "joseokgyu12@gmail.com";
-		String fromName = "카르페디엠";
-		String subject = "";
-		String msg = "";
+				map.put("checkNum", "false");
+			}else {
 
-		if(div.equals("findpw")) {
-			subject = "카르페디엠 임시 비밀번호 입니다.";
-			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-			msg += "<h3 style='color: blue;'>";
-			msg += vo.getNickname()+ "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
-			msg += "<p>임시 비밀번호 : ";
-			msg += vo.getPassword() + "</p></div>";
+				 /* 인증번호(난수) 생성 */
+		        Random random = new Random();
+		        int checkNum = random.nextInt(888888) + 111111;
+		        logger.info("인증번호 " + checkNum);
+		        
+		        
+		        /* 이메일 보내기 */
+		        String setFrom = "joseokgyu12@gmail.com";
+		        String toMail = email;
+		        String title = "카르페 디엠 회원가입 인증 이메일 입니다.";
+		        String content = 
+		                "카르페디엠을  방문해주셔서 감사합니다." +
+		                "<br><br>" + 
+		                "인증 번호는 " + checkNum + "입니다." + 
+		                "<br>" + 
+		                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		        
+		        try {
+		        	MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+		            helper.setFrom(setFrom);
+		            helper.setTo(toMail);
+		            helper.setSubject(title);
+		            helper.setText(content,true);
+		        }catch(Exception e) {
+		            e.printStackTrace();
+		        }
+		        mailSender.send(message);
+		       String checkNum1= checkNum+"";
+		       	map.put("checkNum", checkNum1);
+			}
+		
+
+			return map;
 		}
-
-		// 받는 사람 E-Mail 주소
-		String mail = vo.getEmail();
-		try {
-			HtmlEmail email = new HtmlEmail();
-			email.setDebug(true);
-			email.setCharset(charSet);
-			email.setSSL(true);
-			email.setHostName(hostSMTP);
-			email.setSmtpPort(465); //네이버 이용시 587
-
-			email.setAuthentication(hostSMTPid, hostSMTPpwd);
-			email.setTLS(true);
-			email.addTo(mail, charSet);
-			email.setFrom(fromEmail, fromName, charSet);
-			email.setSubject(subject);
-			email.setHtmlMsg(msg);
-			email.send();
-		} catch (Exception e) {
-			System.out.println("메일발송 실패 : " + e);
-		}
-	}
 
 	//비밀번호찾기
 	public void findPw(HttpServletResponse response, Member vo) throws Exception {
@@ -275,7 +283,7 @@ public class MemberController {
 			
 			Service.update(pw);
 			// 비밀번호 변경 메일 발송
-			sendEmail(vo, "findpw");
+//			sendEmail(vo, "findpw");
 
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();

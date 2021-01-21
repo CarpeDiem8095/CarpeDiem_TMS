@@ -80,11 +80,11 @@ function checkChange(){
 		alert("닉네임이 존재합니다.");
 		return false;
 	}else if (CCpwd1==0) {
-		$("#allcheckpwd1").val();
+		$("#allcheckpwd1").focus();
 		alert("비밀번호 확인이 되지 않았습니다.");
 		return false;
 	}else if (CCpwd2==0) {
-		$("#allcheckpwd2").val()
+		$("#allcheckpwd2").focus()
 		alert("비밀번호가 확인이 되지 않았습니다.");
 		return false;
 	}else{
