@@ -10,13 +10,25 @@ public class ChatingDto {
 	private String chatgroupid;
 	private String chatcontent;
 	private Date chatregdate;
+	private String report_status;
 
 	public ChatingDto() {
 
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "ChatingDto [seq=" + seq + ", chatmyid=" + chatmyid + ", chatyourid=" + chatyourid + ", chatgroupid="
+				+ chatgroupid + ", chatcontent=" + chatcontent + ", chatregdate=" + chatregdate + ", report_status="
+				+ report_status + "]";
+	}
+
+
+
 	public ChatingDto(int seq, String chatmyid, String chatyourid, String chatgroupid, String chatcontent,
-			Date chatregdate) {
+			Date chatregdate, String report_status) {
 		super();
 		this.seq = seq;
 		this.chatmyid = chatmyid;
@@ -24,13 +36,10 @@ public class ChatingDto {
 		this.chatgroupid = chatgroupid;
 		this.chatcontent = chatcontent;
 		this.chatregdate = chatregdate;
+		this.report_status = report_status;
 	}
 
-	@Override
-	public String toString() {
-		return "ChatingDto [seq=" + seq + ", chatmyid=" + chatmyid + ", chatyourid=" + chatyourid + ", chatgroupid="
-				+ chatgroupid + ", chatcontent=" + chatcontent + ", chatregdate=" + chatregdate + "]";
-	}
+
 
 	public int getSeq() {
 		return seq;
@@ -80,4 +89,17 @@ public class ChatingDto {
 		this.chatregdate = chatregdate;
 	}
 
+
+
+	public String getReport_status() {
+		return report_status;
+	}
+
+
+
+	public void setReport_status(String report_status) {
+		this.report_status = report_status;
+	}
+
+	
 }

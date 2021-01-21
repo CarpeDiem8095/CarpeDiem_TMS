@@ -28,7 +28,7 @@ AND CHATYOURID =#{chatyourid}
 </update>
 
 <select id="selchatboardcontent" parameterType="java.util.Map" resultType="ChatDto">
-SELECT CHATMYID ,CHATYOURID,CHATGROUPID,CHATCONTENT FROM CHATINGBOARD c 
+SELECT CHATMYID ,CHATYOURID,CHATGROUPID,CHATCONTENT,REPORT_STATUS FROM CHATINGBOARD c 
 WHERE CHATMYID =#{chatmyid}
 AND CHATYOURID =#{chatyourid}
 </select>
