@@ -57,7 +57,7 @@ public class ReviewController {
 //	}
 //	
 	
-	// 테이블 리스트로 이동
+	// 하루일정 테이블 리스트로 이동
 	@RequestMapping(value = "/onedayTableList.do", method = RequestMethod.GET)
 	public String onedayTableList(Model model, String oneday_seq) {
 		System.out.println("테이블 게시판 이동 : "+oneday_seq);
@@ -67,6 +67,16 @@ public class ReviewController {
 		return "review/onedayTableList";
 	}
 	
+	// 노트 모아보기 테이블 리스트로 이동
+	@RequestMapping(value = "/NoteTableList.do", method = RequestMethod.GET)
+	public String NoteTableList(String note_seq, Model model, String page) {
+		System.out.println("노트 테이블 이동 : "+note_seq);
+		model.addAttribute("noteCollection",oneService.noteCollectOnedayAP(note_seq));
+		model.addAttribute("note_seq", note_seq);
+		model.addAttribute("page",page);
+		return "review/noteTableList";
+	}
+	
 	// 글 작성 
 	@RequestMapping(value = "/fileUpload.do", method=RequestMethod.POST)
 	//@ResponseBody
@@ -74,10 +84,13 @@ public class ReviewController {
 		
 		
 		// 경로
-		String path = req.getSession().getServletContext().getRealPath("/");
-		System.out.println("지금 path : "+path);
-		String directory = path+"src/main/webapp/uploadFiles";
-		//System.out.println("절대경로 :"+directory);
+		String path = req.getSession().getServletContext().getRealPath("/"); 
+//		String path = "/Users/EUNSOL/git/CarpeDiem_TMS/CarpeDiem_TMS/src/main/webapp/uploadFiles/"; // 절대경로
+		System.out.println("상대 경로 테스트 : "+path);
+	
+		String directory = path +"uploadFiles";
+		//System.out.println("상대경로 :"+directory);
+    
 		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
 		String encoding = "UTF-8";
 
@@ -151,7 +164,8 @@ public class ReviewController {
 			json.put("place_seq", dto.getPlace_seq());
 			json.put("content", dto.getContent());
 			json.put("origin_name", dto.getOrigin_name());
-			json.put("uuid_name", dto.getOrigin_name());
+			json.put("uuid_name", dto.getUuid_name());
+			json.put("img_url",dto.getImg_url());
 			
 			return json.toString();
 		}
@@ -302,8 +316,11 @@ public class ReviewController {
 	// 상세 글 조회 
 	@RequestMapping(value="/selOneBoard.do", method=RequestMethod.GET)
 	public String reviewSelOneBoard(String oneday_seq, Model model) {
+		service.readCount(oneday_seq);
 		model.addAttribute("selDetailOneday",oneService.selDetailOneday(oneday_seq));
 		model.addAttribute("oneday_seq", oneday_seq);
 		return "review/detailOnedayBoard";
 	}
+	
+	
 }

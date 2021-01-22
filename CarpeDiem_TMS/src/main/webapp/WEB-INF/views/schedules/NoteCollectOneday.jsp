@@ -8,8 +8,10 @@
 <meta charset="UTF-8">
 <title>노트의 모든 하루일정 조회</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="./js/review.js"></script>
 </head>
 <style type="text/css">
 #container {
@@ -42,8 +44,8 @@ a {
 	<h3>노트 모아 보기 </h3>
 	<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
-				<a href="./NoteCollectOneday.do?note_seq=${note_seq}&page=${page}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
-				<a href="./NoteTableList.do?note_seq=${note_seq}" class="w3-bar-item w3-button">일정표 보기</a> 
+				<a href="./NoteCollectOneday.do?note_seq=${seq}&page=${page}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
+				<a href="./NoteTableList.do?note_seq=${seq}&page=${page}" class="w3-bar-item w3-button">일정표 보기</a> 
 			</div>
 		</div> 
 		<div class="panel-group" id="accordion">
@@ -62,17 +64,41 @@ a {
 							<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 							<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 						</div>
-						<form action="./fileUpload.do" method="post">
-							<input type="hidden" name="oneday_seq" value="${oneday_seq}">
-							<div class="revForm" class="w3-container w3-hide">
-								<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
-								<div>
-									<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-									<div><input type="text" style="width:400px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
-									<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
+					<div>
+						<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
+								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
+								<input type="hidden" name="place_seq" value="${p.place_seq}">
+									<div class="revForm" class="w3-container w3-hide">
+										<div><input type="file" name="filename" class="uploadFile" accept="image/*" multiple="multiple"></div>
+										<div>
+											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
+											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+											
+											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+										</div>
 								</div>
-							</div>
 						</form>
+					</div>
+					<!-- 수정 Modal -->
+								<div class="modal fade" id="modifyRev" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- 수정 Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title"> 후기 수정 </h4>
+											</div>
+											<div class="modal-body">
+												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
+											</div>
+										</div>
+
+									</div>
+								</div>
+					
 						<!-- 메모추가 부분 -->
 						<form>
 							<div class="memoForm" class ="w3-container w3-hide" >
@@ -99,17 +125,26 @@ a {
 							<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 							<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 						</div>
-								<form action="./fileUpload.do" method="post">
-								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
-									<div class="revForm" class="w3-container w3-hide">
-										<div><input type="file" id="uploadFile_${p.place_seq}" name="filename" class="uploadFile" accept="image/*"></div>
+						<div>
+							<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
+									<input type="hidden" name="oneday_seq" value="${oneday_seq}">
+									<input type="hidden" name="place_seq" value="${p.place_seq}">
+										
+										<div class="revForm" class="w3-container w3-hide">
 										<div>
-											<div id="preview_${p.place_seq}" style="border: 1px solid black; width: 250px; height: 250px; float:left;"></div>
-											<div><input type="text" style="width:400px; height: 250px;" name="content" id="content_${p.place_seq}"></div>
-											<div><input type="submit" id="btnSave_${p.place_seq}"  value="save" style="float:right;"/></div>
+											<input type="file" name="filename" class="uploadFile" accept="image/*"> 
+										</div>
+										<div>
+											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
+											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+											
+											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 										</div>
 									</div>
-								</form>
+							</form>
+						</div>
 							<!-- 메모추가 부분 -->
 						<form>
 							<div class="memoForm" class ="w3-container w3-hide" >
@@ -247,33 +282,66 @@ a {
 		});
 	});
 	
-	// 아코디언 메뉴 롤업
+	// 리뷰 폼 보이기
 	$(document).ready(function() {	
 		$(".revForm").hide();
 		$(".memoForm").hide();
-		$(".showMeTheForm").click(function(){
-			$(".revForm").hide();
-			console.log($(this).parent().parent().find(".revForm").html());
-			$(this).parent().parent().find(".revForm").slideToggle('slow');
-		});
+		
 	 });
 	
 	
-	// 등록 된 이미지 미리보기
+	$(".showMeTheForm").click(function(){
+		var placeSeq = $(this).parent().find(".this_place_seq");
+		//alert(placeSeq);
+			if ($(".revForm").is(':visible')) {
+				$(".revForm").slideUp('300');
+			} else {
+				$.ajax({
+					type:'get',
+					url : 'reviewList.do',
+					data : {"place_seq":placeSeq.val()},
+					dataType: 'json',
+					contentType:'application/json; charset=utf-8',
+					success:function(data){
+			 			if(data.content != null || data.origin_name !=null){
+				        	placeSeq.parent().parent().find(".preview").html("<img src=./uploadFiles/"+data.uuid_name+" style='width: 225px; height: 225px;'>");
+				        	placeSeq.parent().parent().find(".content").html(data.content);
+				        	placeSeq.parent().parent().find(".btnSave").css("display","none");
+				        	placeSeq.parent().parent().find(".btnReset").css("display","none");
+				        	placeSeq.parent().parent().find(".uploadFile").css("display","none");
+			 			}else{
+			 				console.log("====null====");
+			 				placeSeq.parent().parent().find(".btnModify").css("display","none");
+			 			}
+					},
+				      error : function(err){
+				         alert("잘못된 요청입니다."+err);
+				      }
+					
+				})
+			//console.log($(this).parent().parent().find(".revForm").html());
+			$(this).parent().parent().find(".revForm").slideToggle('slow');
+			}
+		});
+	
+	
+	// 등록된 이미지 미리보기 
+	$(".uploadFile").on('change', function(){
+	    readInputFile(this);
+	});
+
+
 	function readInputFile(input) {
 	    if(input.files && input.files[0]) {
 	        var reader = new FileReader();
 	        reader.onload = function (e) {
-	            $('#preview_${p.place_seq}').html("<img src="+ e.target.result +" style='width: 250px; height: 250px;'>");
-	        }
+	        	//alert(input);
+	            $('.preview').html("<img src="+ e.target.result +" style='width: 225px; height: 225px;'>");
+	      }
 	        reader.readAsDataURL(input.files[0]);
 	    }
 	}
-	 
-	// 등록된 이미지 바꾸기 
-	$(".uploadFile").on('change', function(){
-	    readInputFile(this);
-	});	
+</script>
 	</script>
 	
 	<!-- 지도 좌표 아작스 처리 -->

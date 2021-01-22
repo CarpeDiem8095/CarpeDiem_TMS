@@ -34,9 +34,11 @@ a {
 		<a href="./iLikeit.do">♡</a>
 	</div>
 
-	<div class="container">
+	<div id="container">
 
-		<h3>하루 일정</h3>
+		<h3>하루 일정</h3> 
+<%-- 		<h4>세션 : ${mDto.email}</h4> --%>
+<%-- 		<h4>이메일 : ${commentList[0].email}</h4> --%>
 
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
@@ -54,11 +56,21 @@ a {
 			</div>
 			<form action="./writeComment.do" id="writeForm" method="post">
 				<div class="input-group">
+				<c:choose>
+				<c:when test="${mDto.email eq null}">
+					<input type="text" class="form-control" id="content" name="content" readonly="readonly" placeholder="로그인 후 이용하세요."> 
+					<span class="input-group-btn"> 
+						<input type="button" class="btn btn-default disabled" value="등록">
+					</span>
+				</c:when>
+				<c:otherwise>
 					<input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요."> 
 					<input type="hidden" name="oneday_seq" value="${oneday_seq}"> 
 					<span class="input-group-btn"> 
 						<input type="submit" class="btn btn-default" value="등록">
 					</span>
+				</c:otherwise>
+				</c:choose>
 				</div>
 			</form>
 
@@ -73,13 +85,17 @@ a {
 						<input type="hidden" name="step" value="${i.step}">
 						<div style="width: 665px; height: 35px; float: left;">
 							${i.comm_seq}${i.email}${i.content} 
+							<c:if test="${mDto.email eq i.email}">
 							<input type="button" onclick="delComment()" class="btn btn-default" value="삭제" style="float: right;"> 
 							<input type="button" onclick="modifyCommForm('${i.comm_seq}')" class="btn btn-default btnModi" value="수정" style="float: right;">
+							</c:if>
 						</div>
 					</form>
 
 					<span class="showMeTheForm">
+					<c:if test="${mDto.email ne null}">
 						<input type="button" class="btn btn-default" value="답글" style="float: right;">
+					</c:if>
 					</span>
 					<form action="./writeReply.do" method="post">
 						<input type="hidden" name="oneday_seq" value="${i.oneday_seq}">
@@ -102,6 +118,7 @@ a {
 		function delComment() {
 			var formData = $('#updateComment').serialize();
 			console.log(formData);
+			//alert(formData.val());
 
 			$.ajax({
 				type : 'get',
@@ -111,8 +128,11 @@ a {
 				contentType : 'application/json; charset=utf-8',
 				success : function(data) {
 					//alert(data.result);
-					alert("댓글이 삭제 됩니다.");
-					location.reload();
+					if(confirm("댓글을 삭제 하시겠습니까?")==true){
+						location.reload();
+					}else{   //취소
+					    return;
+					}
 				},
 				error : function(err) {
 					alert("잘못된 요청입니다." + err);
@@ -149,7 +169,7 @@ a {
 							html += "	<input type='hidden' name='comm_seq' value='"+data.comm_seq+"'>";
 							html += "	<div class='input-group-append'>";
 							html += "		<input type='button' class='btn btn-default' value='등록' onclick='modifyComment()'>";
-							html += "		<input type='button' class='btn btn-default' value='취소'>";
+							html += "		<input type='button' class='btn btn-default' value='취소' onclick='location.reload()'>";
 							html += "	</div>";
 							html += "</div>";
 
@@ -200,6 +220,7 @@ a {
 				$(this).parent().find(".re_Form").slideToggle('fast');
 			});
 		});
+		
 	</script>
 </body>
 </html>

@@ -46,4 +46,9 @@ public class ReviewServiceImpl implements IReviewService {
 				
 	}
 
+	@Override
+	public int readCount(String oneday_seq) {
+		return dao.readCount(oneday_seq);
+	}
+
 }

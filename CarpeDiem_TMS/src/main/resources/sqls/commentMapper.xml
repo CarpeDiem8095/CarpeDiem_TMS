@@ -44,7 +44,8 @@
  <delete id="delComment" parameterType="comDto">
 	DELETE FROM COMMENTBOARD
 	WHERE ONEDAY_SEQ = #{oneday_seq}
-	AND REFFER = #{reffer} AND STEP >= #{step}
+	AND REFFER = #{reffer} 
+	AND DEPTH >= (SELECT DEPTH FROM COMMENTBOARD WHERE COMM_SEQ=#{comm_seq})
  </delete>
  
  <select id="getOneComment" parameterType="comDto" resultType="comDto">

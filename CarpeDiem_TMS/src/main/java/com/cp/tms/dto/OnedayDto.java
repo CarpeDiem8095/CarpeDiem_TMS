@@ -11,7 +11,7 @@ public class OnedayDto {
 	private String oneday_title;
 	private String onedate;
 	private String reportchk;
-	private String one_readcnt;
+	private int one_readcnt;
 	private String note_public;
 	private String email; // reviewBoard에서 사용하기 위해서 컬럼 추가
 	private List<PlaceDto> placeDto;
@@ -30,7 +30,7 @@ public class OnedayDto {
 	}
 	
 	public OnedayDto(String oneday_seq, String note_seq, String oneday_delflag, String oneday_title, String onedate,
-			String reportchk, String one_readcnt, String note_public) {
+			String reportchk, int one_readcnt, String note_public) {
 		super();
 		this.oneday_seq = oneday_seq;
 		this.note_seq = note_seq;
@@ -44,7 +44,7 @@ public class OnedayDto {
 
 
 	public OnedayDto(String oneday_seq, String note_seq, String oneday_delflag, String oneday_title, String onedate,
-			String reportchk, String one_readcnt, String note_public, String email, List<PlaceDto> placeDto) {
+			String reportchk, int one_readcnt, String note_public, String email, List<PlaceDto> placeDto) {
 		super();
 		this.oneday_seq = oneday_seq;
 		this.note_seq = note_seq;
@@ -104,10 +104,10 @@ public class OnedayDto {
 	public void setReportchk(String reportchk) {
 		this.reportchk = reportchk;
 	}
-	public String getOne_readcnt() {
+	public int getOne_readcnt() {
 		return one_readcnt;
 	}
-	public void setOne_readcnt(String one_readcnt) {
+	public void setOne_readcnt(int one_readcnt) {
 		this.one_readcnt = one_readcnt;
 	}
 	public String getNote_public() {

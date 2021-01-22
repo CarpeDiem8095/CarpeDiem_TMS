@@ -394,8 +394,9 @@ a {
 						dataType: 'json',
 						contentType:'application/json; charset=utf-8',
 						success:function(data){
+							//alert(data.img_url);
 				 			if(data.content != null || data.origin_name !=null){
-					        	placeSeq.parent().parent().find(".preview").html("<img src=./uploadFiles/"+data.uuid_name+" style='width: 225px; height: 225px;'>");
+					        	placeSeq.parent().parent().find(".preview").html("<img src='./uploadFiles/"+data.uuid_name+"' style='width: 225px; height: 225px;'>");
 					        	placeSeq.parent().parent().find(".content").html(data.content);
 					        	placeSeq.parent().parent().find(".btnSave").css("display","none");
 					        	placeSeq.parent().parent().find(".btnReset").css("display","none");

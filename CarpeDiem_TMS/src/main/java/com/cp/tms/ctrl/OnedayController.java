@@ -142,7 +142,6 @@ public class OnedayController {
 		model.addAttribute("oneDto", oneDto);
 		model.addAttribute("seq",note_seq);
 		model.addAttribute("page",page);
-		model.addAttribute("note_seq",note_seq);
 		return "schedules/NoteCollectOneday";
 	}
 	
