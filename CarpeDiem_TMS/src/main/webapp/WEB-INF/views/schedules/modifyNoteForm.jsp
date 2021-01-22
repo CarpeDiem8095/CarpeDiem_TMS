@@ -11,7 +11,7 @@
 	<form style="text-align: center;" id="frm">
 		<p>당신의 노트를 수정해 주세요</p>
 		<input type="hidden" name="seq" value="${seq}">
-	 	<input type="text" name="title" value="${note_Title}" maxlength="10">
+	 	<input type="text" name="title" value="${note_Title}" maxlength="15" required="required">
 	 	<input type="button" value="변경하기" id="modifySubmit">
 	</form>
 </body>
@@ -33,7 +33,9 @@
             	alert("성공");
                 self.close();
                 window.opener.location.reload();
-            }
+            },error : function() {
+				alert("타이틀을 입력해주세요");
+			}
         });
     });
 	
