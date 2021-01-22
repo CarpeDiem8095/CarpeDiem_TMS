@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cp.tms.dto.Member;
+import com.cp.tms.dto.QuestionDto;
 
 public interface IMemberService {
 	
@@ -61,5 +62,11 @@ public interface IMemberService {
     
  // 마이페이지
   	public int update_mypage(Member mdto);
+  	
+  	
+  	//관리자페이지
+	public int adminTotalCount();
+
+	public List<QuestionDto> adminQuestionboardList(Map<String, Object> map);
     
 }
