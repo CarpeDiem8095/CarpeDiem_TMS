@@ -19,4 +19,6 @@ public interface IReviewDao {
 	public List<OnedayDto> oneBoardList(Map<String, Object> map);
 	
 	public int totalCount();
+	
+	public int readCount(String oneday_seq);
 }

@@ -57,9 +57,11 @@ public class CommentController {
 	// 댓글의 댓글 작성 
 	@RequestMapping(value = "/writeReply.do", method = RequestMethod.POST)
 	@Transactional
-	public String writeReply(CommentDto dto, HttpServletRequest req) {
+	public String writeReply(CommentDto dto, HttpServletRequest req, HttpSession session) {
 		String oneday_seq = req.getParameter("oneday_seq");
-		dto.setEmail("A002");
+		Member mDto = (Member)session.getAttribute("mDto");
+		dto.setEmail(mDto.getEmail());
+//		dto.setEmail("A002");
 	// dto.setComm_seq("37");
 	//	System.out.println("댓글 댓글에서 받는 oneday_seq : " + oneday_seq);
 	//	model.addAttribute(comm_seq, "comm_seq");

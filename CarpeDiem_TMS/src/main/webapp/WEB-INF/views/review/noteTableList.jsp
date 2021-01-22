@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>하루 일정 조회</title>
+<title>일정 모아 보기</title>
 </head>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -46,36 +48,37 @@ a {
 <div id="container">
 <%-- ${onedayList} --%>
  	
- 		<h3>하루 일정</h3>
+ 		<h3>일정 모아보기</h3>
 		
 <div class="w3-show-inline-block">
 	<div class="w3-bar w3-light-grey">
-		<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button">일정 보기</a> 
-		<a href="./onedayTableList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정표 보기</a> 
-		<a href="./commnetList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">댓글 보기</a>
+		<a href="./NoteCollectOneday.do?note_seq=${note_seq}&page=${page}" class="w3-bar-item w3-button">일정 보기</a> 
+		<a href="./NoteTableList.do?note_seq=${note_seq}&page=${page}" class="w3-bar-item w3-button w3-dark-grey">일정표 보기</a> 
 	</div>
 </div> 
 <p></p>
 <p></p>
 <p></p>
 <table id="myTable" class="table table-bordered">
-	<c:forEach var="oneday" items="${onedayList}">
-<thead>
+	<c:forEach var="oneday" items="${noteCollection}" varStatus="onedayVs">
+<thead style="background-color:#607d8b; color: white;">
 <tr>
-	<th>번호</th>
+	<th>순서</th>
+	<th>제목</th>
 	<th>날짜</th>
 	<th>장소</th>
 	<th>메모</th>
 </tr>
 </thead>
 <tbody>
-		<c:forEach var="p" items="${oneday.placeDto}" varStatus="vs">
+		<c:forEach var="p" items="${oneday.placeDto}" varStatus="placeVs">
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:parseDate var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss.SSS" value="${oneday.onedate}" />
 		<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd" var="onedate" />
 		
 <tr>
-	<td>${vs.count}</td>
+	<td>${placeVs.count}</td>
+	<td><c:if test="${placeVs.index eq 0}">${oneday.oneday_title}</c:if></td>
 	<td><c:out value="${onedate}"/></td>
 	<td>${p.place_name}</td>
 	<td>${p.memo}</td>

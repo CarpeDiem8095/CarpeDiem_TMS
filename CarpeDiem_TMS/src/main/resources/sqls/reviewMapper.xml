@@ -34,7 +34,14 @@
 </select>
 
 <select id="totalCount" resultType="java.lang.Integer">
-	SELECT COUNT(ONEDAY_SEQ) FROM ONEDAY 
+	SELECT COUNT(ONEDAY_SEQ) 
+		FROM ONEDAY 
+		WHERE ONEDAY_DELFLAG = 'N' AND ONEDAY_PUBLIC = 'Y'
 </select>
+
+<update id="readCount" parameterType="java.lang.String">
+	UPDATE TRIP.ONEDAY SET ONE_READCNT=ONE_READCNT+1
+	WHERE ONEDAY_SEQ=#{oneday_seq}
+</update>
 
 </mapper>

@@ -52,4 +52,10 @@ public class ReviewDaoImpl implements IReviewDao {
 		return cnt;
 	}
 
+	@Override
+	public int readCount(String oneday_seq) {
+		int cnt = session.update(NS+"readCount",oneday_seq);
+		return cnt;
+	}
+
 }

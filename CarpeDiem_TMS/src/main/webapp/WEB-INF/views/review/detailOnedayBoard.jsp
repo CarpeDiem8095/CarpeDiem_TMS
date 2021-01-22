@@ -62,57 +62,24 @@ a {
 						<div>
 							<div class="w3-panel w3-black placeTitleCss">
 								<button class="w3-btn w3-black">${p.place_name}</button>
-								<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-								<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
-								<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
-								<input type="hidden" class="this_place_seq" value="${p.place_seq}">
+								<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">후기</button>
+								<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모</button>
 							</div>
 						<div>
-							<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
 								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 								<input type="hidden" name="place_seq" value="${p.place_seq}">
 									<div class="revForm" class="w3-container w3-hide">
-										<div><input type="file" name="filename" class="uploadFile" accept="image/*" multiple="multiple"></div>
 										<div>
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
-											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
-											
-											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
-											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
-											
+											<div><textarea style="width:400px; height: 250px; background-color: white" name="content" class="content form-control" readonly="readonly"></textarea></div>
 										</div>
 									</div>
-							</form>
 						</div>
-								<!-- 수정 Modal -->
-								<div class="modal fade" id="modifyRev" role="dialog">
-									<div class="modal-dialog">
-
-										<!-- 수정 Modal content-->
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="modal-title"> 후기 수정 </h4>
-											</div>
-											<div class="modal-body">
-												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
-											</div>
-										</div>
-
-									</div>
-								</div>
-
 								<!-- 메모추가 부분 -->
 							<form>
 								<div class="memoForm" class ="w3-container w3-hide" >
 									<div>
-										<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
-									</div>
-									<div>
-										<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
-										<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
-										<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+										<textarea style="width: 650px; height: 200px; background-color: white" class="memoArea" readonly="readonly"></textarea>
 									</div>
 								</div>
 							</form>	
@@ -125,43 +92,26 @@ a {
 								<div>
 								<div class="w3-panel w3-black placeTitleCss">
 										<button class="w3-btn w3-black">${p.place_name}</button>
-										<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-										<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
-										<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
-										<input type="hidden" class="this_place_seq" value="${p.place_seq}">
+										<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">후기</button>
+										<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모</button>
 								</div>
 								<div>
-									<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
-									<input type="hidden" name="oneday_seq" value="${oneday_seq}">
-									<input type="hidden" name="place_seq" value="${p.place_seq}">
-										
 										<div class="revForm" class="w3-container w3-hide">
 											<div>
-												<input type="file" name="filename" class="uploadFile" accept="image/*"> 
 												</div>
 											<div>
 												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
-												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
-												
-												<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
-												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-												<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+												<div><textarea style="width:400px; height: 250px; background-color: white" name="content" class="content form-control" readonly="readonly"></textarea></div>
 											</div>
 										</div>
-									</form>
 								</div>
 								
 									<!-- 메모추가 부분 -->
 									<form>
 										<div class="memoForm" class ="w3-container w3-hide" >
 											<div>
-												<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+												<textarea style="width:650px; height:200px; background-color: white;" class="memoArea" readonly="readonly"></textarea>
 											</div>
-										<div>
-											<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
-											<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
-											<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
-										</div>
 										</div>
 									</form>							
 								</div>
@@ -320,58 +270,13 @@ a {
 <script type="text/javascript">
 		// 메모 보여주기
 		$(".showMeTheMemo").click(function(){
-			console.log($(this).parent().parent().find(".memoForm").html());
-			
-//	 		var memo = $(this).parent().parent().find(".memoArea").val("왜 아작스 처리 후에는 this가 안먹는거지????");
-			var memo = $(this).parent().parent().find(".memoArea").val();
-			console.log(memo);
-			var onedaySeq = $(this).parent().find(".this_oneday_seq").val();
-			var placeSeq = $(this).parent().find(".this_place_seq").val();
-			$(".revForm").hide();
-			
-			$(".memoForm").hide();
-			$(this).parent().parent().find(".memoForm").slideToggle('slow');
-			
-			$.ajax({
-				type : "post", 
-		        url : "showMemo.do",
-		        data : {"onedaySeq":onedaySeq, "placeSeq":placeSeq},
-		        dataType : "json",
-		        success : function(json) {
-		        	console.log($(this).parent().parent().find(".memoForm").html());
-//	 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
-//	 	        	$(this).parent().parent().find(".memoArea").val(json.memo);
-		        	
-//	 				memo = json.memo;
-//	 				console.log(json.memo);
-//	 				console.log(memo);
-//	 				memo = json.memo;
-					$(".memoArea").val(json.memo);
-		        }
-			});
-			return memo;
+			if ($(".memoForm").is(':visible')) {
+				$(".memoForm").slideUp('300');
+			}else{
+				$(this).parent().parent().find(".memoForm").slideToggle('slow');
+			}
 		});
 		
-		// 메모 인설트
-		$(".addMemo").click(function(){
-			var memo = $(this).parent().parent().find(".memoArea").val();
-			var placeSeq = $(this).parent().find(".memo_place_seq").val();
-			var onedaySeq = $(this).parent().find(".memo_oneday_seq").val();
-			console.log(placeSeq);
-			console.log(onedaySeq);
-			
-			$.ajax({
-				type : "post", 
-		        url : "addMemo.do",
-		        data : {"memo":memo, "placeSeq":placeSeq, "onedaySeq":onedaySeq},
-		        dataType : "json",
-		        success : function(json) {
-//	 	        	console.log($(this).parent().parent().find(".memoForm").html());
-					$(".memoArea").val(json.memo);
-					alert("메모가 추가 되었습니다.");
-		        }
-			});
-		});
 
 		// 리뷰 폼 보이기
 		$(document).ready(function() {	
@@ -387,29 +292,6 @@ a {
 				if ($(".revForm").is(':visible')) {
 					$(".revForm").slideUp('300');
 				} else {
-					$.ajax({
-						type:'get',
-						url : 'reviewList.do',
-						data : {"place_seq":placeSeq.val()},
-						dataType: 'json',
-						contentType:'application/json; charset=utf-8',
-						success:function(data){
-				 			if(data.content != null || data.origin_name !=null){
-					        	placeSeq.parent().parent().find(".preview").html("<img src=./uploadFiles/"+data.uuid_name+" style='width: 225px; height: 225px;'>");
-					        	placeSeq.parent().parent().find(".content").html(data.content);
-					        	placeSeq.parent().parent().find(".btnSave").css("display","none");
-					        	placeSeq.parent().parent().find(".btnReset").css("display","none");
-					        	placeSeq.parent().parent().find(".uploadFile").css("display","none");
-				 			}else{
-				 				console.log("====null====");
-				 				placeSeq.parent().parent().find(".btnModify").css("display","none");
-				 			}
-						},
-					      error : function(err){
-					         alert("잘못된 요청입니다."+err);
-					      }
-						
-					})
 				//console.log($(this).parent().parent().find(".revForm").html());
 				$(this).parent().parent().find(".revForm").slideToggle('slow');
 				}
