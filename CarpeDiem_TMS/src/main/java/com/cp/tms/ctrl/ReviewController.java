@@ -90,6 +90,7 @@ public class ReviewController {
 	
 		String directory = path +"uploadFiles";
 		//System.out.println("상대경로 :"+directory);
+    
 		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
 		String encoding = "UTF-8";
 

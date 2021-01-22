@@ -44,9 +44,8 @@
 	<update id="update_mypage" parameterType="memDto">
 		UPDATE "MEMBER" SET NICKNAME =#{nickname}, PASSWORD =#{password}
 		WHERE EMAIL = #{email}
-		
-	
 	</update>
+	
 	<!-- 비밀번호 재설정 기능 -->
 	<update id="resetPassword">
 	UPDATE "MEMBER" SET PASSWORD =#{password} 
@@ -67,6 +66,12 @@
      ROW_NUMBER () OVER (ORDER BY JOINDATE DESC) ONE
        					 FROM "MEMBER" m)
 	WHERE ONE BETWEEN  #{start} AND #{last}
+	</select>
+	
+	<!-- 글 개수(관리자) -->
+	<select id="adminTotalCountOne" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM "MEMBER"
 	</select>
 	
 	<!-- 전체 회원 조회(탈퇴test용) -->

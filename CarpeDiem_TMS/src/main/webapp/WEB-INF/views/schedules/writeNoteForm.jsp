@@ -10,7 +10,7 @@
 <body>
 	<form style="text-align: center;" id="frm">
 		<p>당신의 노트를 생성해 주세요</p>
-	 	<input type="text" name="title" maxlength="10">
+	 	<input type="text" name="title" maxlength="15" required="required">
 	 	<input type="button" value="작성하기" id="writeSubmit">
 	</form>
 
@@ -23,6 +23,7 @@
 	});
 	
 	$("#writeSubmit").click(function(){
+		
         var frm = $("#frm").serialize(); 
         $.ajax({
             type : "post", // post방식으로 전송
@@ -32,7 +33,9 @@
             	alert("노트가 생성 되었습니다.");
                 self.close();
                 window.opener.location.reload();
-            }
+            }, error : function() {
+				alert("타이틀을 입력해주세요");
+			}
         });
     });
 </script>

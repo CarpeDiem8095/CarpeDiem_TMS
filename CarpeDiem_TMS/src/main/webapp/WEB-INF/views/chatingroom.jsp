@@ -17,18 +17,17 @@
       var nick = null ; 
       var allContent = "";
       
-      $(document).ready(function() { // dom이 생성되면 실행됨
-    	  wss();
-      }); //$(document).ready 끝
+      $(document).ready(function() { 
+    	  chatwss();
+      }); 
       
       
-      function wss(){
+      function chatwss(){
           replace();
     	  nick = $("#nickName").val();
           $(".chat_div").show();
           $(".chat").focus();
           
-          // 웹소켓 서버
           ws = new WebSocket("ws://172.30.1.15:8091/CarpeDiem_TMS/tripChat.do");
           
           /// 웹소켓 서버가 오픈 됐을때

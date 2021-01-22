@@ -106,7 +106,7 @@ a {
 							<form>
 								<div class="memoForm" class ="w3-container w3-hide" >
 									<div>
-										<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+										<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 									</div>
 									<div>
 										<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
@@ -154,7 +154,7 @@ a {
 									<form>
 										<div class="memoForm" class ="w3-container w3-hide" >
 											<div>
-												<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+												<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 											</div>
 										<div>
 											<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
@@ -172,11 +172,12 @@ a {
 								<input type="hidden" name="myY" value="${p.ylng}"/>
 						</c:forEach>
 					</c:forEach>
+					<button onclick="history.back(-1)">뒤로가기</button>
 				</div>
 				<div id="map" style="width: 500px; height: 400px; margin: 0px auto;"></div>
-			
 				</div>
-				
+				<div>
+				</div>
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>

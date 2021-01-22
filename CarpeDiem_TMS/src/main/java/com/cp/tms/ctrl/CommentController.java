@@ -23,7 +23,6 @@ import com.cp.tms.model.comment.ICommentService;
 public class CommentController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
 	@Autowired
 	private ICommentService service;
 	

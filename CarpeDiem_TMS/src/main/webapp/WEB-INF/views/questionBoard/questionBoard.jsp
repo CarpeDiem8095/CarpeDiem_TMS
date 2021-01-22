@@ -127,15 +127,14 @@
 					<div class="modal-body textPw-body">
 						<form action="#" class="form-margin" method="post" id="frmPW">
 							<input type="hidden" value="${dto.seq}" name="seq">
-							<input type="hidden" value="${dto.text_pw}" name="text_pw">
 							<div class="form-group form-textPw">
 								<br>
 								<br>
 								<label for="text_pw">비밀번호</label>
-								<input type="password"  class="form-control" id="text_pw" name="text_pw" maxlength="4" required>
+								<input type="password" class="form-control" id="text_pw" name="text_pw" maxlength="4" required>
 							</div>
 							<div class="modal-footer" style="text-align: center">
-								<input type="button" class="btn-primary" value="확인" onclick="txtPwChk()"/>
+								<input type="button" id="pwvaluechek" class="btn-primary" value="확인"/>
 							</div>
 						</form>
 					</div>
@@ -153,31 +152,6 @@
 					</div>
 					<div class="modal-body">
 						<form action="#" class="form-margin" method="post" id="frmModify">
-<%-- 							<input type='hidden' id="auth" name='auth' value='${mDto.auth}'> --%>
-<%-- 							<input type='hidden' value='${dto.seq}' name='seq'> --%>
-<!-- 							<div class='form-group'> -->
-<!-- 								<label for='writer'>작성자</label> -->
-<%-- 								<input type='text' class='form-control' id='writer' name='writer' value='${dto.writer}' required> --%>
-<!-- 							</div> -->
-<!-- 							<div class='form-group'> -->
-<!-- 								<label for='title'>제목</label> -->
-<%-- 								<input type='text' class='form-control' id='title' name='title' value='${dto.title}' required> --%>
-<!-- 							</div> -->
-<!-- 							<div class='form-group'> -->
-<!-- 								<label for='content'>내용</label> -->
-<%-- 								<textarea class='form-control' rows='5' id='content' name='content' required>${dto.content}</textarea> --%>
-<!-- 							</div> -->
-<%-- 							<c:if test="${mDto.auth eq 'A'}"> --%>
-<!-- 								<div class='form-group'> -->
-<!-- 									<label for='content'>공개여부</label> -->
-<!-- 									<input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp; -->
-<!-- 									<input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글 -->
-<!-- 								</div> -->
-<%-- 							</c:if> --%>
-<!-- 							<div class='modal-footer' style='text-align: center'> -->
-<!-- 								<input type='button' class='btn-primary' value='확인' onclick='update()'/> -->
-<!-- 								<input type='reset' class='btn-primary' value='초기화'/> -->
-<!-- 							</div> -->
 						</form>
 					</div>
 				</div>
@@ -210,27 +184,40 @@
 			return false;
 		}
 	}
+	$(".text_pw").click (function(){
+	    var buttonID = $(this).attr('id');
+	    var hiddenPw = $(this).parent().parent().find("hidden").val();
+	})
 	
-	function txtPwChk() {
-		var seq = "${dto.seq}";
-		var qDtoText_pw = "${dto.text_pw}";
+	function txtPwChk(thisplace) {
+		var qDtoText_pw = $("#text_pw_writer").val();
 		var text_pw = $("#text_pw").val();
-		$.ajax({
-			type: "post",
-			url: "./txtPwChk.do",
-			data: "seq="+seq+"&qDtoText_pw="+qDtoText_pw+"&text_pw="+text_pw,
-			success: function() {
-				if (qDtoText_pw.val() == text_pw.val()) {
-					$(".text_pw").css("display", "none");
-				} else {
-					alert("글 비밀번호를 확인해 주세요.");
-					$(".qDtoContent").css("display", "none");
-				}
-			},
-			error: function() {
-				alert("잘못된 요청입니다.");
-			}
-		});
+		alert(qDtoText_pw);
+		alert(text_pw);
+		alert(thisplace);
+		alert(thisplaces.val());
+		if(qDtoText_pw == text_pw){
+			$("#"+thisplace).parent().css("display", "none");
+			$(".qDtoContent").css("display", "block");
+		}else{
+			alert("비밀번호가 다릅니다.");
+		}
+// 		$.ajax({
+// 			type: "post",
+// 			url: "./txtPwChk.do",
+// 			data: "seq="+seq+"&qDtoText_pw="+qDtoText_pw+"&text_pw="+text_pw,
+// 			success: function() {
+// 				if (qDtoText_pw.val() == text_pw.val()) {
+// 					$(".text_pw").css("display", "none");
+// 				} else {
+// 					alert("글 비밀번호를 확인해 주세요.");
+// 					$(".qDtoContent").css("display", "none");
+// 				}
+// 			},
+// 			error: function() {
+// 				alert("잘못된 요청입니다.");
+// 			}
+// 		});
 	}
 </script>
 </html>

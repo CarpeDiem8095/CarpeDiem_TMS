@@ -103,7 +103,7 @@ a {
 						<form>
 							<div class="memoForm" class ="w3-container w3-hide" >
 							<div>
-								<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+								<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 							</div>
 							<div>
 								<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
@@ -149,7 +149,7 @@ a {
 						<form>
 							<div class="memoForm" class ="w3-container w3-hide" >
 								<div>
-									<textarea style="width: 650px; height: 200px;" class="memoArea"></textarea>
+									<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 								</div>
 								<div>
 									<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
@@ -183,6 +183,9 @@ a {
 					</c:forEach>
 				</div>
 			</div>
+			<button onclick="history.back(-1)">뒤로가기</button>
+		</div>
+		<div>
 		</div>
 </body>
 <script type="text/javascript"
@@ -350,24 +353,6 @@ a {
 	         data : "seq="+seq,
 	         dataType : "json",
 	         success : function(json) { //성공시
-	         
-	         	var title = json.A_place_name.split('/');
-	         	var x = json.A_xlat.split('/');
-	         	var y = json.A_ylng.split('/');
-				
-	    		var map = new kakao.maps.Map(container, options);
-	    		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-	    		mapOption = {
-	    			center : new daum.maps.LatLng(x[0], y[0]), // 지도의 중심좌표
-	    			level : 10
-	    		// 지도의 확대 레벨
-	    		};
-
-	    		
-	    		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	    		var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다 
-	    		var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
-
 	    		//배열 생성
 	    		var latlng = []
 	    		for (var i = 0; i < json.size; i++) {

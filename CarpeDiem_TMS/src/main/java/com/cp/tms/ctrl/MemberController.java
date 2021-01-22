@@ -36,6 +36,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cp.tms.dto.ChatingDto;
 import com.cp.tms.dto.Member;
+import com.cp.tms.dto.Paging;
+import com.cp.tms.dto.QuestionDto;
 import com.cp.tms.model.chat.ITripchatService;
 import com.cp.tms.model.member.IMemberDao;
 import com.cp.tms.model.member.IMemberService;
@@ -52,7 +54,8 @@ public class MemberController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
+	
+	
 	@Autowired
 	private IMemberService Service;
 
@@ -67,9 +70,8 @@ public class MemberController {
 	//회언가입
 	@RequestMapping(value = "/joinform.do", method = RequestMethod.POST)
 	public String joinfrom(Model model, Member dto) {
-		System.out.println(dto);
-		
 		boolean isc = Service.singupMember(dto);
+		
 		if (isc) {
 			model.addAttribute("<script>alert('회원가입에 성공하셨습니다')</script>");
 		}else {
@@ -150,11 +152,6 @@ public class MemberController {
 
 	
 
-	
-
-		
-	
-	
 
 	//로그인
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
@@ -300,15 +297,103 @@ public class MemberController {
 	public String update_mypage (Model model, Member mdto, HttpSession session) {
 		System.out.println(mdto);
 		int cnt = Service.update_mypage(mdto);
-		if (cnt>0) {
-			model.addAttribute("<script>alert('회원정보 수정 완료');</script>");
-		}else {
-			model.addAttribute("<script>alert('회원정보 수정 실패');</script>");
-		}
 			model.addAttribute(session);
 		return "main/TripMainpage";
 		
 	}
+	
+	// 문의 게시판으로 이동(전체 조회-페이징)
+		@RequestMapping(value = "/questionBoardAdmin.do", method = RequestMethod.GET)
+		public String questionBoardAdmin(Model model, String page, HttpSession session, String seq, String email, String nickname, String joindate, String withdrawal) {
+
+			
+			// 로그인된 사용자 정보
+			Member mDto = (Member)session.getAttribute("mDto");
+
+			
+			if (session.getAttribute("mDto") == null) {
+				mDto = new Member();
+				mDto.setEmail(email);
+				mDto.setNickname(nickname);
+				mDto.setJoindate(joindate);
+				mDto.setAuth("U");
+				mDto.setWithdrawal(withdrawal);
+			}
+			
+			List<QuestionDto> qLists = null;
+			
+			if (page == null) {
+				page = "1";
+			}
+			
+			int selPage = Integer.parseInt(page);
+
+			
+			Paging p = new Paging();
+			
+
+			if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
+				p.setTotalCount(Service.adminTotalCount());
+			} else { // 
+				p.setTotalCount(Service.adminTotalCount());
+			}
+			
+			// 보여줄 게시글의 수
+			p.setCountList(5);
+			
+			// 보여줄 페이지의 수
+			p.setCountPage(3);
+			
+			// 총 페이지의 수
+			p.setTotalPage(p.getTotalCount());
+			
+			// 선택한 페이지
+			p.setPage(selPage);
+			
+			// 시작 페이지
+			p.setStartPage(selPage);
+			
+			// 마지막 페이지
+			p.setEndPage(p.getCountPage());
+
+			System.out.println(p);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("first", (p.getPage()-1)*p.getCountList()+1);
+			map.put("last", p.getPage()*p.getCountList());
+
+			if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
+				qLists = Service.adminQuestionboardList(map);
+			} else { // 회원
+				qLists = Service.adminQuestionboardList(map);		
+			}
+			model.addAttribute("questionLists", qLists);
+			model.addAttribute("page", p);
+			if(session.getAttribute("mDto")==null) {
+				model.addAttribute("mDto.auth","U");
+			}
+
+			
+			return "member/adminMap";
+		}
+		
+		
+		//로그인을 session객체를 sessionAttribute에 담아주기
+		@RequestMapping(value = "/loginapi.do" , method = RequestMethod.GET)
+		public String login() {
+			return "ApiLogin";
+		}
+		
+		//API 처리 구글
+		@RequestMapping(value = "/loginafter.do", method = RequestMethod.POST)
+		public String loginafter(Member mDto, Model model) {
+
+			model.addAttribute("email", mDto.getEmail());
+			model.addAttribute("nickname", mDto.getNickname());
+			System.out.println(mDto);
+			return "main/TripMainpage";
+			
+		}
 	
 	
 }

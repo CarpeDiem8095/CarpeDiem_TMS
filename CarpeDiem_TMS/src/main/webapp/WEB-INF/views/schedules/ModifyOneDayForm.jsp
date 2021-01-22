@@ -13,10 +13,10 @@
 		<form style="text-align: center;" id="frm">
 			<input type="hidden" name="onedaySeq" value="${onedaySeq}">
 			<div>
-		 		<input type="text" name="oneTitle" value="${oneDto.oneday_title}" maxlength="10"><br>
+		 		<input type="text" name="oneTitle" value="${oneDto.oneday_title}" maxlength="15" required="required"><br>
 		 	</div>
 		 	<div>
-		 		<input type="text" name="oneDate" value="${fn:substring(oneDto.onedate, 0, 10)}" maxlength="10">
+		 		<input type="text" name="oneDate" value="${fn:substring(oneDto.onedate, 0, 10)}" maxlength="10" required="required">
 		 	</div>
 		 	<div>
 		 		<input type="button" value="수정하기" id="modifySubmit">
@@ -41,7 +41,9 @@
             	alert("성공");
                 self.close();
                 window.opener.location.reload();
-            }
+            },error : function() {
+				alert("타이틀이나 날짜를 입력해주세요");
+			}
         });
     });
 </script>
