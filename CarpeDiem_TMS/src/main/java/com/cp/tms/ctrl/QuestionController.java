@@ -112,7 +112,7 @@ public class QuestionController {
 		if(session.getAttribute("mDto")==null) {
 			model.addAttribute("mDto.auth","U");
 		}
-//		System.out.println("선택된 페이지의 글 목록: "+qUserDto);
+		System.out.println("선택된 페이지의 글 목록: "+qLists);
 //		System.out.println("선택된 페이지의 페이징dto: "+p);
 		
 		return "questionBoard/questionBoard";
@@ -204,7 +204,9 @@ public class QuestionController {
 		json.put("writer", dto.getWriter());
 		json.put("title", dto.getTitle());
 		json.put("content", dto.getContent());
+//		json.put("qDto", dto);
 		System.out.println("선택된 글의 값: "+json.toString());
+		
 		return json.toString();
 	}
 	
