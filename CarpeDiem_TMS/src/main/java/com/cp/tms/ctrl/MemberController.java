@@ -67,9 +67,8 @@ public class MemberController {
 	//회언가입
 	@RequestMapping(value = "/joinform.do", method = RequestMethod.POST)
 	public String joinfrom(Model model, Member dto) {
-		System.out.println(dto);
-		
 		boolean isc = Service.singupMember(dto);
+		
 		if (isc) {
 			model.addAttribute("<script>alert('회원가입에 성공하셨습니다')</script>");
 		}else {
@@ -300,11 +299,6 @@ public class MemberController {
 	public String update_mypage (Model model, Member mdto, HttpSession session) {
 		System.out.println(mdto);
 		int cnt = Service.update_mypage(mdto);
-		if (cnt>0) {
-			model.addAttribute("<script>alert('회원정보 수정 완료');</script>");
-		}else {
-			model.addAttribute("<script>alert('회원정보 수정 실패');</script>");
-		}
 			model.addAttribute(session);
 		return "main/TripMainpage";
 		

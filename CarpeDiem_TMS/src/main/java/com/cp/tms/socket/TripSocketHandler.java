@@ -32,9 +32,6 @@ public class TripSocketHandler extends TextWebSocketHandler {
 		super.afterConnectionEstablished(session);
 
 		list.add(session); // 전체 접속자 리스트에 새로운 접속자 추가
-		System.out.println("client session cnt : " + list.size());
-		System.out.println("session connected : " + session.getId());
-		System.out.println(list);
 	}
 
 	@Override
@@ -43,10 +40,10 @@ public class TripSocketHandler extends TextWebSocketHandler {
 		String msg = message.getPayload();
 		String txt = "";
 
-		System.out.println(session.getAttributes());
 		Map<String, Object> mySession = session.getAttributes();
 		String myGrSession = (String) mySession.get("gr_id"); // 접속자의 그룹 아이디
 		String myMemSession = (String) mySession.get("chat_id"); // 접속자 아이디
+		
 		String[] my_gr_session = myGrSession.split(",");
 		if (msg != null && !msg.equals("")) {
 			if (msg.indexOf("#$nick_") > -1) {
@@ -57,7 +54,8 @@ public class TripSocketHandler extends TextWebSocketHandler {
 					String[] other_gr_session = otherGrSession.split(",");
 					if (my_gr_session[0].equals(other_gr_session[1])&&my_gr_session[1].equals(other_gr_session[0])) { 
 						s.sendMessage(
-								new TextMessage("<font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다.</font>"));
+								new TextMessage("<font color='red' size='1px'>" 
+								+ myMemSession + " 님이 입장했습니다.</font>"));
 					}
 					if(myGrSession.equals(otherGrSession)) {
 						s.sendMessage(

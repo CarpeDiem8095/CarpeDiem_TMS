@@ -71,7 +71,7 @@
 			url:"./mainchat.do",
 			data:"userid="+email,
 			success:function(){
-				alert("접속성공");
+				alert("환영합니다.");
 			},error:function(){
 				alert("채팅접속에 문제가 발생하였습니다.");
 			}
@@ -109,9 +109,7 @@
 	}
 	
 	</script>
-	<c:if test="${mDto.email !=null}">
 	<script type="text/javascript" src="./js/chatting/mainchat.js"></script>
-	</c:if>
 <body data-spy="scroll" data-target=".fixed-top">
 <!-- Preloader -->
 	<div class="spinner-wrapper">
@@ -573,7 +571,7 @@ function loginEmail(){
 	</tr>
 	<c:forEach var="myChatLists" items="${myChatLists}" varStatus="vs">
 		<tr>
-				<td class="mychatname">${fn:toUpperCase(fn:substring(myChatLists.chatyourid,fn:indexOf(myChatLists.chatyourid,'@')+1,fn:indexOf(myChatLists.chatyourid,'@')+2))}</td>
+				<td class="mychatname">${fn:substring(myChatLists.chatyourid,0,fn:indexOf(myChatLists.chatyourid,'@')+1)}${fn:toUpperCase(fn:substring(myChatLists.chatyourid,fn:indexOf(myChatLists.chatyourid,'@')+1,fn:indexOf(myChatLists.chatyourid,'@')+2))}</td>
 				<td><input type="button" value="채팅하기" onclick="goSocket2('${myChatLists.chatgroupid}','${myChatLists.chatmyid}','${myChatLists.chatyourid}')"></td>
 		</tr>
 	</c:forEach>

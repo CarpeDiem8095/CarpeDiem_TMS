@@ -127,6 +127,7 @@ public class MemberDaoImpl implements IMemberDao {
 	//마이페이지
 	@Override
 	public int update_mypage(Member mdto) {
+		mdto.setPassword(passwordencoder.encode(mdto.getPassword()));
 		return SqlSession.update(CP+"update_mypage", mdto);
 	}
 
