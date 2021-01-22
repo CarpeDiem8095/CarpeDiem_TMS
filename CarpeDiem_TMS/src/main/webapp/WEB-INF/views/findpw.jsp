@@ -41,9 +41,9 @@ function emailsend(){
 		success:function(data){
 			if (data.checkNum=="flase") {
 				alert("존재하지 않는 이메일 입니다.");
+				$("#checkNum").attr("value",data.checkNum);	
 			}else{
 				alert("인증 번호 전송");
-				$("#checkNum").attr("value",data.checkNum);	
 			}
 
 		}

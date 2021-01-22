@@ -40,7 +40,9 @@
             	alert("성공");
                 self.close();
                 window.opener.location.reload();
-            }
+            },error : function() {
+				alert("타이틀이나 날짜를 입력해주세요");
+			}
         });
     });
 </script>

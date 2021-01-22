@@ -21,7 +21,7 @@ public class CalendarInputData {
 		} else if (dayCal == 0) {
 			return "blue";
 		} else {
-			return "black";
+			return "white";
 		}
 	}
 	
@@ -57,10 +57,10 @@ public class CalendarInputData {
 					System.out.println("달력에 들어간 일정 : "+oneDto.getOnedate().substring(0,10).trim());
 					
 					StringBuffer sb = new StringBuffer();
-					sb.append("<div>");
+					sb.append("<div class='checkOneday'>");
 					sb.append("<a href='./insertPlacePage.do?seq="+oneDto.getOneday_seq()+"&noteSeq="+noteSeq+"&selDate="+compairDate+"'>"+oneDto.getOneday_title()+"</a>");
-					sb.append("<input type = 'button' value='X' style='float: right;' onclick='delOneday("+oneDto.getOneday_seq()+")'>");
-					sb.append("<input type = 'button' value='수정' onclick='modifyOneday("+oneDto.getOneday_seq()+")' style='text-align: center; float: right;'>");
+					sb.append("<input type = 'button' value='X' style='float: right;' class='btn-delete' onclick='delOneday("+oneDto.getOneday_seq()+")'>");
+					sb.append("<input type = 'button' value='수정' onclick='modifyOneday("+oneDto.getOneday_seq()+")' class='btn-modify' style='text-align: center; float: right;'>");
 					sb.append("</div>");
 					res+=sb.toString();
 				}
