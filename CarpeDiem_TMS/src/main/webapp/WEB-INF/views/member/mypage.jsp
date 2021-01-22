@@ -115,19 +115,19 @@ function checkChange(){
 					</p>
 					<p>
 						<label>NICKNAME</label> 
-						<input class="w3-input" type="text" id="nickname" name="nickname" onkeyup="nicknameCheck()"> 
+						<input class="w3-input" type="text" id="nickname" name="nickname" onkeyup="nicknameCheck()" required="required"> 
 						<span id="nicknameCheck" class="glyphicon glyphicon-apple nickname"></span>
 					</p>
 					
 					<p>
 						<label>New Password</label> 
 						
-						<input class="w3-input" id="pwd" name="password" type="password" onkeyup="passwordcheck()" >
+						<input class="w3-input" id="pwd" name="password" type="password" onkeyup="passwordcheck()" required="required" >
 						<span id="passwordch1" class="glyphicon glyphicon-eye-open passwordch1"></span>
 					</p>
 					<p>
 						<label>Confirm</label>
-						<input class="w3-input" type="password" id="pwd2" name="pwd2" type="password" onkeyup="passwordch2()" >
+						<input class="w3-input" type="password" id="pwd2" name="pwd2" type="password" onkeyup="passwordch2()" required="required" >
 						<span id="passwordch2" class="glyphicon glyphicon-eye-open passwordch2"></span>
 					</p>
 					<p class="w3-center">

@@ -69,6 +69,12 @@
 	WHERE ONE BETWEEN  #{start} AND #{last}
 	</select>
 	
+	<!-- 글 개수(관리자) -->
+	<select id="adminTotalCountOne" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM "MEMBER"
+	</select>
+	
 	<!-- 전체 회원 조회(탈퇴test용) -->
 	<select id="allMember" resultType="memDto">
 		SELECT EMAIL,NICKNAME,AUTH,WITHDRAWAL,JOINDATE 
