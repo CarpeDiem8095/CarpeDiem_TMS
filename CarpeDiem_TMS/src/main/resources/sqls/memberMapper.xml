@@ -44,9 +44,8 @@
 	<update id="update_mypage" parameterType="memDto">
 		UPDATE "MEMBER" SET NICKNAME =#{nickname}, PASSWORD =#{password}
 		WHERE EMAIL = #{email}
-		
-	
 	</update>
+	
 	<!-- 비밀번호 재설정 기능 -->
 	<update id="resetPassword">
 	UPDATE "MEMBER" SET PASSWORD =#{password} 

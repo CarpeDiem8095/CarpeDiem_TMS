@@ -75,8 +75,8 @@ public class ReviewController {
 		
 		// 경로
 		String path = req.getSession().getServletContext().getRealPath("/");
-	
-		String directory = path+"uploadFiles";
+		System.out.println("지금 path : "+path);
+		String directory = path+"src/main/webapp/uploadFiles";
 		//System.out.println("절대경로 :"+directory);
 		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
 		String encoding = "UTF-8";
