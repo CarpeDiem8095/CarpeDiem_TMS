@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.cp.tms.dto.Member;
+import com.cp.tms.dto.QuestionDto;
 
 @Repository
 public class MemberDaoImpl implements IMemberDao {
@@ -127,7 +128,24 @@ public class MemberDaoImpl implements IMemberDao {
 	//마이페이지
 	@Override
 	public int update_mypage(Member mdto) {
+		mdto.setPassword(passwordencoder.encode(mdto.getPassword()));
 		return SqlSession.update(CP+"update_mypage", mdto);
 	}
+
+
+
+	//관리자페이지
+	@Override
+	public List<QuestionDto> adminQuestionboardList(Map<String, Object> map) {
+		return SqlSession.selectList(CP+"allBoard", map);
+	}
+	//글갯수
+	@Override
+	public int adminTotalCount() {
+		return SqlSession.selectOne(CP+"adminTotalCountOne");
+	}
+
+
+
 
 }

@@ -3,11 +3,9 @@ $(document).ready(function() {
 	})
 
 	var wss = function() {
-		var ws = null;
-		var show = null;
-		var grId = "main";
 		var userid = $("#userid").val();
-		alert(userid);
+
+		var grId = "main";
 		$(".accessmembers").children().remove();
 		$.ajax({
 			url : "./viewChatList.do",
@@ -15,13 +13,20 @@ $(document).ready(function() {
 			success : function(data) {
 			for( var k in data.list) {
 					if (data.list[k] == grId) {
-						if(k != userid){
-							var gr_id = userid+","+k;
-						$(".accessmembers").append("<tr><td class='main_mem_access'>"+k+"</td>"
-						+"<td class='chatbutton'>"+"<input type='button' value='채팅하기' onclick="+"goSocket('"+gr_id+"','"+k+"')"+"></td></tr>");
+						var spuserid= k.split('@');
+						spuserid[1] = spuserid[1].substring(0,1);
+						var gr_id = userid+","+k;
+						if(userid == '' || userid ==null){
+								$(".accessmembers").append("<tr><td class='main_mem_access' colspan='2'>"+
+								spuserid[0]+"@"+spuserid[1].toUpperCase()+"</td></tr>");
+						}
+						else if(k != userid){
+						$(".accessmembers").append("<tr><td class='main_mem_access'>"+spuserid[0]+"@"+spuserid[1].toUpperCase()
+						+"</td>"+"<td class='chatbutton'>"+"<input type='button' value='채팅하기' onclick="+"goSocket('"+gr_id+"','"+k+"')"+"></td></tr>");
+							}
 						}
 					}
-				}
+				
 			},
 			error : function() {
 				console.log('의미 심장한 애러 발생 (╯°□°）╯︵ ┻━┻');

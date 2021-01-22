@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.cp.tms.dto.Member;
+import com.cp.tms.dto.QuestionDto;
 
 @Repository
 public class MemberServiceImpl implements IMemberService {
@@ -125,6 +126,21 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public int update_mypage(Member mdto) {
 		return Dao.update_mypage(mdto);
+	}
+
+	
+	
+	
+	@Override
+	public int adminTotalCount() {
+		
+		return Dao.adminTotalCount();
+	}
+
+	@Override
+	public List<QuestionDto> adminQuestionboardList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return Dao.adminQuestionboardList(map);
 	}
 
 

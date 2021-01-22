@@ -17,6 +17,17 @@
 <meta charset="UTF-8">
 <title>일정 달력</title>
 <style type="text/css">
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  background: linear-gradient(to right, rgb(189, 195, 199), rgb(44, 62, 80));
+  overflow: hidden;
+}
+
 	#calendar {
     border: 1px solid #ccc;
     border-collapse: collapse;
@@ -40,6 +51,46 @@
   
   a {
   	text-decoration: none;
+  }
+  
+  .checkOneday{
+  	text-align: center;
+  	color: white;
+  	text-shadow: white;
+  	text-decoration: underline;
+  }
+  
+  .dayCss{
+  }
+  .tableForms{
+  }
+
+   .btnBack{
+   background-color: #4C3F99;
+   	color: white;
+   }
+   .btnAllOneday{
+   background-color:#992064;
+   	color: white;
+   }
+	.btn-create{
+	background-color: #1E9E68;
+	color: white;
+	}
+	
+	.btn-modify{
+		background-color: #EB7415;
+		color: white;
+	}
+	
+	.btn-delete{
+		background-color: #9E265E;
+		color: white;
+	}
+  
+  .tiCalendar{
+		text-shadow: 0 -1px 4px #6E79CE, 0 -2px 10px #6E79CE, 0 -10px 20px #6E79CE, 0 -18px 40px #6E79CE, 2px 2px 2px rgba(110,121,206,0), 2px 2px 2px rgba(110,121,206,0);
+		color: #FFFFFF;
   }
 </style>
 </head>
@@ -91,10 +142,10 @@
 		String noteSeq = (String)request.getAttribute("seq");
 
 	%>
-	<div id="container">
+	<div id="container" clas="flex-contatiner">
 		<form>
 			<table id="calendar">
-				<caption>
+				<caption class="tiCalendar">
 					<a href="./calendar.do?year=<%=year-1%>&month=<%=month%>&seq=${seq}">&#8810;</a>
 					<a href="./calendar.do?year=<%=year%>&month=<%=month-1%>&seq=${seq}">&lt;</a>&nbsp;
 					<span class="y"><%=year%></span>년도&nbsp;
@@ -103,36 +154,35 @@
 					<a href="./calendar.do?year=<%=year+1%>&month=<%=month%>&seq=${seq}">&#8811;</a>
 				</caption>
 				<tr>
-			      <th>일</th>
-			      <th>월</th>
-			      <th>화</th>
-			      <th>수</th>
-			      <th>목</th>
-			      <th>금</th>
-			      <th>토</th>
+			      <th class="dayCss">SUN</th>
+			      <th class="dayCss">MON</th>
+			      <th class="dayCss">TUE</th>
+			      <th class="dayCss">WED</th>
+			      <th class="dayCss">THU</th>
+			      <th class="dayCss">FRI</th>
+			      <th class="dayCss">SAT</th>
 			    </tr>
-			    <tr>
+			    <tr class="clist">
 			    <%	
 			    	// 공백
 			    	for (int i=0; i<dayOfWeek-1; i++) {
-			    		out.print("<td>&nbsp;</td>");
+			    		out.print("<td class='dayCss'>&nbsp;</td>");
 			    	}
 			    
 			    	// 달력 출력
 			    	for (int i=1; i<=lastDay; i++) {
 			    %>
-			    	<td id="<%=i%>">
+			    	<td id="<%=i%>" class="tableForms">
 			    		<a href="#" class="countView" style="color:<%=CalendarInputData.fontColor(i, dayOfWeek)%>">&nbsp;<%=i%></a>
 			    		<div style="display: none;">
 			    			<input type="text" name="selYear" value="<%=year%>">
 			    			<input type="text" name="selMonth" value="<%=month%>">
 			    		</div>
-			    		<div class="clist">
-			    		
+			    		<div class="">
 							<%= CalendarInputData.getCalView(year, month, i, clist, noteSeq) %>
 							<% if (CalendarInputData.getCalView(year, month, i, clist, noteSeq).equals("")){
 							%>
-			    			<input type = "button" value="생성" onclick="writeOneday(${seq},<%=year%>,<%=month%>,<%=i%>)">
+			    			<input type = "button" value="생성" onclick="writeOneday(${seq},<%=year%>,<%=month%>,<%=i%>)" class="btn-create">
 							<%
 							}
 							%>
@@ -154,13 +204,13 @@
 			</table>
 		</form>
 		<div style="text-align: center;">
-			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'" style="width: 1072px;">
+			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'" style="width: 1072px;" class="btnBack">
 			<input type = "hidden" value="${seq}" id="noteSeq">
 		</div>
 		<div style="text-align: center;">
 		<c:if test="${fn:length(ndto[0].odto) > 1}">
 		<div>
-			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 1072px;">
+			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 1072px;" class="btnAllOneday">
 		</div>
 		</c:if>
 		</div>
