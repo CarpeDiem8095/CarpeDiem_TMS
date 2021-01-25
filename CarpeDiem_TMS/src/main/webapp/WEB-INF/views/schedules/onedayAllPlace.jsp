@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +15,10 @@
 <style type="text/css">
 #container {
 	width: 650px;
-	height: 540px;
 	margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
+    overflow-y: auto;
 }
 
 a {
@@ -44,7 +45,9 @@ a {
 
 </style>
 <body>
-		<div id="container">
+<%@include file="../header/TMS_header.jsp" %>
+<div id="intro" class="basic-1">
+<div id="container">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
@@ -121,7 +124,7 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-blue-grey"/></div>
 								<div>
 								<div class="w3-panel w3-blue-grey placeTitleCss">
 										<button class="w3-btn w3-blue-grey">${p.place_name}</button>
@@ -180,6 +183,9 @@ a {
 				</div>
 				<div>
 				</div>
+	</div>
+</div>
+	<%@include file="../footer/TMS_footer.jsp" %>
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
