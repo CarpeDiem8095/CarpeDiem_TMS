@@ -22,12 +22,14 @@
 <link href="css/styles.css" rel="stylesheet">
 <link href="css/fontawesome-all.css" rel="stylesheet">
 <link rel="icon" href="images/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+<link rel="stylesheet" href="css/question.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <script src="https://apis.google.com/js/platform.js" defer></script>
-<script type="text/javascript" src="./js/naveridlogin_js_sdk_2.0.0.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script type="text/javascript" src="./js/support.js"></script>
 
 <script type="text/javascript" src="./js/member/main_member_chat.js"></script>
 <script>

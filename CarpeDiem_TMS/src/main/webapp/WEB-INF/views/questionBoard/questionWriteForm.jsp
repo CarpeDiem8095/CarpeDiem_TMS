@@ -54,14 +54,14 @@
 					</td>
 				</tr>
 				<!-- 비회원/회원만 보이게 -->
-				<c:if test="${mDto.auth ne 'A'}">
-					<tr>
-						<th>비밀번호</th>
-						<td>
-							<input type="password" class="form-control" name="text_pw" placeholder="4자리 숫자를 입력해 주세요." maxlength="4" required>
-						</td>
-					</tr>
-				</c:if>
+<%-- 				<c:if test="${mDto.auth ne 'A'}"> --%>
+<!-- 					<tr> -->
+<!-- 						<th>비밀번호</th> -->
+<!-- 						<td> -->
+<!-- 							<input type="password" class="form-control" name="text_pw" placeholder="4자리 숫자를 입력해 주세요." maxlength="4" required> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<%-- 				</c:if> --%>
 				<tr>
 					<th>내용</th>
 					<td>

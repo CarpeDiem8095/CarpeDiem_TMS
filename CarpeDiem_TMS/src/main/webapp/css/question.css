@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+.cards-2 {
+	padding-top: 8.0rem;
+}
+
+#container {
+	width: 800px;
+	height: 500px;
+	margin: 40px auto;
+}
+	
+th {
+	text-align: center;
+}
+	
+a {
+	text-decoration: none;
+	vertical-align: -webkit-baseline-middle;
+	margin-left: 10px;
+}
+	
+.table>tbody>tr>td {
+	padding: 0;
+}
+	
+.table>tbody>tr>td>div>div {
+	padding: 10px;
+}
+
+.center{
+        text-align: center;
+        display: inline-block;
+    }
+	
+.form-textPw {
+	height: 150px;
+	text-align: center;
+}
+	
+#text_pw {
+	width: 100px;
+	padding: 0;
+	margin: 0;
+	margin: 30px auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+	
+.modal-dialog {
+	width: 400px;
+	margin: 110px auto;
+}
