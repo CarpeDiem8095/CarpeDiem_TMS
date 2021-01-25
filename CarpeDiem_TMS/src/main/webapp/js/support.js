@@ -74,13 +74,11 @@ var modifyAjax = function(val) {
 			html += "	 <textarea class='form-control' rows='5' id='content' name='content'>"+v.content+"</textarea>";
 			html += "  </div>";
 			
-//			if () { // 관리자한테만 보여줘야 하는데 session이 담고 있는 auth를 어떻게 조건으로 추가하지..? 여기서 그게 가능한가..?
-				html += "  <div class='form-group'>";
-				html += "    <label for='content'>공개여부</label>";
-				html += "	 <input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp;";
-				html += "	 <input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글";
-				html += "  </div>";
-//			}
+			html += "  <div class='form-group'>";
+			html += "    <label for='content'>공개여부</label>";
+			html += "	 <input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp;";
+			html += "	 <input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글";
+			html += "  </div>";
 			
 			html += "  <div class='modal-footer' style='text-align: center'>";
 			html += "    <input type='button' class='btn btn-primary' value='확인' onclick='update()'/>";
