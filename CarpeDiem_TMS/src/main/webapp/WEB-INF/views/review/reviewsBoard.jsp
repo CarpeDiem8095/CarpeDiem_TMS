@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,10 +40,22 @@
 	.pagination>li>a{
 		color: #607d8b;
 	}
+	.center{
+		text-align: center;
+		display: inline-block;
+	}
 </style>
 <body>
 <%-- ${oneBoardList} --%>
+<%@include file="../header/TMS_header.jsp" %>
+<div id="intro" class="basic-1">
 <div id="container">
+<h3 style="text-align: left;"> 후기 조회 </h3>
+<div style="text-align: left;"> 방문했던 공간에 대한 기억들을 함께 공유해주세요 </div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 <table class="table table-bordered table-hover w3-table">
 		<tr class="w3-blue-grey">
 			<th>글 번호</th>
@@ -70,7 +79,7 @@
 </table>
 	
 	<!-- 페이징 -->
-			<div class="center" style="text-align: center;">
+			<div class="center">
 				<ul class="pagination">
 					<c:if test="${pb.startPage ne 1}">
 						<li><a href="./oneBoardList.do?page=1">◀◀</a></li>
@@ -86,6 +95,8 @@
 				</ul>
 			</div>
 		
+	</div>
 </div>
+<%@include file="../footer/TMS_footer.jsp" %>
 </body>
 </html>
