@@ -1,20 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>노트의 모든 하루일정 조회</title>
-<%-- <%@ include file="/WEB-INF/views/header/TMS_header.jsp" %> --%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="./js/review.js"></script>
+<%@ include file="/WEB-INF/views/header/TMS_header.jsp" %>
 </head>
 <style type="text/css">
 #container {
-	width: 650px;
-	height: 540px;
-	margin: 40px auto;
+    width: 800px;
+    margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+    max-height: none;
+    overflow-y: auto;
+    margin-bottom: 300px;
+    margin-top: 130px;
+    margin-bottom: 100px;
+    height: 900px;
 }
 th {
 	text-align: center;
@@ -172,7 +181,7 @@ a {
 <%-- 				</c:forEach> --%>
 			
 			</div>
-			<div style="position: absolute; left: 1380px;  top: 40px;">	
+			<div style="position: absolute; left: 1450px;  top: 130px;">	
 				<div id="map" style="width: 500px; height: 400px;"></div>
 				<div>
 					<c:forEach var="oneday" items="${oneDto}" varStatus="onedayVs"> <!-- 버튼을 클릭하면 얘의 seq로 select태워서 아작스처리 -->
@@ -184,6 +193,7 @@ a {
 		</div>
 		<div>
 		</div>
+		<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>

@@ -28,7 +28,7 @@ a {
 
 #map{
 	position: absolute;
-    left: 1380px;
+    left: 1450px;
     top: 140px;
 }
 
@@ -40,9 +40,22 @@ a {
 .w3-rigth-align{
 	float: right;
 }
+
+#container {
+    width: 800px;
+    margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+    max-height: none;
+    overflow-y: auto;
+    margin-bottom: 300px;
+    margin-top: 130px;
+    margin-bottom: 100px;
+    height: 900px;
+}
+
 </style>
 <body>
-<%-- <%@include file="../header/TMS_header.jsp" %> --%>
+<%@include file="../header/TMS_header.jsp" %>
 		<div id="container">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
@@ -179,6 +192,7 @@ a {
 				</div>
 				<div>
 				</div>
+				<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
