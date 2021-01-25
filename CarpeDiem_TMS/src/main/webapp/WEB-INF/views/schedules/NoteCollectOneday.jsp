@@ -330,7 +330,6 @@ a {
 	    readInputFile(this);
 	});
 
-
 	function readInputFile(input) {
 	    if(input.files && input.files[0]) {
 	        var reader = new FileReader();
@@ -342,8 +341,7 @@ a {
 	    }
 	}
 </script>
-	</script>
-	
+
 	<!-- 지도 좌표 아작스 처리 -->
 	<script type="text/javascript">
 		function selectOneDay(seq){
@@ -353,6 +351,21 @@ a {
 	         data : "seq="+seq,
 	         dataType : "json",
 	         success : function(json) { //성공시
+		         	var title = json.A_place_name.split('/');
+		         	var x = json.A_xlat.split('/');
+		         	var y = json.A_ylng.split('/');
+					
+		    		var map = new kakao.maps.Map(container, options);
+		    		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+		    		mapOption = {
+		    			center : new daum.maps.LatLng(x[0], y[0]), // 지도의 중심좌표
+		    			level : 10
+		    		// 지도의 확대 레벨
+		    		};
+		    		
+		    		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		    		var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다 
+		    		var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 	    		//배열 생성
 	    		var latlng = []
 	    		for (var i = 0; i < json.size; i++) {

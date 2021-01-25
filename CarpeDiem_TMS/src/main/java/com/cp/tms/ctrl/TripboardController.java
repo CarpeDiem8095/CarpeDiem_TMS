@@ -73,7 +73,7 @@ public class TripboardController {
 	public String deltripboard(TripboadDto dto,String auth) {
 		
 		if(auth.equals("ADMIN")) {
-			searchService.delfalgtripboardadmin(dto.getSeq());
+			searchService.delfalgtripboardadmin(Integer.parseInt(dto.getSeq()));
 		}else {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("userid", dto.getUserid());

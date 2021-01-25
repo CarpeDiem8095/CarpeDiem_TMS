@@ -18,14 +18,12 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/swiper.css" rel="stylesheet">
 <link href="css/magnific-popup.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
 <link href="css/fontawesome-all.css" rel="stylesheet">
 <link rel="icon" href="images/favicon.png">
+<link href="css/styles.css" rel="stylesheet">
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://apis.google.com/js/platform.js" defer></script>
-    <script type="text/javascript" src="./js/naveridlogin_js_sdk_2.0.0.js"></script>
-
 	<script type="text/javascript" src="./js/member/main_member_chat.js"></script>
 <script>
 	$(document).ready(function(){

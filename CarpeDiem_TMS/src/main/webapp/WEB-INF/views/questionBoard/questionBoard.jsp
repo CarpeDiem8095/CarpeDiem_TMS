@@ -2,66 +2,14 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>문의 게시판</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
-<style type="text/css">
-	#container {
-		width: 800px;
-		height: 540px;
-		margin: 40px auto;
-	}
-	
-	th {
-		text-align: center;
-	}
-	
-	a {
-		text-decoration: none;
-		vertical-align: -webkit-baseline-middle;
-		margin-left: 10px;
-	}
-	
-	.table>tbody>tr>td {
-		padding: 0;
-	}
-	
-	.table>tbody>tr>td>div>div {
-		padding: 10px;
-	}
-	
-	.form-textPw {
-		height: 150px;
-		text-align: center;
-	}
-	
-	#text_pw {
-		width: 100px;
-		padding: 0;
-		margin: 0;
-		margin: 30px auto;
-		margin-top: 5px;
-		margin-bottom: 5px;
-	}
-	
-	.modal-dialog {
-		width: 400px;
-		margin: 110px auto;
-	}
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script type="text/javascript" src="./js/support.js"></script>
 </head>
 <body>
+<%@include file="../header/TMS_header.jsp" %>
 	<div id="container">
 		<h3>문의하기</h3>
 		<form action="#" method="post" id="frm" name="frm" onsubmit="return chkbox();">
@@ -70,7 +18,7 @@
 					<tr class="info">
 						<c:if test="${mDto.auth eq 'A'}">
 							<th>
-<!-- 								<input type="checkbox" id="allCheck" onclick="checkAll(this.checked)"> -->
+								<input type="checkbox" id="allCheck" onclick="checkAll(this.checked)">
 							</th>
 						</c:if>
 						<th>글 번호</th>
@@ -108,7 +56,7 @@
 			
 			<div style="text-align: center; padding-bottom: 20px;">
 	  			<input type="button" class="btn btn-primary" value="글쓰기" onclick="location.href='./writeForm.do'">
-	  			<!-- 관리자만 보이게 -->
+	  			관리자만 보이게
 	  			<c:if test="${mDto.auth eq 'A'}">
 					<input type="submit" class="btn btn-primary" value="삭제" style="width: 68px">
 				</c:if>
@@ -120,12 +68,12 @@
 		<div id="textPw" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<!-- modal header -->
+					modal header
 					<div class="modal-header textPw-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h3 class="modal-title" style="text-align: center">글 비밀번호를 입력해 주세요.</h3>
 					</div>
-					<!-- modal body -->
+					modal body
 					<div class="modal-body textPw-body">
 						<form action="#" class="form-margin" method="post" id="frmPW">
 							<input type="hidden" value="${dto.seq}" name="seq">
@@ -160,66 +108,6 @@
 			</div>
 		</div>
 	</div>
+<%@include file="../footer/TMS_footer.jsp" %>
 </body>
-<script type="text/javascript">
-	function checkAll(bool){
-		console.log(bool);
-		var chkval = document.getElementsByName('chkVal'); // nodeList
-
-		for (var i = 0; i < chkval.length; i++) {
-			chkval[i].checked = bool;
-		}
-	}
-	
-	function chkbox(){
-		var chkval = document.getElementsByName('chkVal');
-		var n = 0;
-		for (var i = 0; i < chkval.length; i++) {
-			if(chkval[i].checked){
-				n++;
-			}
-		}	
-		if(n>0){
-			document.getElementById("frm").action = "./multiDel.do";
-		} else {
-			swal("삭제 오류","한개 이상의 글을 선택하세요");
-			return false;
-		}
-	}
-	$(".text_pw").click (function(){
-	    var buttonID = $(this).attr('id');
-	    var hiddenPw = $(this).parent().parent().find("hidden").val();
-	})
-	
-	function txtPwChk(thisplace) {
-		var qDtoText_pw = $("#text_pw_writer").val();
-		var text_pw = $("#text_pw").val();
-		alert(qDtoText_pw);
-		alert(text_pw);
-		alert(thisplace);
-		alert(thisplaces.val());
-		if(qDtoText_pw == text_pw){
-			$("#"+thisplace).parent().css("display", "none");
-			$(".qDtoContent").css("display", "block");
-		}else{
-			alert("비밀번호가 다릅니다.");
-		}
-// 		$.ajax({
-// 			type: "post",
-// 			url: "./txtPwChk.do",
-// 			data: "seq="+seq+"&qDtoText_pw="+qDtoText_pw+"&text_pw="+text_pw,
-// 			success: function() {
-// 				if (qDtoText_pw.val() == text_pw.val()) {
-// 					$(".text_pw").css("display", "none");
-// 				} else {
-// 					alert("글 비밀번호를 확인해 주세요.");
-// 					$(".qDtoContent").css("display", "none");
-// 				}
-// 			},
-// 			error: function() {
-// 				alert("잘못된 요청입니다.");
-// 			}
-// 		});
-	}
-</script>
 </html>
