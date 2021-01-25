@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<head>
+<body>
 <!-- Footer -->
 	<div class="footer">
 		<div class="container">
@@ -73,7 +73,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<p class="p-small">
-						Copyright © 2020 <a href="https://inovatik.com">Template by
+						Copyright &copy; 2020 <a href="https://inovatik.com">Template by
 							Inovatik</a>
 					</p>
 				</div>

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,12 +21,15 @@
 <link href="css/styles.css" rel="stylesheet">
 <link href="css/fontawesome-all.css" rel="stylesheet">
 <link rel="icon" href="images/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+<link rel="stylesheet" href="css/question.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://apis.google.com/js/platform.js" defer></script>
-    <script type="text/javascript" src="./js/naveridlogin_js_sdk_2.0.0.js"></script>
-
+    
 	<script type="text/javascript" src="./js/member/main_member_chat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script type="text/javascript" src="./js/support.js"></script>
 <script>
 	$(document).ready(function(){
 		var id = '${mDto.email}';

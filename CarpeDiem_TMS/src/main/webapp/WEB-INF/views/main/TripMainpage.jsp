@@ -8,7 +8,7 @@
 <title>메인페이지입니다.</title>
 </head>
 <body data-spy="scroll" data-target=".fixed-top">
-<%@include file="../header/TMS_header.jsp" %>
+<%@include file="/WEB-INF/views/header/TMS_header.jsp" %>
 <script>
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:

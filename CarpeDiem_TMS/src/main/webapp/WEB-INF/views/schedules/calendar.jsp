@@ -246,10 +246,10 @@ body {
 			    			<input type="text" id="month" name="selMonth" value="<%=month%>">
 			    		</div>
 			    		<!-- 날씨 -->
-			        	<div style="float: right">
-				        	<span id="temp" style="color: white;"></span><br>
-							<span id="icon"></span>
-			        	</div>
+<!-- 			        	<div style="float: right"> -->
+<!-- 				        	<span id="temp" style="color: white;"></span><br> -->
+<!-- 							<span id="icon"></span> -->
+<!-- 			        	</div> -->
 			    		<div class="">
 							<%= CalendarInputData.getCalView(year, month, i, clist, noteSeq) %>
 							<% if (CalendarInputData.getCalView(year, month, i, clist, noteSeq).equals("")){

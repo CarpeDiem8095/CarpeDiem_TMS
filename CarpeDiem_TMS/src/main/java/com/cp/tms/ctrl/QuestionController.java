@@ -66,7 +66,7 @@ public class QuestionController {
 		
 		// 총 게시글의 수
 //		if (session.getAttribute("mDto") == null) { // 비회원
-//			model.addAttribute("mDto.auto", "U");
+//			model.addAttribute("mDto.auth", "U");
 //			p.setTotalCount(service.userTotalCount());
 		if (mDto.getAuth().equalsIgnoreCase("A")) { // 관리자
 			p.setTotalCount(service.adminTotalCount());
@@ -148,7 +148,7 @@ public class QuestionController {
 		Member mDto = (Member)session.getAttribute("mDto");
 		
 		if (session.getAttribute("mDto") == null) { // 비회원
-			model.addAttribute("mDto.auto", "U");
+			model.addAttribute("mDto.auth", "U");
 			boolean isc = service.userWriteQuestionboard(dto);
 			System.out.println("문의글 입력 성공여부: " + isc);
 		} else if (mDto.getAuth().equalsIgnoreCase("A")) {
