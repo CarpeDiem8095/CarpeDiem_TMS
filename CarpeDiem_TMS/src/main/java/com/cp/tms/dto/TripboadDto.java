@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TripboadDto {
 
-	private int seq;
+	private String seq;
 	private int rn;
 	private String userid;
 	private String nickname;
@@ -15,7 +15,7 @@ public class TripboadDto {
 	public TripboadDto() {
 	}
 
-	public TripboadDto(int seq, int rn, String userid, String nickname, String boardtitle, String delflag,
+	public TripboadDto(String seq, int rn, String userid, String nickname, String boardtitle, String delflag,
 			Date tripregdate) {
 		super();
 		this.seq = seq;
@@ -33,8 +33,6 @@ public class TripboadDto {
 				+ ", boardtitle=" + boardtitle + ", delflag=" + delflag + ", tripregdate=" + tripregdate + "]";
 	}
 
-	
-	
 	public int getRn() {
 		return rn;
 	}
@@ -43,11 +41,11 @@ public class TripboadDto {
 		this.rn = rn;
 	}
 
-	public int getSeq() {
+	public String getSeq() {
 		return seq;
 	}
 
-	public void setSeq(int seq) {
+	public void setSeq(String seq) {
 		this.seq = seq;
 	}
 

@@ -2,9 +2,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +66,6 @@
 					</c:if>
 				</div>
 			</form>
-			
 			<!-- 비밀번호 입력 modal -->
 			<div id="textPw" class="modal fade" role="dialog">
 				<div class="modal-dialog">
@@ -117,65 +113,4 @@
 	</div>
 <%@include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
 </body>
-<script type="text/javascript">
-	function checkAll(bool){
-		console.log(bool);
-		var chkval = document.getElementsByName('chkVal'); // nodeList
-
-		for (var i = 0; i < chkval.length; i++) {
-			chkval[i].checked = bool;
-		}
-	}
-	
-	function chkbox(){
-		var chkval = document.getElementsByName('chkVal');
-		var n = 0;
-		for (var i = 0; i < chkval.length; i++) {
-			if(chkval[i].checked){
-				n++;
-			}
-		}	
-		if(n>0){
-			document.getElementById("frm").action = "./multiDel.do";
-		} else {
-			swal("삭제 오류","한개 이상의 글을 선택하세요");
-			return false;
-		}
-	}
-	$(".text_pw").click (function(){
-	    var buttonID = $(this).attr('id');
-	    var hiddenPw = $(this).parent().parent().find("hidden").val();
-	})
-	
-	function txtPwChk(thisplace) {
-		var qDtoText_pw = $("#text_pw_writer").val();
-		var text_pw = $("#text_pw").val();
-		alert(qDtoText_pw);
-		alert(text_pw);
-		alert(thisplace);
-		alert(thisplaces.val());
-		if(qDtoText_pw == text_pw){
-			$("#"+thisplace).parent().css("display", "none");
-			$(".qDtoContent").css("display", "block");
-		}else{
-			alert("비밀번호가 다릅니다.");
-		}
-// 		$.ajax({
-// 			type: "post",
-// 			url: "./txtPwChk.do",
-// 			data: "seq="+seq+"&qDtoText_pw="+qDtoText_pw+"&text_pw="+text_pw,
-// 			success: function() {
-// 				if (qDtoText_pw.val() == text_pw.val()) {
-// 					$(".text_pw").css("display", "none");
-// 				} else {
-// 					alert("글 비밀번호를 확인해 주세요.");
-// 					$(".qDtoContent").css("display", "none");
-// 				}
-// 			},
-// 			error: function() {
-// 				alert("잘못된 요청입니다.");
-// 			}
-// 		});
-	}
-</script>
 </html>

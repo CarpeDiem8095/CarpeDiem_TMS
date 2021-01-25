@@ -7,25 +7,23 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="text-container about">
-						<h4>Few Words About Aria</h4>
-						<p class="white">We're passionate about delivering the best
-							business growth services for companies just starting out as
-							startups or industry players that have established their market
-							position a long tima ago.</p>
+						<h4>여행 일정과 추억을 관리해주는 홈페이지</h4>
+						<p class="white">저희 홈페이지에서 다양한 장소에 간 사진들과 간단한 글로 추억을 간직해보세요
+						그 추억을 통해서 여러사람들과 함께한 사진들을 후기로 남겨서 다른사람들과 공유를 통해 커뮤니케이션을 형성하고
+						혼자만의 추억은 만들고 싶지 않으신 분들은 1:1채팅이라는 기능을 통해 동행찾기 게시판에 제목을 올리고 시간에 맞추어
+						접속한 사람들끼리 채팅으로 친해져 보세요. 다양한 추억을 만들어보세요~~
+						</p>
 					</div>
 					<!-- end of text-container -->
 				</div>
 				<!-- end of col -->
 				<div class="col-md-2">
 					<div class="text-container">
-						<h4>Links</h4>
+						<h4>Team</h4>
 						<ul class="list-unstyled li-space-lg white">
-							<li><a class="white" href="#your-link">startupguide.com</a>
-							</li>
-							<li><a class="white" href="terms-conditions.html">Terms
-									& Conditions</a></li>
-							<li><a class="white" href="privacy-policy.html">Privacy
-									Policy</a></li>
+							<li>Team : CarpeDiem</li>
+							<li>010-0000-0000</li>
+							<li>주소 : 서울특별시 금천구 가산동 가산디지털2로 801호 </li>
 						</ul>
 					</div>
 					<!-- end of text-container -->
@@ -33,12 +31,9 @@
 				<!-- end of col -->
 				<div class="col-md-2">
 					<div class="text-container">
-						<h4>Tools</h4>
+						<h4>문의사항</h4>
 						<ul class="list-unstyled li-space-lg">
-							<li><a class="white" href="#your-link">businessgrowth.com</a>
-							</li>
-							<li><a class="white" href="#your-link">influencers.com</a></li>
-							<li class="media"><a class="white" href="#your-link">optimizer.net</a>
+							<li><a class="white" href="./questionBoard.do">문의사항은 <br>여기를 클릭해주세요</a>
 							</li>
 						</ul>
 					</div>
@@ -47,12 +42,13 @@
 				<!-- end of col -->
 				<div class="col-md-2">
 					<div class="text-container">
-						<h4>Partners</h4>
-						<ul class="list-unstyled li-space-lg">
-							<li><a class="white" href="#your-link">unicorns.com</a></li>
-							<li><a class="white" href="#your-link">staffmanager.com</a>
-							</li>
-							<li><a class="white" href="#your-link">association.gov</a></li>
+						<h4>Team구성</h4>
+						<ul class="list-unstyled li-space-lg white">
+							<li>전은솔(PM)</li>
+							<li>김예지</li>
+							<li>이수안</li>
+							<li>조석규</li>
+							<li>최우성</li>
 						</ul>
 					</div>
 					<!-- end of text-container -->
@@ -73,8 +69,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<p class="p-small">
-						Copyright &copy; 2020 <a href="https://inovatik.com">Template by
-							Inovatik</a>
+						CarpeDiem © 2021 <a href="./mainpage.do"></a>
 					</p>
 				</div>
 				<!-- end of col -->

@@ -8,8 +8,10 @@
 </head>
 <body>
 <%@include file="../header/TMS_header.jsp" %>
-<div id="intro" class="basic-1">
-<table style="text-align: center;">
+<div id="intro" class="basic-1" style="margin: 90px;">
+<div class="container">
+<table class="table">
+<thead>
 	<tr>
 		<th>연번</th>
 		<th>제목</th>
@@ -17,6 +19,8 @@
 		<th>작성일</th>
 		<th>삭제</th>
 	</tr>
+	</thead>
+	<tbody>
 	<c:forEach var="tripboard" items="${serchDto}">
 	<tr>
 		<td>${tripboard.rn}</td>
@@ -25,20 +29,23 @@
 		</td>
 		<td><fmt:formatDate value="${tripboard.tripregdate}" pattern="yyyy-MM-dd HH:mm"/></td>
 		<c:choose>
-		<c:when test="${auth == 'ADMIN'}">
+		<c:when test="${mDto.auth == 'A'}">
 		<td>
-		<input type="button" value="삭제가능" onclick="location.href='./deltripboard.do?seq=${tripboard.seq}&auth=${auth}'">
+		<input type="button" value="삭제가능" onclick="location.href='./deltripboard.do?seq=${tripboard.seq}&auth=${mDto.auth}'">
 		</td>
 		</c:when>
-		<c:when test="${tripboard.userid == 'sung9606071@gmail.com'}">		
+		<c:when test="${tripboard.userid == mDto.email}">		
 		<td>
-		<input type="button" value="삭제가능" onclick="location.href='./deltripboard.do?seq=${tripboard.seq}&userid=${tripboard.userid}&auth=${auth}'">
+		<input type="button" value="삭제가능" onclick="location.href='./deltripboard.do?seq=${tripboard.seq}&userid=${mDto.email}&auth=${mDto.auth}'">
 		</td>
 		</c:when>
 		</c:choose>
 		
 	</tr>
 	</c:forEach>
+	</tbody>
+	
+	
 	<tr>
 		<td colspan="4" style="text-align: center;">
 			<c:if test="${p.startpage ne 1}">
@@ -56,11 +63,12 @@
 	</tr>
 	<tr>
 		<td>
-			<input type="button" value="글작성" onclick="location.href='./serchboardmove.do'">
-			<input type="button" value="뒤로가기">
+			<input type="button" class="btn-outline-sm" value="글작성" onclick="location.href='./serchboardmove.do'">
+			<input type="button" style="background-color: #007bff;" class="btn-outline-sm" value="뒤로가기" onclick="location.href='javascript:history.back();'">
 		</td>
 	</tr>
 </table>
+</div>
 </div>
 <%@include file="../footer/TMS_footer.jsp" %>
 </body>
