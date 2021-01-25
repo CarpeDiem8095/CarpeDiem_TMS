@@ -1,10 +1,8 @@
-$(document).ready(function() {
-		wss();
-	})
-
-	var wss = function() {
+$(document).ready(function(){
+	wss();
+});
+var wss = function() {
 		var userid = $("#userid").val();
-
 		var grId = "main";
 		$(".accessmembers").children().remove();
 		$.ajax({
@@ -14,7 +12,7 @@ $(document).ready(function() {
 			for( var k in data.list) {
 					if (data.list[k] == grId) {
 						var spuserid= k.split('@');
-						spuserid[1] = spuserid[1].substring(0,1);
+						spuserid[1] = spuserid[1].substr(0,1);
 						var gr_id = userid+","+k;
 						if(userid == '' || userid ==null){
 								$(".accessmembers").append("<tr><td class='main_mem_access' colspan='2'>"+
