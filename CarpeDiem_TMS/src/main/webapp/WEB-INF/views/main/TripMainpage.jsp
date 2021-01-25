@@ -499,6 +499,18 @@ function gg_login(){
 }
 
 
+
+
+   var naverLogin = new naver.LoginWithNaverId(
+      {
+         clientId: "rfXVKsgZQ9w7VbNvMjol", //
+         callbackUrl: "http://localhost:8091/Test02_naver/callback.jsp",
+         isPopup: false,
+         loginButton: {color: "green", type: 3, height: 60}
+      }
+   );
+   	naverLogin.init();
+
 </script>
 
 	<div class="modal fade" id="loginModal">
@@ -537,8 +549,8 @@ function gg_login(){
 						</div>
 						<hr>
 
-						<div id="naver_id_login" style="text-align: center">
-							<a href="./naverlogin.do" class="btn btn-success"> N+네이버 계정 로그인 </a> 
+						<div id="naverLogin" style="text-align: center">
+							
 							<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
 						</div>
 					</form>
