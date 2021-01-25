@@ -2,7 +2,6 @@
 <%@page import="com.cp.tms.dto.CommentDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,12 +27,8 @@ a {
 }
 </style>
 <body>
-
-
-	<div>
-		<a href="./iLikeit.do">♡</a>
-	</div>
-
+<%@include file="../header/TMS_header.jsp" %>
+<div id="intro" class="basic-1">
 	<div id="container">
 
 		<h3>하루 일정</h3> 
@@ -222,5 +217,7 @@ a {
 		});
 		
 	</script>
+</div>
+<%@include file="../footer/TMS_footer.jsp" %>
 </body>
 </html>
