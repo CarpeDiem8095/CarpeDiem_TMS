@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +22,10 @@
 <style type="text/css">
 #container {
 	width: 800px;
-	height: 540px;
 	margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
+    overflow-y: auto;
 }
 
 a {
@@ -44,7 +44,8 @@ a {
 }
 </style>
 <body>
-
+<%@include file="../header/TMS_header.jsp" %>
+<div id="intro" class="basic-1">
 <div id="container">
 <%-- ${onedayList} --%>
  	
@@ -87,6 +88,7 @@ a {
 </tbody>
 </table>
 </div>
+</div>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -123,5 +125,6 @@ $(document).ready(function() {
     });
 });
 </script>
+<%@include file="../footer/TMS_footer.jsp" %>
 </body>
 </html>

@@ -24,7 +24,7 @@
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://apis.google.com/js/platform.js" defer></script>
-    <script type="text/javascript" src="./js/naveridlogin_js_sdk_2.0.0.js"></script>
+<!--     <script type="text/javascript" src="./js/naveridlogin_js_sdk_2.0.0.js"></script> -->
 
 	<script type="text/javascript" src="./js/member/main_member_chat.js"></script>
 <script>
@@ -58,7 +58,7 @@
 		<!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
 		<!-- Image Logo -->
-		<a class="navbar-brand logo-image" href="index.html"><img
+		<a class="navbar-brand logo-image" href="./mainpage.do"><img
 			src="images/calo.png" alt="alternative"></a>
 
 		<!-- Mobile Menu Toggle Button -->
@@ -264,10 +264,10 @@
 						</div>
 						<hr>
 
-						<div id="naver_id_login" style="text-align: center">
-							<a href="./naverlogin.do" class="btn btn-success"> N+네이버 계정 로그인 </a> 
-							<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-						</div>
+<!-- 						<div id="naver_id_login" style="text-align: center"> -->
+<!-- 							<a href="./naverlogin.do" class="btn btn-success"> N+네이버 계정 로그인 </a>  -->
+<!-- 							<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div> -->
+<!-- 						</div> -->
 					</form>
 				</div>
 			</div>

@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,13 +18,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="./js/pdfmaker/pdfmake.min.js"></script> 
 <script src="./js/pdfmaker/vfs_fonts.js"></script>
-
+<script type="text/javascript" src="./js/review.js"></script>
 
 <style type="text/css">
 #container {
 	width: 800px;
-	height: 540px;
 	margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
+    overflow-y: auto;
 }
 
 a {
@@ -47,6 +46,8 @@ a {
 </style>
 <body>
 
+<%@include file="../header/TMS_header.jsp" %>
+<div id="intro" class="basic-1">
 <div id="container">
 <%-- ${onedayList} --%>
  	
@@ -100,8 +101,10 @@ a {
 </tbody>
 </table>
 </div>
+</div>
+<%@include file="../footer/TMS_footer.jsp" %>
 <script type="text/javascript">
-
+// 출력 
 $(document).ready(function() {
 	
 	$('#myTable_length').hide()
