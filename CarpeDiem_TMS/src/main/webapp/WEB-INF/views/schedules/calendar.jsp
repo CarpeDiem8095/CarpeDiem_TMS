@@ -94,6 +94,73 @@ body {
   }
 </style>
 </head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+	//&units=metric을 추가하면 자동으로 섭씨온도로 바꿀 수 있음(원래는 화씨)
+	var units = "metric";
+	
+	// Open weather API request
+	// id는 지역 아이디, appid는 apiKey
+	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?id=1846265&units='+units+'&APPID=e95d958a11128b11ad3eb0fa101dae38',
+		function(json){
+		// 현재 일시
+		var date = new Date();
+		date = moment(date).format('YYYY-MM-DD HH:mm:ss');
+		var hours = date.substring(11,13); // 현재 시간(HH)
+		
+		var year = $('#year').html();
+		var month = $('#month').html();
+		var day = $('#day').html();
+		
+		date = date.substring(0,11); // String type -> YYYY-MM-DD 
+		hours *= 1; // *=1 -> number로 형변환
+		hours = hours-hours%3;
+		hours *= ""; // String으로 형변환
+		if (hours == "0") {
+			hours = "00";
+		}
+		
+		var present = date+hours;
+		var jsonPresent = "";
+		
+		var time = 0;
+		for (var i = 0; i < 40; i++) {
+			jsonPresent = json.list[i].dt_txt.substring(0,13);
+			if (present == jsonPresent) {
+				time = i;
+				break;
+			}
+		}
+		
+		// json 날짜
+		var dt_txt = json.list[time].dt_txt; // 일시
+		var dt_year = dt_txt.substring(0,4);
+		var dt_month = dt_txt.substring(5,7);	
+		var dt_day = dt_txt.substring(8,10);
+		
+		// json 기온
+		var temp_now = json.list[0].main.temp;
+	  	var temp_min = json.list[0].main.temp_min;
+	  	var temp_max = json.list[0].main.temp_max;
+		  	
+	  	// 실수 값을 Math.round()를 사용하여 정수 값으로 만들어 줌   
+		var temp = Math.round(temp_now);
+		var tempMin = Math.round(temp_min);
+		var tempMax = Math.round(temp_max);
+		
+		// 날씨api에서 하루에 3시간씩 8개, 총 5일 제공
+		for (var i = 0; i < 5; i++) { // 0 1 2 3 4 => 5번 반복
+			
+			if (year == dt_year && month == dt_month && day == dt_day) { // 현재 년월일이 json의 년월일과 같다면 날씨정보를 뿌려준다
+// 				$("#temp").html(temp+'&deg;'); // 현재기온
+				$("#temp").html(tempMin+'&deg;/'+tempMax+'&deg;'); // 최저/최고기온
+// 				$("#icon").html('<img src="http://openweathermap.org/img/w/' + json.list[0].weather[0].icon + '.png"</img>');
+				$("#icon"+(i+1)).html('<img src="http://openweathermap.org/img/w/' + json.list[time+i*8].weather[0].icon + '.png"</img>'); // 날씨 아이콘
+			}
+		}
+	});
+</script>
 <body>
 <%-- <c:set var="oneday_Seq" value="${seq}"/> --%>
 	<%
@@ -142,16 +209,16 @@ body {
 		String noteSeq = (String)request.getAttribute("seq");
 
 	%>
-	<div id="container" clas="flex-contatiner">
+	<div id="container" class="flex-contatiner">
 		<form>
 			<table id="calendar">
 				<caption class="tiCalendar">
-					<a href="./calendar.do?year=<%=year-1%>&month=<%=month%>&seq=${seq}">&#8810;</a>
-					<a href="./calendar.do?year=<%=year%>&month=<%=month-1%>&seq=${seq}">&lt;</a>&nbsp;
+					<a href="./calendar.do?year=<%=year-1%>&month=<%=month%>&seq=${seq}">◀◀</a>
+					<a href="./calendar.do?year=<%=year%>&month=<%=month-1%>&seq=${seq}">◁</a>&nbsp;
 					<span class="y"><%=year%></span>년도&nbsp;
 					<span class="m"><%=month%></span>월&nbsp;
-					<a href="./calendar.do?year=<%=year%>&month=<%=month+1%>&seq=${seq}">&gt;</a>
-					<a href="./calendar.do?year=<%=year+1%>&month=<%=month%>&seq=${seq}">&#8811;</a>
+					<a href="./calendar.do?year=<%=year%>&month=<%=month+1%>&seq=${seq}">▷</a>
+					<a href="./calendar.do?year=<%=year+1%>&month=<%=month%>&seq=${seq}">▶▶</a>
 				</caption>
 				<tr>
 			      <th class="dayCss">SUN</th>
@@ -173,11 +240,16 @@ body {
 			    	for (int i=1; i<=lastDay; i++) {
 			    %>
 			    	<td id="<%=i%>" class="tableForms">
-			    		<a href="#" class="countView" style="color:<%=CalendarInputData.fontColor(i, dayOfWeek)%>">&nbsp;<%=i%></a>
+			    		<a href="#" id="day" class="countView" style="color:<%=CalendarInputData.fontColor(i, dayOfWeek)%>; padding-left: 5px;"><%=i%></a>
 			    		<div style="display: none;">
-			    			<input type="text" name="selYear" value="<%=year%>">
-			    			<input type="text" name="selMonth" value="<%=month%>">
+			    			<input type="text" id="year" name="selYear" value="<%=year%>">
+			    			<input type="text" id="month" name="selMonth" value="<%=month%>">
 			    		</div>
+			    		<!-- 날씨 -->
+			        	<div style="float: right">
+				        	<span id="temp" style="color: white;"></span><br>
+							<span id="icon"></span>
+			        	</div>
 			    		<div class="">
 							<%= CalendarInputData.getCalView(year, month, i, clist, noteSeq) %>
 							<% if (CalendarInputData.getCalView(year, month, i, clist, noteSeq).equals("")){
