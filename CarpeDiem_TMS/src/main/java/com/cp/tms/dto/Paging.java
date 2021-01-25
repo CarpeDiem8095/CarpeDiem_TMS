@@ -60,10 +60,10 @@ public class Paging {
 
 	public void setTotalPage(int totalPage) {
 		
-		int totalPageResult = totalCount/countList; // 27글/한페이지 3 = 9개
-		if (totalCount%countList > 0) { // 나머지가 있다 -> 페이지가 하나 더 있어야 한다
+		int totalPageResult = totalCount/countList; 
+		if (totalCount%countList > 0) { 
 			totalPageResult++;			
-		} //totalCount가 총 게시글 게수 countList 페이지 다섯개씩 뿌리는데 나머지가 0보다 크면
+		} 
 		
 		this.totalPage = totalPageResult;
 	}

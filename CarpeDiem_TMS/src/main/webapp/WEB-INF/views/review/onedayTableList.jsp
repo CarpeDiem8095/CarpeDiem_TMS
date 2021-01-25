@@ -16,6 +16,7 @@
 <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="./js/pdfmaker/pdfmake.min.js"></script> 
 <script src="./js/pdfmaker/vfs_fonts.js"></script>
 
@@ -39,6 +40,7 @@ a {
 
 .dataTables_length{
 	float: right;
+	margin-left: 20px;
 }
 </style>
 <body>
@@ -60,12 +62,12 @@ a {
 <p></p>
 <table id="myTable" class="table table-bordered">
 	<c:forEach var="oneday" items="${onedayList}">
-<thead>
+<thead style="background-color:#607d8b; color: white; text-align: center;">
 <tr>
-	<th>번호</th>
-	<th>날짜</th>
-	<th>장소</th>
-	<th>메모</th>
+	<th style="text-align: center;">번호</th>
+	<th style="text-align: center;">날짜</th>
+	<th style="text-align: center;">장소</th>
+	<th style="text-align: center;">메모</th>
 </tr>
 </thead>
 <tbody>
@@ -88,18 +90,28 @@ a {
 <script type="text/javascript">
 
 $(document).ready(function() {
+<%-- 	var oneday_seq = <%=request.getParameter("oneday_seq")%>; --%>
+// 	var columns = ["ONEDATE", "PLACE_NAME", "MEMO"];
 	$('#myTable_length').hide()
     $('#myTable').DataTable( {
+//     	sAjaxSource : "/getDataList.do?oneday_seq="+oneday_seq+"&columns="+columns,
+//         sServerMethod: "POST",
+//         columns : [
+//             {data: "onedate"},
+//             {data: "place_name"},
+//             {data: "memo"}
+//         ],
         dom: 'Blfrtip',
         buttons: [{
-            extend: 'csvHtml5',
-            text: 'Export CSV',
-            footer: true,
-            className: 'exportBtn btn btn-default'
-        },
+        	extend: 'excel',
+			text: 'EXCEL 저장',
+			filename: '엑셀파일명',
+			title: '엑셀파일 안에 쓰일 제목',
+			className: 'exportBtn btn btn-default'
+		},
         {
         	extend: 'pdf',
-            text: 'Save current page',
+            text: 'PDF 저장',
             exportOptions: {
                 modifier: {
                     page: 'current'
