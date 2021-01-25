@@ -62,7 +62,7 @@
 		ORDER BY p.STEP ASC
 	</select>
 	
-	<!-- 해당 노트(note_seq)의 모든 하루일정의/ 모든 장소 조회 -->
+	<!-- 해당 노트(note_seq)의 모든 하루일정의/모든 장소 조회 -->
 	<select id="noteCollectOnedayAP" parameterType="java.lang.String" resultMap="oneDto">
 		SELECT o.ONEDAY_SEQ , o.ONEDAY_TITLE, o.ONEDATE,
 		p.PLACE_SEQ, p.STEP, p.PLACE_NAME, p.XLAT, p.YLNG, p.MEMO
