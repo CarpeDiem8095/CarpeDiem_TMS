@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>하루 일정 조회</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -54,15 +55,15 @@ a {
 		</div> 
 			<div class="panel-group" id="accordion">
 				<c:forEach var="oneday" items="${selDetailOneday}">
-					<div style="font-style:italic; color: red;">${oneday.oneday_title}</div>
+					<div class="w3-text-dark-grey" style="font-style: italic; margin-top: 20px;" ><h5>${oneday.oneday_title}</h5></div>
 					<c:forEach var="p" items="${oneday.placeDto}" varStatus="vs">
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div class="w3-panel w3-black placeTitleCss">
-								<button class="w3-btn w3-black">${p.place_name}</button>
-								<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-								<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+							<div class="w3-panel w3-blue-grey placeTitleCss">
+								<button class="w3-btn w3-blue-grey">${p.place_name}</button>
+								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
+								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
 								<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 								<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 							</div>
@@ -76,9 +77,9 @@ a {
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 											
-											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
 											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" onclick="modifyForm('${p.place_seq}')"/></div>
 											
 										</div>
 									</div>
@@ -120,12 +121,12 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align"/></div>
 								<div>
-								<div class="w3-panel w3-black placeTitleCss">
-										<button class="w3-btn w3-black">${p.place_name}</button>
-										<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-										<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+								<div class="w3-panel w3-blue-grey placeTitleCss">
+										<button class="w3-btn w3-blue-grey">${p.place_name}</button>
+										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
+										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
 										<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 										<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 								</div>
@@ -142,9 +143,9 @@ a {
 												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 												
-												<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+												<div><input type="submit" class="btnSave btn btn-default w3-blue-grey"  value="SAVE" style="float:right;"/></div>
 												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-												<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
 									</form>
@@ -172,7 +173,8 @@ a {
 								<input type="hidden" name="myY" value="${p.ylng}"/>
 						</c:forEach>
 					</c:forEach>
-					<button onclick="history.back(-1)">뒤로가기</button>
+					<p></p>
+					<button onclick="history.back(-1)" class="w3-button w3-padding-small w3-border w3-round-large w3-rigth-align">뒤로가기</button>
 				</div>
 				<div id="map" style="width: 500px; height: 400px; margin: 0px auto;"></div>
 				</div>

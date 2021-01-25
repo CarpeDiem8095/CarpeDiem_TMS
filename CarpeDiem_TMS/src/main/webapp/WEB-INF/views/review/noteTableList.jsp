@@ -18,6 +18,7 @@
 <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="./js/pdfmaker/pdfmake.min.js"></script> 
 <script src="./js/pdfmaker/vfs_fonts.js"></script>
 
@@ -41,6 +42,7 @@ a {
 
 .dataTables_length{
 	float: right;
+	margin-left: 20px;
 }
 </style>
 <body>
@@ -48,7 +50,7 @@ a {
 <div id="container">
 <%-- ${onedayList} --%>
  	
- 		<h3>일정 모아보기</h3>
+ 		<h3 id = "excel_title">${note_title} 일정 전체 보기</h3>
 		
 <div class="w3-show-inline-block">
 	<div class="w3-bar w3-light-grey">
@@ -60,8 +62,7 @@ a {
 <p></p>
 <p></p>
 <table id="myTable" class="table table-bordered">
-	<c:forEach var="oneday" items="${noteCollection}" varStatus="onedayVs">
-<thead style="background-color:#607d8b; color: white;">
+<thead style="background-color:#607d8b; color: white; text-align: center">
 <tr>
 	<th>순서</th>
 	<th>제목</th>
@@ -70,12 +71,22 @@ a {
 	<th>메모</th>
 </tr>
 </thead>
+	<c:forEach var="oneday" items="${noteCollection}" varStatus="onedayVs">
 <tbody>
 		<c:forEach var="p" items="${oneday.placeDto}" varStatus="placeVs">
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:parseDate var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss.SSS" value="${oneday.onedate}" />
 		<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd" var="onedate" />
-		
+<c:if test="${placeVs.count eq 1}">
+<tr style="background-color:#f1f1f1;">
+	<td>${placeVs.count}</td>
+	<td><c:if test="${placeVs.index eq 0}">${oneday.oneday_title}</c:if></td>
+	<td><c:out value="${onedate}"/></td>
+	<td>${p.place_name}</td>
+	<td>${p.memo}</td>
+</tr>
+</c:if>
+<c:if test="${placeVs.count > 1}">
 <tr>
 	<td>${placeVs.count}</td>
 	<td><c:if test="${placeVs.index eq 0}">${oneday.oneday_title}</c:if></td>
@@ -83,6 +94,7 @@ a {
 	<td>${p.place_name}</td>
 	<td>${p.memo}</td>
 </tr>
+</c:if>
 	</c:forEach>
 	</c:forEach>
 </tbody>
@@ -91,18 +103,20 @@ a {
 <script type="text/javascript">
 
 $(document).ready(function() {
+	
 	$('#myTable_length').hide()
     $('#myTable').DataTable( {
         dom: 'Blfrtip',
         buttons: [{
-            extend: 'csvHtml5',
-            text: 'Export CSV',
-            footer: true,
-            className: 'exportBtn btn btn-default'
-        },
+			extend: 'excel',
+			text: 'EXCEL 저장',
+			filename: '엑셀파일명',
+			title: 'title',
+			className: 'exportBtn btn btn-default'
+		},
         {
         	extend: 'pdf',
-            text: 'Save current page',
+            text: 'PDF 저장',
             exportOptions: {
                 modifier: {
                     page: 'current'

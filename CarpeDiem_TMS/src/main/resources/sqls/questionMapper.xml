@@ -106,11 +106,11 @@
 			WHERE SEQ=#{seq}
 	</update>
 	
-	<!-- 글 삭제(root글 삭제 시 댓글도 삭제) -->
+	<!-- 글 삭제 -->
 	<update id="deleteQuestionboard" parameterType="java.lang.String">
 		UPDATE QUESTIONBOARD SET DELFLAG='Y'
-			WHERE REFER=(SELECT REFER FROM QUESTIONBOARD WHERE SEQ=#{seq})
-	</update>	
+			WHERE SEQ=#{seq}
+	</update>
 	
 	<!-- 다중삭제(관리자) -->
 	<update id="multiDelQuestionboard" parameterType="java.util.Map">
