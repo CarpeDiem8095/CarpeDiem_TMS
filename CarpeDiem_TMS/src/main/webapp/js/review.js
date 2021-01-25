@@ -1,3 +1,30 @@
+// 출력 
+$(document).ready(function() {
+	
+	$('#myTable_length').hide()
+    $('#myTable').DataTable( {
+        dom: 'Blfrtip',
+        buttons: [{
+			extend: 'excel',
+			text: 'EXCEL 저장',
+			filename: '엑셀파일명',
+			title: 'title',
+			className: 'exportBtn btn btn-default'
+		},
+        {
+        	extend: 'pdf',
+            text: 'PDF 저장',
+            exportOptions: {
+                modifier: {
+                    page: 'current'
+                }
+            },
+            footer: true,
+            className: 'exportBtn btn btn-default'
+        }]
+    });
+});
+
 // 후기 수정 
 function modifyForm(val){
 	function getParameterByName(name) {

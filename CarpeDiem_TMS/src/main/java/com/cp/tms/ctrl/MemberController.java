@@ -180,6 +180,20 @@ public class MemberController {
 		
 	}
 	
+	//네이버
+	@RequestMapping(value="login", method=RequestMethod.GET)
+	public String loginGET() {
+		
+		return "user/login";
+	}
+	
+	@RequestMapping(value="loginPostNaver", method=RequestMethod.GET)
+	public String loginPOSTNaver(HttpSession session) {
+		
+		return "user/loginPostNaver";
+	}
+	
+	
 	//로그아웃 처리
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
@@ -302,7 +316,7 @@ public class MemberController {
 		
 	}
 	
-	// 문의 게시판으로 이동(전체 조회-페이징)
+	//  게시판으로 이동(전체 조회-페이징)
 		@RequestMapping(value = "/questionBoardAdmin.do", method = RequestMethod.GET)
 		public String questionBoardAdmin(Model model, String page, HttpSession session, String seq, String email, String nickname, String joindate, String withdrawal) {
 

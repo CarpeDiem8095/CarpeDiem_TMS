@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="google-signin-scope" content="profile email">
-<meta name="google-signin-client_id" content="389178713167-flq59s0etrbsa3k33baj0efa48e4ret1.apps.googleusercontent.com">
+<meta name="google-signin-scope" content="profile email">
+<meta name="google-signin-client_id"
+	content="389178713167-flq59s0etrbsa3k33baj0efa48e4ret1.apps.googleusercontent.com">
 <meta charset="UTF-8">
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext"
@@ -21,15 +22,16 @@
 <link href="css/styles.css" rel="stylesheet">
 <link href="css/fontawesome-all.css" rel="stylesheet">
 <link rel="icon" href="images/favicon.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
 <link rel="stylesheet" href="css/question.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://apis.google.com/js/platform.js" defer></script>
-    
-	<script type="text/javascript" src="./js/member/main_member_chat.js"></script>
+
+<script src="https://apis.google.com/js/platform.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script type="text/javascript" src="./js/support.js"></script>
+
+<script type="text/javascript" src="./js/member/main_member_chat.js"></script>
 <script>
 	$(document).ready(function(){
 		var id = '${mDto.email}';
@@ -61,7 +63,7 @@
 		<!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
 		<!-- Image Logo -->
-		<a class="navbar-brand logo-image" href="index.html"><img
+		<a class="navbar-brand logo-image" href="./mainpage.do"><img
 			src="images/calo.png" alt="alternative"></a>
 
 		<!-- Mobile Menu Toggle Button -->
@@ -95,7 +97,7 @@
 					href="./mypage.do">마이페이지(${mDto.email})</a></li>
 				<li class="userboard nav-item"><a class="nav-link page-scroll"
 					href="./questionBoardAdmin.do">관리자페이지</a></li>
-					<c:if test="${mDto.auth eq 'A'}"></c:if>
+				<c:if test="${mDto.auth eq 'A'}"></c:if>
 				<li>
 					<button type="button" class="btn btn-primary join"
 						data-toggle="modal" data-target="#myModal">회원가입</button>
@@ -103,8 +105,7 @@
 						data-toggle="modal" data-target="#loginModal">로그인</button>
 				</li>
 				<li class="userboard nav-item">회원 아이디 :${mDto.email} <br>
-					회원 이름 :${mDto.auth} 
-					<a href="./logout.do" onclick="SignOut()">로그아웃</a>
+					회원 이름 :${mDto.nickname} <a href="./logout.do" onclick="SignOut()">로그아웃</a>
 				</li>
 			</ul>
 		</div>
@@ -113,7 +114,7 @@
 	<!-- end of navbar -->
 	<input type="hidden" id="userid" value="${mDto.email}">
 
-	
+
 	<!-- 모든 인증이 완료되면 회원가입실행 -->
 	<input type="hidden" id="allcheckemail" value="0">
 	<input type="hidden" id="allchecknum" value="0">
@@ -215,10 +216,10 @@
 								<span class="glyphicon glyphicon-plus"></span>완 료
 							</button>
 
-							<button type="button" id="button" onclick="history.go(0);" 
-								class="btn btn-danger btn-default pull-left" 
-								data-dismiss="modal" value="Reset" style="margin: 10px" >
-								<span class="glyphicon glyphicon-remove"  ></span>취 소
+							<button type="button" id="button" onclick="history.go(0);"
+								class="btn btn-danger btn-default pull-left"
+								data-dismiss="modal" value="Reset" style="margin: 10px">
+								<span class="glyphicon glyphicon-remove"></span>취 소
 							</button>
 						</div>
 					</form>
@@ -230,6 +231,18 @@
 
 	<!-- 로그인 모달 -->
 	<!-- The Modal -->
+	<script type="text/javascript">
+	var naver_id_login = new naver_id_login("XSNm6RA9OmQcBhrv9Ezg", "http//:localhost:8091CarpeDiem_TMS/ApiLogin.jsp");	// Client ID, CallBack URL 삽입
+		// 단 'localhost'가 포함된 CallBack URL
+	var state = naver_id_login.getUniqState();
+
+	naver_id_login.setButton("green", 2, 20);
+	naver_id_login.setDomain("서비스 URL");	//  URL
+	naver_id_login.setState(state);
+	naver_id_login.setPopup();
+	naver_id_login.init_naver_id_login();
+	
+	</script>
 
 	<div class="modal fade" id="loginModal">
 		<div class="modal-dialog">
@@ -253,8 +266,8 @@
 
 						<div class="form-group has-feedback">
 							<input type="password" id="InputPassword" class="form-control"
-								 placeholder="비밀번호" onkeyup="enterkey()">
-							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+								placeholder="비밀번호" onkeyup="enterkey()"> <span
+								class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 
 						<div class="row" style="margin-left: 10px">
@@ -266,15 +279,14 @@
 							</div>
 						</div>
 						<hr>
-
-						<div id="naver_id_login" style="text-align: center">
-							<a href="./naverlogin.do" class="btn btn-success"> N+네이버 계정 로그인 </a> 
-							<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-						</div>
+						<div id="naver_id_login"></div>
+						<hr>
+							<div class="g-signin2" data-onsuccess="onSignIn"
+								data-theme="dark"></div>	
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-	<script type="text/javascript" src="./js/chatting/mainchat.js"></script>
+<script type="text/javascript" src="./js/chatting/mainchat.js"></script>
