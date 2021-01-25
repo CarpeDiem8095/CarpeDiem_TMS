@@ -139,6 +139,7 @@ public class OnedayController {
 	public String NoteCollectOneday(String note_seq, Model model, String page) {
 		List<OnedayDto> oneDto = 
 		service.noteCollectOnedayAP(note_seq);
+		
 		model.addAttribute("oneDto", oneDto);
 		model.addAttribute("seq",note_seq);
 		model.addAttribute("page",page);

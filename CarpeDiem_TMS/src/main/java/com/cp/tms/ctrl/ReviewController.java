@@ -3,6 +3,7 @@ package com.cp.tms.ctrl;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cp.tms.dto.OnedayDto;
 import com.cp.tms.dto.Paging;
+import com.cp.tms.dto.PlaceDto;
 import com.cp.tms.dto.ReviewDto;
 import com.cp.tms.model.review.IReviewService;
+import com.cp.tms.model.schedule.INoteService;
 import com.cp.tms.model.schedule.IOneDayService;
 import com.cp.tms.model.schedule.IPlaceService;
 import com.oreilly.servlet.MultipartRequest;
@@ -37,7 +40,7 @@ public class ReviewController {
 	private IReviewService service;
 	
 	@Autowired
-	private IPlaceService plService;
+	private INoteService nService;
 	
 	@Autowired
 	private IOneDayService oneService;
@@ -67,10 +70,23 @@ public class ReviewController {
 		return "review/onedayTableList";
 	}
 	
+//	// 하루일정 아작스 
+//	@SuppressWarnings("unchecked")
+//	@RequestMapping(value = "/getDataList.do")
+//	public String getDataList(String oneday_seq) {
+//		JSONObject json = new JSONObject();
+//		List<OnedayDto> aaData = oneService.selDetailOneday(oneday_seq); //aaData로 전송 해야만 인식 함 
+//		
+//		json.put("aaData", aaData);
+//		return json.toString();
+//	}
+	
+	
 	// 노트 모아보기 테이블 리스트로 이동
 	@RequestMapping(value = "/NoteTableList.do", method = RequestMethod.GET)
 	public String NoteTableList(String note_seq, Model model, String page) {
-		System.out.println("노트 테이블 이동 : "+note_seq);
+		//System.out.println("노트 테이블 이동 : "+note_seq);
+		model.addAttribute("note_title", nService.selNoteOne(note_seq));
 		model.addAttribute("noteCollection",oneService.noteCollectOnedayAP(note_seq));
 		model.addAttribute("note_seq", note_seq);
 		model.addAttribute("page",page);
@@ -94,7 +110,8 @@ public class ReviewController {
 		int maxPortSize = 10*1024*1024; // 1kb -> 1Mb -> 10Mb
 		String encoding = "UTF-8";
 
-		MultipartRequest multi = new MultipartRequest(req, directory, maxPortSize, encoding, new DefaultFileRenamePolicy());
+		MultipartRequest multi = 
+				new MultipartRequest(req, directory, maxPortSize, encoding, new DefaultFileRenamePolicy());
 
 		String oneday_seq = multi.getParameter("oneday_seq");
 		
@@ -110,6 +127,7 @@ public class ReviewController {
 		System.out.println("전달 받은 파일명 :"+origin_name);
 		
 		// 파일 받기
+		
 		String uuid_name = UUID.randomUUID().toString().replaceAll("-", "")+
 		origin_name.substring(origin_name.lastIndexOf("."));
 			
@@ -220,7 +238,7 @@ public class ReviewController {
 		System.out.println("전달 받은 파일명 :"+origin_name);
 		
 		// 파일 받기
-		String uuid_name = UUID.randomUUID().toString().replaceAll("-", "");
+		String uuid_name = UUID.randomUUID().toString().replaceAll("-", "")+
 		origin_name.substring(origin_name.lastIndexOf("."));
 			
 		System.out.println("저장 할 파일 명 : "+uuid_name);

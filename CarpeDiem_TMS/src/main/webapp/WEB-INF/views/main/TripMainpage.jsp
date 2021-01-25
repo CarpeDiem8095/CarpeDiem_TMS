@@ -140,7 +140,7 @@
 		<!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
 		<!-- Image Logo -->
-		<a class="navbar-brand logo-image" href="index.html"><img
+		<a class="navbar-brand logo-image" href="./mainpage.do"><img
 			src="images/calo.png" alt="alternative"></a>
 
 		<!-- Mobile Menu Toggle Button -->
