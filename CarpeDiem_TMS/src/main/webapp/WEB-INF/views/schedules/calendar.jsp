@@ -8,16 +8,14 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>일정 달력</title>
+<%@ include file="/WEB-INF/views/header/TMS_header.jsp" %>
 <style type="text/css">
-
 html,
 body {
   width: 100%;
@@ -33,6 +31,7 @@ body {
     border-collapse: collapse;
    	text-align: center;
    	margin: 0px auto;
+   	margin-top: 150px;
   }
   
   #calendar th {
@@ -41,8 +40,8 @@ body {
   }
   
   #calendar td {
-    width: 150px;
-    height: 100px;
+    width: 100px;
+    height: 80px;
     border: 1px solid #ccc;
     text-align: left;
     vertical-align: top;
@@ -61,6 +60,7 @@ body {
   }
   
   .dayCss{
+  	color: white;
   }
   .tableForms{
   }
@@ -91,11 +91,19 @@ body {
   .tiCalendar{
 		text-shadow: 0 -1px 4px #6E79CE, 0 -2px 10px #6E79CE, 0 -10px 20px #6E79CE, 0 -18px 40px #6E79CE, 2px 2px 2px rgba(110,121,206,0), 2px 2px 2px rgba(110,121,206,0);
 		color: #FFFFFF;
+		caption-side : top;
+		text-align: center;
   }
+  
+  a {
+	color: #2e00ff;
+	text-decoration: underline;
+	}
+	
 </style>
+
 </head>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
 	//&units=metric을 추가하면 자동으로 섭씨온도로 바꿀 수 있음(원래는 화씨)
 	var units = "metric";
@@ -246,10 +254,10 @@ body {
 			    			<input type="text" id="month" name="selMonth" value="<%=month%>">
 			    		</div>
 			    		<!-- 날씨 -->
-			        	<div style="float: right">
-				        	<span id="temp" style="color: white;"></span><br>
-							<span id="icon"></span>
-			        	</div>
+<!-- 			        	<div style="float: right"> -->
+<!-- 				        	<span id="temp" style="color: white;"></span><br> -->
+<!-- 							<span id="icon"></span> -->
+<!-- 			        	</div> -->
 			    		<div class="">
 							<%= CalendarInputData.getCalView(year, month, i, clist, noteSeq) %>
 							<% if (CalendarInputData.getCalView(year, month, i, clist, noteSeq).equals("")){
@@ -276,13 +284,13 @@ body {
 			</table>
 		</form>
 		<div style="text-align: center;">
-			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'" style="width: 1072px;" class="btnBack">
+			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'" style="width: 704px;" class="btnBack">
 			<input type = "hidden" value="${seq}" id="noteSeq">
 		</div>
-		<div style="text-align: center;">
+		<div style="text-align: center; margin-bottom: 50px;">
 		<c:if test="${fn:length(ndto[0].odto) > 1}">
 		<div>
-			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 1072px;" class="btnAllOneday">
+			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 704px;" class="btnAllOneday">
 		</div>
 		</c:if>
 		</div>
@@ -322,4 +330,5 @@ body {
 	}
 	
 </script>
+<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
 </html>

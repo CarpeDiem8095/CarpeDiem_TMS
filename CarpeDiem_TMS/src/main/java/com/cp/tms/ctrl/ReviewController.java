@@ -291,7 +291,7 @@ public class ReviewController {
 		 pb.setTotalCount(service.totalCount());
 		 
 		 // 출력 될 게시물의 갯수
-		 pb.setCountList(5);
+		 pb.setCountList(10);
 		 
 		 // - 1~10 페이지 -
 		 pb.setCountPage(5);

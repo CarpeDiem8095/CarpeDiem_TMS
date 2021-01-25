@@ -21,7 +21,7 @@
 					<div class="text-container">
 						<h4>Team</h4>
 						<ul class="list-unstyled li-space-lg white">
-							<li>대표 이사: 전은솔</li>
+							<li>Team : CarpeDiem</li>
 							<li>010-0000-0000</li>
 							<li>주소 : 서울특별시 금천구 가산동 가산디지털2로 801호 </li>
 						</ul>

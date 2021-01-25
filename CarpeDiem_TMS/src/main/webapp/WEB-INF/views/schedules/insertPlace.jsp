@@ -6,17 +6,22 @@
 <head>
 <meta charset="utf-8">
 <title>일정 등록</title>
+<%@ include file="/WEB-INF/views/header/TMS_header.jsp" %>
 <style>
 .pname{
 	text-align: left;
 }
 
 .map_wrap, .map_wrap * {
-	margin: 0;
+	margin: 0px auto;
 	padding: 0;
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	font-size: 12px;
 }
+
+ .map_wrap { 
+ 	margin-top: 150px; 
+ } 
 
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active {
 	color: #000;
@@ -203,14 +208,14 @@
 	left: 850px;
 }
 </style>
-</head>
+</head><!-- selectOneDay -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <body>
-	<div class="map_wrap">
+	<div class="map_wrap" style="margin-top: 150px; height: 720px;">
 		<div id="map"
-			style="width: 500px; height: 500px; position: relative; overflow: hidden; left: 300px">
+			style="width: 500px; height: 500px; position: relative; overflow: hidden; left: 400px">
 		</div>
-	<div id="menu_wrap" class="bg_white">
+	<div id="menu_wrap" class="bg_white" style=" right: 0px; margin-left: 550px;">
 		<div class="option">
 			<div>
 				<form onsubmit="searchPlaces(); return false;">
@@ -304,7 +309,7 @@
 	</form>
 	</div>
 	</div>
-	
+	<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41&libraries=services"></script>
