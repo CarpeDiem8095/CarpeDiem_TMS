@@ -1,7 +1,12 @@
 @charset "UTF-8";
+
+.cards-2 {
+	padding-top: 8.0rem;
+}
+
 #container {
 	width: 800px;
-	height: 540px;
+	height: 500px;
 	margin: 40px auto;
 }
 	
@@ -22,6 +27,11 @@ a {
 .table>tbody>tr>td>div>div {
 	padding: 10px;
 }
+
+.center{
+        text-align: center;
+        display: inline-block;
+    }
 	
 .form-textPw {
 	height: 150px;

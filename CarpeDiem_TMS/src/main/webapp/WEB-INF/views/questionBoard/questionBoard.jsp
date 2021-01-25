@@ -11,7 +11,6 @@
 <meta charset="UTF-8">
 <title>문의 게시판</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -63,10 +62,10 @@
 				</div>
 				
 				<div style="text-align: center;">
-		  			<input type="button" class="btn btn-primary" value="글쓰기" style="font-size: small; width: 60px; height: 30px;" onclick="location.href='./writeForm.do'">
+		  			<input type="button" class="btn btn-primary" value="글쓰기" style="font-size: small; width: 68px; height: 30px;" onclick="location.href='./writeForm.do'">
 		  			<!-- 관리자만 보이게 -->
 		  			<c:if test="${mDto.auth eq 'A'}">
-						<input type="submit" class="btn btn-primary" value="삭제" style="width: 68px">
+						<input type="submit" class="btn btn-primary" value="삭제" style="font-size: small; width: 68px; height: 30px;">
 					</c:if>
 				</div>
 			</form>
