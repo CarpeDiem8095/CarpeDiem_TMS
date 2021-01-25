@@ -1,21 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>전체 노트 페이지</title>
+<%@ include file="/WEB-INF/views/header/TMS_header.jsp" %>
+</head>
+
 	<style type="text/css">
+	body {
+  		width: 100%;
+  		height: 500px;
+	}
+
 		.frameTD{
 			width: 150px;
 			height: 150px;
 			border: 1px solid black;
 		}
+		
+		
+		.marform{
+			margin-top: 300px;
+			margin-bottom: 400px; 
+		}
+		
+	a {
+		color: #2e00ff;
+		text-decoration: underline;
+	}
+
 	</style>
-<meta charset="UTF-8">
-<title>전체 노트 페이지</title>
-</head>
+	
+	
 <body>
-	<form action="./delMultiNote.do" method="post">
+	<form action="./delMultiNote.do" method="post" class="marform">
 		<table style="margin: 0px auto;">
 			<tr>
 				<c:forEach var="note" items="${pageList}" varStatus="vs">
@@ -58,9 +78,8 @@
 	</form>
 	
 	
-	
-</body>
-	<script type="text/javascript">
+<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
+<script type="text/javascript">
 	function delOneNote(seq){
 		var delConfirm = confirm('당신의 노트가 삭제됩니다.');
 		   if (delConfirm) {

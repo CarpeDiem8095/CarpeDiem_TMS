@@ -40,10 +40,9 @@ a {
 .w3-rigth-align{
 	float: right;
 }
-
-
 </style>
 <body>
+<%-- <%@include file="../header/TMS_header.jsp" %> --%>
 		<div id="container">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
