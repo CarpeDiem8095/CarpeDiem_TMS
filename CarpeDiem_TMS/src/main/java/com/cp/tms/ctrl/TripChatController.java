@@ -95,7 +95,7 @@ public class TripChatController implements ServletConfigAware {
 		seldto.setChatgroupid(dto.getChatgroupid());
 		model.addAttribute("chatDto", seldto);
 		session.setAttribute("gr_id", seldto.getChatgroupid());
-		return "chatingroom";
+		return "chattingroom/chatingroom";
 	}
 	
 	@RequestMapping(value = "/socketOpen2", method = RequestMethod.GET)
@@ -112,7 +112,7 @@ public class TripChatController implements ServletConfigAware {
 		model.addAttribute("chatDto", seldto);
 		model.addAttribute("mychatid",(String)session.getAttribute("chat_id"));
 		session.setAttribute("gr_id", seldto.getChatgroupid());
-		return "chatingroom";
+		return "chattingroom/chatingroom";
 	}
 	
 	@RequestMapping(value = "/chatboardcontentinsert.do",method = RequestMethod.POST)

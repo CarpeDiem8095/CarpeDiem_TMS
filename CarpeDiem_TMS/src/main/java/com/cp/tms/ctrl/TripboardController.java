@@ -55,12 +55,12 @@ public class TripboardController {
 		model.addAttribute("serchDto", serchDto);
 		model.addAttribute("p", p);
 		model.addAttribute("auth", auth);
-		return "tripsearchboard";
+		return "tripsearchboard/tripsearchboard";
 	}
 	
 	@RequestMapping(value = "/serchboardmove.do", method = RequestMethod.GET)
 	public String tripsearchboard() {
-		return "serchboardwrite";
+		return "tripsearchboard/serchboardwrite";
 	}
 	
 	@RequestMapping(value = "/searchboardwrite.do",method = RequestMethod.POST)

@@ -257,7 +257,12 @@ strong {
 	cursor: text;
 	transition: all 0.2s ease;
 }
-
+.mainaccess {
+	margin-left: 15px;
+	font-size: 13px;
+	padding: 5px;
+	border-bottom: 0.5px solid #B4B4B4;
+}
 /* IE10+ hack to solve lower label text position compared to the rest of the browsers */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {  
 	.label-control {

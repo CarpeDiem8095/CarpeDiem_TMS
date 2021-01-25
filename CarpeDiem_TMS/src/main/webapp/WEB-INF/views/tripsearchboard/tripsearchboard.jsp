@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +7,8 @@
 <title>동행찾기 게시판</title>
 </head>
 <body>
+<%@include file="../header/TMS_header.jsp" %>
+<div id="intro" class="basic-1">
 <table style="text-align: center;">
 	<tr>
 		<th>연번</th>
@@ -40,7 +39,6 @@
 		
 	</tr>
 	</c:forEach>
-	
 	<tr>
 		<td colspan="4" style="text-align: center;">
 			<c:if test="${p.startpage ne 1}">
@@ -54,7 +52,7 @@
 			<a href="./boardsearch.do?page=${p.lastpage+1}">▶</a>
 			<a href="./boardsearch.do?page=${p.totalpage}">▶▶</a>
 			</c:if>
-			</td>
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -63,5 +61,7 @@
 		</td>
 	</tr>
 </table>
+</div>
+<%@include file="../footer/TMS_footer.jsp" %>
 </body>
 </html>
