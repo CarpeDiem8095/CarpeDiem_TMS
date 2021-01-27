@@ -53,21 +53,22 @@ a {
 }
 
 #container {
-    width: 650px;
+    width: 800px;
+    height: 900px;
     margin: 40px auto;
     height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
     max-height: none;
     overflow-y: auto;
-    margin-bottom: 300px;
-    margin-top: 130px;
-    margin-bottom: 100px;
+    margin-top: 140px;
+    margin-bottom: 200px;
 }
 
 </style>
-<body>
+<body style="text-align: left;">
 <%@include file="../header/TMS_header.jsp" %>
-	<div id="intro" class="basic-1">
-		<div id="container">
+		<div id="container" style="
+    height: 800px;
+    margin-top: 140px;">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
@@ -203,9 +204,8 @@ a {
 				</div>
 				<div>
 				</div>
-				<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
-				</div>
-
+				
+<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>

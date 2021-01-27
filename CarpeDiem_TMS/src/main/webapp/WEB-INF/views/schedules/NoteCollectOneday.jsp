@@ -43,8 +43,10 @@ a {
 .w3-rigth-align{
 	float: right;
 }
+    
+
 </style>
-<body>
+<body style="text-align: left;">
 	<div class="fck"></div>
 	<div id="container">
 	<h3>노트 모아 보기 </h3>

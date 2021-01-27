@@ -6,8 +6,6 @@
 <meta charset="UTF-8">
 <title>전체 노트 페이지</title>
 <%@ include file="/WEB-INF/views/header/TMS_header.jsp" %>
-</head>
-
 	<style type="text/css">
 	body {
   		width: 100%;
@@ -32,7 +30,7 @@
 	}
 
 	</style>
-	
+</head>
 	
 <body>
 	<form action="./delMultiNote.do" method="post" class="marform">
