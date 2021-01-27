@@ -14,9 +14,11 @@
 <script type="text/javascript" src="./js/support.js"></script>
 <style type="text/css">
 	#container {
-		width: 800px;
-		height: 540px;
-		margin: 40px auto;
+	width: 800px;
+	margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
+    overflow-y: auto;
 	}
 	
 	a {

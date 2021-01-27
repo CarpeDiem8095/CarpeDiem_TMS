@@ -15,9 +15,12 @@
 
 <style type="text/css">
 #container {
-	width: 800px;
+	width: 650px;
 	height: 540px;
 	margin: 40px auto;
+	text-align: left;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
 }
 
 a {
@@ -28,7 +31,7 @@ a {
 </style>
 <body>
 <%@include file="../header/TMS_header.jsp" %>
-<div id="intro" class="basic-1">
+<div id="services" class="cards-2">
 	<div id="container">
 
 		<h3>하루 일정</h3> 
@@ -73,30 +76,36 @@ a {
 			<c:forEach var="i" items="${commentList}" varStatus="vs">
 				<div id="commentId">
 
-					<form id="updateComment" method="get">
+					<form class="updateComment" method="post" action="./delComment.do">
 						<input type="hidden" name="comm_seq" value="${i.comm_seq}">
 						<input type="hidden" name="oneday_seq" value="${i.oneday_seq}">
-						<input type="hidden" name="reffer" value="${i.reffer}"> 
-						<input type="hidden" name="step" value="${i.step}">
-						<div style="width: 665px; height: 35px; float: left;">
-							${i.comm_seq}${i.email}${i.content} 
-							<c:if test="${mDto.email eq i.email}">
-							<input type="button" onclick="delComment()" class="btn btn-default" value="삭제" style="float: right;"> 
-							<input type="button" onclick="modifyCommForm('${i.comm_seq}')" class="btn btn-default btnModi" value="수정" style="float: right;">
-							</c:if>
+						<input type="hidden" name="depth" value="${i.depth}">
+						<input type="hidden" name="reffer" value="${i.reffer}">
+						<div>
+							<div style="width: 550px; height: 35px; float: left;" class="modifyPlace">
+								${i.comm_seq}
+								${i.email}
+								${i.content}
+							</div>
+							<div style="width:102px; float: right;" >
+								<c:if test="${mDto.email eq i.email}">
+								<input type="button" onclick="modifyCommForm($(this),'${i.comm_seq}')" class="btn btn-default btnModi" value="수정" style="float: right;">
+								<input type="button" onclick="delComment($(this))" class="btn btn-default" value="삭제" style="float: right;"> 
+								</c:if>
+							</div>	
 						</div>
 					</form>
-
-					<span class="showMeTheForm">
+					
+					<div style="width: 51px; float: right;" class="showMeTheForm">
 					<c:if test="${mDto.email ne null}">
 						<input type="button" class="btn btn-default" value="답글" style="float: right;">
 					</c:if>
-					</span>
+					</div>
 					<form action="./writeReply.do" method="post">
 						<input type="hidden" name="oneday_seq" value="${i.oneday_seq}">
 						<input type="hidden" name="comm_seq" value="${i.comm_seq}">
 						<div class="re_Form">
-							<div class="input-group" style="width: 670px;">
+							<div class="input-group">
 								<input type="text" name="content" class="form-control" placeholder="답글 내용을 입력하세요."> 
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="submit">등록</button>
@@ -110,34 +119,41 @@ a {
 	</div>
 	<script>
 		// 댓글 삭제
-		function delComment() {
-			var formData = $('#updateComment').serialize();
-			console.log(formData);
-			//alert(formData.val());
 
-			$.ajax({
-				type : 'get',
-				url : 'delComment.do',
-				data : formData,
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				success : function(data) {
-					//alert(data.result);
-					if(confirm("댓글을 삭제 하시겠습니까?")==true){
-						location.reload();
-					}else{   //취소
-					    return;
-					}
-				},
-				error : function(err) {
-					alert("잘못된 요청입니다." + err);
-				}
+		function delComment(thisVal) {
+// 			var delVal = thisVal.parent().parent(); // 해당 폼 
+// 			alert(delVal.find('.updateComment').prop('tagName'));
+// 			delVal.filter('.updateComment').submit();
+			document.sub1.submit();
+			
+			
+// 			var formData = $('#updateComment').serialize();
+// 			console.log(formData);
+// 			//alert(formData.val());
+// 			if (confirm("댓글을 삭제 하시겠습니까?") == true) {
 
-			})
+// 				$.ajax({
+// 					type : 'get',
+// 					url : 'delComment.do',
+// 					data : formData,
+// 					dataType : 'json',
+// 					contentType : 'application/json; charset=utf-8',
+// 					success : function(data) {
+// 						//alert(data.result);
+// 						location.reload();
+// 					},
+// 					error : function(err) {
+// 						alert("잘못된 요청입니다." + err);
+// 					}
+
+// 				})
+// 			} else { //취소
+// 				return;
+// 			}
 		}
 
 		// 댓글 수정 폼 생성
-		function modifyCommForm(val) {
+		function modifyCommForm(a,val) {
 			$('.showMeTheForm').hide();
 			//alert(val);
 			var comm_seq = val;
@@ -145,7 +161,8 @@ a {
 
 			var oneday_seq = <%=request.getParameter("oneday_seq")%>;
 			//alert(oneday_seq)
-			var a =$(this);
+// 			alert(a.parent().parent().find('.modifyPlace').html());
+			var modiPlace = a.parent().parent().find('.modifyPlace');
 
 			$.ajax({
 						type : 'get',
@@ -160,7 +177,7 @@ a {
 							//alert(data.content)
 							//alert(data.comm_seq)
 							html = "<div class='input-group mb-3'>";
-							html += "	<input type='text' class ='form-control' id='modifyVal' value='"+data.content+"'>";
+							html += "	<input type='text' class ='form-control' class='modifyVal' value='"+data.content+"'>";
 							html += "	<input type='hidden' name='comm_seq' value='"+data.comm_seq+"'>";
 							html += "	<div class='input-group-append'>";
 							html += "		<input type='button' class='btn btn-default' value='등록' onclick='modifyComment()'>";
@@ -168,7 +185,7 @@ a {
 							html += "	</div>";
 							html += "</div>";
 
-							$('#commentId').html(html);
+							modiPlace.html(html);
 							
 						},
 						error : function(err) {
