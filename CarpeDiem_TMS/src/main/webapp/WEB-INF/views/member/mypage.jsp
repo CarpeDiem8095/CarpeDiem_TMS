@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
-
+<%@include file="/WEB-INF/views/header/TMS_header.jsp" %>
 function Withdrawal(){
 	$("#myForm").attr("action","./delete.do");
 	$("#myForm").submit();
@@ -95,6 +95,7 @@ function checkChange(){
 
 </script>
 <title>마이페이지</title>
+
 </head>
 <body>
 <!-- 닉네임, 비밀번호, 새로운 비밀번호가 일치되면 회원 변경 -->
