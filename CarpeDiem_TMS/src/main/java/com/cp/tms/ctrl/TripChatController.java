@@ -71,16 +71,11 @@ public class TripChatController implements ServletConfigAware {
 	
 	@RequestMapping(value = "/socketOpen.do", method = RequestMethod.GET)
 	public String socketOpen(HttpSession session,ChatingDto dto, Model model) {
-		System.out.println("상대방아이디는?" + dto.getChatyourid());
-		System.out.println("그룹아이디는?" + dto.getChatgroupid());
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("chatmyid",session.getAttribute("chat_id"));
 		map.put("chatyourid", dto.getChatyourid());
 		ChatingDto seldto=tripchatservice.selchatboardcontent(map);
-		System.out.println("현제 세션아이디"+ session.getAttribute("chat_id"));
 		if(seldto == null) {
-			// 새로 생성
 			dto.setChatmyid((String)session.getAttribute("chat_id"));
 			boolean isc=tripchatservice.chatboardinsert(dto);
 			System.out.println("채팅생성 : "+isc);
@@ -89,7 +84,6 @@ public class TripChatController implements ServletConfigAware {
 			seldto=tripchatservice.selchatboardcontent(map);
 		}
 		if(seldto.getReport_status()=="Y") {
-			model.addAttribute("<script type='text/javascript'>alert('신고된 채팅방입니다.신고처리후 사용해주세요');</script>");
 			return "main/TripMainpage";
 		}
 		seldto.setChatgroupid(dto.getChatgroupid());

@@ -30,8 +30,7 @@ public class TripSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("afterConnectionEstablished()실행");
 		super.afterConnectionEstablished(session);
-
-		list.add(session); // 전체 접속자 리스트에 새로운 접속자 추가
+		list.add(session);
 	}
 
 	@Override
@@ -78,8 +77,7 @@ public class TripSocketHandler extends TextWebSocketHandler {
 							logger.info("newMsg:" + msgLog);
 							txt = newMsg;
 						s.sendMessage(new TextMessage(txt));
-					}
-					if(my_gr_session[0].equals(other_gr_session[1])&&my_gr_session[1].equals(other_gr_session[0])) {
+					}if(my_gr_session[0].equals(other_gr_session[1])&&my_gr_session[1].equals(other_gr_session[0])) {
 							String newMsg = myMemSession + ": "
 									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "");
 							String msgLog = myMemSession
