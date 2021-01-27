@@ -66,6 +66,7 @@
 					</c:if>
 				</div>
 			</form>
+			
 			<!-- 비밀번호 입력 modal -->
 			<div id="textPw" class="modal fade" role="dialog">
 				<div class="modal-dialog">
