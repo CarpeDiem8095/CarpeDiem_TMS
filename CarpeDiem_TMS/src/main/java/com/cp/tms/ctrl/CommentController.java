@@ -55,7 +55,6 @@ public class CommentController {
 	
 	// 댓글의 댓글 작성 
 	@RequestMapping(value = "/writeReply.do", method = RequestMethod.POST)
-	@Transactional
 	public String writeReply(CommentDto dto, HttpServletRequest req, HttpSession session) {
 		String oneday_seq = req.getParameter("oneday_seq");
 		Member mDto = (Member)session.getAttribute("mDto");
@@ -71,20 +70,26 @@ public class CommentController {
 	}
 	
 	// 댓글 삭제
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/delComment.do",method=RequestMethod.GET)
-	@ResponseBody
-	public String delComment(CommentDto dto, HttpServletRequest req) {
-		String oneday_seq = req.getParameter("oneday_seq");
-		JSONObject json = new JSONObject();
+//	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/delComment.do",method=RequestMethod.POST)
+	public String delComment(HttpServletRequest req,String comm_seq, int depth, int reffer) {
 		
-		System.out.println("삭제에서 받아오는 dto : " + dto);
+		System.out.println("삭제 할 comm_seq : " + comm_seq);
+		String oneday_seq = req.getParameter("oneday_seq");
+//		JSONObject json = new JSONObject();
+		CommentDto dto = new CommentDto();
+		dto.setOneday_seq(oneday_seq);
+		dto.setComm_seq(comm_seq);
+		dto.setDepth(depth);
+		dto.setReffer(reffer);
+		System.out.println("삭제 할 DTO : "+dto);
 		boolean isc = service.delComment(dto);
+		
 		System.out.println(isc);
 		System.out.println("삭제 후에 받는 oneday_seq : " + oneday_seq);
 
-		json.put("result", isc);
-		return json.toString();
+//		json.put("result", isc);
+		return "redirect:/commnetList.do?oneday_seq="+oneday_seq;
 	}
 	
 	

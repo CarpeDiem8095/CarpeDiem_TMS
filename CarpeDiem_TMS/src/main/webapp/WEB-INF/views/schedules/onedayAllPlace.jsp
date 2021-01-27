@@ -6,12 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>하루 일정 조회</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="./js/review.js"></script>
 </head>
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="./js/pdfmaker/pdfmake.min.js"></script> 
+<script src="./js/pdfmaker/vfs_fonts.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="./js/review.js"></script>
+
 <style type="text/css">
 #container {
 	width: 650px;
@@ -43,7 +53,7 @@ a {
 }
 
 #container {
-    width: 800px;
+    width: 650px;
     margin: 40px auto;
     height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
     max-height: none;
@@ -51,12 +61,12 @@ a {
     margin-bottom: 300px;
     margin-top: 130px;
     margin-bottom: 100px;
-    height: 900px;
 }
 
 </style>
 <body>
 <%@include file="../header/TMS_header.jsp" %>
+	<div id="intro" class="basic-1">
 		<div id="container">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
@@ -194,6 +204,7 @@ a {
 				<div>
 				</div>
 				<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
+				</div>
 
 </body>
 <script type="text/javascript"

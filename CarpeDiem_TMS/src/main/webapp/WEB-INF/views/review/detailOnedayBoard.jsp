@@ -15,8 +15,11 @@
 <style type="text/css">
 #container {
 	width: 650px;
-	height: 540px;
 	margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
+    overflow-y: auto;
+    text-align: left;
 }
 
 a {
@@ -27,7 +30,7 @@ a {
 
 #map{
 	position: absolute;
-    left: 1380px;
+    left: 1450px;
     top: 140px;
 }
 
@@ -42,9 +45,9 @@ a {
 
 </style>
 <body>
-<%-- ${oneDto} --%>
-
-<div id="container">
+<%@include file="../header/TMS_header.jsp" %>
+	<div id="intro" class="basic-1">
+		<div id="container" style="width: 650px;">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
@@ -55,31 +58,64 @@ a {
 		</div> 
 			<div class="panel-group" id="accordion">
 				<c:forEach var="oneday" items="${selDetailOneday}">
-					<div style="font-style:italic; color: red;">${oneday.oneday_title}</div>
+					<div class="w3-text-dark-grey" style="font-style: italic; margin-top: 20px;" ><h5>${oneday.oneday_title}</h5></div>
 					<c:forEach var="p" items="${oneday.placeDto}" varStatus="vs">
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div class="w3-panel w3-black placeTitleCss">
-								<button class="w3-btn w3-black">${p.place_name}</button>
-								<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">후기</button>
-								<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모</button>
+							<div class="w3-panel w3-blue-grey placeTitleCss">
+								<button class="w3-btn w3-blue-grey">${p.place_name}</button>
+								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
+								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
+								<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+								<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 							</div>
 						<div>
+							<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
 								<input type="hidden" name="oneday_seq" value="${oneday_seq}">
 								<input type="hidden" name="place_seq" value="${p.place_seq}">
 									<div class="revForm" class="w3-container w3-hide">
+										<div><input type="file" name="filename" class="uploadFile" accept="image/*" multiple="multiple"></div>
 										<div>
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
-											<div><textarea style="width:400px; height: 250px; background-color: white" name="content" class="content form-control" readonly="readonly"></textarea></div>
+											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+											
+											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
+											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" onclick="modifyForm('${p.place_seq}')"/></div>
+											
 										</div>
 									</div>
+							</form>
 						</div>
+								<!-- 수정 Modal -->
+								<div class="modal fade" id="modifyRev" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- 수정 Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title"> 후기 수정 </h4>
+											</div>
+											<div class="modal-body">
+												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
 								<!-- 메모추가 부분 -->
 							<form>
 								<div class="memoForm" class ="w3-container w3-hide" >
 									<div>
-										<textarea style="width: 650px; height: 200px; background-color: white" class="memoArea" readonly="readonly"></textarea>
+										<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
+									</div>
+									<div>
+										<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+										<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+										<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
 									</div>
 								</div>
 							</form>	
@@ -88,30 +124,47 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-blue-grey"/></div>
 								<div>
-								<div class="w3-panel w3-black placeTitleCss">
-										<button class="w3-btn w3-black">${p.place_name}</button>
-										<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">후기</button>
-										<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모</button>
+								<div class="w3-panel w3-blue-grey placeTitleCss">
+										<button class="w3-btn w3-blue-grey">${p.place_name}</button>
+										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
+										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
+										<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
+										<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 								</div>
 								<div>
+									<form class ="fileForm" enctype="multipart/form-data" action="./fileUpload.do" method="post">
+									<input type="hidden" name="oneday_seq" value="${oneday_seq}">
+									<input type="hidden" name="place_seq" value="${p.place_seq}">
+										
 										<div class="revForm" class="w3-container w3-hide">
 											<div>
+												<input type="file" name="filename" class="uploadFile" accept="image/*"> 
 												</div>
 											<div>
 												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
-												<div><textarea style="width:400px; height: 250px; background-color: white" name="content" class="content form-control" readonly="readonly"></textarea></div>
+												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
+												
+												<div><input type="submit" class="btnSave btn btn-default w3-blue-grey"  value="SAVE" style="float:right;"/></div>
+												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
+												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
+									</form>
 								</div>
 								
 									<!-- 메모추가 부분 -->
 									<form>
 										<div class="memoForm" class ="w3-container w3-hide" >
 											<div>
-												<textarea style="width:650px; height:200px; background-color: white;" class="memoArea" readonly="readonly"></textarea>
+												<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 											</div>
+										<div>
+											<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+											<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
+											<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+										</div>
 										</div>
 									</form>							
 								</div>
@@ -123,11 +176,16 @@ a {
 								<input type="hidden" name="myY" value="${p.ylng}"/>
 						</c:forEach>
 					</c:forEach>
+					<p></p>
+					<button onclick="history.back(-1)" class="w3-button w3-padding-small w3-border w3-round-large w3-rigth-align">뒤로가기</button>
 				</div>
 				<div id="map" style="width: 500px; height: 400px; margin: 0px auto;"></div>
-			
 				</div>
-				
+				<div>
+				</div>
+				<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
+				</div>
+
 </body>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
@@ -288,14 +346,39 @@ a {
 		
 		$(".showMeTheForm").click(function(){
 			var placeSeq = $(this).parent().find(".this_place_seq");
-			//alert(placeSeq);
+			alert(placeSeq);
 				if ($(".revForm").is(':visible')) {
 					$(".revForm").slideUp('300');
 				} else {
+					$.ajax({
+						type:'get',
+						url : 'reviewList.do',
+						data : {"place_seq":placeSeq.val()},
+						dataType: 'json',
+						contentType:'application/json; charset=utf-8',
+						success:function(data){
+							//alert(data.img_url);
+				 			if(data.content != null || data.origin_name !=null){
+					        	placeSeq.parent().parent().find(".preview").html("<img src='./uploadFiles/"+data.uuid_name+"' style='width: 225px; height: 225px;'>");
+					        	placeSeq.parent().parent().find(".content").html(data.content);
+					        	placeSeq.parent().parent().find(".btnSave").css("display","none");
+					        	placeSeq.parent().parent().find(".btnReset").css("display","none");
+					        	placeSeq.parent().parent().find(".uploadFile").css("display","none");
+				 			}else{
+				 				console.log("====null====");
+				 				placeSeq.parent().parent().find(".btnModify").css("display","none");
+				 			}
+						},
+					      error : function(err){
+					         alert("잘못된 요청입니다."+err);
+					      }
+						
+					})
+						
 				//console.log($(this).parent().parent().find(".revForm").html());
 				$(this).parent().parent().find(".revForm").slideToggle('slow');
 				}
-			});
+			})
 		
 		
 		// 등록된 이미지 미리보기 
@@ -315,5 +398,5 @@ a {
 		    }
 		}
 </script>
-
+<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
 </html>
