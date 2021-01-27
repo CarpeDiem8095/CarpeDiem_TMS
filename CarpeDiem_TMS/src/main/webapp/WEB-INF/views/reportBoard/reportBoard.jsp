@@ -25,6 +25,11 @@
 		vertical-align: -webkit-baseline-middle;
 		margin-left: 10px;
 	}
+	
+	.center{
+        text-align: center;
+        display: inline-block;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -34,7 +39,7 @@
 	<div id="services" class="cards-2">
 		<div id="container">
 			<h1 style="margin-top: 50px; margin-bottom: 20px;">신고처리 게시판</h1>
-			<div>
+			<div style="margin-bottom: 20px;">
 				<table class="table table-bordered" style="font-size: small;">
 					<tr class="info">
 						<th>글 번호</th>
