@@ -16,10 +16,8 @@
 <title>일정 달력</title>
 <%@ include file="/WEB-INF/views/header/TMS_header.jsp" %>
 <style type="text/css">
-html,
 body {
-  width: 100%;
-  height: 100%;
+     width: 100%;
 }
 body {
   background: linear-gradient(to right, rgb(189, 195, 199), rgb(44, 62, 80));
@@ -40,8 +38,8 @@ body {
   }
   
   #calendar td {
-    width: 100px;
-    height: 80px;
+    width: 90px;
+    height: 70px;
     border: 1px solid #ccc;
     text-align: left;
     vertical-align: top;
@@ -73,6 +71,7 @@ body {
    background-color:#992064;
    	color: white;
    }
+   
 	.btn-create{
 	background-color: #1E9E68;
 	color: white;
@@ -93,6 +92,7 @@ body {
 		color: #FFFFFF;
 		caption-side : top;
 		text-align: center;
+		padding: 0px;
   }
   
   a {
@@ -101,11 +101,8 @@ body {
 	}
 	
 </style>
-
 </head>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-<body>
 <%-- <c:set var="oneday_Seq" value="${seq}"/> --%>
 	<%
 		// 현재 날짜의 년도와 월
@@ -274,17 +271,18 @@ body {
 			</table>
 		</form>
 		<div style="text-align: center;">
-			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'" style="width: 704px;" class="btnBack">
+			<input type="button" value="뒤로가기" onclick="location.href='./notePaging.do?page=${page}'" style="width: 633.6px;" class="btnBack">
 			<input type = "hidden" value="${seq}" id="noteSeq">
 		</div>
 		<div style="text-align: center; margin-bottom: 50px;">
 		<c:if test="${fn:length(ndto[0].odto) > 1}">
 		<div>
-			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 704px;" class="btnAllOneday">
+			<input type = "button" value="하루 일정 묶음 조회" onclick="location.href='./NoteCollectOneday.do?note_seq=${seq}&page=${page}'" style="width: 633.6px;" class="btnAllOneday">
 		</div>
 		</c:if>
 		</div>
 	</div>
+<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
 </body>
 
 <script type="text/javascript">
@@ -320,5 +318,5 @@ body {
 	}
 	
 </script>
-<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
+
 </html>

@@ -9,6 +9,7 @@
 </head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
+<%@include file="/WEB-INF/views/header/TMS_header.jsp" %>
 function passWD(){
 	var pwd = $("#pwd").val();
 	var passowrd =$("#passowrd").val();

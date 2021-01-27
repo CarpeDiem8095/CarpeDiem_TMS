@@ -42,10 +42,12 @@
  </update>
  
  <delete id="delComment" parameterType="comDto">
-	DELETE FROM COMMENTBOARD
-	WHERE ONEDAY_SEQ = #{oneday_seq}
-	AND REFFER = #{reffer} 
-	AND DEPTH >= (SELECT DEPTH FROM COMMENTBOARD WHERE COMM_SEQ=#{comm_seq})
+	DELETE FROM TRIP.COMMENTBOARD
+		WHERE ONEDAY_SEQ =#{oneday_seq}
+		AND DEPTH >= (SELECT "DEPTH" 
+							FROM TRIP.COMMENTBOARD 
+							WHERE COMM_SEQ=#{comm_seq})
+		AND REFFER = (SELECT REFFER FROM TRIP.COMMENTBOARD WHERE COMM_SEQ=#{comm_seq})
  </delete>
  
  <select id="getOneComment" parameterType="comDto" resultType="comDto">
