@@ -16,8 +16,8 @@
 #container {
 	width: 650px;
 	margin: 40px auto;
-    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
-   	max-height: 540px;
+    height: expression( this.scrollHeight > 790 ? "800px" : "auto" );
+   	max-height: 800px;
     overflow-y: auto;
     text-align: left;
 }
@@ -42,12 +42,11 @@ a {
 .w3-rigth-align{
 	float: right;
 }
-
 </style>
 <body>
-<%@include file="../header/TMS_header.jsp" %>
-	<div id="intro" class="basic-1">
-		<div id="container" style="width: 650px;">
+<%-- <%@include file="../header/TMS_header.jsp" %> --%>
+<!-- 	<div id="intro" class="basic-1"> -->
+		<div id="container" style="width: 650px; height: 800px;">
 		<h3>하루 일정</h3>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
@@ -63,7 +62,7 @@ a {
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div class="w3-panel w3-blue-grey placeTitleCss">
+							<div class="w3-panel w3-blue-grey placeTitleCss" style="margin:3px; padding:2px;">
 								<button class="w3-btn w3-blue-grey">${p.place_name}</button>
 								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
 								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
@@ -80,9 +79,9 @@ a {
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 											
-											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
-											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" onclick="modifyForm('${p.place_seq}')"/></div>
+											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey  w3-border" value="SAVE" style="float:right;"/></div>
+											<div><input type="button" class="btnReset btn btn-default  w3-border" value="RESET" onclick="reset();" style="float:right;"/></div>
+											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey  w3-border" value="수정" onclick="modifyForm('${p.place_seq}')"/></div>
 											
 										</div>
 									</div>
@@ -124,9 +123,9 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-blue-grey"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-dark-grey w3-hover-text-blue-grey"/></div>
 								<div>
-								<div class="w3-panel w3-blue-grey placeTitleCss">
+								<div class="w3-panel w3-blue-grey placeTitleCss" style="margin:3px; padding:2px;">
 										<button class="w3-btn w3-blue-grey">${p.place_name}</button>
 										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
 										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
@@ -146,9 +145,9 @@ a {
 												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 												
-												<div><input type="submit" class="btnSave btn btn-default w3-blue-grey"  value="SAVE" style="float:right;"/></div>
-												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+												<div><input type="submit" class="btnSave btn btn-default  w3-border w3-blue-grey"  value="SAVE" style="float:right;"/></div>
+												<div><input type="button" class="btnReset btn btn-default  w3-border" value="RESET" onclick="reset();" style="float:right;"/></div>
+												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey  w3-border" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
 									</form>
@@ -183,8 +182,7 @@ a {
 				</div>
 				<div>
 				</div>
-				<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
-				</div>
+<!-- 				</div> -->
 
 </body>
 <script type="text/javascript"
@@ -346,7 +344,7 @@ a {
 		
 		$(".showMeTheForm").click(function(){
 			var placeSeq = $(this).parent().find(".this_place_seq");
-			alert(placeSeq);
+// 			alert(placeSeq);
 				if ($(".revForm").is(':visible')) {
 					$(".revForm").slideUp('300');
 				} else {
@@ -358,7 +356,8 @@ a {
 						contentType:'application/json; charset=utf-8',
 						success:function(data){
 							//alert(data.img_url);
-				 			if(data.content != null || data.origin_name !=null){
+				 			if(data.content != null || data.origin_name !=null){ 
+				 				// null일 시, 글 작성 폼을 보여 줌 
 					        	placeSeq.parent().parent().find(".preview").html("<img src='./uploadFiles/"+data.uuid_name+"' style='width: 225px; height: 225px;'>");
 					        	placeSeq.parent().parent().find(".content").html(data.content);
 					        	placeSeq.parent().parent().find(".btnSave").css("display","none");
@@ -398,5 +397,93 @@ a {
 		    }
 		}
 </script>
-<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	
+
+<script type="text/javascript">
+
+// 후기 수정 
+function modifyForm(val){
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	        results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+ 	//alert(val);
+ 	var seq = getParameterByName('seq'); 
+ 	//alert(Result);
+ 	
+	ajaxModify(val,seq);
+	$('#modifyRev').modal();
+}
+
+var ajaxModify = function(val,seq){
+	$.ajax({
+		url:'./modifyRevForm.do',
+		method : 'post',
+		data : {"place_seq":val, "oneday_seq":seq},
+		dataType:'json',
+		success : function(data){
+			html = "<div class='form-group'>";
+			html += "<input type='hidden' value='"+data.place_seq+"' name='place_seq'/>";
+			html += "<input type='hidden' value='"+data.oneday_seq+"' name='oneday_seq'/>";
+	        html += "<label>이미지 첨부</label>";
+			html +="<p class='form-control' style='height: 41.5px;'><input type='file' class='uploadFile' id='uploadFile' name='filename' accept='image/*'></p>";
+			html += "</div>";
+			 
+			html += "<div class='form-group'>";
+			html += "<label>미리보기</label>";
+			html +="<div class='form-control preview' style='width: 300px; height: 300px;'></div>";
+			html += "</div>";
+			
+			html += "<div class='form-group'>";
+	        html += "<label for='content'>내용</label>";
+			html +="<textarea class='form-control' style='width:564px; height: 250px;' name='content'>"+data.content+"</textarea>";
+			html +="</div>";
+			
+		    html += "<div class='modal-footer'>";
+		    html += "<input class='btn btn-default w3-blue-grey' type='button' value='수정' onclick='update()'/>";
+		    html += "<input class='btn btn-default' type='button' value='삭제' onclick='delReview("+data.place_seq+","+data.oneday_seq+")' style='float:left;'/>";
+		    html += "<button type='button' class='btn btn-default' data-dismiss='modal'>취소</button>";
+		    html += "</div>";
+		    
+			 $('#frmModify').html(html);
+			 
+			// 등록된 이미지 미리보기 
+			 $(".uploadFile").on('change', function(){
+			     readInputFile(this);
+			 });
+
+
+			 function readInputFile(input) {
+			     if(input.files && input.files[0]) {
+			         var reader = new FileReader();
+			         reader.onload = function (e) {
+			         	//alert(input);
+			             $('.preview').html("<img src="+ e.target.result +" style='width: 248px; height: 248px;'>");
+			       }
+			         reader.readAsDataURL(input.files[0]);
+			     }
+			 }
+		},
+	      error: function(){
+	          alert("잘못된 요청입니다.");
+	      }
+	
+	})
+}
+
+function update(){
+//  alert("작동");
+  var frm = document.getElementById('frmModify');
+  frm.action = './modifyRev.do';
+  var preVal = $('#uploadFile').val();
+//  alert(preVal);
+  if(preVal == null||preVal==''){
+	  alert("사진을 첨부해 주세요.");
+  }else{
+	  frm.submit();
+  }
+}
+</script>
+<%-- <%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>	 --%>
 </html>

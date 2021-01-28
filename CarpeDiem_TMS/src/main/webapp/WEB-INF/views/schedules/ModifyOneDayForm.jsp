@@ -39,7 +39,7 @@
 
 
 $('.from_date').datepicker({ 
-    weekStart: 1, // 1이면 월요일부터 0이 디폴트
+    weekStart: 0, // 1이면 월요일부터 0이 디폴트
 	autoclose: true,
 	format : 'yyyy-mm-dd'
 })
