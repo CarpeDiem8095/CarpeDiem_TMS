@@ -48,7 +48,6 @@ function modify(val) {
 }
 
 var modifyAjax = function(val) {
-//	var auth = $("#auth").val();
 	$.ajax({
 		url: "./modifyForm.do",
 		method: "post",
@@ -56,7 +55,6 @@ var modifyAjax = function(val) {
 		dataType: "json",
 		success: function(v) {
 			console.log(v.seq, v.writer, v.title, v.content);
-//			console.log(auth);
 			
 			 html = "  <input type='hidden' value='"+v.seq+"' name='seq'>";
 			html += "  <div class='form-group'>";
@@ -104,9 +102,7 @@ function update() {
 //	alert(content);
 	if (title == '' || content == '') {
 		swal("수정 오류", "제목과 내용은 필수입니다.");
-//		return false;
 	} else {
 		frm.submit();
-//		return true;
 	}
 }

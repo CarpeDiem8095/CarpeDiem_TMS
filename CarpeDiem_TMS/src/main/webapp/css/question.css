@@ -6,7 +6,6 @@
 
 #container {
 	width: 800px;
-	height: 500px;
 	margin: 40px auto;
 }
 	
@@ -29,10 +28,10 @@ a {
 }
 
 .center{
-        text-align: center;
-        display: inline-block;
-        font-size: small;
-    }
+	text-align: center;
+	display: inline-block;
+	font-size: small;
+}
 	
 .form-textPw {
 	height: 150px;

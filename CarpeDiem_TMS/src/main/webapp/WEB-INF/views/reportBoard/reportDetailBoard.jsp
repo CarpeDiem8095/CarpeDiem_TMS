@@ -55,7 +55,6 @@
 				<input type="button" class="btn-primary" value="to.신고자" onclick="location.href='./mailForm.do?seq=${detail.seq}&reporter_email=${detail.reporter_email}'">
 				<input type="button" class="btn-primary" value="to.신고대상" onclick="location.href='./mailForm2.do?seq=${detail.seq}&subject_email=${detail.subject_email}'">
 				<input type="button" class="btn-primary" value="신고처리 완료" onclick="changeWithdrawal('${detail.subject_email}', '${detail.seq}')">
-<%-- 				<input type="button" class="btn-primary" value="신고처리" onclick="changeProcessingStatus(${detail.seq})"> --%>
 				<input type="button" class="btn-primary" value="전체글목록" onclick="location.href='./reportBoard.do'">
 			</div>
 		</form>

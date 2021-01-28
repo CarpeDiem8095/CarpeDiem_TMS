@@ -12,7 +12,6 @@
 <style type="text/css">
 	#container {
 		width: 800px;
-		height: 500px;
 		margin: 40px auto;
 	}
 	
