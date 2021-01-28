@@ -21,7 +21,7 @@ body {
 }
 body {
   background: linear-gradient(to right, rgb(189, 195, 199), rgb(44, 62, 80));
-  overflow: hidden;
+  overflow: auto;
 }
 
 	#calendar {
@@ -204,7 +204,7 @@ body {
 		}
 	});
 </script>
-	<div id="container" class="flex-contatiner">
+	<div id="container" class="flex-contatiner" style="margin-bottom: 180px; font-size: 9px;">
 		<form>
 			<table id="calendar">
 				<caption class="tiCalendar">
