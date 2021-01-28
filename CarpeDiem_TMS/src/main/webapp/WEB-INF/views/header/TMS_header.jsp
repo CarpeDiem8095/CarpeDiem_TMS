@@ -224,7 +224,7 @@
 
 							<button type="submit" id="signYes" name="signYes"
 								class="btn btn-success btn-default pull-left" value="Send"
-								style="margin: 10px; margin-right: 270px">
+								style="margin: 10px;">
 								<span class="glyphicon glyphicon-plus"></span>완 료
 							</button>
 
