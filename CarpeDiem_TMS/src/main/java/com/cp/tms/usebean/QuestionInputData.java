@@ -96,8 +96,8 @@ public class QuestionInputData {
 		sb.append("<tr>");
 		sb.append("	<td colspan='"+n+"'>");
 		sb.append("		<div id='collapse"+dto.getSeq()+"' class='panel-collapse collapse'>");
-		sb.append("			<div class='form-group'>");
-		sb.append("				<label>내용</label><br>");
+		sb.append("			<div class='form-group' style='text-align: left;'>");
+		sb.append("				<label style='padding-left: 5px;'>내용</label><br>");
 		// 내용은 auth가 'A'가 아니라면 글 비밀번호가 일치해야 볼 수 있음
 //		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
@@ -120,7 +120,7 @@ public class QuestionInputData {
 //			sb.append("				</div>");
 //		}
 		sb.append("			</div>");
-		sb.append("			<div class='form-group'>");
+		sb.append("			<div class='form-group' style=''>");
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("				<input type='button' class='btn btn-primary' value='수정' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='답변' onclick='reply(\""+dto.getSeq()+"\")'>");
