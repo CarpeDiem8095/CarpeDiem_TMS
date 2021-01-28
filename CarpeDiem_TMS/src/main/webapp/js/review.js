@@ -38,7 +38,6 @@ function modifyForm(val){
  	//alert(Result);
  	
 	ajaxModify(val,seq);
-	$('#modifyRev').modal();
 }
 
 var ajaxModify = function(val,seq){

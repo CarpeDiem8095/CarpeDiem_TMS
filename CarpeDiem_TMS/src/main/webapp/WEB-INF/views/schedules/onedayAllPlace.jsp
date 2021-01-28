@@ -9,7 +9,6 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="./js/review.js"></script>
 
@@ -93,7 +92,7 @@ a {
 											
 											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
 											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" onclick="modifyForm('${p.place_seq}')"/></div>
+											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정"  data-toggle='modal' data-target='#modifyRev' onclick="modifyForm('${p.place_seq}')"/></div>
 											
 										</div>
 									</div>

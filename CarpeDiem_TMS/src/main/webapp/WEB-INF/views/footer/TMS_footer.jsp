@@ -83,19 +83,19 @@
 	<!-- Scripts -->
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Bootstrap framework -->
-	<script src="js/swiper.min.js"></script>
+<!-- 	<script src="js/swiper.min.js"></script> -->
 	<!-- Swiper for image and text sliders -->
-	<script src="js/jquery.magnific-popup.js"></script>
+<!-- 	<script src="js/jquery.magnific-popup.js"></script> -->
 	<!-- Magnific Popup for lightboxes -->
-	<script src="js/morphext.min.js"></script>
+<!-- 	<script src="js/morphext.min.js"></script> -->
 	<!-- Morphtext rotating text in the header -->
-	<script src="js/isotope.pkgd.min.js"></script>
+<!-- 	<script src="js/isotope.pkgd.min.js"></script> -->
 	<!-- Isotope for filter -->
-	<script src="js/validator.min.js"></script>
+<!-- 	<script src="js/validator.min.js"></script> -->
 	<!-- Validator.js - Bootstrap plugin that validates forms -->
 	<script src="js/scripts.js"></script>
 	<!-- Custom scripts -->
-	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> -->
 	<script type="text/javascript">
          $(function () {
              $('.navbar ul li a.search').on('click', function (e) {

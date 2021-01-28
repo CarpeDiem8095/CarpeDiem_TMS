@@ -44,7 +44,6 @@ function report(val) {
 
 function modify(val) {
 	modifyAjax(val);
-	$('#modify').modal();
 }
 
 var modifyAjax = function(val) {
