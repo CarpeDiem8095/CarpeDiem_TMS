@@ -28,7 +28,7 @@
 		REPORTCHK,
 		ONE_READCNT, ONEDAY_PUBLIC)
 		VALUES(SEQ_ONEDAY.NEXTVAL, #{note_seq}, 'N' ,
-		#{oneday_title}, #{onedate}, 'N', 0, 'N'
+		#{oneday_title}, #{onedate}, 'N', 0, 'Y'
 		)
 	</insert>
 
