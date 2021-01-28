@@ -122,7 +122,7 @@ public class QuestionInputData {
 		sb.append("			</div>");
 		sb.append("			<div class='form-group' style=''>");
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
-			sb.append("				<input type='button' class='btn btn-primary' value='수정' onclick='modify(\""+dto.getSeq()+"\")'>");
+			sb.append("				<input type='button' class='btn btn-primary' value='수정' data-toggle='modal' data-target='#modify' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='답변' onclick='reply(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='삭제' onclick='del(\""+dto.getSeq()+"\")'>");
 //		} else { // 수정, 삭제 버튼은 글 비밀번호가 일치해야 볼 수 있음(테스트 후 바로 위 div로 올리기)

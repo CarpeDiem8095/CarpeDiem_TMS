@@ -8,17 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <title>하루 일정 조회</title>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>  -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-<!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
 
-<!-- <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script> -->
-<!-- <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script> -->
-<!-- <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> -->
-<!-- <script src="./js/pdfmaker/pdfmake.min.js"></script>  -->
-<!-- <script src="./js/pdfmaker/vfs_fonts.js"></script> -->
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
 </head>
 
@@ -49,6 +45,12 @@ a {
 </style>
 <body>
 <%@include file="../header/TMS_header.jsp" %>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="./js/pdfmaker/pdfmake.min.js"></script> 
+<script src="./js/pdfmaker/vfs_fonts.js"></script>
 <div id="intro" class="basic-1">
 <div id="container">
 <%-- ${onedayList} --%>
@@ -100,6 +102,7 @@ $(document).ready(function() {
 // 	var columns = ["ONEDATE", "PLACE_NAME", "MEMO"];
 	$('#myTable_length').hide()
     $('#myTable').DataTable( {
+    	destroy : true,
 //     	sAjaxSource : "/getDataList.do?oneday_seq="+oneday_seq+"&columns="+columns,
 //         sServerMethod: "POST",
 //         columns : [
