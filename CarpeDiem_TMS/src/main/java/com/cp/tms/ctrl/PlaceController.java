@@ -2,6 +2,8 @@ package com.cp.tms.ctrl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,11 +78,12 @@ public class PlaceController {
 	}
 	
 	@RequestMapping(value="/selDetailOneday.do", method = RequestMethod.GET)
-	public String selDetailOneday(Model model, String seq) {
+	public String selDetailOneday(Model model, String seq,HttpSession session) {
 		
 		List<OnedayDto> selDetailOneday = oService.selDetailOneday(seq);
 		model.addAttribute("selDetailOneday", selDetailOneday);
 		model.addAttribute("oneday_seq", seq);
+		session.setAttribute("boardtype", "makeboard");
 		return selDetailOneday.size()>0?"schedules/onedayAllPlace":"error";
 	}
 	

@@ -91,32 +91,15 @@ a {
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 											
+											<c:if test="${boardtype ne 'review'}">
 											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
 											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
 											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정"  data-toggle='modal' data-target='#modifyRev' onclick="modifyForm('${p.place_seq}')"/></div>
-											
+											</c:if>
 										</div>
 									</div>
 							</form>
 						</div>
-								<!-- 수정 Modal -->
-								<div class="modal fade" id="modifyRev" role="dialog">
-									<div class="modal-dialog">
-
-										<!-- 수정 Modal content-->
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title" style="float:left;"> 후기 수정 </h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-											</div>
-											<div class="modal-body">
-												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
-											</div>
-										</div>
-
-									</div>
-								</div>
-
 								<!-- 메모추가 부분 -->
 							<form>
 								<div class="memoForm" class ="w3-container w3-hide" >
@@ -157,9 +140,11 @@ a {
 												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 												
+												<c:if test="${boardtype ne 'review'}">
 												<div><input type="submit" class="btnSave btn btn-default w3-blue-grey"  value="SAVE" style="float:right;"/></div>
 												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
 												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정"  data-toggle='modal' data-target='#modifyRev' onclick="modifyForm('${p.place_seq}')"/></div>
+												</c:if>
 											</div>
 										</div>
 									</form>
@@ -194,7 +179,23 @@ a {
 				</div>
 				<div>
 				</div>
-				
+												<!-- 수정 Modal -->
+								<div class="modal fade" id="modifyRev" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- 수정 Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title" style="float:left;"> 후기 수정 </h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+											<div class="modal-body">
+												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
+											</div>
+										</div>
+
+									</div>
+								</div>
 </body>
 <%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
 <script type="text/javascript"

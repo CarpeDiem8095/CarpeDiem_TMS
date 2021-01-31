@@ -2,6 +2,8 @@ package com.cp.tms.ctrl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -152,7 +154,7 @@ public class OnedayController {
 	@ResponseBody
 	public String selectOneDay(String seq) {
 		List<OnedayDto> oneDto = service.selDetailOneday(seq);  
-		
+		System.out.println(""+oneDto);
 		int size = oneDto.get(0).getPlaceDto().size();
 		
 		String A_place_name = ""; 
@@ -164,7 +166,6 @@ public class OnedayController {
 			A_xlat += oneDto.get(0).getPlaceDto().get(i).getXlat()+"/";
 			A_ylng += oneDto.get(0).getPlaceDto().get(i).getYlng()+"/";
 		}
-		
 		JSONObject json = new JSONObject();
 		json.put("A_place_name", A_place_name);
 		json.put("A_xlat", A_xlat);

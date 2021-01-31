@@ -275,7 +275,7 @@ public class ReviewController {
 	
 	// 글목록 조회 paging 
 	@RequestMapping(value="/oneBoardList.do", method=RequestMethod.GET)
-	public String oneBoardList(Model model, String page) {
+	public String oneBoardList(Model model, String page, HttpSession session) {
 		
 		 if(page==null||page=="") {
 			 page="1";
@@ -325,7 +325,7 @@ public class ReviewController {
 		 System.out.println(service.oneBoardList(map));
 		
 		 model.addAttribute("pb",pb);
-
+		 session.setAttribute("boardtype", "review");
 		 System.out.println(pb);
 		
 		return "review/reviewsBoard"; 
