@@ -20,6 +20,7 @@ import com.cp.tms.dto.ChatingDto;
 import com.cp.tms.dto.Member;
 import com.cp.tms.dto.UserDto;
 import com.cp.tms.model.chat.ITripchatService;
+import com.cp.tms.model.member.IMemberService;
 
 @Controller
 public class TripChatController implements ServletConfigAware {
@@ -27,6 +28,9 @@ public class TripChatController implements ServletConfigAware {
 	
 	@Autowired
 	private ITripchatService tripchatservice;
+	
+	@Autowired
+	private IMemberService Service;
 	
 	@Override
 	public void setServletConfig(ServletConfig servletConfig) {
@@ -138,6 +142,21 @@ public class TripChatController implements ServletConfigAware {
 		System.out.println(dto);
 		boolean isc=tripchatservice.delchatboard(dto);
 		return isc== true ?"삭제성공":"삭제실패";
+	}
+	
+	//로그아웃 처리
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		String mem_id = (String) session.getAttribute("chat_id");
+		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
+		System.out.println("기존 접속 회원 리스트:" + chatList);
+		if (chatList != null) {
+			chatList.remove(mem_id);
+		}
+		System.out.println("갱신 후 접속 회원 리스트:" + chatList);
+		servletContext.setAttribute("chatList", chatList);
+		Service.logout(session);
+		return "redirect:index.jsp";
 	}
 }
 

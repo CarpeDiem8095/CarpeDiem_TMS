@@ -15,12 +15,12 @@ var wss = function() {
 						spuserid[1] = spuserid[1].substr(0,1);
 						var gr_id = userid+","+k;
 						if(userid == '' || userid ==null){
-								$(".accessmembers").append("<tr><td class='main_mem_access' colspan='2'>"+
+								$(".accessmembers").append("<tr stle='padding-bottom: 8px;'><td class='main_mem_access' colspan='2'>"+
 								spuserid[0]+"@"+spuserid[1].toUpperCase()+"</td></tr>");
 						}
 						else if(k != userid){
-						$(".accessmembers").append("<tr><td class='main_mem_access'>"+spuserid[0]+"@"+spuserid[1].toUpperCase()
-						+"</td>"+"<td class='chatbutton'>"+"<input type='button' value='채팅하기' onclick="+"goSocket('"+gr_id+"','"+k+"')"+"></td></tr>");
+						$(".accessmembers").append("<tr style='padding-bottom: 8px;'><td class='main_mem_access'>"+spuserid[0]+"@"+spuserid[1].toUpperCase()
+						+"</td>"+"<td class='chatbutton'>"+"<input class='btn btn-success' type='button' value='채팅하기' onclick="+"goSocket('"+gr_id+"','"+k+"')"+"></td></tr>");
 							}
 						}
 					}

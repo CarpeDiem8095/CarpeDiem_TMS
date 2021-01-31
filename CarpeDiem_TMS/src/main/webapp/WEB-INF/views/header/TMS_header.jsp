@@ -22,10 +22,7 @@
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext"
 	rel="stylesheet">
 <link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/swiper.css" rel="stylesheet">
-<link href="css/magnific-popup.css" rel="stylesheet">
-<link href="css/fontawesome-all.css" rel="stylesheet">
-<link rel="icon" href="images/favicon.png">
+<link rel="icon" href="./images/calo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
 <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -66,22 +63,19 @@
 
 		<!-- Image Logo -->
 		<a class="navbar-brand logo-image" href="./mainpage.do"><img
-			src="images/calo.png" alt="alternative"></a>
+			src="images/calo.png" alt="alternative" style="height: 50px; width: 110px;"></a>
 
 		<!-- Mobile Menu Toggle Button -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarsExampleDefault"
-			aria-controls="navbarsExampleDefault" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-awesome fas fa-bars"></span> <span
-				class="navbar-toggler-awesome fas fa-times"></span>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-awesome fas fa-bars"></span> 
+			<span class="navbar-toggler-awesome fas fa-times"></span>
 		</button>
 		<!-- end of mobile menu toggle button -->
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link page-scroll"
-					href="#header">HOME <span class="sr-only">(current)</span></a></li>
+					href="./mainpage.do">HOME <span class="sr-only">(current)</span></a></li>
 				<li class="nav-item"><a
 					class="nav-link page-scroll checklogining_schedules"
 					onclick="checklogining_schedules()">일정 관리</a></li>
