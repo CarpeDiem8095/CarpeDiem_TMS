@@ -51,17 +51,17 @@ var ajaxModify = function(val,seq){
 			html += "<input type='hidden' value='"+data.place_seq+"' name='place_seq'/>";
 			html += "<input type='hidden' value='"+data.oneday_seq+"' name='oneday_seq'/>";
 	        html += "<label>이미지 첨부</label>";
-			html +="<p class='form-control' style='height: 41.5px;'><input type='file' class='uploadFile' id='uploadFile' name='filename' accept='image/*'></p>";
+			html +="<p class='form-control' style='width: 450px; height: 32px;'><input type='file' class='uploadFile' id='uploadFile' name='filename' accept='image/*'></p>";
 			html += "</div>";
 			 
 			html += "<div class='form-group'>";
 			html += "<label>미리보기</label>";
-			html +="<div class='form-control preview' style='width: 300px; height: 300px;'></div>";
+			html +="<div class='form-control preview' style='width: 256px; height: 256px;'></div>";
 			html += "</div>";
 			
 			html += "<div class='form-group'>";
 	        html += "<label for='content'>내용</label>";
-			html +="<textarea class='form-control' style='width:564px; height: 250px;' name='content'>"+data.content+"</textarea>";
+			html +="<textarea class='form-control' style='width:450px; height: 200px;' name='content'>"+data.content+"</textarea>";
 			html +="</div>";
 			
 		    html += "<div class='modal-footer'>";
@@ -83,7 +83,7 @@ var ajaxModify = function(val,seq){
 			         var reader = new FileReader();
 			         reader.onload = function (e) {
 			         	//alert(input);
-			             $('.preview').html("<img src="+ e.target.result +" style='width: 248px; height: 248px;'>");
+			             $('.preview').html("<img src="+ e.target.result +" style='width: 240px; height: 240px;'>");
 			       }
 			         reader.readAsDataURL(input.files[0]);
 			     }
