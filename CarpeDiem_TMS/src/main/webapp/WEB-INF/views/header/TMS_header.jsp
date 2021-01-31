@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/question.css">
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext"
 	rel="stylesheet">
@@ -23,7 +22,7 @@
 	rel="stylesheet">
 <link href="css/bootstrap.css" rel="stylesheet">
 <link rel="icon" href="./images/calo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
 <link href="css/styles.css" rel="stylesheet">
 </head>
 
@@ -63,7 +62,7 @@
 
 		<!-- Image Logo -->
 		<a class="navbar-brand logo-image" href="./mainpage.do"><img
-			src="images/calo.png" alt="alternative" style="height: 50px; width: 110px;"></a>
+			src="images/calo2.png" alt="alternative" style="width: 165px; height: 50px;"></a>
 
 		<!-- Mobile Menu Toggle Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,7 +99,7 @@
 					<button type="button" class="btn btn-primary login"
 						data-toggle="modal" data-target="#loginModal">로그인</button>
 				</li>
-				<li class="userboard nav-item">회원 아이디 :${mDto.email} <br>
+				<li class="userboard nav-item">회원 아이디 :${mDto.email} <br><br>
 					회원 이름 :${mDto.nickname} <a href="./logout.do" onclick="SignOut()">로그아웃</a>
 				</li>
 			</ul>

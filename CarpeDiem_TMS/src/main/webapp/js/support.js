@@ -56,28 +56,28 @@ var modifyAjax = function(val) {
 			console.log(v.seq, v.writer, v.title, v.content);
 			
 			 html = "  <input type='hidden' value='"+v.seq+"' name='seq'>";
-			html += "  <div class='form-group'>";
+			html += "  <div class='form-group' style='text-align: left; font-size: small;'>";
 			html += "    <label for='writer'>작성자</label>";
-			html += "	 <input type='text' class='form-control' id='writer' name='writer' value='"+v.writer+"' readonly>";
+			html += "	 <input type='text' class='form-control' id='writer' name='writer' value='"+v.writer+"' style='font-size: small;' readonly>";
 			html += "  </div>";
 			
-			html += "  <div class='form-group'>";
+			html += "  <div class='form-group' style='text-align: left; font-size: small;'>";
 			html += "    <label for='title'>제목</label>";
-			html += "	 <input type='text' class='form-control' id='title' name='title' value='"+v.title+"'>";
+			html += "	 <input type='text' class='form-control' id='title' name='title' style='font-size: small;' value='"+v.title+"'>";
 			html += "  </div>";
 			
-			html += "  <div class='form-group'>";
+			html += "  <div class='form-group' style='text-align: left; font-size: small;'>";
 			html += "    <label for='content'>내용</label>";
-			html += "	 <textarea class='form-control' rows='5' id='content' name='content'>"+v.content+"</textarea>";
+			html += "	 <textarea class='form-control' rows='5' id='content' name='content' style='font-size: small;'>"+v.content+"</textarea>";
 			html += "  </div>";
 			
-			html += "  <div class='form-group'>";
+			html += "  <div class='form-group' style='text-align: left; font-size: small;'>";
 			html += "    <label for='content'>공개여부</label>";
 			html += "	 <input type='radio' name='public_status' value='Y' onclick='RadioCheck()' checked> 공개글&nbsp;&nbsp;";
 			html += "	 <input type='radio' name='public_status' value='N' onclick='RadioCheck()'> 비밀글";
 			html += "  </div>";
 			
-			html += "  <div class='modal-footer' style='text-align: center'>";
+			html += "  <div class='modal-footer' style='text-align: center; display: block;'>";
 			html += "    <input type='button' class='btn btn-primary' value='확인' onclick='update()'/>";
 			html += "	 <input type='reset' class='btn btn-primary' value='초기화'/>";
 			html += "	 <button type='button' class='btn btn-primary' data-dismiss='modal'>취소</button>";

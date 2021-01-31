@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
-<%@include file="/WEB-INF/views/header/TMS_header.jsp" %>
 function Withdrawal(){
 	$("#myForm").attr("action","./delete.do");
 	$("#myForm").submit();

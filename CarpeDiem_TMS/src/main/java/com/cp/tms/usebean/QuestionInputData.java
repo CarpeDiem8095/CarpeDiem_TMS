@@ -100,7 +100,7 @@ public class QuestionInputData {
 		sb.append("				<label style='padding-left: 5px;'>내용</label><br>");
 		// 내용은 auth가 'A'가 아니라면 글 비밀번호가 일치해야 볼 수 있음
 //		if (mDto.getAuth().equalsIgnoreCase("A")) {
-			sb.append("				<textarea rows='7' class='form-control' readonly>"+dto.getContent()+"</textarea>");
+			sb.append("				<textarea rows='7' class='form-control' style='font-size: small;' readonly>"+dto.getContent()+"</textarea>");
 //		} else { // 글 비밀번호가 일치하면 글 내용, 수정/삭제 버튼 display: block
 //			sb.append("<input type='hidden' value='"+dto.getText_pw()+"' id='text_pw_writer"+i+"'/> ");
 //			sb.append("				<textarea rows='7' class='form-control qDtoContent' style='display: none;' readonly>"+dto.getContent()+"</textarea>");
@@ -120,7 +120,7 @@ public class QuestionInputData {
 //			sb.append("				</div>");
 //		}
 		sb.append("			</div>");
-		sb.append("			<div class='form-group' style=''>");
+		sb.append("			<div class='form-group' style='text-align: left'>");
 		if (mDto.getAuth().equalsIgnoreCase("A")) {
 			sb.append("				<input type='button' class='btn btn-primary' value='수정' data-toggle='modal' data-target='#modify' onclick='modify(\""+dto.getSeq()+"\")'>");
 			sb.append("				<input type='button' class='btn btn-primary' value='답변' onclick='reply(\""+dto.getSeq()+"\")'>");

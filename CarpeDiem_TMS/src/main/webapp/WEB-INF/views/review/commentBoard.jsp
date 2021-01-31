@@ -40,12 +40,16 @@ a {
 
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
-				<a href="./selDetailOneday.do?seq=${oneday_seq}"
-					class="w3-bar-item w3-button">일정 보기</a> <a
-					href="./onedayTableList.do?oneday_seq=${oneday_seq}"
-					class="w3-bar-item w3-button">일정표 보기</a> <a
-					href="./commnetList.do?oneday_seq=${oneday_seq}"
-					class="w3-bar-item w3-button w3-dark-grey">댓글 보기</a>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${mDto.email eq null}"> --%>
+<%-- 				<<a href="./selOneBoard.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">일정 보기</a> --%>
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+				<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button">일정 보기</a>
+<%-- 				</c:otherwise> --%>
+				<a href="./onedayTableList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button">일정표 보기</a> 
+				<a href="./commnetList.do?oneday_seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">댓글 보기</a>
+<%-- 			</c:choose>  --%>
 			</div>
 		</div>
 		<div class="commentList">

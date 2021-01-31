@@ -15,7 +15,7 @@
 </head>
 <style type="text/css">
 #container {
-    width: 800px;
+    width: 650px;
     margin: 40px auto;
     height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
     max-height: none;
@@ -65,10 +65,10 @@ a {
 				<c:choose>
 					<c:when test="${p.step eq '1'}">
 					<div>
-						<div class="w3-panel w3-black placeTitleCss">
-							<button class="w3-btn w3-black">${p.place_name}</button>
-							<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-							<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+						<div class="w3-panel w3-blue-grey placeTitleCss">
+							<button class="w3-btn w3-blue-grey">${p.place_name}</button>
+							<button class="w3-btn w3-blue-grey w3-text-black w3-hover-text-white w3-rigth-align showMeTheForm">장소후기</button>
+							<button class="w3-btn w3-blue-grey w3-text-black w3-hover-text-white w3-rigth-align showMeTheMemo">메모작성</button>
 							<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 							<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 						</div>
@@ -82,9 +82,9 @@ a {
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 											
-											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
 											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정"  data-toggle='modal' data-target='#modifyRev' onclick="modifyForm('${p.place_seq}')"/></div>
 										</div>
 								</div>
 						</form>
@@ -124,12 +124,12 @@ a {
 					</c:when>
 					<c:otherwise>
 						<div>
-							<div><input type="button" onclick="viewPath(${p.oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block w3-blue w3-left-align"/></div>
+							<div><input type="button" onclick="viewPath(${p.oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-dark-grey"/></div>
 						<div>
-						<div class="w3-panel w3-black placeTitleCss"> 
-							<button class="w3-btn w3-black">${p.place_name}</button>
-							<button class="w3-btn w3-pink w3-rigth-align showMeTheForm">장소후기</button>
-							<button class="w3-btn w3-purple w3-rigth-align showMeTheMemo">메모작성</button>
+												<div class="w3-panel w3-blue-grey placeTitleCss">
+							<button class="w3-btn w3-blue-grey">${p.place_name}</button>
+							<button class="w3-btn w3-blue-grey w3-text-black w3-hover-text-white w3-rigth-align showMeTheForm">장소후기</button>
+							<button class="w3-btn w3-blue-grey w3-text-black w3-hover-text-white w3-rigth-align showMeTheMemo">메모작성</button>
 							<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 							<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 						</div>
@@ -146,9 +146,9 @@ a {
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
 											
-											<div><input type="submit" class="btnSave btn btn-default w3-light-grey w3-hover-blue-grey"  value="SAVE" style="float:right;"/></div>
+											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey" value="SAVE" style="float:right;"/></div>
 											<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정"  data-toggle='modal' data-target='#modifyRev' onclick="modifyForm('${p.place_seq}')"/></div>
 										</div>
 									</div>
 							</form>
@@ -191,7 +191,7 @@ a {
 					</c:forEach>
 				</div>
 			</div>
-			<button onclick="history.back(-1)">뒤로가기</button>
+			<button onclick="history.back(-1)" class="w3-button w3-padding-small w3-border w3-round-large">뒤로가기</button>
 		</div>
 		<div>
 		</div>

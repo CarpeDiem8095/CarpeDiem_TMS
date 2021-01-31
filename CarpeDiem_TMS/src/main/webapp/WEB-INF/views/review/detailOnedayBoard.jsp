@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>후기 조회</title>
+<title>하루 일정 조회</title>
+</head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="./js/review.js"></script>
-</head>
+
 <style type="text/css">
 #container {
 	width: 650px;
 	margin: 40px auto;
-    height: expression( this.scrollHeight > 790 ? "800px" : "auto" );
-   	max-height: 800px;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+   	max-height: 540px;
     overflow-y: auto;
-    text-align: left;
 }
 
 a {
@@ -42,12 +41,25 @@ a {
 .w3-rigth-align{
 	float: right;
 }
+
+#container {
+    width: 650px;
+    height: 900px;
+    margin: 40px auto;
+    height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
+    max-height: none;
+    overflow-y: auto;
+    margin-top: 140px;
+    margin-bottom: 200px;
+}
 </style>
-<body>
-<%-- <%@include file="../header/TMS_header.jsp" %> --%>
-<!-- 	<div id="intro" class="basic-1"> -->
-		<div id="container" style="width: 650px; height: 800px;">
+<body style="text-align: left;">
+<%@include file="../header/TMS_header.jsp" %>
+		<div id="container" style="width:650px;
+    height: 800px;
+    margin-top: 140px;">
 		<h3>하루 일정</h3>
+<%-- 		<h4>세션 : ${mDto.email}</h4> --%>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
 				<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
@@ -62,10 +74,10 @@ a {
 					<c:choose>
 						<c:when test="${p.step eq '1'}">
 						<div>
-							<div class="w3-panel w3-blue-grey placeTitleCss" style="margin:3px; padding:2px;">
+							<div class="w3-panel w3-blue-grey placeTitleCss">
 								<button class="w3-btn w3-blue-grey">${p.place_name}</button>
-								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
-								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
+								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소</button>
+								<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모</button>
 								<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 								<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 							</div>
@@ -78,11 +90,6 @@ a {
 										<div>
 											<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 											<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
-											
-											<div><input type="submit" class="btnSave btn btn-default w3-blue-grey  w3-border" value="SAVE" style="float:right;"/></div>
-											<div><input type="button" class="btnReset btn btn-default  w3-border" value="RESET" onclick="reset();" style="float:right;"/></div>
-											<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey  w3-border" value="수정" onclick="modifyForm('${p.place_seq}')"/></div>
-											
 										</div>
 									</div>
 							</form>
@@ -112,9 +119,10 @@ a {
 										<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 									</div>
 									<div>
-										<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+									<c:if test="${mDto.email eq email}">
 										<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
 										<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+									</c:if>
 									</div>
 								</div>
 							</form>	
@@ -123,12 +131,12 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-dark-grey w3-hover-text-blue-grey"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-blue-grey"/></div>
 								<div>
-								<div class="w3-panel w3-blue-grey placeTitleCss" style="margin:3px; padding:2px;">
+								<div class="w3-panel w3-blue-grey placeTitleCss">
 										<button class="w3-btn w3-blue-grey">${p.place_name}</button>
-										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소후기</button>
-										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모작성</button>
+										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheForm">장소</button>
+										<button class="w3-btn w3-blue-grey w3-rigth-align w3-text-black w3-hover-text-white showMeTheMemo">메모</button>
 										<input type="hidden" class="this_oneday_seq" value="${p.oneday_seq}">
 										<input type="hidden" class="this_place_seq" value="${p.place_seq}">
 								</div>
@@ -144,10 +152,6 @@ a {
 											<div>
 												<div class="preview form-control" style="width: 250px; height: 250px; float:left;"></div>
 												<div><textarea style="width:400px; height: 250px;" name="content" class="content form-control"></textarea></div>
-												
-												<div><input type="submit" class="btnSave btn btn-default  w3-border w3-blue-grey"  value="SAVE" style="float:right;"/></div>
-												<div><input type="button" class="btnReset btn btn-default  w3-border" value="RESET" onclick="reset();" style="float:right;"/></div>
-												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey  w3-border" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
 									</form>
@@ -160,9 +164,10 @@ a {
 												<textarea style="width: 650px; height: 200px;" class="memoArea" maxlength="1500"></textarea>
 											</div>
 										<div>
-											<input type="button" value="메모저장" class="w3-btn w3-purple w3-rigth-align addMemo">
+										<c:if test="${mDto.email eq email}">
 											<input type="hidden" value="${p.place_seq}" class="memo_place_seq">
 											<input type="hidden" value="${p.oneday_seq}" class="memo_oneday_seq">
+										</c:if>
 										</div>
 										</div>
 									</form>							
@@ -182,9 +187,9 @@ a {
 				</div>
 				<div>
 				</div>
-<!-- 				</div> -->
-
+				
 </body>
+<%@ include file="/WEB-INF/views/footer/TMS_footer.jsp" %>
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=570bd9d7a1a3fc9dcd12463a4f207e41"></script>
 <script>

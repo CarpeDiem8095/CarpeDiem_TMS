@@ -59,6 +59,7 @@ a {
     height: 800px;
     margin-top: 140px;">
 		<h3>하루 일정</h3>
+<%-- 		<h4>세션 : ${mDto.email}</h4> --%>
 		<div class="w3-show-inline-block">
 			<div class="w3-bar w3-light-grey">
 				<a href="./selDetailOneday.do?seq=${oneday_seq}" class="w3-bar-item w3-button w3-dark-grey">일정 보기</a> 
@@ -105,8 +106,8 @@ a {
 										<!-- 수정 Modal content-->
 										<div class="modal-content">
 											<div class="modal-header">
+												<h4 class="modal-title" style="float:left;"> 후기 수정 </h4>
 												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="modal-title"> 후기 수정 </h4>
 											</div>
 											<div class="modal-body">
 												<form action="#" enctype="multipart/form-data" class="form-margin" method="post" id="frmModify"></form>
@@ -134,7 +135,7 @@ a {
 						</c:when>
 						<c:otherwise>
 							<div>
-								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-blue-grey"/></div>
+								<div><input type="button" onclick="viewPath(${oneday_seq},${p.place_seq})" value="[길찾기]" class="w3-btn w3-block btn btn-link w3-left-align w3-text-dark-grey"/></div>
 								<div>
 								<div class="w3-panel w3-blue-grey placeTitleCss">
 										<button class="w3-btn w3-blue-grey">${p.place_name}</button>
@@ -158,7 +159,7 @@ a {
 												
 												<div><input type="submit" class="btnSave btn btn-default w3-blue-grey"  value="SAVE" style="float:right;"/></div>
 												<div><input type="button" class="btnReset btn btn-default" value="RESET" onclick="reset();" style="float:right;"/></div>
-												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정" style="float:right;" onclick="modifyForm('${p.place_seq}')"/></div>
+												<div><input type="button" class="btnModify btn btn-default w3-rigth-align w3-hover-blue-grey" value="수정"  data-toggle='modal' data-target='#modifyRev' onclick="modifyForm('${p.place_seq}')"/></div>
 											</div>
 										</div>
 									</form>
