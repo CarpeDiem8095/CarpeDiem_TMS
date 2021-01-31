@@ -18,7 +18,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="./js/pdfmaker/pdfmake.min.js"></script> 
 <script src="./js/pdfmaker/vfs_fonts.js"></script>
-<script type="text/javascript" src="./js/review.js"></script>
 
 <style type="text/css">
 #container {
@@ -27,6 +26,7 @@
     height: expression( this.scrollHeight > 530 ? "540px" : "auto" );
    	max-height: 540px;
     overflow-y: auto;
+    text-align: left;
 }
 
 a {
@@ -45,12 +45,16 @@ a {
 }
 </style>
 <body>
-
 <%@include file="../header/TMS_header.jsp" %>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="./js/pdfmaker/pdfmake.min.js"></script> 
+<script src="./js/pdfmaker/vfs_fonts.js"></script>
 <div id="intro" class="basic-1">
 <div id="container">
 <%-- ${onedayList} --%>
- 	
  		<h3 id = "excel_title">${note_title} 일정 전체 보기</h3>
 		
 <div class="w3-show-inline-block">

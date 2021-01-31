@@ -26,6 +26,7 @@ public class CommentController {
 	@Autowired
 	private ICommentService service;
 	
+	// 댓글 게시판으로 이동
 	@RequestMapping(value = "/commnetList.do", method=RequestMethod.GET)
 	public String commnetList(String oneday_seq,Model model) {
 		//System.out.println("댓글 게시판 Welcome! 하루 일정 seq : " + oneday_seq);
