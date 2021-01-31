@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>문의 게시판</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/question.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/support.js"></script>
@@ -98,11 +99,11 @@
 			
 			<!-- 수정 modal -->
 			<div id="modify" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+				<div class="modal-dialog" style="margin-top: 200px;">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h3 class="modal-title" style="text-align: center">글 수정</h3>
+							<h2 class="modal-title" style="text-align: center; margin-bottom: 5px; margin-top: 5px; margin-left: 210px;">글 수정</h2>
+							<button type="button" class="close" data-dismiss="modal" style="font-size: large;">&times;</button>
 						</div>
 						<div class="modal-body">
 							<form action="#" class="form-margin" method="post" id="frmModify">
