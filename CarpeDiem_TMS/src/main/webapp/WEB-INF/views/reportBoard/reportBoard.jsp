@@ -26,9 +26,14 @@
 	}
 	
 	.center{
-        text-align: center;
-        display: inline-block;
-    }
+		text-align: center;
+		display: inline-block;
+		font-size: small;
+	}
+    
+    .table>tbody>tr>td>a {
+		text-decoration: none;
+	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -51,8 +56,12 @@
 					<c:forEach var="dto" items="${reDto}">
 					<tr>
 						<td style="text-align: center; vertical-align: middle; width: 90px;">${dto.seq}</td>
-						<td style="text-align: center; vertical-align: middle; height: 56px;"><a href="./reportDetail.do?seq=${dto.seq}&reporter_email=${dto.reporter_email}&subject_email=${dto.subject_email}">${dto.report_type}</a></td>
-						<td style="text-align: center; vertical-align: middle;"><fmt:formatDate value="${dto.text_regdate}" pattern="yyyy-MM-dd"/></td>
+						<td style="text-align: center; vertical-align: middle; height: 56px;">
+							<a href="./reportDetail.do?seq=${dto.seq}&reporter_email=${dto.reporter_email}&subject_email=${dto.subject_email}">${dto.report_type}</a>
+						</td>
+						<td style="text-align: center; vertical-align: middle;">
+							<fmt:formatDate value="${dto.text_regdate}" pattern="yyyy-MM-dd"/>
+						</td>
 						<td style="text-align: center; vertical-align: middle;">${dto.subject_email}</td>
 						<td style="text-align: center; vertical-align: middle;">${dto.processing_status}</td>
 						<td style="text-align: center; vertical-align: middle;">${dto.board_type}</td>
