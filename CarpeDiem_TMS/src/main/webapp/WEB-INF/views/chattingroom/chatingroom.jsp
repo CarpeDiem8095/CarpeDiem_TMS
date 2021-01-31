@@ -43,13 +43,14 @@
           	var send = msgArr[0]; // ex: user01
 			var sendmsg = msgArr[1]; // ex: 안녕
           	
-          	
           	if(msg.startsWith("<font color=")){	//입장,퇴장
             	$(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
           	}else if(send=="<%=chat_id%>"){
-	          	$(".receive_msg").append($("<div id='sendDiv' class='"+send+"'>").append($("<span id='sender' class='"+send+"'>").text(msg))).append("<br><br>");
+	          	$(".receive_msg").append($("<div id='sendDiv' class='"+send+"'>").append($("<span id='sender'class='"+send+"'>").text(send))).append("<br>");
+	          	$(".receive_msg").append($("<div id='sendDiv' class='"+send+"'>").append($("<span id='sender'class='"+send+" sendmsg'>").text(sendmsg))).append("<br><br><br><br><br><br>");
           	}else{
-	          	$(".receive_msg").append($("<div id='receiveDiv' class='"+send+"'>").append($("<span id='receiver' class='"+send+"'>").text(msg))).append("<br><br>");
+	          	$(".receive_msg").append($("<div id='receiveDiv' class='"+send+"'>").append($("<span id='receiver' class='"+send+"'>").text(send))).append("<br>");
+	          	$(".receive_msg").append($("<div id='receiveDiv' class='"+send+"'>").append($("<span id='receiver'class='"+send+" receivemsg'>").text(sendmsg))).append("<br><br><br><br><br><br>");
           	}
           	$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
           	chatSave();

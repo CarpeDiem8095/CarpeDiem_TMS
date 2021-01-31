@@ -10,7 +10,7 @@
 </head>
 <body>
 <%@include file="../header/TMS_header.jsp" %>
-<div id="intro" class="basic-1" style="margin: 90px;">
+<div id="intro" class="basic-1" style="margin: 90px; font-size: 15px;">
 <div class="container">
 <form action="./searchboardwrite.do" method="post">
 <input type="hidden" name="userid" value="${mDto.email}">
@@ -18,11 +18,11 @@
 <table class="table">
 	<tr>
 		<th class="th">작성자</th>
-		<td><input class="input" type="text" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" readonly="readonly"></td>
+		<td><input class="input" type="text" style="margin-top: 5px;" value="${mDto.nickname}(${fn:substring(mDto.email,0,fn:indexOf(mDto.email,'@')+1)}${fn:toUpperCase(fn:substring(mDto.email,fn:indexOf(mDto.email,'@')+1,fn:indexOf(mDto.email,'@')+2))})" readonly="readonly"></td>
 	</tr>
 	<tr>
 		<th class="th">제목</th>
-		<td><input type="text" name="boardtitle" required></td>
+		<td><input type="text" style="margin-top: 5px;" name="boardtitle" required></td>
 	</tr>
 	<tr>
 		<td colspan="2">

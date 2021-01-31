@@ -8,10 +8,11 @@
 </head>
 <body>
 <%@include file="../header/TMS_header.jsp" %>
-<div id="intro" class="basic-1" style="margin: 90px;">
+<div id="intro" class="basic-1" style="margin: 90px; font-size: 15px;">
 <div class="container">
+	<div style="font-size: 50px; margin-bottom: 30px;">&lt;동행찾기 게시판&gt;</div>
 <table class="table">
-<thead>
+	<thead>
 	<tr>
 		<th>연번</th>
 		<th>제목</th>
@@ -39,6 +40,9 @@
 		<input type="button" value="삭제가능" onclick="location.href='./deltripboard.do?seq=${tripboard.seq}&userid=${mDto.email}&auth=${mDto.auth}'">
 		</td>
 		</c:when>
+		<c:otherwise>
+			<td><h3>X</h3></td>
+		</c:otherwise>
 		</c:choose>
 		
 	</tr>
@@ -47,7 +51,7 @@
 	
 	
 	<tr>
-		<td colspan="4" style="text-align: center;">
+		<td colspan="5" style="text-align: center;">
 			<c:if test="${p.startpage ne 1}">
 			<a href="./boardsearch.do?page=1">◁◁</a>
 			<a href="./boardsearch.do?page=${p.startpage-p.countpage}">◁</a>

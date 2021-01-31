@@ -263,6 +263,11 @@ strong {
 	padding: 5px;
 	border-bottom: 0.5px solid #B4B4B4;
 }
+.carousel-item> img{
+	width: 90%;
+	height: 700px;
+}
+
 /* IE10+ hack to solve lower label text position compared to the rest of the browsers */
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {  
 	.label-control {
@@ -781,10 +786,6 @@ input[type='checkbox'] {
 /*********************/
 /*    04. Header     */
 /*********************/
-.header {
-	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('../images/header-background.jpg') center center no-repeat;
-	background-size: cover;
-}
 
 .header .header-content {
 	padding-top: 8rem;

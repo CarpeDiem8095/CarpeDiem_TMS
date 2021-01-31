@@ -194,13 +194,7 @@ public class MemberController {
 	}
 	
 	
-	//로그아웃 처리
-	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		Service.logout(session);
-		return "redirect:index.jsp";
-//		return "main";
-	}
+
 	
 	
 	/* 비밀번호 찾기 */
