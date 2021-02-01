@@ -27,7 +27,7 @@
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://172.30.1.15:8091/CarpeDiem_TMS/tripChat.do");
+          ws = new WebSocket("ws://3.35.125.159:8091/CarpeDiem_TMS/tripChat.do");
           
           /// 웹소켓 서버가 오픈 됐을때
           ws.onopen = function() {

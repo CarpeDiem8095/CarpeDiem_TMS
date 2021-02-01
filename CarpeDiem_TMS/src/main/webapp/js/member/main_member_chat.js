@@ -219,13 +219,13 @@
 		 var InputEmail = $("#InputEmail").val();
 //	 	 alert(InputEmail)
 		if(!emailRul.test(InputEmail)) {
-		   $("#loginEmail").css("color","red");
-		   $("#loginEmail").html("잘못된 형식입니다.");
-//	 	   $("#allcheckemail").attr("value","0");
+		   $("#emailRul").css("color","red");
+//		   $("#emailRul").html("잘못된 형식입니다.");
+//	 	   $("#InputEmail").attr("value","0");
 		}else{
-			$("#loginEmail").css("color","green");
-			$("#loginEmail").html("올바른 형식입니다.");
-//	 		$("#allcheckemail").attr("value","1");
+			$("#emailRul").css("color","green");
+//			$("#emailRul").html("올바른 형식입니다.");
+//	 		$("#InputEmail").attr("value","1");
 //	 		$("#sendCheckNum").attr("onclick","emailsend()");
 		}
 		

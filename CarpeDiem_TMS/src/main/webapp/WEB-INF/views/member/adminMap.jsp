@@ -1,5 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="com.cp.tms.model.member.IMemberDao"%>
+<%@page import="com.cp.tms.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -23,7 +26,7 @@ th {
 <body>
 	<div id="container">
 		<h3>관리자 전용 페이지</h3>
-		<form action="#" method="post" id="frm" name="frm"
+		<form action="./questionBoardAdmin.do" method="post" id="frm" name="frm"
 			onsubmit="return chkbox();">
 			<div class="panel-group" id="accordion">
 				<table class="table table-bordered">
@@ -37,7 +40,7 @@ th {
 						<th>이메일</th>
 						<th>닉네임</th>
 						<th>등록일</th>
-						<c:if test="${mDto.auth eq 'A'}">
+						<c:if test="${mDto.auth eq 'Y'}">
 							<th>사용여부</th>
 						</c:if>
 					</tr>
@@ -88,6 +91,6 @@ th {
 				</ul>
 			</div>
 		</form>
-	</div>
+		</div>
 </body>
 </html>

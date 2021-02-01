@@ -1,39 +1,27 @@
 package com.cp.tms.ctrl;
 
-import java.io.IOException;
+
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import com.cp.tms.ctrl.MailHandler;
-
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.cp.tms.dto.ChatingDto;
 import com.cp.tms.dto.Member;
 import com.cp.tms.dto.Paging;
@@ -202,11 +190,6 @@ public class MemberController {
 	public void findPwGET() throws Exception{
 	}
 
-	@RequestMapping(value = "/findpw.do", method = RequestMethod.POST)
-	public void findPwPOST(@ModelAttribute Member member, HttpServletResponse response) throws Exception{
-		Service.findPw(response, member);
-//		return "";
-	}
 	
 
 	
@@ -225,13 +208,13 @@ public class MemberController {
 			
 			if (cnt>0) {
 
-				map.put("checkNum", "false");
+				map.put("checkNumtwo", "false");
 			}else {
 
 				 /* 인증번호(난수) 생성 */
 		        Random random = new Random();
-		        int checkNum = random.nextInt(888888) + 111111;
-		        logger.info("인증번호 " + checkNum);
+		        int checkNumtwo = random.nextInt(888888) + 111111;
+		        logger.info("인증번호 " + checkNumtwo);
 		        
 		        
 		        /* 이메일 보내기 */
@@ -241,7 +224,7 @@ public class MemberController {
 		        String content = 
 		                "카르페디엠을  방문해주셔서 감사합니다." +
 		                "<br><br>" + 
-		                "인증 번호는 " + checkNum + "입니다." + 
+		                "인증 번호는 " + checkNumtwo + "입니다." + 
 		                "<br>" + 
 		                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 		        
@@ -255,8 +238,8 @@ public class MemberController {
 		            e.printStackTrace();
 		        }
 		        mailSender.send(message);
-		       String checkNum1= checkNum+"";
-		       	map.put("checkNum", checkNum1);
+		       String checkNum2= checkNumtwo+"";
+		       	map.put("checkNumtwo", checkNum2);
 			}
 		
 

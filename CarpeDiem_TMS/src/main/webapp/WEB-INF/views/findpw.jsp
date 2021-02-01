@@ -39,9 +39,9 @@ function emailsend(){
 		url:"./mailCCk.do",
 		data:"email="+email,
 		success:function(data){
-			if (data.checkNum=="flase") {
+			if (data.checkNumtwo=="flase") {
 				alert("존재하지 않는 이메일 입니다.");
-				$("#checkNum").attr("value",data.checkNum);	
+				$("#checkNumtwo").attr("value",data.checkNumtwo);	
 			}else{
 				alert("인증 번호 전송");
 			}
@@ -72,7 +72,16 @@ function emailOk(){
 }
 
 	function finBtn() {
-		alert("작동");
+		alert("이메일 또는 인증번호가 일치하지 않습니다.");
+		 var email = $("#email").val();
+		 var checkrm = $("#checkNum").val();
+		if (email==checkrm) {
+			alert("임시비밀번호를 전송했습니다.");
+			
+		}else{
+			alert("이메일 또는 인증번호가 일치하지 않습니다.");
+		}
+
 
 	}
 

@@ -1,5 +1,9 @@
 package com.cp.tms.model.member;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.cp.tms.dto.Member;
 import com.cp.tms.dto.QuestionDto;
+import com.sun.jdi.connect.spi.Connection;
 
 public interface IMemberDao {
 	
@@ -58,6 +63,8 @@ public interface IMemberDao {
  		public int adminTotalCount();
 
  		public List<QuestionDto> adminQuestionboardList(Map<String, Object> map);
+ 		
+ 
 
 
 }

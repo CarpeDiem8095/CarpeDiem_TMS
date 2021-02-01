@@ -90,16 +90,15 @@
 				</c:if>
 				<li class="userboard nav-item"><a class="nav-link page-scroll"
 					href="./mypage.do">마이페이지(${mDto.email})</a></li>
-				<li class="userboard nav-item"><a class="nav-link page-scroll"
-					href="./questionBoardAdmin.do">관리자페이지</a></li>
-				<c:if test="${mDto.auth eq 'A'}"></c:if>
+<!-- 				<li class="userboard nav-item"><a class="nav-link page-scroll" -->
+<!-- 					href="./questionBoardAdmin.do">관리자페이지</a></li> -->
 				<li>
 					<button type="button" class="btn btn-primary join"
 						data-toggle="modal" data-target="#myModal">회원가입</button>
 					<button type="button" class="btn btn-primary login"
 						data-toggle="modal" data-target="#loginModal">로그인</button>
 				</li>
-				<li class="userboard nav-item">회원 아이디 :${mDto.email} <br><br>
+				<li class="userboard nav-item">회원 아이디 :${mDto.email} <br>
 					회원 이름 :${mDto.nickname} <a href="./logout.do" onclick="SignOut()">로그아웃</a>
 				</li>
 			</ul>
@@ -242,15 +241,15 @@
 						<div class="form-group has-feedback">
 							<input type="text" id="InputEmail" class="form-control"
 								placeholder="이메일" onkeyup="loginEmail()"> <span
-								id="loginEmail"
+								id="InputEmail"
 								class="glyphicon glyphicon-exclamation-sign form-control-feedback InputEmail"></span>
 						</div>
-
 						<div class="form-group has-feedback">
 							<input type="password" id="InputPassword" class="form-control"
-								placeholder="비밀번호" onkeyup="enterkey()"> <span
+								placeholder="비밀번호"> <span
 								class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
+						
 
 						<div class="row" style="margin-left: 10px">
 							<div class="col-xs-4" style="margin-top: -5px;">
