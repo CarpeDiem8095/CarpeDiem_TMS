@@ -45,21 +45,6 @@ public class ReviewController {
 	@Autowired
 	private IOneDayService oneService;
 	
-//	// 이동
-//	@RequestMapping(value="/reviewsList.do", method = RequestMethod.GET)
-//	public String reviewList (Model model, String seq, String one_seq) {
-//		System.out.println("장소 seq" + seq);
-//		System.out.println("하루 일정 seq" + one_seq);
-//		//System.out.println(plService.reviewList(seq));
-//		//System.out.println(oneService.selDetailOneday(one_seq));
-//		model.addAttribute("reviewList",plService.reviewList(seq));
-//		model.addAttribute("selDetailOneday", oneService.selDetailOneday(one_seq));
-//		model.addAttribute("oneday_seq", one_seq);
-//		model.addAttribute("seq", seq);
-//		return "reviewsList";
-//	}
-//	
-	
 	// 하루일정 테이블 리스트로 이동
 	@RequestMapping(value = "/onedayTableList.do", method = RequestMethod.GET)
 	public String onedayTableList(Model model, String oneday_seq) {
@@ -69,18 +54,6 @@ public class ReviewController {
 		System.out.println(oneService.selDetailOneday(oneday_seq));
 		return "review/onedayTableList";
 	}
-	
-//	// 하루일정 아작스 
-//	@SuppressWarnings("unchecked")
-//	@RequestMapping(value = "/getDataList.do")
-//	public String getDataList(String oneday_seq) {
-//		JSONObject json = new JSONObject();
-//		List<OnedayDto> aaData = oneService.selDetailOneday(oneday_seq); //aaData로 전송 해야만 인식 함 
-//		
-//		json.put("aaData", aaData);
-//		return json.toString();
-//	}
-	
 	
 	// 노트 모아보기 테이블 리스트로 이동
 	@RequestMapping(value = "/NoteTableList.do", method = RequestMethod.GET)
