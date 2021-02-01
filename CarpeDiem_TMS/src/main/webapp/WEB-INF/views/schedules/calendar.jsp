@@ -20,8 +20,8 @@ body {
      width: 100%;
 }
 body {
-  background: linear-gradient(to right, rgb(189, 195, 199), rgb(44, 62, 80));
-  overflow: auto;
+	background: linear-gradient(to right, rgb(127, 127, 213), rgb(134, 168, 231), rgb(145, 234, 228));
+  	overflow: auto;
 }
 
 	#calendar {
@@ -313,7 +313,7 @@ body {
 	function modifyOneday(onedaySeq){
 		var url = "./ModifyOneDayForm.do?onedaySeq="+onedaySeq;
 		var title = "하루일정 수정 폼 입니다.";
-		var attr = "width=400px, height=200px";
+		var attr = "width=400px, height=400px";
 		var wirteOneDay = window.open(url, title, attr);
 	}
 	

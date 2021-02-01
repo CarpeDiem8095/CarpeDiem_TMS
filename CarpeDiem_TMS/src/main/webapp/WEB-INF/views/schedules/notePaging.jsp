@@ -28,6 +28,27 @@
 		color: #2e00ff;
 		text-decoration: underline;
 	}
+	
+	.btn-update{
+		background-color: #EB7415;
+		color: white;
+	}
+	
+	.btn-delete{
+		background-color: #9E265E;
+		color: white;
+	}
+	
+	.btn-create{
+	background-color: #1E9E68;
+	color: white;
+	}
+	
+	.btn-delete2{
+		background-color: #EB7415;
+		color: white;
+	}
+	
 
 	</style>
 </head>
@@ -40,14 +61,14 @@
 					<td class="frameTD">
 					<div>
 						<div>
-							<input type = "button" value="X" style="float: right;" onclick="delOneNote(${note.note_seq})">
+							<input type = "button" value="X" style="float: right;" onclick="delOneNote(${note.note_seq})" class="btn-update">
 						</div>
 						<div>
 							<input type="checkbox" name="box" value="${note.note_seq}">
 							<a href="./calendar.do?seq=${note.note_seq}&page=${page.page}">${note.note_title}</a><br>
 						</div>
 						<div>
-							<input type = "button" value="수정" style="float: right;" onclick="modifyNote(${note.note_seq})">
+							<input type = "button" value="수정" style="float: right;" onclick="modifyNote(${note.note_seq})" class="btn-delete">
 						</div>
 					</div>
 					</td>
@@ -70,8 +91,8 @@
 			</tr>
 		</table>
 		<div style="text-align: center;">
-			<input type = "button" value="노트생성" onclick="writeNote()" style="text-align: center;">
-			<input type = "submit" value="다중삭제" style="margin: 0px auto;" style="text-align: center;">
+			<input type = "button" value="노트생성" onclick="writeNote()" style="text-align: center;" class="btn-create">
+			<input type = "submit" value="다중삭제" style="margin: 0px auto;" style="text-align: center;" class="btn-delete2">
 		</div>
 	</form>
 	
