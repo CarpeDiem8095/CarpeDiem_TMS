@@ -80,7 +80,7 @@ a {
 			<c:forEach var="i" items="${commentList}" varStatus="vs">
 				<div id="commentId">
 
-					<form class="updateComment" method="post" action="./delComment.do">
+					<form name="sub1" class="updateComment" method="post" action="./delComment.do">
 						<input type="hidden" name="comm_seq" value="${i.comm_seq}">
 						<input type="hidden" name="oneday_seq" value="${i.oneday_seq}">
 						<input type="hidden" name="depth" value="${i.depth}">
@@ -88,6 +88,9 @@ a {
 						<div>
 							<div style="width: 550px; height: 35px; float: left;" class="modifyPlace">
 								${i.comm_seq}
+									<jsp:useBean id="format" class="com.cp.tms.usebean.replyPhoto" scope="page"/>
+									<jsp:setProperty property="depth" name="format" value="${i.depth}"/>
+									<jsp:getProperty property="photo" name="format"/>
 								${i.email}
 								${i.content}
 							</div>
@@ -125,10 +128,10 @@ a {
 		// 댓글 삭제
 
 		function delComment(thisVal) {
-// 			var delVal = thisVal.parent().parent(); // 해당 폼 
+			var delVal = thisVal.parent().parent(); // 해당 폼 
 // 			alert(delVal.find('.updateComment').prop('tagName'));
-// 			delVal.filter('.updateComment').submit();
-			document.sub1.submit();
+			delVal.filter('.updateComment').submit();
+    
 			
 			
 // 			var formData = $('#updateComment').serialize();
@@ -201,7 +204,8 @@ a {
 
 		// 댓글 수정 
 		function modifyComment() {
-			var modifyVal = document.getElementById("modifyVal").value;
+			var modifyVal = document.getElementsByClassName("modifyVal").value;
+
 			var comm_seq = document.getElementsByName("comm_seq")[0].value;
 
 			var moval_comm_seq = "";
